@@ -6,26 +6,9 @@
         <div class="profile-card">
             <div class="profile-left">
                 <div class="profile-info">
-                    <small class="greeting">Planned and regular club competition</small>
-                    <h2 class="name">2024 - 2025 Season</h2>
+                    <small class="greeting">Viewing Event</small>
+                    <h2 class="name">Zoom Lecture</h2>
                     <p class="role">{{EventCount}} Events to go</p>
-                </div>
-            </div>
-            <div class="dt-search mx-auto">
-                <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search events..." aria-controls="example1" />
-            </div>
-            <div class="quick-filter text-end">
-                <strong>Quick Filter</strong>
-                <small class="d-block">(Click icons to filter)</small>
-                <div class="d-flex gap-2 justify-content-end">
-                    <i class="bi bi-calendar-event"></i>
-                    <i class="bi bi-camera"></i>
-                    <i class="bi bi-newspaper"></i>
-                </div>
-                <div class="d-flex gap-2 justify-content-end mt-2">
-                    <i class="bi bi-trophy"></i>
-                    <i class="bi bi-info"></i>
-                    <i class="bi bi-bell"></i>
                 </div>
             </div>
         </div>

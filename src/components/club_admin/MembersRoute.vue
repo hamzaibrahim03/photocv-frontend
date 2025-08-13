@@ -65,28 +65,33 @@
             </div>
         </div>
     </div>
-    <div class="dt-paging">
-        <nav aria-label="pagination">
-            <button class="dt-paging-button first" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(1)" aria-label="First">
-                «
-            </button>
+    <div class="d-flex justify-content-between">
+        <div class="button-group" style="margin-left: 2%">
+            <button class="btn" id="edit" @click="navigate">Add New</button>
+        </div>
+        <div class="dt-paging">
+            <nav aria-label="pagination">
+                <button class="dt-paging-button first" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(1)" aria-label="First">
+                    «
+                </button>
 
-            <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
-                ‹
-            </button>
+                <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
+                    ‹
+                </button>
 
-            <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
-                {{ page }}
-            </button>
+                <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
+                    {{ page }}
+                </button>
 
-            <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
-                ›
-            </button>
+                <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
+                    ›
+                </button>
 
-            <button class="dt-paging-button last" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(totalPages)" aria-label="Last">
-                »
-            </button>
-        </nav>
+                <button class="dt-paging-button last" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(totalPages)" aria-label="Last">
+                    »
+                </button>
+            </nav>
+        </div>
     </div>
 </section>
 </template>

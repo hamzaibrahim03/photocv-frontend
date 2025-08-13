@@ -3,7 +3,15 @@
 <HeaderRoute title="Events" />
 <section class="content">
     <div class="dashboard-card">
-        <QuickFilters greeting="Viewing Event" name="Zoom Lecture" :role="formattedStartDate" />
+        <div class="profile-card">
+            <div class="profile-left">
+                <div class="profile-info">
+                    <small class="greeting">Viewing event</small>
+                    <h2 class="name">{{event.name}}</h2>
+                    <p class="role">{{formattedStartDate}}</p>
+                </div>
+            </div>
+        </div>
         <div class="card-section">
             <div class="stat-card">
                 <small class="ca-details">Events</small>
@@ -29,15 +37,16 @@
                     <div class="custom-card">
                         <div class="row">
                             <div class="col-md-4">
-                                <img :src="event.featured_image_url" alt="Meeting" />
+                                <img :src="event.featured_image_url" alt="Meeting" style="max-width: 300px; height: 250px"/>
                             </div>
-                            <div class="col-md-8" style="padding-left: 30px">
+                            <div class="col-md-8">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h5>{{event.name}}</h5>
-                                    <div class="icon-container">
-                                        <a href="#"><i class="fas fa-comment-alt"></i></a>
-                                        <a href="#"><i class="fas fa-camera"></i></a>
-                                        <a href="#"><i class="fas fa-calendar-alt"></i></a>
+                                    <div class="icon-container ms-3">
+                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
+                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
+                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
+                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
                                     </div>
                                 </div>
                                 <p class="date">{{formattedStartDate}}</p>
@@ -45,15 +54,6 @@
                                     {{event.description}}
                                 </p>
                             </div>
-                            <p class="text-secondary" style="margin-top: 10px">
-                                {{event.description}}
-                            </p>
-                            <p class="text-secondary">
-                                {{event.description}}
-                            </p>
-                            <p class="text-secondary">
-                                {{event.description}}
-                            </p>
                             <div class="divider"></div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -177,12 +177,15 @@ import { useEventStore } from '@/stores/EventStore'
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
 import CalendarAll from "@/partials/events/CalendarAll.vue"
-import QuickFilters from "@/partials/events/QuickFilters.vue"
 import RecentComments from '@/partials/events/RecentComments.vue'
 import MoreEvents from '@/partials/events/MoreEvents.vue'
 import dayjs from 'dayjs'
-    /* global $ */
+import Pro from "@/assets/icons/event_list/pro.svg"
+import Cal from "@/assets/icons/event_list/cal.svg"
+import Cam from "@/assets/icons/event_list/cam.svg"
+import Mess from "@/assets/icons/event_list/mess.svg"
 import { useRoute } from 'vue-router';
+    /* global $ */
 
 const route = useRoute();
 const id = route.params.id;

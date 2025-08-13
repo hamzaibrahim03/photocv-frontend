@@ -7,6 +7,7 @@ import EventRoute from "@/components/club_admin/EventRoute.vue";
 import CompetitionsRoute from "@/components/club_admin/CompetitionsRoute.vue";
 import ClubRoute from "@/components/club_admin/ClubRoute.vue";
 import CompetitionsEdit from "@/components/club_admin/CompetitionsEdit.vue";
+import CompetitionSettings from "@/components/club_admin/CompetitionSettings.vue";
 import EventSingle from "@/components/club_admin/EventSingle.vue";
 import CompetitionSingle from "@/components/club_admin/CompetitionSingle.vue";
 import EventsAdd from "@/components/club_admin/EventsAdd.vue";
@@ -99,6 +100,11 @@ const routes = [
     name: "CompetitionsAdd",
     path: "/comp_edit",
     component: CompetitionsEdit,
+  },
+  {
+    name: "CompetitionSettings",
+    path: "/comp_set",
+    component: CompetitionSettings,
   },
   {
     name: "MembersRoute",

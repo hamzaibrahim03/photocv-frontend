@@ -18,14 +18,14 @@
                 <strong>Quick Filter</strong>
                 <small class="d-block">(Click icons to filter)</small>
                 <div class="d-flex gap-2 justify-content-end">
-                    <i class="bi bi-calendar-event"></i>
-                    <i class="bi bi-camera"></i>
-                    <i class="bi bi-newspaper"></i>
+                    <img :src="Com" alt="icon" style="width: 20px; height: 20px" />
+                    <img :src="Cale" alt="icon" style="width: 20px; height: 20px" />
+                    <img :src="Book" alt="icon" style="width: 20px; height: 20px" />
                 </div>
                 <div class="d-flex gap-2 justify-content-end mt-2">
-                    <i class="bi bi-trophy"></i>
-                    <i class="bi bi-info"></i>
-                    <i class="bi bi-bell"></i>
+                    <img :src="Cup" alt="icon" style="width: 20px; height: 20px" />
+                    <img :src="Hand" alt="icon" style="width: 20px; height: 20px" />
+                    <img :src="Note" alt="icon" style="width: 20px; height: 20px" />
                 </div>
             </div>
         </div>
@@ -57,10 +57,11 @@
                             <div class="flex-grow-1 d-flex flex-column justify-content-between">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5>{{ news.title || 'Untitled News' }}</h5>
-                                    <div class="icon-container">
-                                        <i class="fas fa-comment-alt me-2"></i>
-                                        <i class="fas fa-camera me-2"></i>
-                                        <i class="fas fa-calendar-alt"></i>
+                                    <div class="icon-container ms-3">
+                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
+                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
+                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
+                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
                                     </div>
                                 </div>
                                 <p class="names" style="font-size: 14px">{{ news.club_news_type.name }}</p>
@@ -119,6 +120,16 @@ import HeaderRoute from "@/components/HeaderRoute.vue";
 import CalendarAll from "@/partials/events/CalendarAll.vue";
 import RecentComments from "@/partials/news/RecentComments.vue";
 import MoreNews from "@/partials/news/MoreNews.vue";
+import Pro from "@/assets/icons/event_list/pro.svg"
+import Cal from "@/assets/icons/event_list/cal.svg"
+import Cam from "@/assets/icons/event_list/cam.svg"
+import Mess from "@/assets/icons/event_list/mess.svg"
+import Book from "@/assets/icons/quick_notice/book.svg"
+import Cale from "@/assets/icons/quick_notice/calender.svg"
+import Com from "@/assets/icons/quick_notice/com.svg"
+import Cup from "@/assets/icons/quick_notice/cup.svg"
+import Hand from "@/assets/icons/quick_notice/hand.svg"
+import Note from "@/assets/icons/quick_notice/note.svg"
 /* global $ */
 
 const {
