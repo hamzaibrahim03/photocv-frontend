@@ -1,0 +1,30 @@
+// src/stores/HomeStore.js
+import { defineStore } from 'pinia';
+import api from '@/api/clubdata'; // Corrected import
+
+export const useHomeStore = defineStore('home', {
+  state: () => ({
+    homeData: {},
+    clubSettings: {},
+    loading: false,
+    error: null
+  }),
+
+  actions: {
+    async fetchHomeData(domain) {
+      this.loading = true;
+      try {
+        const response = await api.getAllClubData(domain);
+        this.homeData = response.data;
+        this.clubSettings = response.data.data.clubSettings.original.data.club.setting
+        console.log(this.clubSettings)
+        this.error = null;
+      } catch (err) {
+        console.error('Failed to load home data:', err);
+        this.error = err;
+      } finally {
+        this.loading = false;
+      }
+    }
+  }
+});
