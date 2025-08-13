@@ -1,5 +1,5 @@
-import ClubGallery from "@/partials/gallery/ClubGallery.vue";
-import MemberGallery from "@/partials/gallery/MemberGallery.vue";
+import ClubGallery from "@/partials/club_admin/gallery/ClubGallery.vue";
+import MemberGallery from "@/partials/club_admin/gallery/MemberGallery.vue";
 
 export default [
   {

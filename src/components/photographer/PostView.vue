@@ -118,8 +118,8 @@ import { useUserStore } from "@/stores/UserStore";
 import { ref, computed, onMounted, watch } from 'vue'
 import apiClient from 'axios'
 import { useNoticeStore } from '@/stores/NoticeStore'
-import RecentComments from "@/partials/notices/RecentComments.vue";
-import MoreNotices from "@/partials/notices/MoreNotices.vue";
+import RecentComments from "@/partials/club_admin/notices/RecentComments.vue";
+import MoreNotices from "@/partials/club_admin/notices/MoreNotices.vue";
 
 const {
     notices,

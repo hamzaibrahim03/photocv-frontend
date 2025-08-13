@@ -50,10 +50,10 @@ import { onMounted } from 'vue'
 import { useEventStore } from '@/stores/EventStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarAll from "@/partials/events/CalendarAll.vue";
-import RecentComments from '@/partials/events/RecentComments.vue'
-import MoreEvents from '@/partials/events/MoreEvents.vue'
-import EventsForm from "@/partials/eventsedit/EventsForm.vue";
+import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue";
+import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
+import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
+import EventsForm from "@/partials/club_admin/eventsedit/EventsForm.vue";
 
 /* global $ */
 

@@ -215,7 +215,7 @@
 <script>
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import ClubProfile from "@/partials/club/ClubProfile.vue";
+import ClubProfile from "@/partials/club_admin/club/ClubProfile.vue";
 
 export default {
     name: "KamranGallerySingle",

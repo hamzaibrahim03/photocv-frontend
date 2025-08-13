@@ -278,8 +278,8 @@ import Image from "@/assets/icons/dashboard/profile_image.svg"
 import Comment from "@/assets/icons/dashboard/comment.svg"
 import Point from "@/assets/icons/dashboard/point.svg"
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import MembersComponent from "@/partials/dashboard/MembersComponent.vue";
-import EventsComponent from "@/partials/dashboard/EventsComponent.vue";
+import MembersComponent from "@/partials/club_admin/dashboard/MembersComponent.vue";
+import EventsComponent from "@/partials/club_admin/dashboard/EventsComponent.vue";
 
 /* global $ */
 

@@ -1,9 +1,9 @@
-import KamranAwards from "@/partials/membersingle/KamranAwards.vue";
-import KamranComments from "@/partials/membersingle/KamranComments.vue";
-import KamranEntries from "@/partials/membersingle/KamranEntries.vue";
-import KamranGallery from "@/partials/membersingle/KamranGallery.vue";
-import KamranLikes from "@/partials/membersingle/KamranLikes.vue";
-import ProfileMember from "@/partials/membersingle/ProfileMember.vue";
+import KamranAwards from "@/partials/club_admin/membersingle/KamranAwards.vue";
+import KamranComments from "@/partials/club_admin/membersingle/KamranComments.vue";
+import KamranEntries from "@/partials/club_admin/membersingle/KamranEntries.vue";
+import KamranGallery from "@/partials/club_admin/membersingle/KamranGallery.vue";
+import KamranLikes from "@/partials/club_admin/membersingle/KamranLikes.vue";
+import ProfileMember from "@/partials/club_admin/membersingle/ProfileMember.vue";
 
 export default [
   {

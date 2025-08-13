@@ -176,9 +176,9 @@ import { onMounted, computed } from 'vue'
 import { useEventStore } from '@/stores/EventStore'
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
-import CalendarAll from "@/partials/events/CalendarAll.vue"
-import RecentComments from '@/partials/events/RecentComments.vue'
-import MoreEvents from '@/partials/events/MoreEvents.vue'
+import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue"
+import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
+import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
 import dayjs from 'dayjs'
 import Pro from "@/assets/icons/event_list/pro.svg"
 import Cal from "@/assets/icons/event_list/cal.svg"

@@ -145,9 +145,9 @@ import Cam from "@/assets/icons/event_list/cam.svg"
 import Mess from "@/assets/icons/event_list/mess.svg"
 import HeaderRoute from '@/components/HeaderRoute.vue'
 import NavigationRoute from '@/components/NavigationRoute.vue'
-import CalendarAll from '@/partials/events/CalendarAll.vue'
-import RecentComments from '@/partials/events/RecentComments.vue'
-import MoreEvents from '@/partials/events/MoreEvents.vue'
+import CalendarAll from '@/partials/club_admin/events/CalendarAll.vue'
+import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
+import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
 /* global $ */
 
 const {

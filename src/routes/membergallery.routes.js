@@ -1,4 +1,4 @@
-import MemberGalleries from "@/partials/membergallery/MemberGalleries.vue";
+import MemberGalleries from "@/partials/club_admin/membergallery/MemberGalleries.vue";
 
 export default [
   {

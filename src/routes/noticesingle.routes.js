@@ -1,4 +1,4 @@
-import NoticeForm from "@/partials/noticesingle/NoticeForm.vue";
+import NoticeForm from "@/partials/club_admin/noticesingle/NoticeForm.vue";
 
 export default [
   {

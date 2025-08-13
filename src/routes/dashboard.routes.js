@@ -1,16 +1,16 @@
-import CalendarDashboard from "@/partials/dashboard/CalendarDashboard.vue";
-import ClubGallery from "@/partials/dashboard/ClubGallery.vue";
-import EventsComponent from "@/partials/dashboard/EventsComponent.vue";
-import LatestMembers from "@/partials/dashboard/LatestMembers.vue";
-import LatestNews from "@/partials/dashboard/LatestNews.vue";
-import MemberGallery from "@/partials/dashboard/MemberGallery.vue";
-import MembersComponent from "@/partials/dashboard/MembersComponent.vue";
-import ProfileComponent from "@/partials/dashboard/ProfileComponent.vue";
-import RecentNotices from "@/partials/dashboard/RecentNotices.vue";
-import RecentPages from "@/partials/dashboard/RecentPages.vue";
-import RecentResults from "@/partials/dashboard/RecentResults.vue";
-import UpcomingCompetitions from "@/partials/dashboard/UpcomingCompetitions.vue";
-import UpcomingEvents from "@/partials/dashboard/UpcomingEvents.vue";
+import CalendarDashboard from "@/partials/club_admin/dashboard/CalendarDashboard.vue";
+import ClubGallery from "@/partials/club_admin/dashboard/ClubGallery.vue";
+import EventsComponent from "@/partials/club_admin/dashboard/EventsComponent.vue";
+import LatestMembers from "@/partials/club_admin/dashboard/LatestMembers.vue";
+import LatestNews from "@/partials/club_admin/dashboard/LatestNews.vue";
+import MemberGallery from "@/partials/club_admin/dashboard/MemberGallery.vue";
+import MembersComponent from "@/partials/club_admin/dashboard/MembersComponent.vue";
+import ProfileComponent from "@/partials/club_admin/dashboard/ProfileComponent.vue";
+import RecentNotices from "@/partials/club_admin/dashboard/RecentNotices.vue";
+import RecentPages from "@/partials/club_admin/dashboard/RecentPages.vue";
+import RecentResults from "@/partials/club_admin/dashboard/RecentResults.vue";
+import UpcomingCompetitions from "@/partials/club_admin/dashboard/UpcomingCompetitions.vue";
+import UpcomingEvents from "@/partials/club_admin/dashboard/UpcomingEvents.vue";
 
 export default [
   {

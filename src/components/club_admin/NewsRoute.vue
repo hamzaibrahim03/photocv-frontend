@@ -117,9 +117,9 @@ import apiClient from 'axios'
 import { useNewsStore } from '@/stores/NewsStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarAll from "@/partials/events/CalendarAll.vue";
-import RecentComments from "@/partials/news/RecentComments.vue";
-import MoreNews from "@/partials/news/MoreNews.vue";
+import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue";
+import RecentComments from "@/partials/club_admin/news/RecentComments.vue";
+import MoreNews from "@/partials/club_admin/news/MoreNews.vue";
 import Pro from "@/assets/icons/event_list/pro.svg"
 import Cal from "@/assets/icons/event_list/cal.svg"
 import Cam from "@/assets/icons/event_list/cam.svg"

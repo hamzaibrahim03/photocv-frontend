@@ -1,5 +1,5 @@
-import ClubForm from "@/partials/club/ClubForm.vue";
-import ClubProfile from "@/partials/club/ClubProfile.vue";
+import ClubForm from "@/partials/club_admin/club/ClubForm.vue";
+import ClubProfile from "@/partials/club_admin/club/ClubProfile.vue";
 
 export default [
   {

@@ -1,5 +1,5 @@
-import MoreNotices from "@/partials/notices/MoreNotices.vue";
-import RecentComments from "@/partials/notices/RecentComments.vue";
+import MoreNotices from "@/partials/club_admin/notices/MoreNotices.vue";
+import RecentComments from "@/partials/club_admin/notices/RecentComments.vue";
 export default [
   {
     path: "/notices/notices",

@@ -1,5 +1,5 @@
-import RecentSubmissions from "@/partials/competitions/RecentSubmissions.vue";
-import MoreCompetitions from "@/partials/competitions/MoreCompetitions.vue";
+import RecentSubmissions from "@/partials/club_admin/competitions/RecentSubmissions.vue";
+import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetitions.vue";
 
 export default [
   {

@@ -129,9 +129,9 @@ import apiClient from 'axios'
 import { useCompetitionStore } from '@/stores/CompetitionStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarAll from "@/partials/events/CalendarAll.vue";
-import RecentSubmissions from "@/partials/competitions/RecentSubmissions.vue";
-import MoreCompetitions from "@/partials/competitions/MoreCompetitions.vue";
+import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue";
+import RecentSubmissions from "@/partials/club_admin/competitions/RecentSubmissions.vue";
+import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetitions.vue";
 import Pro from "@/assets/icons/event_list/pro.svg"
 import Cal from "@/assets/icons/event_list/cal.svg"
 import Cam from "@/assets/icons/event_list/cam.svg"

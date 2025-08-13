@@ -120,9 +120,9 @@ import apiClient from '@/api/axios'
 import { useEventStore } from '@/stores/EventStore'
 import HeaderRoute from '@/components/HeaderRoute.vue'
 import NavigationRoute from '@/components/NavigationRoute.vue'
-import CalendarAll from '@/partials/events/CalendarAll.vue'
-import RecentComments from '@/partials/events/RecentComments.vue'
-import MoreEvents from '@/partials/events/MoreEvents.vue'
+import CalendarAll from '@/partials/club_admin/events/CalendarAll.vue'
+import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
+import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
 /* global $ */
 
 const {

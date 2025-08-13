@@ -42,11 +42,11 @@ import { onMounted } from 'vue'
 import { useNoticeStore } from '@/stores/NoticeStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarAll from "@/partials/events/CalendarAll.vue";
-import RecentComments from "@/partials/notices/RecentComments.vue";
-import MoreNotices from "@/partials/notices/MoreNotices.vue";
-import ProfileWithoutSearch from "@/partials/competitionsadd/ProfileWithoutSearch.vue";
-import NoticeForm from "@/partials/noticesingle/NoticeForm.vue";
+import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue";
+import RecentComments from "@/partials/club_admin/notices/RecentComments.vue";
+import MoreNotices from "@/partials/club_admin/notices/MoreNotices.vue";
+import ProfileWithoutSearch from "@/partials/club_admin/competitionsadd/ProfileWithoutSearch.vue";
+import NoticeForm from "@/partials/club_admin/noticesingle/NoticeForm.vue";
 /* global $ */
 
 const {

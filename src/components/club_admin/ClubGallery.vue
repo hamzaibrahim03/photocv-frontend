@@ -29,8 +29,8 @@
 <script>
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import ClubProfile from "@/partials/club/ClubProfile.vue";
-import ClubGalleries from "@/partials/clubgallery/ClubGalleries.vue";
+import ClubProfile from "@/partials/club_admin/club/ClubProfile.vue";
+import ClubGalleries from "@/partials/club_admin/clubgallery/ClubGalleries.vue";
 export default {
     name: "ClubGallery",
     components: {

@@ -1,4 +1,4 @@
-import EventsForm from "@/partials/eventsedit/EventsForm.vue";
+import EventsForm from "@/partials/club_admin/eventsedit/EventsForm.vue";
 
 export default [
   {

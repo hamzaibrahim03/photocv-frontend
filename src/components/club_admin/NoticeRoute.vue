@@ -121,9 +121,9 @@ import apiClient from 'axios'
 import { useNoticeStore } from '@/stores/NoticeStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import RecentComments from "@/partials/notices/RecentComments.vue";
-import MoreNotices from "@/partials/notices/MoreNotices.vue";
-import CalendarAll from "@/partials/events/CalendarAll.vue";
+import RecentComments from "@/partials/club_admin/notices/RecentComments.vue";
+import MoreNotices from "@/partials/club_admin/notices/MoreNotices.vue";
+import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue";
 import Pro from "@/assets/icons/event_list/pro.svg"
 import Cal from "@/assets/icons/event_list/cal.svg"
 import Cam from "@/assets/icons/event_list/cam.svg"

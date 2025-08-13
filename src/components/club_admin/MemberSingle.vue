@@ -67,13 +67,13 @@
 <script setup>
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import ClubProfile from "@/partials/club/ClubProfile.vue";
-import ProfileMember from "@/partials/membersingle/ProfileMember.vue";
-import KamranComments from "@/partials/membersingle/KamranComments.vue";
-import KamranLikes from "@/partials/membersingle/KamranLikes.vue";
-import KamranEntries from "@/partials/membersingle/KamranEntries.vue";
-import KamranAwards from "@/partials/membersingle/KamranAwards.vue";
-import KamranGallery from "@/partials/membersingle/KamranGallery.vue";
+import ClubProfile from "@/partials/club_admin/club/ClubProfile.vue";
+import ProfileMember from "@/partials/club_admin/membersingle/ProfileMember.vue";
+import KamranComments from "@/partials/club_admin/membersingle/KamranComments.vue";
+import KamranLikes from "@/partials/club_admin/membersingle/KamranLikes.vue";
+import KamranEntries from "@/partials/club_admin/membersingle/KamranEntries.vue";
+import KamranAwards from "@/partials/club_admin/membersingle/KamranAwards.vue";
+import KamranGallery from "@/partials/club_admin/membersingle/KamranGallery.vue";
 </script>
 
 <style scoped></style>

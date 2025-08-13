@@ -1,7 +1,7 @@
-import CalendarAll from "@/partials/events/CalendarAll.vue";
-import QuickFilters from "@/partials/events/QuickFilters.vue";
-import MoreEvents from "@/partials/events/MoreEvents.vue";
-import RecentComments from "@/partials/events/RecentComments.vue";
+import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue";
+import QuickFilters from "@/partials/club_admin/events/QuickFilters.vue";
+import MoreEvents from "@/partials/club_admin/events/MoreEvents.vue";
+import RecentComments from "@/partials/club_admin/events/RecentComments.vue";
 
 export default [
   {

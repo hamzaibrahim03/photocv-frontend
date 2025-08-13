@@ -1,6 +1,6 @@
-import FormAdd from "@/partials/competitionsadd/FormAdd.vue";
-import GlobalSettings from "@/partials/competitionsadd/GlobalSettings.vue";
-import ProfileWithoutSearch from "@/partials/competitionsadd/ProfileWithoutSearch.vue";
+import FormAdd from "@/partials/club_admin/competitionsadd/FormAdd.vue";
+import GlobalSettings from "@/partials/club_admin/competitionsadd/GlobalSettings.vue";
+import ProfileWithoutSearch from "@/partials/club_admin/competitionsadd/ProfileWithoutSearch.vue";
 
 export default [
   {

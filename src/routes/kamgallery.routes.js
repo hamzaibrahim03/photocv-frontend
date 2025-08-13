@@ -1,4 +1,4 @@
-import KamranGalleries from "@/partials/kamgallery/KamranGalleries.vue";
+import KamranGalleries from "@/partials/club_admin/kamgallery/KamranGalleries.vue";
 
 export default [
   {

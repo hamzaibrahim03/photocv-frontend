@@ -29,8 +29,8 @@
 <script>
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import ClubProfile from "@/partials/club/ClubProfile.vue";
-import KamranGalleries from "@/partials/kamgallery/KamranGalleries.vue";
+import ClubProfile from "@/partials/club_admin/club/ClubProfile.vue";
+import KamranGalleries from "@/partials/club_admin/kamgallery/KamranGalleries.vue";
 export default {
     data() {
         return {

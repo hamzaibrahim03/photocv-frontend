@@ -1,5 +1,5 @@
-import MorePages from "@/partials/pages/MorePages.vue";
-import RecentComments from "@/partials/pages/RecentComments.vue";
+import MorePages from "@/partials/club_admin/pages/MorePages.vue";
+import RecentComments from "@/partials/club_admin/pages/RecentComments.vue";
 export default [
   {
     path: "/pages/pages",

@@ -198,10 +198,10 @@ import { useCompetitionStore } from '@/stores/CompetitionStore'
 
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
-import CalendarAll from "@/partials/events/CalendarAll.vue"
-import ProfileWithoutSearch from "@/partials/competitionsadd/ProfileWithoutSearch.vue"
-import RecentSubmissions from "@/partials/competitions/RecentSubmissions.vue"
-import MoreCompetitions from "@/partials/competitions/MoreCompetitions.vue"
+import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue"
+import ProfileWithoutSearch from "@/partials/club_admin/competitionsadd/ProfileWithoutSearch.vue"
+import RecentSubmissions from "@/partials/club_admin/competitions/RecentSubmissions.vue"
+import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetitions.vue"
 
 const route = useRoute()
 const id = route.params.id

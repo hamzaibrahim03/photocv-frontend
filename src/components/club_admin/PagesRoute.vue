@@ -114,8 +114,8 @@ import apiClient from '@/api/axios'
 import { usePagesStore } from '@/stores/PagesStore'
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
-import RecentComments from "@/partials/pages/RecentComments.vue"
-import MorePages from "@/partials/pages/MorePages.vue"
+import RecentComments from "@/partials/club_admin/pages/RecentComments.vue"
+import MorePages from "@/partials/club_admin/pages/MorePages.vue"
 import Pro from "@/assets/icons/event_list/pro.svg"
 import Cal from "@/assets/icons/event_list/cal.svg"
 import Cam from "@/assets/icons/event_list/cam.svg"
