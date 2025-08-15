@@ -41,6 +41,9 @@
     <div v-for="(row, rowIndex) in chunkedCards" :key="rowIndex" class="row-wrapper">
         <div class="photographers">
             <div v-for="(member, index) in row" :key="index" class="photographer-card">
+                <div class="edit-icon" @click="editMember(member)">
+                    <img :src="Edit" alt="icon" style="width:24px; height: 24px" />
+                </div>
                 <img :src="member.profile_image_url" alt="Profile Picture" class="profile-pic" />
                 <div class="social-media-icons">
                     <a href="#" style="background-color: #99816b; color: white"><i class="fab fa-facebook-f"></i></a>
@@ -110,6 +113,7 @@ import HeaderRoute from "@/components/HeaderRoute.vue"
 import Ima from "@/assets/icons/member/image.svg"
 import Com from "@/assets/icons/member/comment.svg"
 import Lik from "@/assets/icons/member/like.svg"
+import Edit from "@/assets/icons/member/edit.svg"
 
 const memberStore = useMemberStore()
 const memberData = computed(() => memberStore.memberData)
@@ -163,6 +167,22 @@ function goToPage(page) {
 </script>
 
 <style scoped>
+.edit-icon {
+  position: relative;
+  top: 8px;
+  right: 8px;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  z-index: 10;
+  text-align: right;
+}
+
+.edit-icon i {
+  color: #cc445e;
+  font-size: 16px;
+}
+
 .social-icons {
     background-color: #d64561;
     display: flex;

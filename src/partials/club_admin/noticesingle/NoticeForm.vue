@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="body"> Notice Body </label>
-                            <img src="@/assets/images/comp/c1.png" alt="Notice" />
+                            <img :src="featured_image" alt="Notice" />
                         </div>
                     </div>
                     <div class="divider3"></div>
@@ -255,6 +255,7 @@ export default {
             title: '',
             type: '',
             description: '',
+            featured_image: '',
             location: '',
             link_page_url: '',
             tags: '',
@@ -285,6 +286,7 @@ export default {
                 title: this.title,
                 type: this.type,
                 description: this.description,
+                featured_image: this.featured_image,
                 location: this.location,
                 link_page_url: this.link_page_url,
                 tags: this.tags,
@@ -320,6 +322,7 @@ export default {
                 this.title = data.title || ''
                 this.type = data.type || ''
                 this.description = data.description || ''
+                this.featured_image = data.featured_image || ''
                 this.location = data.location || ''
                 this.link_page_url = data.link_page_url || ''
                 this.tags = data.tags || ''

@@ -17,6 +17,7 @@ import NoticeRoute from "@/components/club_admin/NoticeRoute.vue";
 import NewsRoute from "@/components/club_admin/NewsRoute.vue";
 import PagesRoute from "@/components/club_admin/PagesRoute.vue";
 import MembersRoute from "@/components/club_admin/MembersRoute.vue";
+import MemberAdd from "@/components/club_admin/MemberAdd.vue";
 import MembersRequest from "@/components/club_admin/MembersRequest.vue";
 import GalleryRoute from "@/components/club_admin/GalleryRoute.vue";
 import MemberGallery from "@/components/club_admin/MemberGallery.vue";
@@ -110,6 +111,16 @@ const routes = [
     name: "MembersRoute",
     path: "/members",
     component: MembersRoute,
+  },
+  {
+    name: "MemberAdd",
+    path: "/member_add",
+    component: MemberAdd,
+  },
+  {
+    name: "member_edit",
+    path: "/member_edit/:id",
+    component: MemberAdd,
   },
   {
     name: "MembersRequest",

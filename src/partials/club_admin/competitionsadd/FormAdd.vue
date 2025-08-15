@@ -4,7 +4,7 @@
         <div class="news-list">
             <div class="form-containers">
                 <form @submit.prevent="submitForm">
-                    <h5>Basic Informaton</h5>
+                    <h5>Basic Information</h5>
                     <div class="row">
                         <div class="col-md-6">
                             <label> Competition Name </label>
@@ -24,9 +24,24 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label> Judging Type </label>
-                            <input type="number" v-model="judging_type_id" class="form-control" />
+                            <select class="form-control">
+                                <option></option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
                         </div>
-                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <label> Assign Judge </label>
+                            <select class="form-control">
+                                <option></option>
+                                <option>Ammar</option>
+                                <option>Sohaib</option>
+                                <option>Kamran</option>
+                                <option>Sarfraz</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="divider3"></div>
 

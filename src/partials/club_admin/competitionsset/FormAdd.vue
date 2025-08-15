@@ -4,7 +4,7 @@
         <div class="news-list">
             <div class="form-containers">
                 <form @submit.prevent="submitForm">
-                    <h5>Basic Informaton</h5>
+                    <h5>Basic Information</h5>
                     <div class="row">
                         <div class="col-md-6">
                             <label> Competition Type </label>

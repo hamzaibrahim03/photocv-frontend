@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001',backgroundColor: homeStore.clubSettings.background_color }">
         <div class="container-fluid">
             <div class="left-header">
-                <img :src="homeStore.clubSettings.logo_url" alt="Ryton"/>
+                <img :src="homeStore.clubSettings.logo_url" alt="Ryton" />
             </div>
 
             <div class="collapse navbar-collapse justify-content-center">
@@ -17,19 +17,35 @@
             </div>
 
             <div class="right-header d-flex align-items-center">
-                <a href="notification.html" class="icon me-3" :style="{ color: homeStore.clubSettings.text_color }"><i class="bi bi-bell"></i></a>
-
-                <div class="admin-dropdown d-flex align-items-center position-relative">
-                    <img :src="user.profile_image" alt="Profile" class="profile-img" />
-                    <span class="ms-2" :style="{ color: homeStore.clubSettings.text_color }">
-                        {{ user.username }}
-                    </span>
-
-                    <div class="dropdown-menu">
-                        <a href="/login">Login</a>
+                <!-- Show this when NOT logged in -->
+                <template v-if="!user || !user.is_logged_in">
+                    <div class="admin-dropdown d-flex align-items-center position-relative">
+                        <a href="/login" class="btn" id="edit" :style="{color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.accent_color }">Login</a>
                     </div>
-                </div>
+                </template>
+
+                <!-- Show this when LOGGED IN -->
+                <template v-else>
+                    <!-- Notification icon -->
+                    <a href="/notification" class="icon me-3" :style="{color: homeStore.clubSettings.text_color }">
+                        <i class="bi bi-bell"></i>
+                    </a>
+
+                    <!-- Profile and Dropdown -->
+                    <div class="admin-dropdown d-flex align-items-center position-relative">
+                        <img :src="userStore.user.profile_image" alt="Profile" class="profile-img" />
+                        <span class="ms-2" :style="{ color: homeStore.clubSettings.text_color }">
+                            {{ userStore.user.username }}
+                        </span>
+
+                        <!-- Dropdown -->
+                        <div class="dropdown-menu">
+                            <a href="#" @click.prevent="handleLogout">Log Out</a>
+                        </div>
+                    </div>
+                </template>
             </div>
+
         </div>
     </nav>
 
@@ -41,11 +57,11 @@
             <p class="location" :style="{ color: homeStore.clubSettings.text_color }">An NYCE Club based in Apps, North East England</p>
             <div class="row">
                 <div class="icon-circles me-3" :style="{ color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.background_color }"><i class="fab fa-facebook-f"></i>
-                    </div>
+                </div>
                 <div class="icon-circles me-3" :style="{ color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.background_color }"><i class="fab fa-instagram"></i>
-                    </div>
+                </div>
                 <div class="icon-circles me-3" :style="{ color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.background_color }"><i class="fab fa-twitter"></i>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -54,7 +70,7 @@
         <div class="card" style="padding-bottom: 15px; height: auto; border: none" :style="{backgroundColor: homeStore.clubSettings.background_color}">
             <div class="row">
                 <div class="col-md-3">
-                    <img :src="homeStore.clubSettings.header_img_url" alt="hero" style="height: 103%; width: 100%; border-radius: 7px"  :style="{ backgroundColor: homeStore.clubSettings.background_color }"/>
+                    <img :src="homeStore.clubSettings.header_img_url" alt="hero" style="height: 103%; width: 100%; border-radius: 7px" :style="{ backgroundColor: homeStore.clubSettings.background_color }" />
                 </div>
                 <div class="col-md-9">
                     <p class="role" style="margin-top: 20px" :style="{color: homeStore.clubSettings.text_color}">
@@ -146,10 +162,10 @@
 
                     <div class="event-list" v-if="homeStore.homeData?.data?.upcomingCompetitions">
                         <div class="event-item">
-                            <img class="img-fluid" :src="homeStore.homeData.data.upcomingCompetitions.featured_image_url" alt="Event" />
+                            <img class="img-fluid" :src="homeStore.homeData.data.upcomingCompetitions.featured_image_url" alt="Comp" />
                             <div class="event-details">
                                 <span class="event-title" :style="{color: homeStore.clubSettings.text_color}">
-                                {{ homeStore.homeData.data.upcomingCompetitions.name }}
+                                    {{ homeStore.homeData.data.upcomingCompetitions.name }}
                                 </span>
                                 <div class="event-time" style="text-align: right">
                                     <small class="event-date" :style="{color: homeStore.clubSettings.text_color}">
@@ -165,9 +181,7 @@
 
                     <div class="button-group mt-auto">
                         <router-link to="/competitions" custom v-slot="{ navigate }">
-                            <button class="btn btn-sm w-100" id="view"
-                                @click="navigate"
-                                :style="{ color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.primary_color }">
+                            <button class="btn btn-sm w-100" id="view" @click="navigate" :style="{ color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.primary_color }">
                                 View All
                             </button>
                         </router-link>
@@ -206,7 +220,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="Latest" style="width: 30%;background-color: #EBE6E1;" :style="{backgroundColor: homeStore.clubSettings.accent_color, opacity: '50%', color: homeStore.clubSettings.text_color}">
+                <div class="Latest" style="width: 30%;background-color: #EBE6E1;" :style="{backgroundColor: homeStore.clubSettings.accent_color, color: homeStore.clubSettings.text_color}">
                     <h5 style="font-size: 20px" :style="{color: homeStore.clubSettings.text_color}">Latest Members</h5>
                     <div class="row">
                         <div class="col-6 mb-3" v-for="latestMember in homeStore.homeData?.data?.latestMembers?.members.slice(0, 6)" :key="latestMember.id">
@@ -231,7 +245,7 @@
                         <h5 class="name" :style="{color: homeStore.clubSettings.text_color}">Recent Comments</h5>
                         <div class="row" v-for="interaction  in homeStore.homeData.data?.latestInteractions" :key="interaction.id">
                             <div class="col-md-2">
-                                <img :src="interaction.image_url" class="img-fluid" alt="Interaction Image" style="max-width: 50px; height: 50px"/>
+                                <img :src="interaction.image_url" class="img-fluid" alt="Interaction Image" style="max-width: 50px; height: 50px" />
                             </div>
                             <div class="col-md-7">
                                 <p :style="{color: homeStore.clubSettings.text_color}">
@@ -344,7 +358,7 @@
 
         <div style="padding-top:30px">
             <h5 class="name" style="text-align: center" :style="{ color: homeStore.clubSettings.text_color }">{{homeStore.clubSettings.footer_text}}</h5>
-            <p class="names" style="text-align: center; margin-left: 24%; margin-right: 23%" :style="{color: homeStore.clubSettings.text_color}">{{homeStore.clubSettings.footer_desc}}</p>
+            <p class="names" style="text-align: center; margin-left: 24%; margin-right: 23%" :style="{color: homeStore.clubSettings.text_color}">{{homeStore.clubSettings.footer_description}}</p>
         </div>
 
         <div class="row align-items-center py-4" style="height: auto">
@@ -371,42 +385,67 @@
 
             <div class="col-md-4">
                 <h5 class="fw-bold mb-4" :style="{color: homeStore.clubSettings.text_color}">Social Links</h5>
-                <div class="social-link d-flex align-items-center mb-3">
-                    <div class="icon-circles me-3" :style="{color: homeStore.clubSettings.background_color, backgroundColor: homeStore.clubSettings.text_color}"><i class="fab fa-facebook-f"></i>
+                <div v-if="homeStore.clubSettings.fb_link_option === 1 && homeStore.clubSettings.fb_link" class="social-link d-flex align-items-center mb-3">
+                    <div class="icon-circles me-3" :style="{ color: homeStore.clubSettings.background_color, backgroundColor: homeStore.clubSettings.text_color }">
+                        <i class="fab fa-facebook"></i>
                     </div>
                     <div>
-                        <p class="fw-bold mb-0" :style="{color: homeStore.clubSettings.text_color}">Facebook</p>
-                        <p class="mb-0" :style="{color: homeStore.clubSettings.text_color}">{{homeStore.clubSettings.fb_link}}</p>
+                        <p class="fw-bold mb-0" :style="{ color: homeStore.clubSettings.text_color }">Facebook</p>
+                        <p class="mb-0" :style="{ color: homeStore.clubSettings.text_color }">
+                            <a :href="homeStore.clubSettings.fb_link" target="_blank" style="text-decoration: none; color: inherit">
+                                {{ homeStore.clubSettings.fb_link }}
+                            </a>
+                        </p>
                     </div>
                 </div>
-                <div class="social-link d-flex align-items-center mb-3">
-                    <div class="icon-circles me-3" :style="{color: homeStore.clubSettings.background_color, backgroundColor: homeStore.clubSettings.text_color}"><i class="fab fa-instagram"></i>
+                <div v-if="homeStore.clubSettings.insta_link_option === 1 && homeStore.clubSettings.insta_link" class="social-link d-flex align-items-center mb-3">
+                    <div class="icon-circles me-3" :style="{ color: homeStore.clubSettings.background_color, backgroundColor: homeStore.clubSettings.text_color }">
+                        <i class="fab fa-instagram"></i>
                     </div>
                     <div>
-                        <p class="fw-bold mb-0" :style="{color: homeStore.clubSettings.text_color}">Instagram</p>
-                        <p class="mb-0" :style="{color: homeStore.clubSettings.text_color}">{{homeStore.clubSettings.insta_link}}</p>
+                        <p class="fw-bold mb-0" :style="{ color: homeStore.clubSettings.text_color }">Instagram</p>
+                        <p class="mb-0" :style="{ color: homeStore.clubSettings.text_color }">
+                            <a :href="homeStore.clubSettings.insta_link" target="_blank" style="text-decoration: none; color: inherit">
+                                {{ homeStore.clubSettings.insta_link }}
+                            </a>
+                        </p>
                     </div>
                 </div>
-                <div class="social-link d-flex align-items-center mb-3">
-                    <div class="icon-circles me-3" :style="{color: homeStore.clubSettings.background_color, backgroundColor: homeStore.clubSettings.text_color}"><i class="fab fa-flickr"></i>
+                <div v-if="homeStore.clubSettings.flickr_link_option === 1 && homeStore.clubSettings.flickr_link" class="social-link d-flex align-items-center mb-3">
+                    <div class="icon-circles me-3" :style="{ color: homeStore.clubSettings.background_color, backgroundColor: homeStore.clubSettings.text_color }">
+                        <i class="fab fa-flickr"></i>
                     </div>
                     <div>
-                        <p class="fw-bold mb-0" :style="{color: homeStore.clubSettings.text_color}">Flickr</p>
-                        <p class="mb-0" :style="{color: homeStore.clubSettings.text_color}">{{homeStore.clubSettings.flickr_link}}</p>
+                        <p class="fw-bold mb-0" :style="{ color: homeStore.clubSettings.text_color }">Flickr</p>
+                        <p class="mb-0" :style="{ color: homeStore.clubSettings.text_color }">
+                            <a :href="homeStore.clubSettings.flickr_link" target="_blank" style="text-decoration: none; color: inherit">
+                                {{ homeStore.clubSettings.flickr_link }}
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
+        <pre>{{homeStore}}</pre>
     </section>
 </div>
-
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { useUserStore } from "@/stores/UserStore";
-import { useHomeStore } from '@/stores/ClubData';
-import { storeToRefs } from 'pinia';
+import {
+    ref,
+    onMounted,
+    computed
+} from 'vue';
+import {
+    useUserStore
+} from "@/stores/UserStore";
+import {
+    useHomeStore
+} from '@/stores/ClubData';
+import {
+    storeToRefs
+} from 'pinia';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -416,9 +455,15 @@ dayjs.extend(relativeTime);
 
 const user = useUserStore();
 const homeStore = useHomeStore();
-const { homeData } = storeToRefs(homeStore);
+const {
+    homeData
+} = storeToRefs(homeStore);
 const cards = computed(() => homeData.value?.data?.memberGalleries || []);
 const cardes = computed(() => homeData.value?.data?.clubGalleries?.original?.data || []);
+
+const handleLogout = async () => {
+  await user.logout();
+};
 
 const chunkedCards = computed(() => {
     const chunkSize = 5;
@@ -475,10 +520,8 @@ const formatDate = (date) =>
     });
 
 const timeAgo = (date) => {
-  return dayjs(date).fromNow();
+    return dayjs(date).fromNow();
 };
-
-
 
 const formatTime = (datetimeStr) => {
     const date = new Date(datetimeStr);
@@ -607,47 +650,46 @@ onMounted(async () => {
 }
 
 .hero-section {
-  position: relative;
-  display: flex;
-  align-items: center;
-  font-family: 'Segoe UI', sans-serif;
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 .hero-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 60px;
-  width: 825px;
-  height: 558px;
-  margin-left: 5%;
-  border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 60px;
+    width: 825px;
+    height: 558px;
+    margin-left: 5%;
+    border-radius: 12px;
 }
 
 .hero-overlay h1 {
-  font-size: 72px;
-  margin-bottom: 10px;
-  margin-top: 50px
+    font-size: 72px;
+    margin-bottom: 10px;
+    margin-top: 50px
 }
 
 .text {
-  font-size: 36px;
-  margin-bottom: 30px;
+    font-size: 36px;
+    margin-bottom: 30px;
 }
 
 .location {
-  font-size: 14px;
-  color: #ccc;
-  margin-top: 20px;
+    font-size: 14px;
+    color: #ccc;
+    margin-top: 20px;
 }
 
 .social-icons i {
-  font-size: 20px;
-  margin-right: 12px;
-  cursor: pointer;
+    font-size: 20px;
+    margin-right: 12px;
+    cursor: pointer;
 }
 
 .ui-datepicker .ui-datepicker-header {
-  background-color: blue;
-  color: green !important;
+    background-color: blue;
+    color: green !important;
 }
-
 </style>

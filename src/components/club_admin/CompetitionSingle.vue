@@ -170,7 +170,7 @@
                         </h2>
                         <div class="button-group">
                             <button class="btn me-2" id="view">Back</button>
-                            <button class="btn" id="edit">Edit</button>
+                            <button class="btn" id="edit">Save</button>
                         </div>
                     </div>
                 </div>

@@ -351,7 +351,7 @@ const recentNotices = computed(() => {
     const notices = dashboardStore.dashboardData?.data?.member_notices || [];
     const now = new Date();
     const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(now.getDate() - 7);
+    oneWeekAgo.setDate(now.getDate() - 30);
 
     return notices
         .filter(notice => {
