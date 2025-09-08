@@ -1,5 +1,5 @@
 <template>
-  <div class="comments-card mt-5">
+  <div class="comments-card mt-5" style="margin-bottom:10px">
     <h5 class="mb-3">{{ Heading }}</h5>
 
     <div class="row" v-for="co in recentsubmissions.slice(0, 4)" :key="co.id">

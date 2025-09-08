@@ -7,7 +7,7 @@
     <template v-if="user.role === 'club_admin'">
         <!-- Club Admin Menu -->
         <a href="#"><img src="@/assets/images/eye.png" alt="Logo" class="img-fluid mb-3" />&nbsp;&nbsp;My Club</a>
-        <a href="/dashboard"><img :src="Dashboard" alt="point-icon" style="width: 15px; height: 15px" /> Dashboard</a>
+        <a href="/dashboard"><img :src="Dashboard" alt="point-icon" style="width: 15px; height: 15px;" /> Dashboard</a>
         <a href="/event"><img :src="Event" alt="event" style="width: 15px; height: 15px" /> Events</a>
         <a href="/competitions"><img :src="Competition" alt="point-icon" style="width: 15px; height: 15px" /> Competitions</a>
         <a href="/members"><img :src="Member" alt="point-icon" style="width: 15px; height: 15px" /> Members</a>

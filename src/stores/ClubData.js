@@ -16,8 +16,9 @@ export const useHomeStore = defineStore('home', {
       try {
         const response = await api.getAllClubData(domain);
         this.homeData = response.data;
-        this.clubSettings = response.data.data.clubSettings.original.data.club.setting
-        console.log(this.clubSettings)
+        this.clubSettings = response.data.data.clubSettings.original.data.settings
+        this.clubSetting = response.data.data.clubSettings.original.data
+        console.log(this.clubSettings.cover_images)
         this.error = null;
       } catch (err) {
         console.error('Failed to load home data:', err);

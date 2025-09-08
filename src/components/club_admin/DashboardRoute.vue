@@ -17,7 +17,7 @@
             <div class="profile-icons">
                 <div class="icon">
                     <span>20</span>
-                    <img :src="Image" alt="image-icon" style="width: 15px; height: 15px"/>
+                    <img :src="Image" alt="image-icon" style="width: 15px; height: 15px" />
                 </div>
                 <div class="icon">
                     <span>53</span>
@@ -108,7 +108,7 @@
                     </div>
                 </div>
             </div>
-            <div class="button-group mt-auto">
+            <div class="button-group mt-auto d-flex gap-2">
                 <router-link to="/members" custom v-slot="{ navigate }">
                     <button class="btn btn-sm" id="view" @click="navigate">View All</button>
                 </router-link>
@@ -131,7 +131,7 @@
                     <div v-for="(item, index) in row" :key="item.id || index" class="pic-item">
                         <div v-if="item.profile_image_url">
                             <!-- Profile Image -->
-                            <img :src="item.profile_image_url" alt="Profile Image" style="max-width: 136px; max-height: 147px" />
+                            <img :src="item.profile_image_url" alt="Profile Image" style="width: 170px; height: 147px" />
 
                             <!-- Username -->
                             <div class="pic-info">
@@ -151,12 +151,13 @@
                 <button class="btn btn-sm" id="view">View All</button>
             </div>
 
-            <div class="col-md-6 mb-3" v-for="(result, index) in dashboardData?.data?.recent_results.slice(0, 6)" :key="result.award_id || index">
-                <div class="pic">
-                    <div class="pic-items">
-                        <img :src="result.image" alt="Result Image" style="max-width: 103px; max-height: 147px;" />
-                        <div class="pic-info">
-                            <span>{{ result.gallery_name }}</span>
+
+            <div class="row g-0">
+                <div class="col-6" style="height: 100%; margin-bottom: 25px" v-for="page in dashboardData?.data?.pages.slice(0, 6)" :key="page.id">
+                    <div class="event-items text-center">
+                        <img class="img-fluid" :src="page.featured_image_url" alt="Profile Picture" style="width: 60px; height: 60px;" />
+                        <div class="event-details">
+                            <span>{{ page.title }}</span>
                         </div>
                     </div>
                 </div>
@@ -253,7 +254,7 @@
                 <div class="pic">
                     <div v-for="(item, index) in row" :key="item.id || index" class="pic-item">
                         <div v-if="item.photos && item.photos.length">
-                            <img :src="item.photos[0].image" :alt="item.photos[0].title" style="max-width: 136px; max-height: 147px" />
+                            <img :src="item.photos[0].image" :alt="item.photos[0].title" style="width: 170px; height: 147px" />
                             <div class="pic-info">{{ item.gallery_name.length > 10 ? item.gallery_name.slice(0, 10) + '...' : item.gallery_name }}</div>
                         </div>
                     </div>
@@ -261,7 +262,6 @@
             </div>
         </div>
     </div>
-    <pre>{{dashboardData}}</pre>
 </section>
 </template>
 
@@ -387,13 +387,66 @@ const chunkCards = computed(() => {
 
 // Fetch on mount
 onMounted(async () => {
-    $("#datepicker").datepicker(); // jQuery
-    try {
-        await dashboardStore.fetchDashboardData();
-    } catch (error) {
-        console.error("Error fetching dashboard data:", error);
-    }
+  try {
+    const highlightedDatesMap = {};
+
+    await dashboardStore.fetchDashboardData();
+
+    // Fill competitions
+    dashboardStore.dashboardData.data.competitions.forEach(comp => {
+      const fullDate = new Date(comp.start_date);
+      const normalizedDate = $.datepicker.formatDate('yy-mm-dd', fullDate);
+      if (!highlightedDatesMap[normalizedDate]) {
+        highlightedDatesMap[normalizedDate] = { competitions: [], events: [] };
+      }
+      highlightedDatesMap[normalizedDate].competitions.push(comp.name);
+    });
+
+    // Fill events
+    dashboardStore.dashboardData.data.events.forEach(event => {
+      const fullDate = new Date(event.event_date);
+      const normalizedDate = $.datepicker.formatDate('yy-mm-dd', fullDate);
+      if (!highlightedDatesMap[normalizedDate]) {
+        highlightedDatesMap[normalizedDate] = { competitions: [], events: [] };
+      }
+      highlightedDatesMap[normalizedDate].events.push(event.name);
+    });
+
+    $("#datepicker").datepicker({
+      beforeShowDay: function (date) {
+        const dateString = $.datepicker.formatDate('yy-mm-dd', date);
+        const entry = highlightedDatesMap[dateString];
+        const classes = [];
+
+        if (entry) {
+          if (entry.competitions.length) classes.push("highlight-date-competition");
+          if (entry.events.length) classes.push("highlight-date-event");
+        }
+
+        // Highlight today's date
+        const today = new Date();
+        if (
+          date.getDate() === today.getDate() &&
+          date.getMonth() === today.getMonth() &&
+          date.getFullYear() === today.getFullYear()
+        ) {
+          classes.push("highlight-today");
+        }
+
+        // Tooltip only (no badge)
+        const tooltip = entry
+          ? entry.competitions.concat(entry.events).join(", ")
+          : "";
+
+        return [true, classes.join(" "), tooltip];
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching home data:", error);
+  }
 });
+
+
 </script>
 
 <style scoped>

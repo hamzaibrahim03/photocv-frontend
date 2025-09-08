@@ -1,334 +1,228 @@
 <template>
-<div :style="{ backgroundColor: homeStore.clubSettings.background_color, fontFamily: homeStore.clubSettings.fonts }">
-    <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001',backgroundColor: homeStore.clubSettings.background_color }">
-        <div class="container-fluid">
-            <div class="left-header">
-                <img :src="homeStore.clubSettings.logo_url" alt="Ryton" />
-            </div>
+<div :style="{ backgroundColor: Color.background_color, fontFamily: Color.fonts }">
+    <Loader :show="isLoading" />
+    <div v-if="!isLoading">
+            <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: Color.background_color, height: '108px' }">
+                <div class="container-fluid">
 
-            <div class="collapse navbar-collapse justify-content-center">
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item" v-for="(item, i) in navItems" :key="i">
-                        <a class="nav-link" :class="{ active: currentRoute === item.to }" :href="item.to" :style="{ color: homeStore.clubSettings.text_color }">
-                            {{ item.label }}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="right-header d-flex align-items-center">
-                <!-- Show this when NOT logged in -->
-                <template v-if="!user || !user.is_logged_in">
-                    <div class="admin-dropdown d-flex align-items-center position-relative">
-                        <a href="/login" class="btn" id="edit" :style="{color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.accent_color }">Login</a>
-                    </div>
-                </template>
-
-                <!-- Show this when LOGGED IN -->
-                <template v-else>
-                    <!-- Notification icon -->
-                    <a href="/notification" class="icon me-3" :style="{color: homeStore.clubSettings.text_color }">
-                        <i class="bi bi-bell"></i>
+                    <a class="navbar-brand d-flex align-items-center" href="/">
+                        <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px" />
                     </a>
 
-                    <!-- Profile and Dropdown -->
-                    <div class="admin-dropdown d-flex align-items-center position-relative">
-                        <img :src="userStore.user.profile_image" alt="Profile" class="profile-img" />
-                        <span class="ms-2" :style="{ color: homeStore.clubSettings.text_color }">
-                            {{ userStore.user.username }}
-                        </span>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                        <!-- Dropdown -->
-                        <div class="dropdown-menu">
-                            <a href="#" @click.prevent="handleLogout">Log Out</a>
-                        </div>
-                    </div>
-                </template>
-            </div>
-
-        </div>
-    </nav>
-
-    <div class="hero-section" :style="{ background: `url(${homeStore.clubSettings.cover_image_url}) no-repeat center center / cover`, height: '100vh', color: '#E7EFF233' }">
-        <div class="hero-overlay">
-            <h1 :style="{ color: homeStore.clubSettings.text_color }">{{homeStore.homeData?.data?.clubSettings.original.data.club.club_name}}</h1>
-            <p class="text" :style="{ color: homeStore.clubSettings.text_color }">{{homeStore.homeData?.data?.clubSettings.original.data.club.about}}</p>
-            <button id="view" :style="{ maxWidth: '200px', height: '60px', color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.accent_color }"> Join Our Club </button>
-            <p class="location" :style="{ color: homeStore.clubSettings.text_color }">An NYCE Club based in Apps, North East England</p>
-            <div class="row">
-                <div class="icon-circles me-3" :style="{ color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.background_color }"><i class="fab fa-facebook-f"></i>
-                </div>
-                <div class="icon-circles me-3" :style="{ color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.background_color }"><i class="fab fa-instagram"></i>
-                </div>
-                <div class="icon-circles me-3" :style="{ color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.background_color }"><i class="fab fa-twitter"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <section class="contents">
-        <div class="card" style="padding-bottom: 15px; height: auto; border: none" :style="{backgroundColor: homeStore.clubSettings.background_color}">
-            <div class="row">
-                <div class="col-md-3">
-                    <img :src="homeStore.clubSettings.header_img_url" alt="hero" style="height: 103%; width: 100%; border-radius: 7px" :style="{ backgroundColor: homeStore.clubSettings.background_color }" />
-                </div>
-                <div class="col-md-9">
-                    <p class="role" style="margin-top: 20px" :style="{color: homeStore.clubSettings.text_color}">
-                        {{homeStore.clubSettings.header_title}}
-                    </p>
-                    <p :style="{ fontFamily: 'Inter', fontWeight: '400', fontSize: '13.5px', letterSpacing: '2px', lineHeight: '30px', textAlign: 'left', marginRight: '10px', color: homeStore.clubSettings.text_color }">
-                        {{homeStore.clubSettings.header_description}}
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="club-banner d-flex justify-content-between align-items-center px-4 py-2" :style="{backgroundColor: homeStore.clubSettings.primary_color}">
-            <div class="text-end text-white">
-                <div class="fw-bold" style="text-align: left" :style="{color: homeStore.clubSettings.text_color}">{{homeStore.homeData?.data?.clubSettings.original.data.club.club_name}}</div>
-                <small class="d-block" style="text-align: left" :style="{color: homeStore.clubSettings.text_color}">{{homeStore.homeData?.data?.clubSettings.original.data.club.tag_line}}</small>
-            </div>
-
-            <div class="d-flex gap-3">
-                <div class="icon-circles" :style="{ color: homeStore.clubSettings.primary_color, backgroundColor: homeStore.clubSettings.text_color }">
-                    <i class="fab fa-facebook-f"></i>
-                </div>
-                <div class="icon-circles" :style="{ color: homeStore.clubSettings.primary_color, backgroundColor: homeStore.clubSettings.text_color }">
-                    <i class="fab fa-instagram"></i>
-                </div>
-                <div class="icon-circles" :style="{ color: homeStore.clubSettings.primary_color, backgroundColor: homeStore.clubSettings.text_color }">
-                    <i class="fab fa-twitter"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" style="height: auto; border: none" :style="{backgroundColor: homeStore.clubSettings.background_color}">
-            <div class="d-flex justify-content-between mb-3" style="padding-right: 20px; padding-top: 50px;">
-                <div>
-                    <h5 class="name" :style="{color: homeStore.clubSettings.text_color}">Club Galleries</h5>
-                    <p class="role" :style="{color: homeStore.clubSettings.text_color, paddingTop: '10px'}">A preview of galleries made up of amazing photographs from club members</p>
-                </div>
-
-                <router-link to="/club_gallery" custom v-slot="{ navigate }">
-                    <button class="btn" id="view" @click="navigate" :style="{maxWidth: '230px', height: '50px', color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.accent_color}">View All Club Galleries</button>
-                </router-link>
-            </div>
-            <div v-for="(row, rowIndex) in chunkCards" :key="rowIndex" class="row-wrapper">
-                <div class="pics">
-                    <div v-for="(item, index) in row" :key="item.id || index" class="pics-item">
-                        <div v-if="item.photos && item.photos.length">
-                            <img :src="item.photos[0].image" :alt="item.photos[0].title" style="max-width: 100%; height: auto; max-height: 100%" />
-                            <div class="pics-info" :style="{backgroundColor: homeStore.clubSettings.secondary_color, color: homeStore.clubSettings.text_color}">{{ item.gallery_name }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="events" style="background-color: #EBE6E1;" :style="{backgroundColor: homeStore.clubSettings.background_color}">
-            <h5 class="name" :style="{color: homeStore.clubSettings.text_color,paddingLeft: '20px', paddingTop: '40px'}">Events & Competitions</h5>
-            <h6 class="role" :style="{color: homeStore.clubSettings.text_color,paddingLeft: '20px', paddingTop: '10px'}">Latest and upcoming events and competions on the club calendar</h6>
-            <div class="upcoming-section">
-                <div class="upcard d-flex flex-column" id="up" :style="{backgroundColor: homeStore.clubSettings.secondary_color}">
-                    <h5 style="font-size: 20px" :style="{color: homeStore.clubSettings.text_color}">Upcoming Events</h5>
-                    <div class="event-list" v-if="homeStore.homeData?.data?.upcomingEvents?.length">
-                        <div class="event-item" v-for="(event, index) in homeStore.homeData.data.upcomingEvents" :key="event.id || index">
-                            <img class="img-fluid" :src="event.featured_image_url" alt="Event" />
-                            <div class="event-details">
-                                <span class="event-title" :style="{color: homeStore.clubSettings.text_color}">{{ event.name }}</span>
-                                <div class="event-time" style="text-align: right">
-                                    <small class="event-date" :style="{color: homeStore.clubSettings.text_color}">{{ formatDate(event.event_date) }}</small><br />
-                                    <small class="event-time-details" :style="{color: homeStore.clubSettings.text_color}">{{ formatTime(event.event_date) }}</small>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                        <ul class="navbar-nav mb-2 mb-lg-0 text-center">
+                            <li class="nav-item">
+                                <a class="nav-link" :class="{ active: $route.path === '/' }" href="/" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                                    Home
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#events" :style="{ color: Color.text_color }">
+                                    Events
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#events" :style="{ color: Color.text_color }">
+                                    Competitions
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#gal" :style="{ color: Color.text_color }">
+                                    Galleries
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#newscontainer" :style="{ color: Color.text_color }">
+                                    News
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#joincontainer" :style="{ color: Color.text_color }">
+                                    Club
+                                </a>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div class="button-group mt-auto">
-                        <router-link to="/event" custom v-slot="{ navigate }">
-                            <button class="btn btn-sm" id="view" :style="{color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.primary_color}" @click="navigate">View All</button>
-                        </router-link>
-                    </div>
-                </div>
+                    <div class="d-flex align-items-center ms-auto">
+                        <template v-if="!user || !user.is_logged_in">
+                            <router-link to="/login" custom v-slot="{ navigate }">
+                                <button class="btn me-2" id="login" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }" @click="navigate">Login</button>
+                            </router-link>
+                        </template>
 
-                <div class="upcards" style="width: 45%">
-                    <div id="datepicker"></div>
-                </div>
-
-                <div class="upcard d-flex flex-column" id="ups" style="margin-left: 2.5rem" :style="{backgroundColor: homeStore.clubSettings.secondary_color}">
-                    <h5 style="font-size: 20px" :style="{color: homeStore.clubSettings.text_color}">
-                        Upcoming Competitions
-                    </h5>
-
-                    <div class="event-list" v-if="homeStore.homeData?.data?.upcomingCompetitions">
-                        <div class="event-item">
-                            <img class="img-fluid" :src="homeStore.homeData.data.upcomingCompetitions.featured_image_url" alt="Comp" />
-                            <div class="event-details">
-                                <span class="event-title" :style="{color: homeStore.clubSettings.text_color}">
-                                    {{ homeStore.homeData.data.upcomingCompetitions.name }}
+                        <template v-else>
+                            <a href="/notification.html" class="icon me-3" :style="{ color: Color.text_color }">
+                                <i class="bi bi-bell"></i>
+                            </a>
+                            <div class="admin-dropdown d-flex align-items-center position-relative">
+                                <img :src="userStore.user.profile_image" alt="Profile" class="profile-img" />
+                                <span class="ms-2" :style="{ color: Color.text_color }">
+                                    {{ userStore.user.username }}
                                 </span>
-                                <div class="event-time" style="text-align: right">
-                                    <small class="event-date" :style="{color: homeStore.clubSettings.text_color}">
-                                        {{ formatDate(homeStore.homeData.data.upcomingCompetitions.start_date) }}
-                                    </small><br />
-                                    <small class="event-time-details" :style="{color: homeStore.clubSettings.text_color}">
-                                        {{ formatTime(homeStore.homeData.data.upcomingCompetitions.start_date) }}
-                                    </small>
+                                <div class="dropdown-menu">
+                                    <a href="#" @click.prevent="handleLogout">Log Out</a>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="button-group mt-auto">
-                        <router-link to="/competitions" custom v-slot="{ navigate }">
-                            <button class="btn btn-sm w-100" id="view" @click="navigate" :style="{ color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.primary_color }">
-                                View All
-                            </button>
-                        </router-link>
+                        </template>
                     </div>
                 </div>
+            </nav>
 
-            </div>
-        </div>
-
-        <div style="margin-bottom: 10px; background-color: #EBE6E1;" :style="{backgroundColor: homeStore.clubSettings.background_color}">
-            <div class="d-flex justify-content-between mb-3" style=" padding-left: 20px; font-size: 20px; padding-right: 20px; padding-top: 20px;">
-                <div>
-                    <h5 class="name" :style="{color: homeStore.clubSettings.text_color}">Member Galleries</h5>
-                    <p class="role" :style="{color: homeStore.clubSettings.text_color}">A preview of galleries uploaded by our amazing photographers from the club</p>
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
                 </div>
-
-                <router-link to="/member_gallery" custom v-slot="{ navigate }">
-                    <button class="btn" id="view" @click="navigate" style="max-width: 260px; height: 50px" :style="{color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.accent_color}">View All Member Galleries</button>
-                </router-link>
-            </div>
-            <div class="section" style="padding: none">
-                <div class="card" style="height: auto; border: none; margin-top: -1px" :style="{backgroundColor: homeStore.clubSettings.background_color}">
-                    <div v-for="(row, rowIndex) in chunkedCards" :key="rowIndex" class="row-wrapper">
-                        <div class="pics">
-                            <div v-for="(item, index) in row" :key="item.id || index" class="pics-items">
-                                <div v-if="item.profile_image_url">
-                                    <!-- Profile Image -->
-                                    <img :src="item.profile_image_url" :alt="item.username" style="max-width: 100%;" />
-
-                                    <!-- Username -->
-                                    <div class="pics-infos">
-                                        <div class="pics-infos" :style="{color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.secondary_color}">{{ item.username.length > 10 ? item.username.slice(0, 10) + '...' : item.username }}</div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[0]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                            <div class="hero-overlay">
+                                <div>
+                                    <h1 :style="{ color: Color.background_color, fontWeight: '400'}">{{Club.club_name}}</h1>
+                                    <p class="cabout" :style="{ color: Color.background_color, fontWeight: '200' }">{{Club.about}}</p>
+                                    <button id="overlay-button" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }"> Join Our Club </button>
+                                    <p class="prehead" :style="{ color: Color.background_color, paddingTop: '20px' }">An NYCE Club based in Apps, North East England</p>
+                                    <div class="row" style="padding-left: 3%">
+                                        <div class="icon-circles me-3" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }"><i class="fab fa-facebook-f"></i>
+                                        </div>
+                                        <div class="icon-circles me-3" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }"><i class="fab fa-instagram"></i>
+                                        </div>
+                                        <div class="icon-circles me-3" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }"><span class="flickr-dots"><i class="fas fa-circle"></i><i class="fas fa-circle"></i></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="Latest" style="width: 30%;background-color: #EBE6E1;" :style="{backgroundColor: homeStore.clubSettings.accent_color, color: homeStore.clubSettings.text_color}">
-                    <h5 style="font-size: 20px" :style="{color: homeStore.clubSettings.text_color}">Latest Members</h5>
-                    <div class="row">
-                        <div class="col-6 mb-3" v-for="latestMember in homeStore.homeData?.data?.latestMembers?.members.slice(0, 6)" :key="latestMember.id">
-                            <div class="event-items text-center">
-                                <img class="img-fluid" :src="latestMember.profile_image_url" alt="Profile Picture" style="width:60px; height: 60px; border-radius: 7px" />
-                                <div class="event-details" :style="{color: homeStore.clubSettings.text_color}">
-                                    <span>{{ latestMember.username }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="latest-interaction" style="background-color: #99816B; padding-top: 50px; padding-left: 30px; padding-bottom: 20px" :style="{backgroundColor: homeStore.clubSettings.secondary_color}">
-            <h5 class="name" :style="{color: homeStore.clubSettings.text_color}">Latest Interactions</h5>
-            <h6 class="role" :style="{color: homeStore.clubSettings.text_color}">A preview of comments and reactions on the photos & other posts on the club website</h6>
-            <div class="row" style="margin-top: 20px">
-                <div class="col-md-6">
-                    <div class="comments-card" :style="{backgroundColor: homeStore.clubSettings.background_color}">
-                        <h5 class="name" :style="{color: homeStore.clubSettings.text_color}">Recent Comments</h5>
-                        <div class="row" v-for="interaction  in homeStore.homeData.data?.latestInteractions" :key="interaction.id">
-                            <div class="col-md-2">
-                                <img :src="interaction.image_url" class="img-fluid" alt="Interaction Image" style="max-width: 50px; height: 50px" />
-                            </div>
-                            <div class="col-md-7">
-                                <p :style="{color: homeStore.clubSettings.text_color}">
-                                    <label class="role" :style="{color: homeStore.clubSettings.text_color}">{{ interaction.comments[0]?.interacted_by?.username || interaction.uploaded_by.username }}</label>&nbsp;&nbsp;
-                                    {{ interaction.comments[0]?.comment || 'No comment yet' }}
-                                </p>
-                                <a href="#" :style="{color: homeStore.clubSettings.text_color}">Remove</a> |
-                                <a href="#" :style="{color: homeStore.clubSettings.text_color}">Translate</a>
-                            </div>
-                            <div class="col-md-3">
-                                <label for="date" :style="{color: homeStore.clubSettings.text_color}">
-                                    {{ timeAgo(interaction.comments[0]?.created_at || interaction.created_at) }}
-                                </label>
-                            </div>
-                            <div class="divider2" :style="{ border: '1px solid ' + homeStore.clubSettings.background_color, color: homeStore.clubSettings.background_color }"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="comments-cards" :style="{ backgroundColor: homeStore.clubSettings.background_color }">
-                        <h5 class="name" :style="{ color: homeStore.clubSettings.text_color }">Recent Likes</h5>
-
-                        <div class="row">
-                            <div class="col-md-2 like-item" v-for="interaction in homeStore.homeData.data?.latestInteractions" :key="interaction.id">
-                                <img :src="interaction.image_url" class="profile-img" alt="User" />
-                                <span class="heart-icon" :style="{ backgroundColor: homeStore.clubSettings.accent_color, color: homeStore.clubSettings.background_color }">❤</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="d-flex justify-content-between mb-3" style=" padding-left: 25px; font-size: 20px; padding-right: 20px; padding-top: 50px;">
-                <div>
-                    <h5 class="name" :style="{color: homeStore.clubSettings.text_color}">Latest Updates</h5>
-                    <p class="role" :style="{color: homeStore.clubSettings.text_color}">Latest results from our camera club competitions, and news posted on our website</p>
-                </div>
-
-                <router-link to="/member_gallery" custom v-slot="{ navigate }">
-                    <button class="btn" id="view" @click="navigate" style="max-width: 200px; height: 50px" :style="{color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.primary_color}">View All Results</button>
-                </router-link>
-            </div>
-            <div class="section" style=" background-color: #EBE6E1; margin-top: 0px" :style="{backgroundColor: homeStore.clubSettings.background_color}">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="cardddd" style="width: 100%; background-color: #EBE6E1; height: auto" :style="{backgroundColor: homeStore.clubSettings.background_color}">
-                            <h5 style="font-size: 20px" :style="{color: homeStore.clubSettings.text_color}">Latest News</h5>
-                            <div class="row" v-for="clubnew in homeData.data?.clubNews" :key="clubnew.id" style="margin-bottom: 10px">
-                                <div class="col-md-2">
-                                    <img :src="clubnew.featured_image_url" alt="Com" style="width: 50px; height: 50px" />
-                                </div>
-                                <div class="col-md-6">
-                                    <p class="text-secondar" :style="{color: homeStore.clubSettings.text_color}">{{ clubnew.title }}</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="event-time" style="text-align: right">
-                                        <small class="event-date" :style="{color: homeStore.clubSettings.text_color}">{{ formatDate(clubnew.created_at) }}</small><br />
-                                        <small class="event-time-details" :style="{color: homeStore.clubSettings.text_color}">{{ formatTime(clubnew.created_at) }}</small>
+                    <div class="carousel-item">
+                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[1]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                            <div class="hero-overlay">
+                                <div class="card-section" style="width: 100%;">
+                                    <div class="stat-card" :style="{width: '50%', backgroundColor: Color.accent_color, color: Color.background_color}">
+                                        <small class="ca-details">Members</small>
+                                        <h3 class="number">{{ memData.total_members }}</h3>
+                                    </div>
+                                    <div class="event-card" :style="{width: '50%', backgroundColor: Color.primary_color}">
+                                        <small class="ca-details">Next Event</small>
+                                        <div class="row">
+                                            <h3 class="number">{{ evData.remaining_days }}&nbsp;<span class="days">days to go</span></h3>  
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="button-group">
-                                <router-link to="/news" custom v-slot="{ navigate }">
-                                    <button class="btn btn-sm" id="view" @click="navigate" :style="{color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.primary_color}">View All</button>
-                                </router-link>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[2]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                            <div class="hero-overlay">
+                                <div v-if="Events.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
+                                    <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
+                                        <img v-if="Events[0].images" :src="Events[0].featured_image_url" alt="Event Image" />
+
+                                        <div>
+                                            <div>
+                                                <div class="justify-content-between align-items-start">
+                                                    <div class="d-flex" id="cls" >    
+                                                        <h5>{{ Events[0].name || 'Untitled Event' }}</h5>
+                                                        <div class="icon-container ms-3">
+                                                            <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
+                                                            <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
+                                                            <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
+                                                            <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <p class="date">
+                                                    {{ formatDate(Events[0].event_date) || 'Date Not Available' }}
+                                                </p>
+                                                <p class="text-secondary">
+                                                    {{ Events[0].description || 'No description provided.' }}
+                                                </p>
+                                            </div>
+                                            <div class="button-group mt-3 d-flex">
+                                                <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="carousel-item">
+                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[3]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                            <div class="hero-overlay">
+                                <div class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
+                                    <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
+                                        <img :src="Notice.featured_image_url" alt="Notice Image" />
 
-                    <div class="card" style="height: auto; border: none; background-color: #EBE6E1; width: 1015px" :style="{backgroundColor: homeStore.clubSettings.background_color}">
-                        <div v-for="(row, rowIndex) in chunkedCards" :key="rowIndex" class="row-wrapper">
-                            <div class="pics">
-                                <div v-for="(item, index) in row" :key="item.id || index" class="pics-items" :class="{ 'bottom-left-radius': rowIndex === chunkedCards.length - 1 && index === 0, 'bottom-right-radius': rowIndex === chunkedCards.length - 1 && index === row.length - 1 }">
-                                    <div v-if="item.profile_image_url">
-                                        <!-- Profile Image -->
-                                        <img :src="item.profile_image_url" :alt="item.username" style="max-width: 100%;" />
+                                        <div>
+                                            <div>
+                                                <div class="justify-content-between align-items-start">
+                                                    <div class="d-flex" id="cls" >
+                                                        <h5>{{ Notice.title || 'Untitled Notice' }}</h5>
+                                                        <div class="icon-container ms-3">
+                                                            <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
+                                                            <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
+                                                            <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
+                                                            <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                                        <!-- Username -->
-                                        <div class="pics-infos">
-                                            <div class="pics-infos" :style="{color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.secondary_color}">{{ item.username.length > 10 ? item.username.slice(0, 10) + '...' : item.username }}</div>
+                                                <p class="date">
+                                                    {{ formatDate(Notice.created_at) || 'Date Not Available' }}
+                                                </p>
+                                                <p class="text-secondary">
+                                                    {{ Notice.description || 'No description provided.' }}
+                                                </p>
+                                            </div>
+                                            <div class="button-group mt-3 d-flex">
+                                                <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[4]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                            <div class="hero-overlay">
+                                <div v-if="News.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%;">
+                                    <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
+                                        <img :src="News[0].featured_image_url" alt="News Image" />
+                                        <div>
+                                            <div>
+                                                <div class="justify-content-between align-items-start">
+                                                    <div class="d-flex" id="cls" >
+                                                        <h5>{{ News[0].title || 'Untitled News' }}</h5>
+                                                        <div class="icon-container ms-3">
+                                                            <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
+                                                            <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
+                                                            <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
+                                                            <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="date">
+                                                    {{ formatDate(News[0].created_at) || 'Date Not Available' }}
+                                                </p>
+                                                <p class="text-secondary">
+                                                    {{ News[0].description || 'No description provided.' }}
+                                                </p>
+                                            </div>
+                                            <div class="button-group mt-3 d-flex">
+                                                <button class="btn me-2" id="view" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -337,97 +231,416 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style="background-color: #ebe6e1; border-radius: 15px; height: 125px; padding: 25px 30px; font-size: 20px; margin-top: 50px" :style="{backgroundColor: homeStore.clubSettings.secondary_color}">
-            <div>
-                <h5 class="fw-semibold mb-1" :style="{color: homeStore.clubSettings.text_color}">
-                    Ready to join the club & work on something exciting?
-                </h5>
-                <p :style="{color: homeStore.clubSettings.text_color, fontSize: '14px', fontWeight: '400', lineHeight: '20px', letterSpacing: '0%'}">
-                    Join the club and let’s create something amazing.
-                </p>
-            </div>
+            <section class="contents">
+                <div class="container" id="herocontainer">
+                    <div class="card" :style="{backgroundColor: Color.background_color, paddingBottom: '15px', height: 'auto', border: 'none'}">
+                        <div class="hero-grid" :style="{ backgroundColor: Color.background_color, alignItems: 'center'}">
+                            <div class="hero-image">
+                                <img :src="Color.header_img_url" alt="hero" style="border-radius: 20px" />
+                            </div>
 
-            <router-link to="/club" custom v-slot="{ navigate }">
-                <button class="btn" id="view" @click="navigate" :style="{color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.accent_color}">
-                    Join Club
-                </button>
-            </router-link>
-        </div>
-
-        <div style="padding-top:30px">
-            <h5 class="name" style="text-align: center" :style="{ color: homeStore.clubSettings.text_color }">{{homeStore.clubSettings.footer_text}}</h5>
-            <p class="names" style="text-align: center; margin-left: 24%; margin-right: 23%" :style="{color: homeStore.clubSettings.text_color}">{{homeStore.clubSettings.footer_description}}</p>
-        </div>
-
-        <div class="row align-items-center py-4" style="height: auto">
-            <div class="col-md-4 text-end pe-4">
-                <h5 class="fw-bold mb-4" :style="{color: homeStore.clubSettings.text_color}">Contact</h5>
-                <div class="contact-item mb-3">
-                    <p class="mb-1" :style="{color: homeStore.clubSettings.text_color}">{{homeStore.homeData?.data?.user.address}}</p>
-                    <div class="icon-circles" :style="{color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.accent_color}"><i class="fas fa-map-marker-alt"></i>
+                            <div class="hero-content">
+                                <h1 id="clubheading" class="heading" :style="{ color: Color.text_color, marginBottom: '15px' }">
+                                    {{ Color.header_title }}
+                                </h1>
+                                <p id="clubsub" class="subhead" style="margin-top: 15px" v-html="Color.header_description" :style="{ color: Color.text_color}"></p>
+                                <button class="btn" id="learn-more" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.accent_color}">
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="contact-item mb-3">
-                    <p class="mb-1" :style="{color: homeStore.clubSettings.text_color}">{{homeStore.homeData?.data?.user.phone}}</p>
-                    <div class="icon-circles" :style="{color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.accent_color}"><i class="fas fa-phone"></i></div>
-                </div>
-                <div class="contact-item mb-3">
-                    <p class="mb-1" :style="{color: homeStore.clubSettings.text_color}">{{homeStore.homeData?.data?.user.email}}</p>
-                    <div class="icon-circles" :style="{color: homeStore.clubSettings.text_color, backgroundColor: homeStore.clubSettings.accent_color}"><i class="fas fa-envelope"></i></div>
-                </div>
-            </div>
 
-            <div class="col-md-4 text-center mb-3 mb-md-0">
-                <img :src="homeStore.clubSettings.footer_img_url" alt="sample" class="rounded-img" />
-            </div>
+                <div class="container" id="clubcontainer">
+                    <div class="club-banners d-flex justify-content-between align-items-center px-4 py-2" :style="{backgroundColor: Color.primary_color}">
+                        <div style="margin-left: 5px">
+                            <div id="bhead" class="head" style="text-align: left" :style="{color: Color.background_color}">{{Club.club_name}}</div>
+                            <small id="bpre" class="prehead" style="text-align: left" :style="{alignItems: 'left', color: Color.background_color}">{{Club.tag_line}}</small>
+                        </div>
 
-            <div class="col-md-4">
-                <h5 class="fw-bold mb-4" :style="{color: homeStore.clubSettings.text_color}">Social Links</h5>
-                <div v-if="homeStore.clubSettings.fb_link_option === 1 && homeStore.clubSettings.fb_link" class="social-link d-flex align-items-center mb-3">
-                    <div class="icon-circles me-3" :style="{ color: homeStore.clubSettings.background_color, backgroundColor: homeStore.clubSettings.text_color }">
-                        <i class="fab fa-facebook"></i>
-                    </div>
-                    <div>
-                        <p class="fw-bold mb-0" :style="{ color: homeStore.clubSettings.text_color }">Facebook</p>
-                        <p class="mb-0" :style="{ color: homeStore.clubSettings.text_color }">
-                            <a :href="homeStore.clubSettings.fb_link" target="_blank" style="text-decoration: none; color: inherit">
-                                {{ homeStore.clubSettings.fb_link }}
-                            </a>
-                        </p>
+                        <div class="d-flex gap-2" style="margin-right: 5px">
+                            <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }">
+                                <i class="fab fa-facebook-f"></i>
+                            </div>
+                            <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }">
+                                <i class="fab fa-instagram"></i>
+                            </div>
+                            <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }">
+                                <span class="flickr-dots"><i class="fas fa-circle"></i><i class="fas fa-circle"></i></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div v-if="homeStore.clubSettings.insta_link_option === 1 && homeStore.clubSettings.insta_link" class="social-link d-flex align-items-center mb-3">
-                    <div class="icon-circles me-3" :style="{ color: homeStore.clubSettings.background_color, backgroundColor: homeStore.clubSettings.text_color }">
-                        <i class="fab fa-instagram"></i>
-                    </div>
-                    <div>
-                        <p class="fw-bold mb-0" :style="{ color: homeStore.clubSettings.text_color }">Instagram</p>
-                        <p class="mb-0" :style="{ color: homeStore.clubSettings.text_color }">
-                            <a :href="homeStore.clubSettings.insta_link" target="_blank" style="text-decoration: none; color: inherit">
-                                {{ homeStore.clubSettings.insta_link }}
-                            </a>
-                        </p>
+
+                <div class="container" id="galcontainer">
+                    <div class="card" style="height: auto; border: none" :style="{backgroundColor: Color.background_color}">
+                        <div class="d-flex justify-content-between align-items-end mb-3" id="cl">
+                            <div>
+                                <h5 id="clubheading" :style="{color: Color.text_color}">Club Galleries</h5>
+                                <p id="clubsub" :style="{color: Color.text_color}">
+                                    A preview of galleries made up of amazing photographs from club members
+                                </p>
+                            </div>
+
+                            <button class="btn" id="club-gallery" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.accent_color}">
+                                View All Club Galleries
+                            </button>
+                        </div>
+
+                        <div class="clubpics">
+                            <div v-for="(item, index) in chunkCards.flat()" :key="item.id || index" class="clubpics-item">
+                                <div v-if="item.photos && item.photos.length">
+                                    <img :src="item.photos[0].image" :alt="item.photos[0].title" style="object-fit: cover; object-position: top;" />
+                                    <div class="clubpics-info" :style="{ backgroundColor: Color.primary_color, opacity: '70%' }">
+                                        <div :style="{ color: Color.background_color }">
+                                            {{ item.gallery_name }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div v-if="homeStore.clubSettings.flickr_link_option === 1 && homeStore.clubSettings.flickr_link" class="social-link d-flex align-items-center mb-3">
-                    <div class="icon-circles me-3" :style="{ color: homeStore.clubSettings.background_color, backgroundColor: homeStore.clubSettings.text_color }">
-                        <i class="fab fa-flickr"></i>
-                    </div>
-                    <div>
-                        <p class="fw-bold mb-0" :style="{ color: homeStore.clubSettings.text_color }">Flickr</p>
-                        <p class="mb-0" :style="{ color: homeStore.clubSettings.text_color }">
-                            <a :href="homeStore.clubSettings.flickr_link" target="_blank" style="text-decoration: none; color: inherit">
-                                {{ homeStore.clubSettings.flickr_link }}
-                            </a>
-                        </p>
+
+                <div class="container" id="eventcontainer">
+                    <div class="events" id="events" style="background-color: #EBE6E1;" :style="{backgroundColor: Color.background_color}">
+                        <h5 id="clubheading" class="heading" :style="{color: Color.text_color}">Events & Competitions</h5>
+                        <h6 id="clubsub" class="subhead" :style="{color: Color.text_color, paddingTop: '6px'}">Latest and upcoming events and competitions on the club calendar</h6>
+                        <div class="upcoming-sections">
+                            <div class="cardddd d-flex flex-column" :style="{backgroundColor: Color.secondary_color, padding: '35px'}">
+                                <h5 class="head" :style="{color: Color.text_color}">Upcoming Events</h5>
+                                <div class="event-list" v-if="Events.length">
+                                    <div class="event-item" v-for="event in Events" :key="event.id || index" style="margin-bottom: 10px">
+                                        <img v-if="event.featured_image_url" class="img-fluid event-img" :src="event.featured_image_url" alt="Event" @error="event.featured_image_url = null" />
+                                        <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
+                                        </div>
+
+                                        <div class="event-details">
+                                            <div class="event-info" style="display: flex; flex-direction: column">
+                                                <span id="ename" :style="{color: Color.text_color}">{{ event.name }}</span>
+                                                <span id="espeaker" :style="{color: Color.primary_color}">Speaker: {{ event.speaker }}</span>
+                                            </div>
+
+                                            <div class="galtext" id="edate">
+                                                <small class="galtext" :style="{color: Color.text_color}">{{ formatDate(event.event_date) }}</small><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="button-group mt-auto">
+                                    <button class="btn btn-sm" id="view-all" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.primary_color}">
+                                        View All
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="cardddd" style="border: 1px solid black">
+                                <Calendar />
+                            </div>
+
+                            <div class="cardddd d-flex flex-column" :style="{backgroundColor: Color.secondary_color, padding: '35px'}">
+                                <h5 class="head" :style="{color: Color.text_color}">Upcoming Competitions</h5>
+                                <div class="event-list" v-if="Comps.length">
+                                    <div class="event-item" v-for="comp in Comps" :key="comp.id || index" style="margin-bottom: 10px">
+                                        <img v-if="comp.featured_image_url" class="img-fluid event-img" :src="comp.featured_image_url" alt="Comp" @error="comp.featured_image_url = null" />
+                                        <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
+                                        </div>
+                                        <div class="event-details">
+                                            <div class="event-info" style="display: flex; flex-direction: column">
+                                                <span id="ename" :style="{color: Color.text_color}">{{ comp.name }}</span>
+                                                <span id="espeaker" :style="{color: Color.primary_color}">Judge: {{ comp.judging_panel }}</span>
+                                            </div>
+                                            <div class="galtext" id="edate">
+                                                <small class="galtext" :style="{color: Color.text_color}">{{ formatDate(comp.start_date) }}</small><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="button-group mt-auto">
+                                    <button class="btn btn-sm" id="view-all" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.primary_color}">
+                                        View All
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <pre>{{homeStore}}</pre>
-    </section>
+
+                <div class="container" id="membercontainer">
+                    <div id="gal" style="margin-bottom: 10px; background-color: #EBE6E1;" :style="{backgroundColor: Color.background_color}">
+                        <div class="d-flex justify-content-between align-items-end mb-3" id="cl" style=" padding-left: 20px; font-size: 20px; padding-right: 20px; padding-top: 20px;">
+                            <div>
+                                <h5 id="clubheading" :style="{color: Color.text_color}">Member Galleries</h5>
+                                <p id="clubsub" :style="{color: Color.text_color}">A preview of galleries uploaded by our amazing photographers from the club</p>
+                            </div>
+
+                            <button class="btn" id="member-gallery" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">
+                                View All Member Galleries
+                            </button>
+                        </div>
+                        <div class="upcoming-section" style="display:flex">
+                            <div class="card" style="height: auto; border: none; margin-top: -1px" :style="{backgroundColor: Color.background_color}">
+                                <div v-for="(row, rowIndex) in chunkedCards" :key="rowIndex">
+                                    <div class="pics">
+                                        <div v-for="(item, index) in row" :key="item.id || index" class="pics-items">
+                                            <div v-if="item.image_url">
+                                                <img :src="item.image_url" :alt="item.username" style="object-fit: cover; object-position: top;" />
+                                                <div class="pics-infos" :style="{backgroundColor: Color.primary_color, opacity: '70%'}">
+                                                    <div :style="{color: Color.background_color}">
+                                                        {{ item.gallery_name.length > 10 ? item.gallery_name.slice(0, 10) + '...' : item.gallery_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cardddd" style="background-color: #EBE6E1; padding: 35px;" :style="{backgroundColor: Color.secondary_color, opacity: '60%',color: Color.text_color}">
+                                <h5 class="head" :style="{color: Color.text_color}">Latest Members</h5>
+                                <div class="row" style="padding-top: 30px;">
+                                    <div class="col-6" style="margin-bottom: 30px;" v-for="latestMember in homeStore.homeData?.data?.latestMembers?.members.slice(0, 6)" :key="latestMember.id">
+                                        <div class="event-items text-center">
+                                            <img v-if="latestMember.profile_image_url" class="img-fluid event-img" :src="latestMember.profile_image_url" alt="Profile" @error="latestMember.profile_image_url = null" style="width:50px; height: 50px; border-radius: 7px;  object-fit: cover; object-position: top;" />
+                                            <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
+                                            </div>
+                                            <div class="memtext" id="memname" :style="{color: Color.text_color}">
+                                                <span>{{ latestMember.first_name +' '+ latestMember.last_name}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="latest-interaction" style="background-color: #99816B;" :style="{backgroundColor: Color.secondary_color}">
+                    <h5 id="clubheading" class="heading" :style="{color: Color.text_color}">Latest Interactions</h5>
+                    <h6 id="clubsub" class="subhead" :style="{color: Color.text_color, marginTop: '12px'}">A preview of comments and reactions on the photos & other posts on the club website</h6>
+                    <div class="row" style="margin-top: 30px; height: 390px">
+                        <div class="col-12 col-md-6 mb-4">
+                            <div class="card comments-card shadow-sm" :style="{ backgroundColor: Color.background_color }">
+                                <div class="card-header border-0" :style="{ backgroundColor: Color.background_color }">
+                                    <h5 class="mb-0" :style="{ color: Color.text_color }">Recent Comments</h5>
+                                </div>
+
+                                <div class="card-body p-3 overflow-auto" style="max-height: 360px; margin-left: -21px">
+                                    <div class="row g-2 align-items-start pb-2 mb-3" v-for="interaction in Interaction" :key="interaction.id">
+                                        <div class="col-3 col-sm-2 text-center">
+                                            <img :src="interaction.image_url" alt="Interaction Image" class="img-fluid" id="comimg" />
+                                        </div>
+
+                                        <div class="col-9 col-sm-7">
+                                            <p id="comtext" :style="{ color: Color.text_color }">
+                                                <strong>
+                                                    {{ interaction.comments[0]?.interacted_by?.username || interaction.uploaded_by.username }}
+                                                </strong>
+                                                &nbsp; {{ interaction.comments[0]?.comment || 'No comment yet' }}
+                                            </p>
+                                            <div>
+                                                <a href="#" id="comtext" class="small me-3" :style="{ color: Color.text_color }">Reply</a>
+                                                <a href="#" id="comtext" class="small" :style="{ color: Color.text_color }">Translate</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-3 text-sm-end mt-2 mt-sm-0">
+                                            <span class="small" id="comdate" :style="{ color: Color.text_color }">
+                                                {{ timeAgo(interaction.comments[0]?.created_at || interaction.created_at) }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="comments-cards p-4 shadow-sm" :style="{ backgroundColor: Color.background_color }">
+                                <h5 class="head mb-3" :style="{ color: Color.text_color }">Recent Likes</h5>
+
+                                <div class="card-body p-3 overflow-auto" style="max-height: 360px;">
+                                    <div class="row g-3">
+                                        <div class="col-6 col-sm-4 col-md-3 col-lg-2" v-for="interaction in Interaction" :key="interaction.id">
+                                            <div class="like-card text-center position-relative">
+                                                <img :src="interaction.image_url" class="profile-img img-fluid" id="likeimg" alt="User" style="" />
+                                                <span class="heart-icon" :style="{ backgroundColor: Color.accent_color, color: Color.background_color }">
+                                                    <img :src="Heart" alt="icon" style="width: 14px; height: 13px" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="container" id="newscontainer">
+                    <div class="events d-flex justify-content-between align-items-end mb-3" id="cl" :style="{backgroundColor: Color.background_color}">
+                        <div>
+                            <h5 id="clubheading" :style="{color: Color.text_color}">Latest Updates</h5>
+                            <p id="clubsub" class="subhead" :style="{color: Color.text_color}">Latest results from our camera club competitions, and news posted on our website</p>
+                        </div>
+
+                        <button class="btn" id="view-results" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.primary_color}">
+                            View All Results
+                        </button>
+                    </div>
+                    <div class="upcoming-section" style="display: flex">
+                        <div class="cardddd" style="margin-left: 0px; background-color: #EBE6E1; padding: 35px" :style="{backgroundColor: Color.secondary_color}">
+                            <h5 class="head" :style="{color: Color.text_color}">Latest News</h5>
+                            <div class="event-list" v-if="News.length">
+                                <div class="event-item" v-for="clubnew in News" :key="clubnew.id || index" style="margin-bottom: 10px">
+                                    <img class="img-fluid" :src="clubnew.featured_image_url" alt="Com" style="max-width: 50px; max-height: 50px" />
+                                    <div class="event-details">
+                                        <span class="prehead" id="pname" :style="{color: Color.text_color, fontWeight: '400'}">{{ clubnew.title }}</span>
+                                        <div class="galtext" id="edate">
+                                            <small class="galtext" :style="{color: Color.text_color}">{{ formatDate(clubnew.created_at) }}</small><br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-group mt-auto">
+                                <button class="btn btn-sm" id="view-all" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.primary_color}">
+                                    View All
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card" :style="{ backgroundColor: Color.background_color, width: '60%', height: 'auto', border: 'none', borderRadius: '10px' }">
+                            <div v-for="(row, rowIndex) in chunkedcards" :key="rowIndex">
+                                <div class="resultpics">
+                                    <div v-for="(item, index) in row" :key="item.id || index" class="resultpics-items">
+                                        <div v-if="item.image && item.image.length">
+                                            <img v-if="item.image" :src="item.image" :alt="item.gallery_name" style="object-fit: cover; object-position: top;" />
+
+                                            <div class="resultpics-infos" :style="{backgroundColor: Color.primary_color, opacity: '70%'}">
+                                                <div :style="{ color: Color.background_color }">
+                                                    {{ item.gallery_name.length > 10 ? item.gallery_name.slice(0, 10) + '...' : item.gallery_name }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container" id="joincontainer">
+                    <div id="cls" class="join d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4" style="background-color: #ebe6e1;" :style="{backgroundColor: Color.secondary_color}">
+                        <div>
+                            <h5 id="clubheading" class="heading" :style="{color: Color.text_color}">
+                                Ready to join the club & work on something exciting?
+                            </h5>
+                            <p id="clubsub" class="head" :style="{color: Color.text_color}">
+                                Join the club and let’s create something amazing.
+                            </p>
+                        </div>
+
+                        <button class="btn" id="join-club" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">
+                            Join Club
+                        </button>
+                    </div>
+                </div>
+
+                <div class="container" style="max-width:1820; padding: 0px 0px">
+                    <div class="footer-section" style="padding-top: 30px">
+                        <h5 id="footer-heading" class="heading footer-heading" :style="{ color: Color.text_color }">{{ Color.footer_text }}</h5>
+                        <p id="footer-description" class="head footer-description mx-auto" style="max-width: 1145px;" :style="{ color: Color.text_color }">{{ Color.footer_description }}</p>
+                    </div>
+                </div>
+
+                <div class="container footer-section" style="max-width: 1820px; padding: 0px 20px;">
+                    <div class="row align-items-center text-center text-md-start">
+
+                        <div class="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
+                        <div class="contact-col">
+                            <h5 class="head mb-4" :style="{ color: Color.text_color, paddingBottom: '15px' }">Contact</h5>
+
+                            <div class="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" :style="{paddingBottom: '10px'}">
+                                <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.address }}</p>
+                                <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                            </div>
+
+                            <div class="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" :style="{paddingBottom: '10px'}">
+                                <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.phone }}</p>
+                                <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                            </div>
+
+                            <div class="contact-item d-flex justify-content-md-end justify-content-center align-items-center" id="cla">
+                                <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.email }}</p>
+                                <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-12 col-md-4 mb-4 mb-md-0 text-center" style="padding-top: -10px">
+                            <img :src="Color.footer_img_url" alt="sample" class="footer-img" />
+                        </div>
+                        <div class="col-12 col-md-4">
+                        <div class="social-col">
+                            <h5 class="head mb-4 text-md-start text-center" :style="{ color: Color.text_color, paddingBottom: '10px' }">Social Links</h5>
+                            
+                            <div v-if="Color.fb_link_option === 1 && Color.fb_link" class="social-item d-flex align-items-center justify-content-md-start justify-content-center mb-3" id="cle">
+                                <div class="ficon-circles me-3" :style="{ color: Color.background_color, backgroundColor: Color.text_color }">
+                                    <i class="fab fa-facebook-f"></i>
+                                </div>
+                                <div>
+                                    <p class="footer-text fw-bold mb-1" :style="{ color: Color.text_color }">Facebook</p>
+                                    <a :href="Color.fb_link" target="_blank" class="footer-link" :style="{ color: Color.text_color }">
+                                        {{ Color.fb_link }}
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div v-if="Color.insta_link_option === 1 && Color.insta_link" class="social-item d-flex align-items-center justify-content-md-start justify-content-center mb-3" id="cle">
+                                <div class="ficon-circles me-3" :style="{ color: Color.background_color, backgroundColor: Color.text_color }">
+                                <i class="fab fa-instagram"></i>
+                                </div>
+                                <div>
+                                    <p class="footer-text fw-bold mb-1" :style="{ color: Color.text_color }">Instagram</p>
+                                    <a :href="Color.insta_link" target="_blank" class="footer-link" :style="{ color: Color.text_color }">
+                                        {{ Color.insta_link }}
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div v-if="Color.flickr_link_option === 1 && Color.flickr_link" class="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
+                                <div class="ficon-circles me-3" :style="{ color: Color.background_color, backgroundColor: Color.text_color }">
+                                    <i class="fab fa-flickr"></i>
+                                </div>
+                                <div>
+                                    <p class="footer-text fw-bold mb-1" :style="{ color: Color.text_color }">Flickr</p>
+                                    <a :href="Color.flickr_link" class="footer-link" :style="{ color: Color.text_color }">
+                                        {{ Color.flickr_link }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="site-footer">
+                    <div class="footer-content">
+                        <p class="memtext">Copyright &copy; 2025 – {{Club.club_name}}</p>
+                        <p class="memtext">Powered by <a href="https://cameraclub.website" target="_blank" :style="{color: Color.text_color, fontWeight: 'bold'}">cameraclub.website</a></p>
+                    </div>
+                </footer>
+
+            </section>
+    </div>
 </div>
 </template>
 
@@ -446,33 +659,77 @@ import {
 import {
     storeToRefs
 } from 'pinia';
+import Loader from "@/components/LoaderAll.vue";
+import Calendar from "@/components/club_public/CalendarRyton.vue";
+import Pro from "@/assets/icons/event_list/pro.svg"
+import Cal from "@/assets/icons/event_list/cal.svg"
+import Cam from "@/assets/icons/event_list/cam.svg"
+import Mess from "@/assets/icons/event_list/mess.svg"
+import Heart from "@/assets/icons/Heart.svg"
+import '@/assets/css/clubstyle.css'
+import '@/assets/dist/calendar-gc.min.css'
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
+/* global $ */
 dayjs.extend(relativeTime);
 
-/* global $ */
-
+const isLoading = ref(true);
 const user = useUserStore();
 const homeStore = useHomeStore();
 const {
     homeData
 } = storeToRefs(homeStore);
-const cards = computed(() => homeData.value?.data?.memberGalleries || []);
+
+const memData = computed(() => homeStore.homeData?.data?.clubSettings?.original?.data || {});
+const evData = computed(() => homeStore.homeData?.data?.clubSettings?.original?.data?.upcoming_event_days_count || {});
+const Events = computed(() => homeStore.homeData?.data?.upcomingEvents || []);
+const News = computed(() => homeStore.homeData?.data?.clubNews || {});
+const Notice = computed(() => homeStore.homeData?.data?.latest_notice?.original?.data || {});
 const cardes = computed(() => homeData.value?.data?.clubGalleries?.original?.data || []);
+const Comps = computed(() => homeStore.homeData?.data?.upcomingCompetitions || []);
+const Club = computed(() => homeStore.homeData?.data?.clubSettings.original.data.club || {});
+const Color = computed(() => homeStore.clubSettings || {});
+const cards = computed(() => {
+    const members = homeData.value?.data?.memberGalleries || [];
 
-const handleLogout = async () => {
-  await user.logout();
-};
+    return members.map(member => {
+        const firstGallery = member.galleries?. [0];
 
-const chunkedCards = computed(() => {
-    const chunkSize = 5;
-    const chunks = [];
-    for (let i = 0; i < cards.value.length; i += chunkSize) {
-        chunks.push(cards.value.slice(i, i + chunkSize));
-    }
-    return chunks;
+        return {
+            id: member.id,
+            username: member.username,
+            gallery_name: firstGallery?.gallery_name || "No Gallery",
+            image_url: firstGallery?.photos?. [0]?.image_url || null
+        };
+    }).filter(card => card.image_url);
 });
+const Interaction = computed(() => homeStore.homeData.data?.latestInteractions || {});
+const picture = computed(() => {
+    const competitions = homeStore.homeData?.data?.latestResults?.original?.data || [];
+
+    return competitions.flatMap(comp => {
+        const members = comp?.competition_members || [];
+
+        return members.flatMap(member =>
+            (member.entries || [])
+            .filter(entry => entry.position === 1 && entry.is_published === 1) 
+            .map(entry => ({
+                id: entry.id,
+                image: entry.entry_image_url,
+                gallery_name: comp?.name || "No Name"
+            }))
+        );
+    });
+});
+const User = computed(() => homeStore.homeData.data?.user || {});
+
+const formatDate = (date) =>
+    new Date(date).toLocaleDateString("en-GB", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+    });
 
 const chunkCards = computed(() => {
     const chunkSize = 5;
@@ -483,160 +740,150 @@ const chunkCards = computed(() => {
     return chunks;
 });
 
-const navItems = ref([{
-        label: 'Home',
-        to: '/home'
-    },
-    {
-        label: 'Events',
-        to: '/event'
-    },
-    {
-        label: 'Competitions',
-        to: '/competitions'
-    },
-    {
-        label: 'Galleries',
-        to: '/gallery'
-    },
-    {
-        label: 'News',
-        to: '/news'
-    },
-    {
-        label: 'Club',
-        to: '/club'
+// const formatTime = (datetimeStr) => {
+//     const date = new Date(datetimeStr);
+//     return date.toLocaleTimeString("en-US", {
+//         weekday: "short",
+//         hour: "2-digit",
+//         minute: "2-digit",
+//     });
+// };
+
+const chunkedCards = computed(() => {
+    const chunkSize = 5; 
+    const rowChunks = [];
+
+    for (let i = 0; i < cards.value.length; i += chunkSize) {
+        rowChunks.push(cards.value.slice(i, i + chunkSize));
     }
-]);
 
-const currentRoute = ref('/home');
-
-const formatDate = (date) =>
-    new Date(date).toLocaleDateString(undefined, {
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-    });
+    return rowChunks.slice(0, 2);
+});
 
 const timeAgo = (date) => {
     return dayjs(date).fromNow();
 };
 
-const formatTime = (datetimeStr) => {
-    const date = new Date(datetimeStr);
-    return date.toLocaleTimeString(undefined, {
-        hour: "2-digit",
-        minute: "2-digit",
-    });
-};
+const chunkedcards = computed(() => {
+    const chunkdSize = 5;
+    const chunkds = [];
+    for (let i = 0; i < picture.value.length; i += chunkdSize) {
+        chunkds.push(picture.value.slice(i, i + chunkdSize));
+    }
+    return chunkds;
+});
 
 onMounted(async () => {
-    $("#datepicker").datepicker();
-    console.log(homeStore)
+    const carouselEl = document.querySelector('#carouselExampleIndicators')
+    if (carouselEl && window.bootstrap) {
+        new window.bootstrap.Carousel(carouselEl)
+    }
+
     let domain = window.location.hostname.split('.')[0];
-    console.log(domain)
     try {
         await homeStore.fetchHomeData(domain);
+
     } catch (error) {
         console.error("Error fetching home data:", error);
+    } finally {
+        isLoading.value = false; // ✅ loader hide
     }
+
+    const option = {
+        dayNames: ["su", "mo", "tu", "we", "th", "fr", "sa"],
+        render: function (date, items) {
+            if (!items || items.length === 0) {
+                return `
+        <td class="day current-month">
+          <a type="button" class="btn-gc-cell">
+            <span class="day-number">${date.getDate()}</span>
+          </a>
+        </td>
+      `;
+            }
+
+            if (items.length === 1) {
+                const ev = items[0];
+                return `
+        <td class="day current-month event">
+          <a type="button" class="btn-gc-cell">
+            <span class="day-number" style="color:${ev.dateColor}">${date.getDate()}</span>
+          </a>
+          <div class="gc-event ${ev.className}">${ev.eventName}</div>
+        </td>
+      `;
+            }
+
+            let badges = items
+                .map(
+                    ev =>
+                    `<div class="gc-event style="margin-bottom:0px; display:flex" ${ev.className}">${ev.eventName}</div>`
+                )
+                .join("");
+
+            return `
+      <td class="day current-month event">
+        <a type="button" class="btn-gc-cell">
+          <span class="day-number" style="color:#CC445E">${date.getDate()}</span>
+        </a>
+        <div style="margin:0;display:flex;overflow-x:auto;width:70px;gap:5px;">
+          ${badges}
+        </div>
+      </td>
+    `;
+        }
+    };
+
+    const events = computed(() =>
+        Events.value.map((event, index) => ({
+            date: new Date(event.event_date),
+            eventName: event.name?.length > 7 ?
+                event.name.substring(0, 7) + "..." :
+                event.name || `Event #${index + 1}`,
+            type: "event",
+            className: "badge bg-info",
+            dateColor: "#99816B"
+        }))
+    );
+
+    const comps = computed(() =>
+        Comps.value.map((comp, index) => ({
+            date: new Date(comp.start_date),
+            eventName: comp.name?.length > 7 ?
+                comp.name.substring(0, 7) + "..." :
+                comp.name || `Comps #${index + 1}`,
+            type: "competition",
+            className: "badge bg-success",
+            dateColor: "#CC445E"
+        }))
+    );
+
+    const allEvents = computed(() => [...events.value, ...comps.value]);
+
+    let calendar = $("#calendar").calendarGC(option);
+
+    calendar.setEvents(allEvents.value);
+
 });
 </script>
 
 <style scoped>
-.custom-navbar {
-    background-color: #fff;
-    padding: 0.8rem 2rem;
-    border-bottom: 1px solid #ddd;
-    font-family: 'Segoe UI', sans-serif;
-}
 
-.logo-img {
-    width: 250px;
-    height: 75px;
-}
 
-.nav-link {
-    font-family: Inter;
-    font-weight: 600;
-    font-style: Semi Bold;
-    font-size: 18px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    color: #4C4036
-}
 
-.nav-link.active,
-.nav-link:hover {
-    color: #8d2d3f;
-    border-bottom: 2px solid #8d2d3f;
-}
 
-.contents {
-    padding: 20px;
-    height: 100%;
-    transition: all 0.3s;
-}
-
-.club-banner {
-    background-color: #c54058;
-    color: white;
-    border-radius: 4px;
-    margin: 1%
-}
-
-.icon-circle {
-    width: 30px;
-    height: 30px;
-    border: 1px solid white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.icon-circle:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.icon-circles {
-    width: 30px;
-    height: 30px;
-    background-color: #99816b;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-}
-
-.rounded-img {
-    height: 250px;
-    width: 400px;
-    border-radius: 30px;
-}
-
-.contact-item {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-}
-
-.social-link i {
-    font-size: 14px;
+.Latest {
+    background: white;
+    width: 35%;
+    height: 370px;
+    border-radius: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .comments-card {
     width: 97%;
     height: 440px;
-    max-height: 440px;
     overflow-y: auto;
     margin-left: 0%
 }
@@ -645,51 +892,129 @@ onMounted(async () => {
     margin-left: -2%;
     width: 97%;
     height: 440px;
-    max-height: 440px;
     overflow-y: auto;
 }
 
-.hero-section {
-    position: relative;
-    display: flex;
-    align-items: center;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-.hero-overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 60px;
-    width: 825px;
-    height: 558px;
-    margin-left: 5%;
-    border-radius: 12px;
-}
-
-.hero-overlay h1 {
-    font-size: 72px;
-    margin-bottom: 10px;
-    margin-top: 50px
-}
-
-.text {
-    font-size: 36px;
-    margin-bottom: 30px;
-}
-
-.location {
+.site-footer {
+    padding-top: 25px;
+    padding-bottom: 10px;
+    text-align: center;
     font-size: 14px;
-    color: #ccc;
-    margin-top: 20px;
+    color: #555;
+    border-top: 1px solid #ddd;
+    margin-top: 40px;
 }
 
-.social-icons i {
+.site-footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    text-decoration: underline;
+}
+
+.ultrahead {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 72px;
+    leading-trim: CAP_HEIGHT;
+    line-height: 20px;
+    letter-spacing: 0%;
+}
+
+.heading {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 36px;
+    leading-trim: CAP_HEIGHT;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.head {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    leading-trim: CAP_HEIGHT;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.clubhead {
+    font-family: Inter;
+    font-weight: 600;
+    font-style: Semi Bold;
     font-size: 20px;
-    margin-right: 12px;
-    cursor: pointer;
+    leading-trim: CAP_HEIGHT;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
 
-.ui-datepicker .ui-datepicker-header {
-    background-color: blue;
-    color: green !important;
+.subhead {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 18px;
+    leading-trim: CAP_HEIGHT;
+    line-height: 36px;
+    letter-spacing: 0%;
 }
+
+.memtext {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    leading-trim: CAP_HEIGHT;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.prehead {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    leading-trim: CAP_HEIGHT;
+    line-height: 20px;
+    letter-spacing: 0%;
+}
+
+.galtext {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 12px;
+    leading-trim: NONE;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
+.event-img,
+.fallback-box {
+    width: 100%;
+    max-width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    object-fit: cover;
+    background-color: #f0f0f0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.fallback-box {
+    font-size: 14px;
+    color: #888;
+}
+
+.flickr-dots i {
+  font-size: 3px;
+  padding-bottom: 12px;
+  margin: 1px;
+}
+
+
+
 </style>
