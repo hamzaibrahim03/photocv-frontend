@@ -5,7 +5,9 @@
 </div>
 <div class="container">
     <div class="login-container">
-        <img src="@/assets/images/photo.png" alt="Camera Club Logo" style="justify-content: center"/>
+        <div>
+            <img src="@/assets/images/photo.png" alt="Camera Club Logo" style="justify-content: center"/>
+        </div>
         <h3>Login</h3>
         <form @submit.prevent="login">
             <div class="inputBox mb-3">

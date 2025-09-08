@@ -19,6 +19,28 @@ export function useMemberGallery() {
       member_gallery.value = galleryList
       memberCount.value = galleryList.length
       console.log(galleryList)
+      // Loop through each member and their galleries
+      galleryList.forEach((member) => {
+        console.log(`👤 Member: ${member.first_name} ${member.last_name}`)
+        
+        if (Array.isArray(member.galleries)) {
+          member.galleries.forEach((gallery, index) => {
+            console.log(`📁 Gallery ${index + 1}: ${gallery.gallery_name || 'No name'}`)
+            if (Array.isArray(gallery.photos)) {
+              gallery.photos.forEach((photo, photoIndex) => {
+                console.log(`🖼️ Photo ${photoIndex + 1}: ${photo.image || 'No image field'}`)
+              })
+            } else {
+              console.log('❌ No photos array in gallery')
+            }
+          })
+        } else {
+          console.log('❌ No galleries found for this member')
+        }
+  
+        console.log('--------------------------')
+      })
+  
     } catch (err) {
       error.value = err.message || 'Failed to load galleries'
     } finally {

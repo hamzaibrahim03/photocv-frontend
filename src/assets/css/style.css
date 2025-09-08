@@ -375,15 +375,16 @@ letter-spacing: 0%;
 
 .upcoming-section {
   display: flex;
-  padding: 20px;
   border-radius: 10px;
-  align-items: center;
+  align-items: start;
   width: 100%;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .upcard {
   width: 50%;
-  height: 290px;
+  height: 390px;
   background: white;
   padding: 20px;
   border-radius: 10px;
@@ -396,11 +397,12 @@ letter-spacing: 0%;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   justify-content: center;
   width: 90%;
+  height: 390px;
   margin-left: 20px;
 }
 
 .ui-datepicker table {
-  height: 240px;
+  height: 340px;
   width: 100%;
   font-size: 0.9em;
   border-collapse: collapse;
@@ -416,7 +418,6 @@ letter-spacing: 0%;
 .event-item {
   display: flex;
   align-items: center;
-  gap: 10px;
 }
 
 .event-item img {
@@ -441,14 +442,6 @@ letter-spacing: 0%;
   object-fit: cover;
 }
 
-.event-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex: 1;
-  font-size: 0.875rem;
-  width: 100%;
-}
 
 .event-title {
   font-weight: 400;
@@ -585,16 +578,6 @@ letter-spacing: 0%;
   margin-top: 10px;
 }
 
-.cardddd {
-  background: white;
-  width: 30.6%;
-  padding: 20px;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  margin-left: 20px;
-  margin-top: 10px;
-}
 
 .carddddd {
   background: white;
@@ -649,14 +632,16 @@ letter-spacing: 0%;
   justify-content: center;
 }
 
-.pics {
+.picss {
   display: flex;
   width: 99.5%;
+  flex-wrap: wrap;
 }
 
 .pics-item {
   position: relative;
   overflow: hidden;
+  flex: 1;
 }
 
 .pics-item img {
@@ -682,14 +667,11 @@ letter-spacing: 0%;
 .pics-items {
   position: relative;
   overflow: hidden;
+  align-self: start;
 }
 
-.pics-items img {
-  max-width: 170px;
-  height: 180px;
-}
 
-.pics-infos {
+.pics-infoss {
   background: #4c403699;
   position: absolute;
   bottom: 0;
@@ -703,102 +685,7 @@ letter-spacing: 0%;
   align-items: center;
   justify-content: center;
 }
-@media (max-width: 1200px) {
-  .profile-card,
-  .card-section,
-  .upcoming-section,
-  .section {
-    flex-direction: column;
-    width: 100%;
-  }
-  .card-section > *,
-  .upcoming-section > *,
-  .section > * {
-    width: 100% !important;
-    margin-left: 0 !important;
-  }
-  .header,
-  .content {
-    margin-left: 0;
-    width: 100%;
-  }
-  .sidebar {
-    position: relative;
-    height: auto;
-    max-width: none;
-    width: 100%;
-  }
-}
 
-@media (max-width: 768px) {
-  .left-header-container,
-  .right-header,
-  .profile-icons,
-  .galleries,
-  .pic {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .profile-left img,
-  .event-item img,
-  .event-items img {
-    max-width: 60px;
-    height: 60px;
-  }
-  .dashboard-card {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .header .left-header {
-    font-size: 2rem;
-  }
-  h5 {
-    font-size: 20px;
-  }
-  h4 {
-    font-size: 24px;
-  }
-  .number {
-    font-size: 36px;
-  }
-  .ca-details,
-  .days,
-  .role,
-  .greeting,
-  .names,
-  .name {
-    font-size: 16px;
-  }
-  #view,
-  #edit,
-  #new {
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .event-title,
-  .event-date,
-  .event-time-details {
-    font-size: 12px;
-  }
-  .button-group,
-  .button-groups {
-    flex-direction: column;
-    gap: 5px;
-  }
-  .admin-dropdown img {
-    max-width: 35px;
-    height: 35px;
-  }
-  .sidebar a {
-    font-size: 16px;
-  }
-  .pic-item img {
-    width: 100%;
-    height: auto;
-  }
-}
 
 /* members */
 .social-icons {
@@ -898,67 +785,7 @@ letter-spacing: 0%;
   object-fit: cover;
 }
 
-@media screen and (max-width: 600px) {
-  .photographers {
-    flex-direction: column;
-    margin-left: 0;
-    align-items: center;
-  }
 
-  .photographer-card {
-    width: 90%;
-    margin: 10px 0;
-  }
-
-  .photographer-card img.profile-pic {
-    width: 150px;
-    height: 150px;
-  }
-
-  .photographer-card .gallery-preview {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .photographer-card .gallery-preview .pic-item img {
-    width: 100%;
-    height: auto;
-  }
-
-  .social-media-icons {
-    flex-wrap: wrap;
-  }
-
-  .social-media-icons a {
-    max-width: 35px;
-    height: 35px;
-    font-size: 14px;
-  }
-}
-
-/* Tablets */
-@media screen and (max-width: 992px) {
-  .photographer-card {
-    width: 45%;
-  }
-
-  .photographer-card img.profile-pic {
-    width: 160px;
-    height: 160px;
-  }
-
-  .photographer-card .gallery-preview .pic-item img {
-    width: 100%;
-    height: auto;
-  }
-}
-
-/* Small desktops and large tablets */
-@media screen and (max-width: 1200px) {
-  .photographer-card {
-    width: 30%;
-  }
-}
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -981,7 +808,7 @@ letter-spacing: 0%;
   background: #8a6f58; 
 }
 /* gallery */
-.card {
+.cardd {
   background: white;
   border-radius: 10px;
   flex: 1;
@@ -1072,88 +899,6 @@ letter-spacing: 0%;
   font-family: Inter;
   width: 100%;
 }
-
-/* Smartphones (portrait and landscape) */
-@media screen and (max-width: 600px) {
-  .card {
-    width: 95%;
-    height: auto;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-
-  .galleriy {
-    flex-direction: column;
-    overflow-x: hidden;
-  }
-
-  .galleriy-item img {
-    width: 100%;
-    height: auto;
-  }
-
-  .galleriy-info,
-  .galleriy-infos {
-    flex-direction: column;
-    font-size: 10px;
-    padding: 8px;
-  }
-
-  .gal-item img {
-    max-width: 30px;
-    height: 30px;
-  }
-
-  .gals-item span {
-    margin-left: 10px;
-    font-size: 14px;
-  }
-
-  .gal-details {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-}
-
-/* Tablets */
-@media screen and (max-width: 992px) {
-  .card {
-    width: 95%;
-    height: auto;
-  }
-
-  .galleriy-item img {
-    width: 100%;
-    height: auto;
-  }
-
-  .gal-item img {
-    max-width: 30px;
-    height: 30px;
-  }
-
-  .gals-item span {
-    font-size: 14px;
-  }
-
-  .gal-details {
-    font-size: 13px;
-  }
-}
-
-/* Small desktops and large tablets */
-@media screen and (max-width: 1200px) {
-  .card {
-    width: 98%;
-  }
-
-  .galleriy-item img {
-    width: 100%;
-    height: auto;
-  }
-}
-
 /* member galleries */
 .dt-paging {
   display: flex;
@@ -1192,18 +937,6 @@ letter-spacing: 0%;
   border: 2px solid white;
 }
 
-/* Responsive adjustments */
-@media screen and (max-width: 600px) {
-  .dt-paging {
-    justify-content: center;
-  }
-
-  .dt-paging-button {
-    width: 35px;
-    height: 35px;
-    font-size: 14px;
-  }
-}
 
 /* competitions */
 .custom-card {
@@ -1216,6 +949,7 @@ letter-spacing: 0%;
   border-radius: 20px;
   width: 100%;
   margin-right: auto;
+  flex-direction: row;
 }
 
 .right {
@@ -1276,7 +1010,10 @@ letter-spacing: 0%;
 .ui-state-default,
 .ui-widget-content .ui-state-default {
   font-weight: normal;
+  background: none;
   color: #454545;
+  border: none;
+  text-align: center;
 }
 
 .ui-datepicker {
@@ -1312,42 +1049,12 @@ letter-spacing: 0%;
 }
 
 .comments-card img {
-  width: 100%;
-  max-width: 40px;
-  height: 40px;
+  width: 60px;
+  max-width: 60px;
+  height: 60px;
   border-radius: 7px;
 }
 
-@media (max-width: 768px) {
-  .custom-card {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .custom-card img {
-    margin-bottom: 15px;
-    margin-right: 0;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-  }
-
-  .right-section {
-    gap: 15px;
-  }
-
-  .icon-container {
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .calendar-container,
-  .comments-card,
-  .commentss-card {
-    width: 100%;
-    margin: 0 auto;
-  }
-}
 
 .icon-container i:hover,
 .quick-filter-icons i:hover {
@@ -1565,20 +1272,18 @@ letter-spacing: 0%;
 .heart-icon {
   position: absolute;
   bottom: -8px;
-  left: 60%;
-  transform: translateX(-150%);
-  background: #cc445e;
-  color: white;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 14px;
   padding: 4px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  max-width: 20px;
+  width: 20px;
   height: 20px;
 }
+
 
 .galleries {
   display: flex;
@@ -1637,103 +1342,6 @@ letter-spacing: 0%;
   justify-content: space-between;
 }
 
-/* Mobile-first default styles are already applied above. Use media queries to enhance layout on wider screens */
-
-@media (max-width: 768px) {
-  .custom-card {
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-  }
-
-  .custom-card img {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-  }
-
-  .right-section {
-    width: 100%;
-  }
-
-  .calendar-container,
-  .comments-card,
-  .commentss-card,
-  .comments-cards {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .form-container,
-  .form-containers {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .galleries {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .galleries-item img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .profile-img,
-  .comments-cards img,
-  .commentss-card img {
-    max-width: 60px;
-    height: 60px;
-  }
-
-  .quick-filter {
-    text-align: left;
-  }
-
-  .tag-dropdown {
-    height: auto;
-  }
-}
-
-@media (max-width: 480px) {
-  .dt-paging {
-    justify-content: center;
-  }
-
-  .dt-paging-button {
-    font-size: 14px;
-    width: 32px;
-    height: 32px;
-  }
-
-  .domain-options {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .custom-checkbox,
-  .domain-option {
-    justify-content: flex-start;
-  }
-
-  .doc-preview p {
-    max-width: 120px;
-    font-size: 12px;
-  }
-
-  .remove-btn {
-    width: 18px;
-    height: 18px;
-    font-size: 12px;
-  }
-
-  .form-container,
-  .form-containers {
-    padding: 10px;
-  }
-}
 
 /* member single view */
 .photographeres {
@@ -1819,59 +1427,6 @@ letter-spacing: 0%;
 .social-media-icons a:hover {
   background-color: #dc3545;
   color: #fff;
-}
-
-/* Mobile-first default already handled above */
-
-/* Tablet View */
-@media (max-width: 992px) {
-  .photographeres {
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .photographer-cards {
-    width: 45%;
-  }
-
-  .photographer-cards img.profile-pic {
-    max-width: 150px;
-    height: 150px;
-  }
-}
-
-/* Mobile View */
-@media (max-width: 600px) {
-  .photographeres {
-    flex-direction: column;
-    align-items: center;
-    margin-left: 0;
-    gap: 15px;
-  }
-
-  .photographer-cards {
-    width: 90%;
-  }
-
-  .photographer-cards img.profile-pic {
-    max-width: 120px;
-    height: 120px;
-  }
-
-  .photographer-cards .social-icons,
-  .social-media-icones {
-    gap: 8px;
-  }
-
-  .photographer-cards .social-icons a,
-  .social-media-icones a {
-    max-width: 32px;
-    height: 32px;
-    font-size: 14px;
-  }
 }
 
 /* club gallery single */
@@ -1997,67 +1552,6 @@ letter-spacing: 0%;
   right: 10px;
 }
 
-/* Tablet View */
-@media (max-width: 992px) {
-  .gallery-item img {
-    max-width: 220px;
-    height: 220px;
-  }
-
-  .lightbox-thumbnails img {
-    max-width: 70px;
-    height: 50px;
-  }
-
-  .nav {
-    font-size: 1.8rem;
-  }
-
-  .close {
-    font-size: 26px;
-    right: 20px;
-  }
-}
-
-/* Mobile View */
-@media (max-width: 600px) {
-  .gallery {
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .gallery-item img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .lightbox-main,
-  .lightbox-content {
-    width: 95%;
-    height: auto;
-  }
-
-  .lightbox-thumbnails {
-    gap: 5px;
-    padding: 5px;
-  }
-
-  .lightbox-thumbnails img {
-    max-width: 60px;
-    height: 45px;
-  }
-
-  .nav {
-    font-size: 1.5rem;
-    padding: 5px;
-  }
-
-  .close {
-    font-size: 24px;
-    top: 10px;
-    right: 15px;
-  }
-}
 
 /* for club and kamran gallery */
 .galleriye {
@@ -2138,63 +1632,3 @@ letter-spacing: 0%;
   padding-left: 20px;
 }
 
-@media (max-width: 992px) {
-  .galleriye-item img {
-    width: 100%;
-    max-width: 380px;
-    height: auto;
-  }
-
-  .galleriye-info,
-  .galleriye-infos {
-    font-size: 11px;
-    padding: 4px;
-  }
-
-  .text-secondary,
-  .text-secondar {
-    font-size: 12.5px;
-    line-height: 18px;
-  }
-
-  .date {
-    font-size: 11px;
-  }
-
-  .card-content {
-    padding-left: 15px;
-  }
-}
-
-@media (max-width: 600px) {
-  .galleriye {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .galleriye-item img {
-    width: 95%;
-    height: auto;
-  }
-
-  .galleriye-info,
-  .galleriye-infos {
-    font-size: 10.5px;
-    padding: 3px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .text-secondary,
-  .text-secondar {
-    font-size: 12px;
-  }
-
-  .date {
-    font-size: 10px;
-  }
-
-  .card-content {
-    padding-left: 10px;
-  }
-}

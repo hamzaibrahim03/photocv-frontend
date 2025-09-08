@@ -3,17 +3,30 @@
 <HeaderRoute title="Member Galleries" />
 <section class="content">
     <div class="dashboard-card">
-        <ClubProfile greeting="Galleries uploaded by Club Members" name="15 Club Galleries" role="Average 20 Images" />
+        <div class="profile-card">
+            <div class="profile-left">
+                <div class="profile-info">
+                    <small class="greeting">Galleries uploaded by Club Members</small>
+                    <h2 class="name">15 Member Galleries</h2>
+                    <small class="role">Average 20 Images</small>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="dt-search">
+                    <input type="search" style="width: 250px" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
+                </div>
+            </div>
+        </div>
         <div class="card-section">
             <div class="stat-card">
                 <small class="ca-details">Images</small>
-                <h3 class="number">872</h3>
+                <h3 class="number">{{ MemberCount }}</h3>
             </div>
             <div class="event-card">
                 <small class="ca-details">Interactions</small>
                 <div class="row">
                     <div class="col-md-5">
-                        <h3 class="number">1k</h3>
+                        <h3 class="number">{{ EventDay }}</h3>
                     </div>
                     <div class="days col-md-7">
                         <span>Likes & Comments</span>
@@ -22,24 +35,139 @@
             </div>
         </div>
     </div>
-    <MemberGalleries />
+
+    <div class="card" style="height:auto">
+        <div class="d-flex justify-content-between align-items-center mb-3" style="padding: 15px">
+            <h4>Member Galleries</h4>
+        </div>
+
+        <div class="row g-0" style="margin-left: 0; margin-right: 0;">
+            <div v-for="(row, rowIndex) in chunkedCards" :key="'row-' + rowIndex" class="row g-0" style="margin-left: 0; margin-right: 0;">
+                <div v-for="(gallery, index) in row" :key="gallery.id" class="galleriy col-4 p-0">
+                    <div class="galleriy-item">
+                        <!-- Corrected image path -->
+                        <img :src="gallery.galleries[0].photos[0].image_url" alt="Gallery Photo" class="img-fluid" style="border-radius:0px; max-width: 493px; max-height: 370px; object-fit: cover;" />
+                        <div style="border-radius: 0px" :class="[ 'galleriy-infos', index % 2 === 0 ? 'even-info' : 'odd-info', ]">
+                            <div class="gal-item">
+                                <img :src="gallery.profile_image_url" alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;" />
+                                <div class="gal-details">
+                                    <span>{{ gallery.galleries[0].gallery_name }}</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-icon d-flex justify-content-between mt-2">
+                                <div class="icons">
+                                    <span>{{ gallery.gallery_total_photos }}</span>
+                                    <img :src="Ima" alt="icon" style="width:14px; height:14px;" />
+                                </div>
+                                <div class="icons">
+                                    <span>{{ gallery.gallery_total_likes }}</span>
+                                    <img :src="Hea" alt="icon" style="width:14px; height:14px;" />
+                                </div>
+                                <div class="icons">
+                                    <span>{{ gallery.gallery_total_comments }}</span>
+                                    <img :src="Com" alt="icon" style="width:14px; height:14px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dt-paging">
+    <nav aria-label="pagination">
+        <button class="dt-paging-button first" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(1)" aria-label="First">
+            «
+        </button>
+
+        <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
+            ‹
+        </button>
+
+        <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
+            {{ page }}
+        </button>
+
+        <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
+            ›
+        </button>
+
+        <button class="dt-paging-button last" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(totalPages)" aria-label="Last">
+            »
+        </button>
+    </nav>
+</div>
 </section>
 </template>
 
-<script>
+<script setup>
+import { onMounted, ref, computed } from 'vue'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import ClubProfile from "@/partials/club_admin/club/ClubProfile.vue";
-import MemberGalleries from "@/partials/club_admin/membergallery/MemberGalleries.vue";
-export default {
-    name: "MemberGallery",
-    components: {
-        HeaderRoute,
-        NavigationRoute,
-        ClubProfile,
-        MemberGalleries,
-    },
-};
+import Ima from "@/assets/icons/gallery/image.svg"
+import Hea from "@/assets/icons/gallery/heart.svg"
+import Com from "@/assets/icons/gallery/comment.svg"
+import { useMemberGallery } from '@/stores/MemberGallery'
+
+// Store
+const { member_gallery, fetchMemberGallery } = useMemberGallery()
+
+// Local state
+const cards = ref([])
+const loading = ref(true)
+const currentPage = ref(1)
+const pageSize = 9
+
+// Computed total pages
+const totalPages = computed(() => {
+    return Math.ceil(cards.value.length / pageSize)
+})
+
+// Computed paginated cards
+const paginatedCards = computed(() => {
+    const start = (currentPage.value - 1) * pageSize
+    return cards.value.slice(start, start + pageSize)
+})
+
+// Chunked into 3 per row
+const chunkedCards = computed(() => {
+    const chunkSize = 3
+    const chunks = []
+    const currentCards = paginatedCards.value
+    for (let i = 0; i < currentCards.length; i += chunkSize) {
+        chunks.push(currentCards.slice(i, i + chunkSize))
+    }
+    return chunks
+})
+
+// Pagination navigation
+function goToPage(page) {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page
+    }
+}
+
+// Fetch data
+onMounted(async () => {
+    await fetchMemberGallery()
+    cards.value = member_gallery.value
+    loading.value = false
+})
 </script>
 
-<style scoped></style>
+
+<style scoped>
+.row-wrapper {
+    display: flex;
+}
+
+.even-info {
+    background-color: #99816b !important;
+}
+
+.odd-info {
+    background-color: #4c4036 !important;
+}
+</style>

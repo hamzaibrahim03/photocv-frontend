@@ -18,8 +18,10 @@
     "dayjs": "^1.11.13",
     "pinia": "^3.0.2",
     "pinia-plugin-persistedstate": "^4.4.1",
+    "swiper": "^11.2.10",
     "vue": "^3.2.13",
     "vue-router": "^4.0.13",
+    "vue3-carousel": "^0.16.0",
     "vue3-datepicker": "^0.4.0",
     "vue3-easy-data-table": "^1.5.47",
     "vuetify": "^3.8.9"

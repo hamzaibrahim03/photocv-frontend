@@ -34,6 +34,9 @@ router.beforeEach((to, from, next) => {
   if (to.path.startsWith('/dashboard') && !isLoggedIn) {
     return next('/login')
   }
+  if (to.name) {
+    document.title = to.name
+  } 
 
   next()
 })

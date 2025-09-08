@@ -39,76 +39,71 @@
     <div class="card">
         <div class="d-flex justify-content-between align-items-center mb-3" style="padding: 15px">
             <h4>Member Galleries</h4>
-            <button class="btn btn-sm" id="view">View All</button>
+            <router-link to="/mem_gallery" custom v-slot="{ navigate }">
+                <button class="btn btn-sm" id="view" @click="navigate">View All</button>
+            </router-link>
         </div>
 
-        <div class="row" style="margin-left:0.1%">
-  <div
-    v-for="gallery in member_gallery"
-    :key="gallery.gallery_id"
-    style="width:24.8%; padding-left: 0; padding-right: 0;"
-  >
-    <div class="galleriy" v-if="gallery.photos && gallery.photos.length">
-      <div class="galleriy-item">
-        <!-- Fix image path -->
-        <img
-          :src="gallery.galleries.photos[0].image"
-          alt="Gallery Photo"
-          class="img-fluid"
-          style="max-width: 493px; max-height: 370px;"
-        />
-        <!-- Use gallery instead of undefined item -->
-        <div class="galleriy-infos">
-          <div class="gal-item">
-            <img :src="gallery.profile_image_url" alt="Profile Picture" />
-            <div class="gal-details">
-              <span>{{ gallery.gallery_name }}</span>
+        <div class="row g-0" style="margin-left: 0; margin-right: 0;">
+            <div v-for="(gallery, index) in member_gallery" :key="gallery.id" class="col-3 p-0">
+                <div class="galleriy" v-if="gallery.galleries.length && gallery.galleries[0].photos.length">
+                    <div class="galleriy-item">
+                        <!-- Corrected image path -->
+                        <img :src="gallery.galleries[0].photos[0].image_url" alt="Gallery Photo" class="img-fluid" style="border-radius:0px; max-width: 493px; max-height: 370px; object-fit: cover;" />
+                        <div style="border-radius: 0px" :class="[ 'galleriy-infos', index % 2 === 0 ? 'even-info' : 'odd-info', ]">
+                            <div class="gal-item">
+                                <img :src="gallery.profile_image_url" alt="Profile Picture" style="width: 30px; height: 30px; object-fit: cover;" />
+                                <div class="gal-details">
+                                    <span>{{ gallery.galleries[0].gallery_name }}</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-icon d-flex justify-content-between mt-2">
+                                <div class="icons">
+                                    <span>{{ gallery.gallery_total_photos }}</span>
+                                    <img :src="Ima" alt="icon" style="width:14px; height:14px;" />
+                                </div>
+                                <div class="icons">
+                                    <span>{{ gallery.gallery_total_likes }}</span>
+                                    <img :src="Hea" alt="icon" style="width:14px; height:14px;" />
+                                </div>
+                                <div class="icons">
+                                    <span>{{ gallery.gallery_total_comments }}</span>
+                                    <img :src="Com" alt="icon" style="width:14px; height:14px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="profile-icon">
-            <div class="icons">
-              <span>{{ gallery.gallery_total_photos }}</span>
-              <img :src="Ima" alt="icon" style="width:14px; height: 14px;" />
-            </div>
-            <div class="icons">
-              <span>{{ gallery.gallery_total_likes }}</span>
-              <img :src="Hea" alt="icon" style="width:14px; height: 14px;" />
-            </div>
-            <div class="icons">
-              <span>{{ gallery.gallery_total_comments }}</span>
-              <img :src="Com" alt="icon" style="width:14px; height: 14px;" />
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 
     </div>
 
     <div class="card">
         <div class="d-flex justify-content-between align-items-center mb-3" style="padding: 15px">
             <h4>Club Galleries</h4>
-            <button class="btn btn-sm" id="view">View All</button>
+            <router-link to="/club_gallery" custom v-slot="{ navigate }">
+                <button class="btn btn-sm" id="view" @click="navigate">View All</button>
+            </router-link>
         </div>
 
         <div class="row" style="margin-left:0.1%">
-            <div v-for="gallery in club_gallery" :key="gallery.gallery_id" style="width:24.8%; padding-left: 0; padding-right: 0;">
+            <div v-for="(gallery, index) in club_gallery" :key="gallery.gallery_id" style="width:24.8%; padding-left: 0; padding-right: 0;">
                 <div class="galleriy" v-if="gallery.photos && gallery.photos.length">
                     <div class="galleriy-item">
-                        <img :src="gallery.photos[0].image" alt="Gallery Photo" class="img-fluid" style="max-width: 493px; max-height: 370px;" />
-                        <div class="galleriy-infos">
+                        <img :src="gallery.photos[0].image" alt="Gallery Photo" class="img-fluid" style="border-radius:0px; max-width: 493px; max-height: 370px;" />
+                        <div style="border-radius: 0px" :class="[ 'galleriy-infos', index % 2 === 0 ? 'even-info' : 'odd-info', ]">
                             <div class="gal-item">
                                 <span>{{ gallery.photos[0].title }}</span>
                             </div>
                             <div class="profile-icon d-flex justify-content-between">
                                 <div class="icons">
-                                    <span>{{ gallery.total_photos }}</span> 
+                                    <span>{{ gallery.total_photos }}</span>
                                     <img :src="Ima" alt="icon" style="width:14px; height: 14px;" />
                                 </div>
                                 <div class="icons">
-                                    <span>{{ gallery.photos[0].likes_count }}</span> 
+                                    <span>{{ gallery.photos[0].likes_count }}</span>
                                     <img :src="Hea" alt="icon" style="width:14px; height: 14px;" />
                                 </div>
                                 <div class="icons">
@@ -171,10 +166,10 @@ onMounted(() => {
 }
 
 .even-info {
-    background-color: #99816b;
+    background-color: #99816b !important;
 }
 
 .odd-info {
-    background-color: #4c4036;
+    background-color: #4c4036 !important;
 }
 </style>
