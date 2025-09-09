@@ -13,13 +13,30 @@
 /* Navbar links */
 .navbar-nav .nav-link {
   font-weight: 400;
-  font-family: 'Inter', sans-serif;
   font-size: 18px;
   padding: 10px 15px;
+  font-family: Inter;
+font-style: Regular;
+line-height: 100%;
+letter-spacing: 0%;
+}
+.custom-nav .nav-item {
+  margin-right: 10px;
 }
 
+.custom-nav .nav-item:last-child {
+  margin-right: 0; /* no gap after last item */
+}
+
+
+.nav-link.active {
+  color: #DD9757 !important;
+}
+
+
 .nav-item {
-  padding: 15px 18px;   /* smaller base padding */
+  padding: 15px 18px;
+  gap: 100px
 }
 
 
@@ -50,7 +67,7 @@
 }
 #newscontainer{
   max-width: 1820px;
-  padding: 75px 40px 40px;
+  padding: 75px 70px 40px;
 }
 #joincontainer {
   max-width: 1820px;
@@ -94,7 +111,7 @@
   align-items: center;
   font-family: 'Segoe UI', sans-serif;
   width: 100%;
-  height: 80vh;
+  height: 70vh;
   align-items: center;
 }
 .cardddd {
@@ -105,12 +122,37 @@
   border-radius: 10px;
 }
 .hero-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #4C403695;
+  opacity: 1;
   padding: 53px 42px;
   width: 825px;
-  margin-left: 5%;
+  margin-left: 2%;
   height: 558px;
   border-radius: 10px;
+}
+.card-section {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+}
+#cl{
+  margin-bottom: 0px;
+}
+.hero-overlay .icon-circles{
+  margin-top: 10px;
+  margin-bottom: 50px;
+  width: 34px;
+  height: 34px;
+  margin-right: 10px;
+}
+
+.club-banners .icon-circles{
+  width: 34px;
+  height: 34px;
+  margin-right: 4px;
+}
+.club-banners .icon-circles:last-child {
+  margin-right: 0; /* no gap after last item */
 }
 .join{
   border-radius: 15px;
@@ -127,8 +169,9 @@
   line-height: 1.2;
   letter-spacing: 0%;
 }
-.hero-overlay .icon-circles{
-  margin-bottom: 50px;
+.hero-overlay .prehead{
+  margin-top: 5px;
+  margin-left: 5px;
 }
 #overlay-button{
   width: 280px;
@@ -142,6 +185,8 @@
   font-family: Inter;
   color: white;
   border: none;
+  margin-top: 12px;
+  margin-left: 5px;
 }
 .hero-card {
   padding: 20px;
@@ -249,7 +294,7 @@
   line-height: 100%;
   font-family: Inter;
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 #member-gallery{
   width: 330px;
@@ -400,7 +445,7 @@
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 36% 58%;
+  grid-template-columns: 36% 59%;
   gap: 80px;
   align-items: start;
 }
@@ -474,6 +519,7 @@
   height: 55px;
 }
 .resultpics {
+  margin-top: -15px;
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 images in a row */
   width: 100%;
@@ -535,7 +581,7 @@
   padding-top: 20px;
   padding-bottom: 20px;
   align-items: start;
-  width: 100%;
+  width: 102%;
   flex-wrap: wrap;
   gap:20px;
 }
@@ -652,7 +698,7 @@
   margin-top: 30px;
 }
 .latest-interaction{
-  padding-top: 80px; padding-left: 70px; padding-bottom: 80px
+  padding: 80px 30px 130px 70px;
 }
 .Latest {
   background: white;
@@ -1068,7 +1114,7 @@ letter-spacing: 0%;
   line-height: 100%;
   font-family: Inter;
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 #learn-more{
   width: 160px;
@@ -1107,7 +1153,7 @@ letter-spacing: 0%;
   line-height: 100%;
   font-family: Inter;
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
   #join-club{
       width: 180px;

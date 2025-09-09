@@ -319,12 +319,6 @@ letter-spacing: 0%;
   margin-right: 5px;
 }
 
-.card-section {
-  display: flex;
-  gap: 15px;
-  width: 30%;
-}
-
 .stat-card {
   background: #cc445e;
   color: white;
@@ -1020,26 +1014,6 @@ letter-spacing: 0%;
   width: 100%;
 }
 
-.comments-card {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 0 auto;
-  margin-left: 5%;
-  width: 90%;
-}
-
-.commentss-card {
-  background: #fff;
-  margin: 0 auto;
-  width: 90%;
-  border-radius: 10px;
-  margin-left: 4%;
-  padding: 20px;
-  max-height: 250px;
-  overflow-y: auto;
-}
 
 .commentss-card img {
   width: 100%;

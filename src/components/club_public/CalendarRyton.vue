@@ -181,16 +181,16 @@ h2 {
 .weekdays {
     font-weight: bold;
     text-align: center;
-    margin-top: 7px;
+    margin-top: 25px;
 }
 
 .day {
   min-height: 42px;
   text-align: center;
-  padding: 4px;
+  padding: 4px 30px;
   position: relative;
   width: 40px;
-  border: 2px solid transparent; /* default */
+  border: 2px solid transparent;
   transition: border 0.2s ease-in-out;
 }
 

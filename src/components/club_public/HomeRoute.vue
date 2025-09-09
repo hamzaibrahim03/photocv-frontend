@@ -14,9 +14,9 @@
                     </button>
 
                     <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                        <ul class="navbar-nav mb-2 mb-lg-0 text-center">
+                        <ul class="navbar-nav mb-2 mb-lg-0 custom-nav" style="margin-left: 75px">
                             <li class="nav-item">
-                                <a class="nav-link" :class="{ active: $route.path === '/' }" href="/" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                                <a class="nav-link" :class="{ active: $route.path === '/' || $route.name === 'HomeRoute' }" @click.prevent="$router.push('/')" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
                                     Home
                                 </a>
                             </li>
@@ -83,7 +83,7 @@
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[0]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ opacity: '0.5', background: `url(${Color.cover_images[0]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
                             <div class="hero-overlay">
                                 <div>
                                     <h1 :style="{ color: Color.background_color, fontWeight: '400'}">{{Club.club_name}}</h1>
@@ -91,11 +91,11 @@
                                     <button id="overlay-button" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }"> Join Our Club </button>
                                     <p class="prehead" :style="{ color: Color.background_color, paddingTop: '20px' }">An NYCE Club based in Apps, North East England</p>
                                     <div class="row" style="padding-left: 3%">
-                                        <div class="icon-circles me-3" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }"><i class="fab fa-facebook-f"></i>
+                                        <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }"><i class="fab fa-facebook-f"></i>
                                         </div>
-                                        <div class="icon-circles me-3" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }"><i class="fab fa-instagram"></i>
+                                        <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }"><i class="fab fa-instagram"></i>
                                         </div>
-                                        <div class="icon-circles me-3" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }"><span class="flickr-dots"><i class="fas fa-circle"></i><i class="fas fa-circle"></i></span>
+                                        <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }"><span class="flickr-dots"><i class="fa-solid fa-circle"></i><i class="fa-solid fa-circle"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -103,9 +103,9 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[1]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ opacity: '0.5', background: `url(${Color.cover_images[1]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
                             <div class="hero-overlay">
-                                <div class="card-section" style="width: 100%;">
+                                <div class="card-section" style="width: 100%;" id="cl">
                                     <div class="stat-card" :style="{width: '50%', backgroundColor: Color.accent_color, color: Color.background_color}">
                                         <small class="ca-details">Members</small>
                                         <h3 class="number">{{ memData.total_members }}</h3>
@@ -121,7 +121,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[2]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ opacity: '0.5', background: `url(${Color.cover_images[2]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
                             <div class="hero-overlay">
                                 <div v-if="Events.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
                                     <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
@@ -158,7 +158,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[3]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ opacity: '0.5', background: `url(${Color.cover_images[3]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
                             <div class="hero-overlay">
                                 <div class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
                                     <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
@@ -195,7 +195,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[4]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                        <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[4]?.url}) no-repeat center center / cover`, color: '#E7EFF233', opacity: '0.5' }">
                             <div class="hero-overlay">
                                 <div v-if="News.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%;">
                                     <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
@@ -268,7 +268,7 @@
                                 <i class="fab fa-instagram"></i>
                             </div>
                             <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }">
-                                <span class="flickr-dots"><i class="fas fa-circle"></i><i class="fas fa-circle"></i></span>
+                                <span class="flickr-dots"><i class="fa-solid fa-circle"></i><i class="fa-solid fa-circle"></i></span>
                             </div>
                         </div>
                     </div>
@@ -276,9 +276,9 @@
 
                 <div class="container" id="galcontainer">
                     <div class="card" style="height: auto; border: none" :style="{backgroundColor: Color.background_color}">
-                        <div class="d-flex justify-content-between align-items-end mb-3" id="cl">
-                            <div>
-                                <h5 id="clubheading" :style="{color: Color.text_color}">Club Galleries</h5>
+                        <div class="d-flex justify-content-between mb-3" id="cl">
+                            <div style="align-items: flex-end">
+                                <h5 id="clubheading" :style="{color: Color.text_color, marginBottom: '15px'}">Club Galleries</h5>
                                 <p id="clubsub" :style="{color: Color.text_color}">
                                     A preview of galleries made up of amazing photographs from club members
                                 </p>
@@ -289,18 +289,32 @@
                             </button>
                         </div>
 
-                        <div class="clubpics">
-                            <div v-for="(item, index) in chunkCards.flat()" :key="item.id || index" class="clubpics-item">
-                                <div v-if="item.photos && item.photos.length">
-                                    <img :src="item.photos[0].image" :alt="item.photos[0].title" style="object-fit: cover; object-position: top;" />
-                                    <div class="clubpics-info" :style="{ backgroundColor: Color.primary_color, opacity: '70%' }">
-                                        <div :style="{ color: Color.background_color }">
-                                            {{ item.gallery_name }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                       <div class="clubpics">
+  <div 
+    v-for="(item, index) in chunkCards.flat()" 
+    :key="item.id || index" 
+    class="clubpics-item"
+    :class="{
+      'top-left': index === 0,
+      'top-right': index === 4,
+      'bottom-left': index === 5,
+      'bottom-right': index === 9
+    }"
+  >
+    <div v-if="item.photos && item.photos.length">
+      <img 
+        :src="item.photos[0].image" 
+        :alt="item.photos[0].title" 
+      />
+      <div class="clubpics-info" :style="{ backgroundColor: Color.primary_color, opacity: '70%' }">
+        <span :style="{ color: Color.background_color }">
+          {{ item.gallery_name }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
                     </div>
                 </div>
 
@@ -337,7 +351,7 @@
                                 </div>
                             </div>
 
-                            <div class="cardddd" style="border: 1px solid black">
+                            <div class="cardddd" style="border: 1px solid black; padding: 0px">
                                 <Calendar />
                             </div>
 
@@ -372,9 +386,9 @@
 
                 <div class="container" id="membercontainer">
                     <div id="gal" style="margin-bottom: 10px; background-color: #EBE6E1;" :style="{backgroundColor: Color.background_color}">
-                        <div class="d-flex justify-content-between align-items-end mb-3" id="cl" style=" padding-left: 20px; font-size: 20px; padding-right: 20px; padding-top: 20px;">
+                        <div class="d-flex justify-content-between mb-3" id="cl" style=" padding-left: 20px; font-size: 20px; padding-right: 20px; padding-top: 20px;">
                             <div>
-                                <h5 id="clubheading" :style="{color: Color.text_color}">Member Galleries</h5>
+                                <h5 id="clubheading" :style="{color: Color.text_color, marginBottom: '15px'}">Member Galleries</h5>
                                 <p id="clubsub" :style="{color: Color.text_color}">A preview of galleries uploaded by our amazing photographers from the club</p>
                             </div>
 
@@ -400,11 +414,11 @@
                                 </div>
                             </div>
 
-                            <div class="cardddd" style="background-color: #EBE6E1; padding: 35px;" :style="{backgroundColor: Color.secondary_color, opacity: '60%',color: Color.text_color}">
+                            <div class="cardddd" style="background-color: #EBE6E1; padding: 35px; height: 360px" :style="{backgroundColor: Color.secondary_color, opacity: '60%',color: Color.text_color}">
                                 <h5 class="head" :style="{color: Color.text_color}">Latest Members</h5>
                                 <div class="row" style="padding-top: 30px;">
-                                    <div class="col-6" style="margin-bottom: 30px;" v-for="latestMember in homeStore.homeData?.data?.latestMembers?.members.slice(0, 6)" :key="latestMember.id">
-                                        <div class="event-items text-center">
+                                    <div class="col-6" style="margin-bottom: 20px;" v-for="latestMember in homeStore.homeData?.data?.latestMembers?.members.slice(0, 6)" :key="latestMember.id">
+                                        <div class="event-items text-center" style="gap: 20px">
                                             <img v-if="latestMember.profile_image_url" class="img-fluid event-img" :src="latestMember.profile_image_url" alt="Profile" @error="latestMember.profile_image_url = null" style="width:50px; height: 50px; border-radius: 7px;  object-fit: cover; object-position: top;" />
                                             <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                             </div>
@@ -420,13 +434,13 @@
                 </div>
 
                 <div class="latest-interaction" style="background-color: #99816B;" :style="{backgroundColor: Color.secondary_color}">
-                    <h5 id="clubheading" class="heading" :style="{color: Color.text_color}">Latest Interactions</h5>
-                    <h6 id="clubsub" class="subhead" :style="{color: Color.text_color, marginTop: '12px'}">A preview of comments and reactions on the photos & other posts on the club website</h6>
+                    <h5 id="clubheading" class="heading" :style="{color: Color.text_color, marginBottom: '12px'}">Latest interactions</h5>
+                    <h6 id="clubsub" class="subhead" :style="{color: Color.text_color}">A preview of comments and reactions on the photos & other posts on the club website</h6>
                     <div class="row" style="margin-top: 30px; height: 390px">
                         <div class="col-12 col-md-6 mb-4">
-                            <div class="card comments-card shadow-sm" :style="{ backgroundColor: Color.background_color }">
+                            <div class="card comments-card shadow-sm" :style="{ backgroundColor: Color.background_color, margin: '0px' }">
                                 <div class="card-header border-0" :style="{ backgroundColor: Color.background_color }">
-                                    <h5 class="mb-0" :style="{ color: Color.text_color }">Recent Comments</h5>
+                                    <h5 class="mb-0" :style="{ color: Color.text_color, paddingLeft: '-25px'}">Recent Comments</h5>
                                 </div>
 
                                 <div class="card-body p-3 overflow-auto" style="max-height: 360px; margin-left: -21px">
@@ -492,11 +506,13 @@
                         </button>
                     </div>
                     <div class="upcoming-section" style="display: flex">
-                        <div class="cardddd" style="margin-left: 0px; background-color: #EBE6E1; padding: 35px" :style="{backgroundColor: Color.secondary_color}">
+                        <div class="cardddd" style="margin-left: 0px; background-color: #EBE6E1; padding: 35px; height: 380px" :style="{backgroundColor: Color.secondary_color}">
                             <h5 class="head" :style="{color: Color.text_color}">Latest News</h5>
                             <div class="event-list" v-if="News.length">
-                                <div class="event-item" v-for="clubnew in News" :key="clubnew.id || index" style="margin-bottom: 10px">
-                                    <img class="img-fluid" :src="clubnew.featured_image_url" alt="Com" style="max-width: 50px; max-height: 50px" />
+                                <div class="event-item" v-for="clubnew in News" :key="clubnew.id || index" style="margin-bottom: 10px;">
+                                    <img v-if="clubnew.featured_image_url" class="img-fluid event-img" :src="clubnew.featured_image_url" alt="News" @error="clubnew.featured_image_url = null" />
+                                    <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
+                                    </div>
                                     <div class="event-details">
                                         <span class="prehead" id="pname" :style="{color: Color.text_color, fontWeight: '400'}">{{ clubnew.title }}</span>
                                         <div class="galtext" id="edate">
@@ -885,7 +901,9 @@ onMounted(async () => {
     width: 97%;
     height: 440px;
     overflow-y: auto;
-    margin-left: 0%
+    margin-left: 0%;
+  border-radius: 10px;
+  padding: 20px 20px;
 }
 
 .comments-cards {
@@ -996,12 +1014,16 @@ onMounted(async () => {
 .event-img,
 .fallback-box {
     width: 100%;
-    max-width: 60px;
-    height: 60px;
+    max-width: 50px;
+    height: 50px;
     border-radius: 5px;
     object-fit: cover;
     background-color: #f0f0f0;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-item{
+    gap: 20px;
 }
 
 .fallback-box {
@@ -1015,6 +1037,24 @@ onMounted(async () => {
   margin: 1px;
 }
 
+.clubpics-item.top-left img {
+  border-top-left-radius: 10px;
+}
+.clubpics-item.top-right img {
+  border-top-right-radius: 10px;
+}
+.clubpics-item.bottom-left img {
+  border-bottom-left-radius: 10px;
+}
+.clubpics-item.bottom-right img {
+  border-bottom-right-radius: 10px;
+}
+.clubpics-info.bottom-left span {
+  border-bottom-left-radius: 10px;
+}
+.clubpics-info.bottom-right span {
+  border-bottom-right-radius: 10px;
+}
 
 
 </style>
