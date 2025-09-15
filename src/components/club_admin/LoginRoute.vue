@@ -41,7 +41,7 @@ import {
 } from "vue";
 import {
     useUserStore
-} from "@/stores/UserStore";
+} from "@/stores/club_admin/UserStore";
 import {
     useRouter
 } from "vue-router";

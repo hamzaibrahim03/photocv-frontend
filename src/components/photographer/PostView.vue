@@ -114,10 +114,10 @@
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import MyPosts from "@/partials/post/MyPosts.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue"
-import { useUserStore } from "@/stores/UserStore";
+import { useUserStore } from "@/stores/club_admin/UserStore";
 import { ref, computed, onMounted, watch } from 'vue'
 import apiClient from 'axios'
-import { useNoticeStore } from '@/stores/NoticeStore'
+import { useNoticeStore } from '@/stores/club_admin/NoticeStore'
 import RecentComments from "@/partials/club_admin/notices/RecentComments.vue";
 import MoreNotices from "@/partials/club_admin/notices/MoreNotices.vue";
 

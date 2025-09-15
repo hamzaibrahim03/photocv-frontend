@@ -373,7 +373,7 @@ letter-spacing: 0%;
   align-items: start;
   width: 100%;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 40px;
 }
 
 .upcard {
@@ -473,12 +473,12 @@ letter-spacing: 0%;
 
 #view {
   width: 100%;
-  max-width: 120px;
+  max-width: 100px;
   height: 40px;
   border-radius: 7px;
   background-color: #99816b;
   font-weight: 400;
-  font-size: 1.2rem;
+  font-size: 16px;
   line-height: 100%;
   font-family: Inter;
   color: white;
@@ -940,7 +940,7 @@ letter-spacing: 0%;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 15px;
   padding: 20px;
-  border-radius: 20px;
+  border-radius: 10px;
   width: 100%;
   margin-right: auto;
   flex-direction: row;
@@ -1219,13 +1219,6 @@ letter-spacing: 0%;
   margin: auto;
   width: 93%;
   margin-left: 5%;
-}
-
-.comments-cards img {
-  width: 100%;
-  max-width: 80px;
-  height: 80px;
-  border-radius: 7px;
 }
 
 .like-item {

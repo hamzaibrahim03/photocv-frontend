@@ -4,73 +4,71 @@
     <div v-if="!isLoading">
         <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: Color.background_color, height: '108px' }">
             <div class="container-fluid">
-
                 <a class="navbar-brand d-flex align-items-center" href="/">
                     <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px" />
                 </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" @click="toggleNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
-                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" :class="{ active: $route.path === '/' || $route.name === 'HomeRoute' }" @click.prevent="$router.push('/')" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" :class="{ active: $route.path === '/' }" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
                                 Home
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#events" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="#events" @click="closeNav" :style="{ color: Color.text_color }">
                                 Events
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#events" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="#events" @click="closeNav" :style="{ color: Color.text_color }">
                                 Competitions
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#gal" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="#gal" @click="closeNav" :style="{ color: Color.text_color }">
                                 Galleries
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#newscontainer" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="#newscontainer" @click="closeNav" :style="{ color: Color.text_color }">
                                 News
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#joincontainer" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="#joincontainer" @click="closeNav" :style="{ color: Color.text_color }">
                                 Club
                             </a>
                         </li>
                     </ul>
-                </div>
-
-                 <div class="right-header">
+                </div>  
+                <div class="right-header d-flex align-items-center">
                     <a href="notification.html" class="icon">
-                        <i class="fa-regular fa-bell text-lg mx-3" :style="{fontSize: '18px'}"></i>
+                        <i class="fa-regular fa-bell text-lg mx-3" :style="{ fontSize: '18px' }"></i>
                     </a>
-                    <div class="admin-dropdown">
-                        <a href="#" class="icon">
+                    <div class="divider" :style="{ width: '2px', height: '46px', margin: '0 10px', background:'#333' }"></div>
+
+                    <div class="admin-dropdown position-relative">
+                        <a href="#" class="icon" @click.prevent="toggleDropdown">
                             <img v-if="User && User.isLoggedIn && User.profile_image_url" :src="User.profile_image_url" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
                             <i v-else class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '38px' }"></i>
                         </a>
 
-                        <router-link to="/login" custom v-slot="{ navigate }">
-                            <span @click="navigate" id="login">Login&nbsp;<i class="fa-solid fa-chevron-down text-xs text-gray-500"></i></span>
-                            
-                        </router-link>    
-                           
-
-                        <div class="dropdown-menu">
+                        <router-link v-if="!User || !User.isLoggedIn" to="/login" custom v-slot="{ navigate }">
+                            <span @click="navigate" id="login">
+                                Login <i class="fa-solid fa-chevron-down text-xs text-gray-500"></i>
+                            </span>
+                        </router-link>
+                        <div class="dropdown-menu" v-show="isDropdownOpen">
                             <a href="#" @click.prevent="handleLogout">Log Out</a>
                         </div>
                     </div>
                 </div>
             </div>
         </nav>
+
 
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -125,21 +123,18 @@
 
                                     <div>
                                         <div>
-                                            <div class="justify-content-between align-items-start">
-                                                <div class="d-flex" id="cls">
-                                                    <h5>{{ Events[0].name || 'Untitled Event' }}</h5>
-                                                    <div class="icon-container ms-3">
+                                            <div class="events-card">
+                                                <h5 class="mb-2">{{ Events[0].name || 'Untitled Event' }}</h5>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="date mb-0">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
+                                                    <div class="icon-container d-flex gap-2">
                                                         <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
                                                         <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
                                                         <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
                                                         <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <p class="date">
-                                                {{ formatDate(Events[0].event_date) || 'Date Not Available' }}
-                                            </p>
+                                            </div>                  
                                             <p class="text-secondary">
                                                 {{ Events[0].description || 'No description provided.' }}
                                             </p>
@@ -162,10 +157,11 @@
 
                                     <div>
                                         <div>
-                                            <div class="justify-content-between align-items-start">
-                                                <div class="d-flex" id="cls">
-                                                    <h5>{{ Notice.title || 'Untitled Notice' }}</h5>
-                                                    <div class="icon-container ms-3">
+                                            <div class="events-card">
+                                                <h5 class="mb-2">{{ Notice.title || 'Untitled Event' }}</h5>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="date mb-0">{{ formatDate(Notice.created_at) || 'Date Not Available' }}</p>
+                                                    <div class="icon-container d-flex gap-2">
                                                         <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
                                                         <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
                                                         <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
@@ -173,10 +169,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <p class="date">
-                                                {{ formatDate(Notice.created_at) || 'Date Not Available' }}
-                                            </p>
                                             <p class="text-secondary">
                                                 {{ Notice.description || 'No description provided.' }}
                                             </p>
@@ -198,10 +190,11 @@
                                     <img :src="News[0].featured_image_url" alt="News Image" />
                                     <div>
                                         <div>
-                                            <div class="justify-content-between align-items-start">
-                                                <div class="d-flex" id="cls">
-                                                    <h5>{{ News[0].title || 'Untitled News' }}</h5>
-                                                    <div class="icon-container ms-3">
+                                            <div class="events-card">
+                                                <h5 class="mb-2">{{ News[0].title || 'Untitled Event' }}</h5>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="date mb-0">{{ formatDate(News[0].created_at) || 'Date Not Available' }}</p>
+                                                    <div class="icon-container d-flex gap-2">
                                                         <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
                                                         <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
                                                         <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
@@ -209,9 +202,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p class="date">
-                                                {{ formatDate(News[0].created_at) || 'Date Not Available' }}
-                                            </p>
                                             <p class="text-secondary">
                                                 {{ News[0].description || 'No description provided.' }}
                                             </p>
@@ -238,7 +228,7 @@
                             </div>
 
                             <div class="hero-content">
-                                <h1 id="clubheading" class="heading" :style="{ color: Color.text_color, marginTop: '-35px' }">
+                                <h1 id="clubheading" class="heading" :style="{ color: Color.text_color }">
                                     {{ Color.header_title }}
                                 </h1>
                                 <p id="clubsub" class="subhead" v-html="Color.header_description" :style="{ color: Color.text_color, marginTop: '20px'}"></p>
@@ -289,20 +279,18 @@
                                 View All Club Galleries
                             </button>
                         </div>
-
                         <div class="clubpics">
-                            <div v-for="(item, index) in chunkCards.flat()" :key="item.id || index" class="clubpics-item" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}">
+                            <div v-for="(item, index) in chunkCards.flat()" :key="item.id || index" class="clubpics-item" :class="getPositionClass(index, chunkCards.flat().length)">
                                 <div v-if="item.photos && item.photos.length">
-                                    <img :src="item.photos[0].image" :alt="item.photos[0].title" />
-                                    <div class="clubpics-info" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}" :style="{ backgroundColor: Color.primary_color, opacity: '70%' }">
+                                    <img :src="item.photos[0].image" :alt="item.photos[0].title" style="object-fit: cover; object-position: top;"/>
+                                    <div class="clubpics-info" :class="getPositionClass(index, chunkCards.flat().length)" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
                                         <span :style="{ color: Color.background_color }">
-                                            {{ item.gallery_name }}
+                                            {{ item.gallery_name.length > 7 ? item.gallery_name.slice(0, 7) + '...' : item.gallery_name }}
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </section>
@@ -341,7 +329,7 @@
                                 </div>
                             </div>
 
-                            <div class="cardddd" style="border: 1px solid black; padding: 0px">
+                            <div class="cardddd" :style="{border: '1px solid' + Color.primary_color, padding: '0px'}">
                                 <Calendar />
                             </div>
 
@@ -390,15 +378,13 @@
                         </div>
                         <div class="upcoming-section" style="display:flex">
                             <div class="card" style="height: auto; border: none; margin-top: -1px" :style="{backgroundColor: Color.background_color, margin: '0px'}">
-                                <div v-for="(row, rowIndex) in chunkedCards" :key="rowIndex">
-                                    <div class="pics">
-                                        <div v-for="(item, index) in row.flat()" :key="item.id || index" class="pics-items" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}">
-                                            <div v-if="item.image_url">
-                                                <img :src="item.image_url" :alt="item.username" style="object-fit: cover; object-position: top;" />
-                                                <div class="pics-infos" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}" :style="{backgroundColor: Color.primary_color, opacity: '70%'}">
-                                                    <div :style="{color: Color.background_color}">
-                                                        {{ item.gallery_name.length > 10 ? item.gallery_name.slice(0, 10) + '...' : item.gallery_name }}
-                                                    </div>
+                                <div class="pics">
+                                    <div v-for="(item, index) in chunkedCards.flat()" :key="item.id || index" class="pics-items" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}">
+                                        <div v-if="item.image_url">
+                                            <img :src="item.image_url" :alt="item.username" style="object-fit: cover; object-position: top;" />
+                                            <div class="pics-infos" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}" :style="{backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
+                                                <div :style="{color: Color.background_color}">
+                                                    {{ item.gallery_name.length > 7 ? item.gallery_name.slice(0, 7) + '...' : item.gallery_name }}
                                                 </div>
                                             </div>
                                         </div>
@@ -430,14 +416,14 @@
                 <div id="latest-interaction" style="background-color: #99816B;" :style="{backgroundColor: Color.secondary_color}">
                     <h5 id="clubheading" class="heading" :style="{color: Color.text_color, marginBottom: '12px'}">Latest interactions</h5>
                     <h6 id="clubsub" class="subhead" :style="{color: Color.text_color}">A preview of comments and reactions on the photos & other posts on the club website</h6>
-                    <div class="row" style="margin-top: 30px; height: 390px">
+                    <div class="row" style="margin-top: 30px;">
                         <div class="col-12 col-md-6 mb-4">
                             <div class="card comments-card shadow-sm" :style="{ backgroundColor: Color.background_color, margin: '0px' }">
                                 <div class="card-header border-0" :style="{ backgroundColor: Color.background_color }">
                                     <h5 class="mb-0" :style="{ color: Color.text_color, paddingLeft: '-25px'}">Recent Comments</h5>
                                 </div>
 
-                                <div class="card-body p-3 overflow-auto" style="max-height: 360px; margin-left: -21px">
+                                <div class="card-body overflow-auto" style="max-height: 360px; margin-left: -21px; padding:5px">
                                     <div class="row g-2 align-items-start pb-2 mb-3" v-for="interaction in Interaction" :key="interaction.id">
                                         <div class="col-3 col-sm-2 text-center">
                                             <img :src="interaction.image_url" alt="Interaction Image" class="img-fluid" id="comimg" />
@@ -467,13 +453,15 @@
 
                         <div class="col-12 col-md-6">
                             <div class="comments-cards p-4 shadow-sm" :style="{ backgroundColor: Color.background_color }">
-                                <h5 class="head mb-3" :style="{ color: Color.text_color }">Recent Likes</h5>
+                                <div class="card-header border-0" :style="{ backgroundColor: Color.background_color }">
+                                    <h5 class="mb-0" :style="{ color: Color.text_color, paddingLeft: '-25px'}">Recent Likes</h5>
+                                </div>
 
-                                <div class="card-body p-3">
+                                <div class="card-body">
                                     <div class="interaction-grid">
                                         <div class="interaction-item" v-for="interaction in Interaction.slice(0, 10)" :key="interaction.id">
                                             <div class="like-card text-center position-relative">
-                                                <img :src="interaction.image_url" class="profile-img img-fluid" id="likeimg" alt="User" />
+                                                <img :src="interaction.image_url" class="img-fluid" id="likeimg" alt="User" />
                                                 <span class="heart-icon" :style="{ backgroundColor: Color.accent_color, color: Color.background_color }">
                                                     <img :src="Heart" alt="icon" style="width: 14px; height: 13px" />
                                                 </span>
@@ -523,16 +511,13 @@
                         </div>
 
                         <div class="card" :style="{ backgroundColor: Color.background_color, width: '60%', height: 'auto', border: 'none', borderRadius: '10px' }">
-                            <div v-for="(row, rowIndex) in chunkedcards" :key="rowIndex">
-                                <div class="resultpics">
-                                    <div v-for="(item, index) in row.flat()" :key="item.id || index" class="resultpics-items" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}">
-                                        <div v-if="item.image && item.image.length">
-                                            <img v-if="item.image" :src="item.image" :alt="item.gallery_name" style="object-fit: cover; object-position: top;" />
-
-                                            <div class="resultpics-infos" :style="{backgroundColor: Color.primary_color, opacity: '70%'}" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}">
-                                                <div :style="{ color: Color.background_color }">
-                                                    {{ item.gallery_name.length > 10 ? item.gallery_name.slice(0, 10) + '...' : item.gallery_name }}
-                                                </div>
+                            <div class="resultpics">
+                                <div v-for="(item, index) in chunkedcards.flat()" :key="item.id || index" class="resultpics-items" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}">
+                                    <div v-if="item.image && item.image.length">
+                                        <img v-if="item.image" :src="item.image" :alt="item.gallery_name" style="object-fit: cover; object-position: top;" />
+                                        <div class="resultpics-infos" :style="{backgroundColor: hexToRgba(Color.primary_color, 0.7) }" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}">
+                                            <div :style="{ color: Color.background_color }">
+                                                {{ item.gallery_name.length > 7 ? item.gallery_name.slice(0, 7) + '...' : item.gallery_name }}
                                             </div>
                                         </div>
                                     </div>
@@ -563,7 +548,7 @@
             </section>
 
             <section>
-                <div class="container" style="max-width:1820; padding: 0px 0px">
+                <div class="container">
                     <div class="footer-section" style="padding-top: 30px">
                         <h5 id="footer-heading" class="heading footer-heading" :style="{ color: Color.text_color }">{{ Color.footer_text }}</h5>
                         <p id="footer-description" class="head footer-description mx-auto" style="max-width: 1145px;" :style="{ color: Color.text_color }">{{ Color.footer_description }}</p>
@@ -572,7 +557,7 @@
             </section>
 
             <section>
-                <div class="container footer-section" style="max-width: 1820px; padding: 0px 20px;">
+                <div class="container footer-section">
                     <div class="row align-items-center text-center text-md-start">
 
                         <div class="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
@@ -634,7 +619,7 @@
 
                                 <div v-if="Color.flickr_link_option === 1 && Color.flickr_link" class="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
                                     <div class="ficon-circles me-3" :style="{ color: Color.background_color, backgroundColor: Color.text_color }">
-                                        <i class="fab fa-flickr"></i>
+                                        <span class="flickr-dots"><i class="fa-solid fa-circle"></i><i class="fa-solid fa-circle"></i></span>
                                     </div>
                                     <div>
                                         <p class="footer-text fw-bold mb-1" :style="{ color: Color.text_color }">Flickr</p>
@@ -661,17 +646,9 @@
 </template>
 
 <script setup>
-import {
-    ref,
-    onMounted,
-    computed
-} from 'vue';
-import {
-    useHomeStore
-} from '@/stores/ClubData';
-import {
-    storeToRefs
-} from 'pinia';
+import { ref, onMounted, computed, onUnmounted } from 'vue';
+import { useHomeStore } from '@/stores/club_public/ClubData';
+import { storeToRefs } from 'pinia';
 import Loader from "@/components/LoaderAll.vue";
 import Calendar from "@/components/club_public/CalendarRyton.vue";
 import Pro from "@/assets/icons/event_list/pro.svg"
@@ -683,6 +660,23 @@ import '@/assets/css/clubstyle.css'
 import '@/assets/dist/calendar-gc.min.css'
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useRouter } from "vue-router";
+
+const columns = ref(5); 
+
+
+const router = useRouter();
+const isNavOpen = ref(false);
+const isDropdownOpen = ref(false);
+const toggleNav = () => {
+  isNavOpen.value = !isNavOpen.value;
+};
+const closeNav = () => {
+  isNavOpen.value = false;
+};
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value;
+};
 
 /* global $ */
 dayjs.extend(relativeTime);
@@ -716,7 +710,12 @@ const cards = computed(() => {
         };
     }).filter(card => card.image_url);
 });
-const Interaction = computed(() => homeStore.homeData.data?.latestInteractions || {});
+const Interaction = computed(() =>
+  Array.isArray(homeStore.homeData.data?.latestInteractions)
+    ? homeStore.homeData.data.latestInteractions
+    : []
+);
+
 const picture = computed(() => {
     const competitions = homeStore.homeData?.data?.latestResults?.original?.data || [];
 
@@ -729,7 +728,7 @@ const picture = computed(() => {
             .map(entry => ({
                 id: entry.id,
                 image: entry.entry_image_url,
-                gallery_name: comp?.name || "No Name"
+                gallery_name: entry.entry_image_title || "No Name"
             }))
         );
     });
@@ -751,6 +750,18 @@ const chunkCards = computed(() => {
     }
     return chunks;
 });
+
+function updateColumns() {
+  if (window.innerWidth < 360) {
+    columns.value = 1; // mobile
+  } else if (window.innerWidth < 576) {
+    columns.value = 2; // tablet
+  }else if (window.innerWidth < 992) {
+    columns.value = 3;
+  } else {
+    columns.value = 5; // desktop
+  }
+}
 
 // const formatTime = (datetimeStr) => {
 //     const date = new Date(datetimeStr);
@@ -776,6 +787,24 @@ const timeAgo = (date) => {
     return dayjs(date).fromNow();
 };
 
+const hexToRgba = (hex, alpha) => {
+  let r = 0, g = 0, b = 0;
+
+  if (hex.length === 4) {
+    r = parseInt(hex[1] + hex[1], 16);
+    g = parseInt(hex[2] + hex[2], 16);
+    b = parseInt(hex[3] + hex[3], 16);
+  }
+  else if (hex.length === 7) {
+    r = parseInt(hex[1] + hex[2], 16);
+    g = parseInt(hex[3] + hex[4], 16);
+    b = parseInt(hex[5] + hex[6], 16);
+  }
+
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+
 const chunkedcards = computed(() => {
     const chunkdSize = 5;
     const chunkds = [];
@@ -786,6 +815,13 @@ const chunkedcards = computed(() => {
 });
 
 onMounted(async () => {
+    document.addEventListener("click", (e) => {
+    if (!e.target.closest(".admin-dropdown")) {
+      isDropdownOpen.value = false;
+    }
+  });
+  updateColumns();
+  window.addEventListener("resize", updateColumns);
     const carouselEl = document.querySelector('#carouselExampleIndicators')
     if (carouselEl && window.bootstrap) {
         new window.bootstrap.Carousel(carouselEl)
@@ -877,6 +913,26 @@ onMounted(async () => {
     calendar.setEvents(allEvents.value);
 
 });
+
+onUnmounted(() => {
+  window.removeEventListener("resize", updateColumns);
+});
+
+function getPositionClass(index, total) {
+  const row = Math.floor(index / columns.value);
+  const col = index % columns.value;
+  const lastIndex = total - 1;
+
+  if (index === 0) return "top-left";
+
+  if (row === 0 && col === columns.value - 1) return "top-right";
+
+  if (row === Math.floor(lastIndex / columns.value) && col === 0) return "bottom-left";
+
+  if (index === lastIndex) return "bottom-right";
+
+  return "";
+}
 </script>
 
 <style scoped>
@@ -928,7 +984,6 @@ onMounted(async () => {
     font-weight: 400;
     font-style: Regular;
     font-size: 72px;
-    leading-trim: CAP_HEIGHT;
     line-height: 20px;
     letter-spacing: 0%;
 }
@@ -938,7 +993,6 @@ onMounted(async () => {
     font-weight: 400;
     font-style: Regular;
     font-size: 36px;
-    leading-trim: CAP_HEIGHT;
     line-height: 100%;
     letter-spacing: 0%;
 }
@@ -948,7 +1002,6 @@ onMounted(async () => {
     font-weight: 500;
     font-style: Medium;
     font-size: 24px;
-    leading-trim: CAP_HEIGHT;
     line-height: 100%;
     letter-spacing: 0%;
 }
@@ -958,7 +1011,6 @@ onMounted(async () => {
     font-weight: 600;
     font-style: Semi Bold;
     font-size: 20px;
-    leading-trim: CAP_HEIGHT;
     line-height: 100%;
     letter-spacing: 0%;
 }
@@ -968,7 +1020,6 @@ onMounted(async () => {
     font-weight: 400;
     font-style: Regular;
     font-size: 18px;
-    leading-trim: CAP_HEIGHT;
     line-height: 36px;
     letter-spacing: 0%;
 }
@@ -978,7 +1029,6 @@ onMounted(async () => {
     font-weight: 400;
     font-style: Regular;
     font-size: 16px;
-    leading-trim: CAP_HEIGHT;
     line-height: 100%;
     letter-spacing: 0%;
 }
@@ -988,7 +1038,6 @@ onMounted(async () => {
     font-weight: 400;
     font-style: Regular;
     font-size: 14px;
-    leading-trim: CAP_HEIGHT;
     line-height: 20px;
     letter-spacing: 0%;
 }
@@ -997,7 +1046,6 @@ onMounted(async () => {
     font-family: Inter;
     font-weight: 400;
     font-size: 12px;
-    leading-trim: NONE;
     line-height: 100%;
     letter-spacing: 0%;
 }
@@ -1028,19 +1076,19 @@ onMounted(async () => {
     margin: 1px;
 }
 .clubpics-item.top-left img {
-    border-top-left-radius: 10px;
+    border-top-left-radius: 10px !important;
 }
 
 .clubpics-item.top-right img {
-    border-top-right-radius: 10px;
+    border-top-right-radius: 10px !important;
 }
 
 .clubpics-item.bottom-left img {
-    border-bottom-left-radius: 10px;
+    border-bottom-left-radius: 10px !important;
 }
 
 .clubpics-item.bottom-right img {
-    border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px !important;
 }
 
 .clubpics-info.bottom-left {

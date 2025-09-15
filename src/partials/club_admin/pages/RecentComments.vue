@@ -36,7 +36,7 @@ import {
 } from "vue";
 import {
     usePageComments
-} from "@/stores/PageComments";
+} from "@/stores/club_admin/PageComments";
 
 export default {
     props: {

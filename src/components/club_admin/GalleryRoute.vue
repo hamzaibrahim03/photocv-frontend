@@ -136,10 +136,10 @@ import Com from "@/assets/icons/gallery/comment.svg"
 // Stores
 import {
     useMemberGallery
-} from '@/stores/MemberGallery'
+} from '@/stores/club_admin/MemberGallery'
 import {
     useClubGallery
-} from '@/stores/ClubGallery'
+} from '@/stores/club_admin/ClubGallery'
 
 // Member Gallery Store
 const {

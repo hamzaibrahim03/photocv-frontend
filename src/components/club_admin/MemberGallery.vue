@@ -109,7 +109,7 @@ import HeaderRoute from "@/components/HeaderRoute.vue";
 import Ima from "@/assets/icons/gallery/image.svg"
 import Hea from "@/assets/icons/gallery/heart.svg"
 import Com from "@/assets/icons/gallery/comment.svg"
-import { useMemberGallery } from '@/stores/MemberGallery'
+import { useMemberGallery } from '@/stores/club_admin/MemberGallery'
 
 // Store
 const { member_gallery, fetchMemberGallery } = useMemberGallery()

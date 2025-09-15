@@ -56,7 +56,7 @@ import Gear from "@/assets/icons/navigation/gear.svg"
 import Plan from "@/assets/icons/navigation/plans.svg"
 import {
     useUserStore
-} from "@/stores/UserStore";
+} from "@/stores/club_admin/UserStore";
 const user = useUserStore();
 const handleLogout = async () => {
     await user.logout();

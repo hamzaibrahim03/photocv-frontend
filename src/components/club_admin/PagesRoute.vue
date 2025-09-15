@@ -111,7 +111,7 @@
 
 import { ref, computed, onMounted, watch } from 'vue'
 import apiClient from '@/api/axios'
-import { usePagesStore } from '@/stores/PagesStore'
+import { usePagesStore } from '@/stores/club_admin/PagesStore'
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
 import RecentComments from "@/partials/club_admin/pages/RecentComments.vue"

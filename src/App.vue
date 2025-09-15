@@ -8,7 +8,7 @@
 <script setup>
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import { onMounted } from 'vue';
-import { useDashboardStore } from '@/stores/DashboardStore';
+import { useDashboardStore } from '@/stores/club_admin/DashboardStore';
 
 const dashboardStore = useDashboardStore();
 

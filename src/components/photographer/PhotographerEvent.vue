@@ -117,7 +117,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import apiClient from '@/api/axios'
-import { useEventStore } from '@/stores/EventStore'
+import { useEventStore } from '@/stores/club_admin/EventStore'
 import HeaderRoute from '@/components/HeaderRoute.vue'
 import NavigationRoute from '@/components/NavigationRoute.vue'
 import CalendarAll from '@/partials/club_admin/events/CalendarAll.vue'

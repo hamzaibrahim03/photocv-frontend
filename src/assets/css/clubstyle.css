@@ -10,7 +10,7 @@
   padding-left: 60px;
 }
 .custom-nav{
-  margin-left: 75px;
+  margin-left: 315px;
 }
 #login{
   padding: 0px 70px 0px 0px;
@@ -81,13 +81,13 @@ letter-spacing: 0%;
   padding: 48px 0px 20px;
 }
 #membercontainer{
-  padding: 20px 0px 70px;
+  padding: 20px 0px 50px;
 }
 #newscontainer{
   padding: 75px 0px 40px;
 }
 #joincontainer {
-  padding: 40px 0px 20px;
+  padding: 25px 0px 20px;
 }
 #galcontainer {
   padding: 55px 0px 30px;
@@ -137,7 +137,7 @@ letter-spacing: 0%;
 .hero-overlay {
   position: relative;
   z-index: 2;
-  background: rgba(76, 64, 54, 0.55); 
+  background: rgba(76, 64, 54, 0.4);
   padding: 53px 42px;
   width: 825px; 
   margin-left: 2%;
@@ -147,7 +147,7 @@ letter-spacing: 0%;
 
 .cardddd {
   background: white;
-  width: 32%;
+  width: 31%;
   padding: 20px;
   height: 390px;
   border-radius: 10px;
@@ -369,7 +369,7 @@ letter-spacing: 0%;
 }
 
 .pics-items img {
-  width: 234px;
+  width: 100%;
   height: 176px;
   object-fit: cover;
   object-position: top;
@@ -503,7 +503,8 @@ letter-spacing: 0%;
   overflow: hidden;
 }
 .clubpics-item img {
-  width: 355px;
+  border-radius: 0;
+  width: 100%;
   height: 265px;
   object-fit: cover;
   object-position: top;
@@ -552,7 +553,7 @@ letter-spacing: 0%;
     letter-spacing: 0%;
 }
 .resultpics-items img {
-  width: 234px;
+  width: 100%;
   height: 184px;
   object-fit: cover;
   object-position: top;
@@ -573,13 +574,16 @@ letter-spacing: 0%;
   justify-content: center;
   height: 30px;
 }
+.card-header{
+  margin-bottom: 20px;
+}
 .upcoming-section {
   display: flex;
   border-radius: 10px;
   align-items: start;
   width: 100%;
   flex-wrap: wrap;
-  gap:20px;
+  gap:40px;
 }
 .upcoming-sections {
   display: flex;
@@ -589,7 +593,7 @@ letter-spacing: 0%;
   align-items: start;
   width: 102%;
   flex-wrap: wrap;
-  gap:20px;
+  gap:40px;
 }
 .event-list{
   padding-top: 30px;
@@ -759,7 +763,8 @@ letter-spacing: 0%;
 margin-right: 10px;
 }
 #likeimg{
-  max-width: 140px; 
+  max-width:140px;
+  width: 100%; 
   height: 90px; 
   object-fit: cover; 
   object-position: top;
@@ -774,8 +779,18 @@ margin-right: 10px;
 
 .interaction-item {
   display: flex;
-  justify-content: center;
 }
+
+.hero-content #clubheading{
+  margin-top: -35px;
+}
+/* Keep right-header fixed to the right */
+.navbar .right-header {
+  margin-left: auto; /* pushes to the right */
+  display: flex;
+  align-items: center;
+}
+
 
 /* 1399px and below */
 @media only screen and (max-width: 1399px) {
@@ -799,19 +814,15 @@ margin-right: 10px;
     justify-content: flex-end;
     position: relative;
   }
-  #ename, #pname{
-    font-size: 12px;
-    width: 120px;
-  }
   #edate{
     width: 85px;
-  }
-  #espeaker{
-    width: 150px
   }
   #memname{
     width: 80px;
     font-size: 14px;
+  }
+  .hero-overlay{
+    margin-bottom: 30px;
   }
   .hero-overlay h1 {
     font-size: 56px !important;
@@ -822,7 +833,7 @@ margin-right: 10px;
     margin-bottom: 49px;
   }
   .hero-grid {
-      grid-template-columns: 34% 58%;
+      grid-template-columns: 34% 61%;
       gap: 60px;
  }
   .hero-image img {
@@ -855,7 +866,7 @@ margin-right: 10px;
       font-size: 1rem;
  }
   .clubpics-item img {
-      width: 320px;
+      width: 100%;
       height: 240px;
  }
  .join{
@@ -870,7 +881,7 @@ margin-right: 10px;
     font-size: 18px;
  }
   .resultpics-items img {
-      width: 200px;
+      width: 100%;
       height: 170px;
  }
   .upcard{
@@ -976,7 +987,7 @@ letter-spacing: 0%;
   padding-right: 30px;
 }
 #joincontainer #clubheading {
-  width: 800px
+  font-size: 34px;
 }
 #learn-more{
   width: 240px;
@@ -991,12 +1002,22 @@ letter-spacing: 0%;
   color: white;
   margin-top: 30px;
 }
+.cardddd{
+  width: 47% !important;
+  margin: 0;
+}
+.cardddd:last-child{
+  margin: 0 auto;
+}
 }
 /* 1199px and below */
 @media only screen and (max-width: 1199px) {
   #logo{
     max-width: 150px;
     padding-left: 5px;
+  }
+  .hero-content #clubheading{
+    margin-top: -15px;
   }
   .custom-nav{
     margin-left: 5px;
@@ -1059,7 +1080,7 @@ letter-spacing: 0%;
   font-size: 14px
 }
 #herocontainer {
-  padding: 25px 0px 0px;
+  padding: 25px 0px;
 }
 #clubcontainer {
   padding: 0px 0px;
@@ -1068,7 +1089,10 @@ letter-spacing: 0%;
   padding: 0px 0px;
 }
 #membercontainer{
-  padding: 5px 0px 20px;
+  padding: 25px 0px;
+}
+#latest-interaction{
+  padding: 30px 10px 30px;
 }
 #newscontainer{
   padding: 45px 0px 0px;
@@ -1077,7 +1101,7 @@ letter-spacing: 0%;
   padding: 25px 0px 10px;
 }
 #galcontainer {
-  padding: 20px 0px 20px;
+  padding: 25px 0px;
 }
  #clubheading{
   font-family: Inter;
@@ -1109,21 +1133,21 @@ letter-spacing: 0%;
       font-size: 0.95rem;
  }
   .clubpics-item img {
-      width: 300px;
+      width: 100%;
       height: 225px;
  }
  .pics{
   grid-template-columns: repeat(3, 1fr);
 }
  .pics-items img {
-     width: 200px;
+     width: 100%;
      height: 150px;
 }
  .resultpics{
    grid-template-columns: repeat(3, 1fr);
  }
   .resultpics-items img {
-      width: 180px;
+      width: 100%;
       height: 150px;
  }
   #view-all {
@@ -1243,7 +1267,7 @@ letter-spacing: 0%;
  }
  
 .cardddd{
-  width: 48% !important;
+  width: 47% !important;
   margin: 0;
 }
 .cardddd:last-child{
@@ -1359,11 +1383,8 @@ letter-spacing: 0%;
     margin-bottom: 45px;
   }
   .cardddd{
-    width: 48% !important;
+    width: 95% !important;
     margin: 0;
-  }
-  .cardddd:last-child{
-    margin: 0 auto;
   }
   .custom-card {
     flex-direction: column;
@@ -1442,7 +1463,7 @@ letter-spacing: 0%;
   .resultpics-items img {
       max-width: 100%;
       width: 100% !important;
-      max-height: auto;
+      height: auto;
  }
   .pics {
       grid-template-columns: repeat(2, 1fr);
@@ -1509,10 +1530,7 @@ letter-spacing: 0%;
   .pics-items img {
       max-width: 100%;
       width: 100% !important;
-      height: 170px;
- }
-  .cardddd {
-      height: auto !important;
+      height: auto;
  }
   .card {
       width: 100% !important;
@@ -1547,10 +1565,10 @@ letter-spacing: 0%;
   letter-spacing: 0%;
 }
 #ename, #pname{
-  width: 120px;
+  width: 100%;
 }
 #espeaker{
-  width: 120px;
+  width: 100%;
 }
 #edate{
  width: 90px;
@@ -1752,7 +1770,7 @@ letter-spacing: 0%;
  }
   .pics-items img {
       max-width: 100%;
-      height: 160px;
+      height: 100%;
       width: 100% !important;
  }
  #ehead {
@@ -1850,8 +1868,14 @@ letter-spacing: 0%;
   .latest-interaction {
       padding: 20px !important;
  }
+ .card-header{
+   padding: 0;
+ }
+ .comments-card{
+   height: 330px;
+ }
   .comments-card, .comments-cards {
-      padding: 15px !important;
+      padding: 25px 15px !important;
  }
   .footer-image {
       max-width: 300px;
@@ -2004,7 +2028,7 @@ letter-spacing: 0%;
  }
  .resultpics{
    flex-direction: column;
-   grid-template-columns: repeat(1, 1fr);
+   grid-template-columns: repeat(1, 1fr) !important;
  }
   .resultpics-items img {
       width: 100%;

@@ -268,7 +268,7 @@
 <script setup>
 import {
     useDashboardStore
-} from '@/stores/DashboardStore';
+} from '@/stores/club_admin/DashboardStore';
 import {
     onMounted,
     computed

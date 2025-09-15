@@ -39,7 +39,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { useNoticeStore } from '@/stores/NoticeStore'
+import { useNoticeStore } from '@/stores/club_admin/NoticeStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
 import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue";

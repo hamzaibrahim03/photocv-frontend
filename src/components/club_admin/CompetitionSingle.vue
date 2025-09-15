@@ -194,7 +194,7 @@ import { onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import dayjs from 'dayjs'
 
-import { useCompetitionStore } from '@/stores/CompetitionStore'
+import { useCompetitionStore } from '@/stores/club_admin/CompetitionStore'
 
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"

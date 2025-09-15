@@ -41,6 +41,7 @@ import PhotographerPlans from "@/components/photographer/PhotographerPlans.vue"
 import LearningNotes from "@/components/photographer/LearningNotes.vue"
 // club public
 import HomeRoute from "@/components/club_public/HomeRoute.vue"
+import EventPublic from "@/components/club_public/EventPublic.vue"
 const routes = [
   {
     name: "Login",
@@ -268,6 +269,11 @@ const routes = [
     name: "HomeRoute",
     path: "/",
     component: HomeRoute,
+  },
+  {
+    name: "EventPublic",
+    path: "/rytonevent",
+    component: EventPublic,
   },
 ];
 

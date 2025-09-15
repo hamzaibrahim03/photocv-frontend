@@ -30,7 +30,7 @@
 
 <script>
 import { onMounted } from "vue";
-import { useNewsComments } from "@/stores/MoreNews";
+import { useNewsComments } from "@/stores/club_admin/MoreNews";
 /* global $ */
 
 export default {

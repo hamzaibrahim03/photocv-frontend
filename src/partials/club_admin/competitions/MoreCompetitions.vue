@@ -25,7 +25,7 @@
 
 <script>
 import { onMounted } from "vue";
-import { useMoreCompetitions } from "@/stores/MoreCompetitions";
+import { useMoreCompetitions } from "@/stores/club_admin/MoreCompetitions";
 /* global $ */
 
 export default {

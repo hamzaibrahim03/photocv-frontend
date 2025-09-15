@@ -51,7 +51,7 @@ import HeaderRoute from "@/components/HeaderRoute.vue";
 import ClubProfile from "@/partials/club_admin/club/ClubProfile.vue";
 import {
     useEventStore
-} from "@/stores/EventStore";
+} from "@/stores/club_admin/EventStore";
 
 // Step Components
 import Step1General from '@/steps_club/Step1General.vue';

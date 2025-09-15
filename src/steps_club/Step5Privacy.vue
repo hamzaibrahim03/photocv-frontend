@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import { useClubFormStore } from '@/stores/ClubFormData';
+import { useClubFormStore } from '@/stores/club_admin/ClubFormData';
 
 const clubStore = useClubFormStore();
 

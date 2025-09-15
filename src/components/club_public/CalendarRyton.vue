@@ -1,21 +1,17 @@
 <template>
-<!-- Calendar -->
-<div 
-  class="calendar" 
-  :style="{ '--border-color': Color.primary_color }"
->
+<div class="calendar" :style="{ '--border-color': Color.primary_color }">
   <!-- Calendar Header -->
   <div class="calendar-header" 
-       :style="{backgroundColor: Color.primary_color, color: Color.background_color}">
-    <button class="previous" 
-            @click="prevMonth" 
-            :style="{backgroundColor: Color.primary_color, color: Color.background_color}">
+       :style="{ backgroundColor: Color.primary_color, color: Color.background_color }">
+    <button class="previous"
+            @click="prevMonth"
+            :style="{ backgroundColor: Color.primary_color, color: Color.background_color }">
       ‹
     </button>
     <h2>{{ monthNames[currentMonth] }} {{ currentYear }}</h2>
-    <button class="next" 
-            @click="nextMonth" 
-            :style="{backgroundColor: Color.primary_color, color: Color.background_color}">
+    <button class="next"
+            @click="nextMonth"
+            :style="{ backgroundColor: Color.primary_color, color: Color.background_color }">
       ›
     </button>
   </div>
@@ -33,12 +29,44 @@
       v-for="day in daysInMonth" 
       :key="day" 
       class="day hoverable"
-      :title="getEventsTooltip(day)"
     >
-      <span class="day-number" :class="{ 'today-badge': isToday(day) }">
-        {{ day }}
-      </span>
+      <!-- Event Labels -->
+      <div class="labels-container">
+      <div 
+        v-if="eventsByDate[`${currentYear}-${currentMonth}-${day}`]" 
+        class="event-labels"
+      >
+        <div 
+          v-if="eventsByDate[`${currentYear}-${currentMonth}-${day}`]" 
+          class="event-label"
+          :style="{ 
+            color: eventsByDate[`${currentYear}-${currentMonth}-${day}`].length === 1 
+              ? Color.primary_color 
+              : Color.accent_color, 
+            backgroundColor: Color.background_color 
+          }"
+        >
+         {{
+          eventsByDate[`${currentYear}-${currentMonth}-${day}`].length === 1
+            ? eventsByDate[`${currentYear}-${currentMonth}-${day}`][0].eventName
+            : eventsByDate[`${currentYear}-${currentMonth}-${day}`]
+                .map(ev => ev.eventName)
+                .join(', ')
+        }}
+        </div>
+      </div>
+
+      <!-- Day Number -->
+      <span 
+  class="day-number" 
+  :class="{ 'today-badge': isToday(day) }"
+  :style="isToday(day) ? { backgroundColor: Color.primary_color } : {}"
+>
+  {{ day }}
+</span>
+
     </div>
+  </div>
   </div>
 </div>
 
@@ -51,7 +79,7 @@ import {
 } from "vue";
 import {
     useHomeStore
-} from "@/stores/ClubData"; // update path
+} from "@/stores/club_public/ClubData"; // update path
 
 const homeStore = useHomeStore();
 
@@ -83,13 +111,6 @@ const comps = computed(() =>
 );
 
 const allEvents = computed(() => [...events.value, ...comps.value]);
-const getEventsTooltip = (day) => {
-  const key = `${currentYear.value}-${currentMonth.value}-${day}`;
-  if (!eventsByDate.value[key]) return "";
-  return eventsByDate.value[key].map(ev => ev.eventName).join(", ");
-};
-
-
 // Calendar logic
 const today = new Date();
 const currentMonth = ref(today.getMonth());
@@ -119,7 +140,6 @@ const eventsByDate = computed(() => {
     });
     return grouped;
 });
-
 
 const prevMonth = () => {
     if (currentMonth.value === 0) {
@@ -160,15 +180,20 @@ h2 {
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-radius: 10px;
 }
 
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
 }
-
+.labels-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap; /* all inline */
+  gap: 4px;
+  margin-top: 4px;
+}
 .previous,
 .next {
     font-size: 28px;
@@ -185,28 +210,52 @@ h2 {
 }
 
 .day {
-  min-height: 42px;
-  text-align: center;
-  padding: 4px 30px;
-  position: relative;
-  width: 40px;
-  border: 2px solid transparent;
-  transition: border 0.2s ease-in-out;
+    min-height: 50px;
+    text-align: center;
+    padding: 4px;
+    position: relative;
+    width: 40px;
+    border: 2px solid transparent;
 }
 
 .day-number {
-  font-size: 16px;
+    font-size: 16px;
 }
 
-/* Hover effect */
 .day.hoverable:hover {
-  border: 2px solid var(--border-color);
-  border-radius: 6px;
-  cursor: pointer;
-  height: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    padding-bottom: 10px;
 }
 
+.today-badge {
+  border-radius: 6px;
+  padding: 2px 6px;
+  display: inline-block;
+  width: 35px;
+  height: 30px;
+}
+
+.event-labels {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  gap: 2px;
+  z-index: 2;
+}
+
+.event-label {
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.day.hoverable:hover .event-labels {
+  display: flex;
+}
 
 </style>

@@ -36,7 +36,7 @@ import {
 } from "vue";
 import {
     useEventComments
-} from "@/stores/EventComments";
+} from "@/stores/club_admin/EventComments";
 /* global $ */
 
 export default {

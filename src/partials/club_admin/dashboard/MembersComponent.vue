@@ -7,7 +7,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { useEventStore } from "@/stores/EventStore";
+import { useEventStore } from "@/stores/club_admin/EventStore";
 
 const {
   memberCount,

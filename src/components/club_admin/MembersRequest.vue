@@ -102,7 +102,7 @@ import {
 } from 'vue'
 import {
     useMemberStore
-} from '@/stores/MemberStore';
+} from '@/stores/club_admin/MemberStore';
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
 import Ima from "@/assets/icons/member/image.svg"

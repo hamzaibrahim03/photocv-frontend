@@ -22,7 +22,7 @@
 
 <script>
 import { onMounted } from "vue";
-import { useMoreCompetitions } from "@/stores/RecentSubmissions";
+import { useMoreCompetitions } from "@/stores/club_admin/RecentSubmissions";
 /* global $ */
 
 export default {

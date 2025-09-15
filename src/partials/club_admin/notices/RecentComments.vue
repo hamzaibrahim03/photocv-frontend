@@ -37,7 +37,7 @@ import {
 } from "vue";
 import {
     useNoticeComments
-} from "@/stores/NoticeComments";
+} from "@/stores/club_admin/NoticeComments";
 
 export default {
     props: {

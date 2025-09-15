@@ -132,7 +132,7 @@ import {
 import apiClient from '@/api/axios'
 import {
     useEventStore
-} from '@/stores/EventStore'
+} from '@/stores/club_admin/EventStore'
 import Video from "@/assets/icons/quick_event/video.svg"
 import Star from "@/assets/icons/quick_event/star.svg"
 import Set from "@/assets/icons/quick_event/set.svg"

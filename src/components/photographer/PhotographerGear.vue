@@ -62,7 +62,7 @@
 <script setup>
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
-import { useUserStore } from "@/stores/UserStore";
+import { useUserStore } from "@/stores/club_admin/UserStore";
 import MyCamera from "@/partials/gear/MyCamera.vue"
 import MyAccessories from "@/partials/gear/MyAccessories.vue"
 import MyLenses from "@/partials/gear/MyLenses.vue"

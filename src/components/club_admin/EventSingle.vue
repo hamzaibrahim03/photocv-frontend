@@ -173,7 +173,7 @@
 
 <script setup>
 import { onMounted, computed } from 'vue'
-import { useEventStore } from '@/stores/EventStore'
+import { useEventStore } from '@/stores/club_admin/EventStore'
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
 import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue"

@@ -110,7 +110,7 @@
 import { ref, computed, onMounted } from 'vue'
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
-import { useUserStore } from "@/stores/UserStore"
+import { useUserStore } from "@/stores/club_admin/UserStore"
 import PhotoRequests from "@/partials/post/PhotoRequests.vue"
 import PhotographerGalleries from "@/partials/post/PhotographerGalleries.vue"
 import SalesCards from "@/partials/post/SalesCards.vue"

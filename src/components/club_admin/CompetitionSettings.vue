@@ -53,7 +53,7 @@ import RecentSubmissions from "@/partials/club_admin/competitions/RecentSubmissi
 import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetitions.vue";
 import FormAdd from "@/partials/club_admin/competitionsset/FormAdd.vue";
 import { onMounted } from 'vue'
-import { useCompetitionStore } from '@/stores/CompetitionStore'
+import { useCompetitionStore } from '@/stores/club_admin/CompetitionStore'
 /* global $ */
 
 const {

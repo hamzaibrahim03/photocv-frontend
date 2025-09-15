@@ -25,10 +25,10 @@
 <script setup>
 import {
     useDashboardStore
-} from '@/stores/DashboardStore';
+} from '@/stores/club_admin/DashboardStore';
 import {
     useUserStore
-} from '@/stores/UserStore';
+} from '@/stores/club_admin/UserStore';
 import defineProps from 'vue'
 import {
     computed

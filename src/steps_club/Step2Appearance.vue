@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import { useClubFormStore } from '@/stores/ClubFormData';
+import { useClubFormStore } from '@/stores/club_admin/ClubFormData';
 import { ref } from 'vue';
 
 const clubStore = useClubFormStore();

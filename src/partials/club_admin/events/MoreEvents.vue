@@ -30,7 +30,7 @@
 
 <script>
 import { onMounted } from "vue";
-import { useEventComments } from "@/stores/MoreEvents";
+import { useEventComments } from "@/stores/club_admin/MoreEvents";
 /* global $ */
 
 export default {

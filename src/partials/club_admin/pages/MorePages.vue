@@ -30,7 +30,7 @@
 
 <script>
 import { onMounted } from "vue";
-import { usePageComments } from "@/stores/MorePages";
+import { usePageComments } from "@/stores/club_admin/MorePages";
 
 export default {
   props: {

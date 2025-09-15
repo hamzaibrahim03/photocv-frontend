@@ -120,7 +120,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import apiClient from 'axios'
-import { useCompetitionStore } from '@/stores/CompetitionStore'
+import { useCompetitionStore } from '@/stores/club_admin/CompetitionStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
 import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue";

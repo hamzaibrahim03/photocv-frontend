@@ -350,7 +350,7 @@ import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
 import {
     useUserStore
-} from "@/stores/UserStore";
+} from "@/stores/club_admin/UserStore";
 import {
     ref
 } from 'vue'

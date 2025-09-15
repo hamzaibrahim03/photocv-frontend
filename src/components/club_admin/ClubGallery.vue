@@ -107,7 +107,7 @@ import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
 import {
     useClubGallery
-} from '@/stores/ClubGallery'
+} from '@/stores/club_admin/ClubGallery'
 import Ima from "@/assets/icons/gallery/image.svg"
 import Hea from "@/assets/icons/gallery/heart.svg"
 import Com from "@/assets/icons/gallery/comment.svg"

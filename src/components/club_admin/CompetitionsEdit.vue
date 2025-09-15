@@ -55,7 +55,7 @@ import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetition
 import FormAdd from "@/partials/club_admin/competitionsadd/FormAdd.vue";
 import GlobalSettings from "@/partials/club_admin/competitionsadd/GlobalSettings.vue";
 import { onMounted } from 'vue'
-import { useCompetitionStore } from '@/stores/CompetitionStore'
+import { useCompetitionStore } from '@/stores/club_admin/CompetitionStore'
 /* global $ */
 
 const {

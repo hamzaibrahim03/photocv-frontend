@@ -576,7 +576,7 @@
 <script setup>
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
-import { useUserStore } from "@/stores/UserStore";
+import { useUserStore } from "@/stores/club_admin/UserStore";
 import { ref } from 'vue'
 
 const search = ref('')

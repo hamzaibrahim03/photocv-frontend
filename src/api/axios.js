@@ -1,6 +1,6 @@
 // src/api/axios.js
 import axios from 'axios'
-import { useUserStore } from '@/stores/UserStore'
+import { useUserStore } from '@/stores/club_admin/UserStore'
 import router from "@/routes/navigation"
 
 // Get subdomain (e.g., "johnphotocv" from "johnphotocv.staging.cameraclub.website")

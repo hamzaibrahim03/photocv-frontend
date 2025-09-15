@@ -8,6 +8,6 @@ export default {
     const BASE_URL = `${protocol}://${domain}${suffix}`;
 
     console.log('Base URL:', BASE_URL);
-    return apiClient.get(`${BASE_URL}/club-public-data`);
+    return apiClient.get(`${BASE_URL}/club/public/home`);
   },
 };

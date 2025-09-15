@@ -200,7 +200,7 @@ import {
 } from 'vue'
 import {
     useCompetitionStore
-} from '@/stores/CompetitionStore';
+} from '@/stores/club_admin/CompetitionStore';
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
 import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue";

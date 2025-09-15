@@ -118,7 +118,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import apiClient from 'axios'
-import { useNoticeStore } from '@/stores/NoticeStore'
+import { useNoticeStore } from '@/stores/club_admin/NoticeStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
 import RecentComments from "@/partials/club_admin/notices/RecentComments.vue";
