@@ -29,6 +29,7 @@
       v-for="day in daysInMonth" 
       :key="day" 
       class="day hoverable"
+        :style="isSunday(day) ? { color: Color.accent_color } : {}"
     >
       <!-- Event Labels -->
       <div class="labels-container">
@@ -109,6 +110,11 @@ const comps = computed(() =>
         dateColor: comp.color || "#CC445E",
     }))
 );
+
+const isSunday = (day) => {
+  const date = new Date(currentYear.value, currentMonth.value, day);
+  return date.getDay() === 0; // 0 = Sunday
+};
 
 const allEvents = computed(() => [...events.value, ...comps.value]);
 // Calendar logic

@@ -51,15 +51,20 @@
                     <div class="divider" :style="{ width: '2px', height: '46px', margin: '0 10px', background:'#333' }"></div>
 
                     <div class="admin-dropdown position-relative">
-                        <a href="#" class="icon" @click.prevent="toggleDropdown">
+                        <a href="#" class="icon" >
                             <img v-if="User && User.isLoggedIn && User.profile_image_url" :src="User.profile_image_url" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
                             <i v-else class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '38px' }"></i>
                         </a>
 
                         <router-link v-if="!User || !User.isLoggedIn" to="/login" custom v-slot="{ navigate }">
-                            <span @click="navigate" id="login">
-                                Login <i class="fa-solid fa-chevron-down text-xs text-gray-500"></i>
-                            </span>
+                            <span id="login">
+  <span @click="navigate">Login</span>
+  <i 
+    class="fa-solid fa-chevron-down text-xs text-gray-500" 
+    @click.stop.prevent="toggleDropdown"
+  ></i>
+</span>
+
                         </router-link>
                         <div class="dropdown-menu" v-show="isDropdownOpen">
                             <a href="#" @click.prevent="handleLogout">Log Out</a>
@@ -305,7 +310,7 @@
                                 <h5 class="head" :style="{color: Color.text_color}">Upcoming Events</h5>
                                 <div class="event-list" v-if="Events.length">
                                     <div class="event-item" v-for="event in Events" :key="event.id || index" style="margin-bottom: 10px">
-                                        <img v-if="event.featured_image_url" class="img-fluid event-img" :src="event.featured_image_url" alt="Event" @error="event.featured_image_url = null" />
+                                        <img v-if="event.featured_image_url" class="img-fluid event-img" :src="event.featured_image_url" alt="Event" @error="event.featured_image_url = null" :style="{backgroundColor: Color.primary_color}" />
                                         <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                         </div>
 
@@ -337,7 +342,7 @@
                                 <h5 class="head" :style="{color: Color.text_color}">Upcoming Competitions</h5>
                                 <div class="event-list" v-if="Comps.length">
                                     <div class="event-item" v-for="comp in Comps" :key="comp.id || index" style="margin-bottom: 10px">
-                                        <img v-if="comp.featured_image_url" class="img-fluid event-img" :src="comp.featured_image_url" alt="Comp" @error="comp.featured_image_url = null" />
+                                        <img v-if="comp.featured_image_url" class="img-fluid event-img" :src="comp.featured_image_url" alt="Comp" @error="comp.featured_image_url = null" :style="{backgroundColor: Color.primary_color}"/>
                                         <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                         </div>
                                         <div class="event-details">
@@ -397,7 +402,7 @@
                                 <div class="row" style="padding-top: 30px;">
                                     <div class="col-6" style="margin-bottom: 20px;" v-for="latestMember in homeStore.homeData?.data?.latestMembers?.members.slice(0, 6)" :key="latestMember.id">
                                         <div class="event-items text-center" style="gap: 20px">
-                                            <img v-if="latestMember.profile_image_url" class="img-fluid event-img" :src="latestMember.profile_image_url" alt="Profile" @error="latestMember.profile_image_url = null" style="width:50px; height: 50px; border-radius: 7px;  object-fit: cover; object-position: top;" />
+                                            <img v-if="latestMember.profile_image_url" class="img-fluid event-img" :src="latestMember.profile_image_url" alt="Profile" @error="latestMember.profile_image_url = null" :style="{width:'50px', height: '50px', borderRadius: '7px',  objectFit: 'cover', objectPosition: 'top', backgroundColor: Color.primary_color}" />
                                             <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                             </div>
                                             <div class="memtext" id="memname" :style="{color: Color.text_color}">

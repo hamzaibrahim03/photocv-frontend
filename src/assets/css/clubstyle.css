@@ -67,7 +67,7 @@ letter-spacing: 0%;
   color: #DD9757 !important; /* adjust highlight color */
 }
 .container{
-  max-width: 1775px;
+  max-width: 1810px;
   padding: 0 15px;
   margin: 0 auto;
 }
@@ -130,7 +130,7 @@ letter-spacing: 0%;
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35); /* subtle dark overlay */
+  background: rgba(255, 255, 255, 0.35); /* subtle dark overlay */
   z-index: 1;
 }
 
