@@ -6,20 +6,22 @@
     <button class="previous"
             @click="prevMonth"
             :style="{ backgroundColor: Color.primary_color, color: Color.background_color }">
-      ‹
+       <i class="fa-solid fa-chevron-left"></i>
     </button>
     <h2>{{ monthNames[currentMonth] }} {{ currentYear }}</h2>
     <button class="next"
             @click="nextMonth"
             :style="{ backgroundColor: Color.primary_color, color: Color.background_color }">
-      ›
+       <i class="fa-solid fa-chevron-right"></i>
     </button>
   </div>
 
   <!-- Weekdays -->
-  <div class="calendar-grid weekdays">
-    <div v-for="day in weekDays" :key="day" class="weekday">{{ day }}</div>
-  </div>
+  <!-- Weekdays -->
+<div class="calendar-grid weekdays">
+  <div v-for="(day, idx) in weekDays" :key="day" class="weekday" :style="idx === 0 ? { color: Color.accent_color } : {}"> {{ day }}</div>
+</div>
+
 
   <!-- Days -->
   <div class="calendar-grid days">
@@ -61,7 +63,7 @@
       <span 
   class="day-number" 
   :class="{ 'today-badge': isToday(day) }"
-  :style="isToday(day) ? { backgroundColor: Color.primary_color } : {}"
+  :style="isToday(day) ? { backgroundColor: Color.primary_color, color: Color.background_color } : {}"
 >
   {{ day }}
 </span>
@@ -74,97 +76,103 @@
 </template>
 
 <script setup>
-import {
-    computed,
-    ref
-} from "vue";
-import {
-    useHomeStore
-} from "@/stores/club_public/ClubData"; // update path
+import { computed, ref } from "vue";
+import { useHomeStore } from "@/stores/club_public/ClubData";
 
 const homeStore = useHomeStore();
-
-const Events = computed(() => homeStore.homeData?.data?.upcomingEvents || []);
-const Comps = computed(() => homeStore.homeData?.data?.upcomingCompetitions || []);
 const Color = computed(() => homeStore.clubSettings || {});
-const isToday = (day) => {
-    return (
-        day === today.getDate() &&
-        currentMonth.value === today.getMonth() &&
-        currentYear.value === today.getFullYear()
-    );
-};
 
-const events = computed(() =>
-    Events.value.map(event => ({
-        date: new Date(event.event_date),
-        eventName: event.name,
-        dateColor: event.color || "#99816B",
-    }))
-);
-
-const comps = computed(() =>
-    Comps.value.map(comp => ({
-        date: new Date(comp.start_date),
-        eventName: comp.name,
-        dateColor: comp.color || "#CC445E",
-    }))
-);
-
-const isSunday = (day) => {
-  const date = new Date(currentYear.value, currentMonth.value, day);
-  return date.getDay() === 0; // 0 = Sunday
-};
-
-const allEvents = computed(() => [...events.value, ...comps.value]);
-// Calendar logic
+// ✅ System (real) month/year
 const today = new Date();
-const currentMonth = ref(today.getMonth());
-const currentYear = ref(today.getFullYear());
+const systemMonth = today.getMonth();   // Sept = 8
+const systemYear = today.getFullYear();
+
+// ✅ Calendar navigation state
+const currentMonth = ref(systemMonth);
+const currentYear = ref(systemYear);
 
 const monthNames = [
-    "January", "February", "March", "April", "May", "June", "July", "August",
-    "September", "October", "November", "December"
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
 ];
 const weekDays = ["S", "M", "T", "W", "T", "F", "S"];
 
+// Calendar structure
 const daysInMonth = computed(() => {
-    return new Date(currentYear.value, currentMonth.value + 1, 0).getDate();
+  return new Date(currentYear.value, currentMonth.value + 1, 0).getDate();
 });
 
 const firstDayOffset = computed(() => {
-    return new Date(currentYear.value, currentMonth.value, 1).getDay();
+  return new Date(currentYear.value, currentMonth.value, 1).getDay();
+});
+
+// API calendar data
+const calendarData = computed(() => homeStore.homeData?.data?.calendar || {});
+
+// ✅ Events only from system's real month (not navigated month)
+const allEvents = computed(() => {
+  const currentKey = `${systemYear}-${String(systemMonth + 1).padStart(2, "0")}`;
+  const currentMonthData = calendarData.value?.[currentKey] || { events: [], competitions: [] };
+
+  const parseEvents = (monthData, type) =>
+    (monthData[type] || []).map(ev => ({
+      date: new Date(ev.date),
+      eventName: ev.name,
+      type
+    }));
+
+  return [
+    ...parseEvents(currentMonthData, "events"),
+    ...parseEvents(currentMonthData, "competitions")
+  ];
 });
 
 // Group events by date
 const eventsByDate = computed(() => {
-    let grouped = {};
-    allEvents.value.forEach(ev => {
-        const key = `${ev.date.getFullYear()}-${ev.date.getMonth()}-${ev.date.getDate()}`;
-        if (!grouped[key]) grouped[key] = [];
-        grouped[key].push(ev);
-    });
-    return grouped;
+  let grouped = {};
+  allEvents.value.forEach(ev => {
+    const key = `${ev.date.getFullYear()}-${ev.date.getMonth()}-${ev.date.getDate()}`;
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(ev);
+  });
+  return grouped;
 });
 
+// Helpers
+const isToday = (day) => {
+  return (
+    day === today.getDate() &&
+    currentMonth.value === today.getMonth() &&
+    currentYear.value === today.getFullYear()
+  );
+};
+
+const isSunday = (day) => {
+  const date = new Date(currentYear.value, currentMonth.value, day);
+  return date.getDay() === 0;
+};
+
+// Navigation
 const prevMonth = () => {
-    if (currentMonth.value === 0) {
-        currentMonth.value = 11;
-        currentYear.value--;
-    } else {
-        currentMonth.value--;
-    }
+  if (currentMonth.value === 0) {
+    currentMonth.value = 11;
+    currentYear.value--;
+  } else {
+    currentMonth.value--;
+  }
 };
 
 const nextMonth = () => {
-    if (currentMonth.value === 11) {
-        currentMonth.value = 0;
-        currentYear.value++;
-    } else {
-        currentMonth.value++;
-    }
+  if (currentMonth.value === 11) {
+    currentMonth.value = 0;
+    currentYear.value++;
+  } else {
+    currentMonth.value++;
+  }
 };
 </script>
+
+
 
 <style scoped>
 .calendar {
@@ -186,17 +194,24 @@ h2 {
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    border-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 60px;
 }
 
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 15px;
+
+}
+.days{
+  margin-top: 10px;
 }
 .labels-container {
   display: flex;
   justify-content: center;
-  flex-wrap: nowrap; /* all inline */
+  flex-wrap: nowrap;
   gap: 4px;
   margin-top: 4px;
 }
@@ -212,40 +227,50 @@ h2 {
 .weekdays {
     font-weight: bold;
     text-align: center;
-    margin-top: 25px;
+    margin-top: 35px;
 }
 
 .day {
-    min-height: 50px;
+    min-height: 48px;
     text-align: center;
     padding: 4px;
     position: relative;
-    width: 40px;
     border: 2px solid transparent;
 }
 
 .day-number {
     font-size: 16px;
+    border-radius: 7px;
+    border: 2px solid transparent;
+    display: flex;
+  width: 38px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 }
 
-.day.hoverable:hover {
+.day.hoverable:hover span {
     border: 2px solid var(--border-color);
-    border-radius: 6px;
     cursor: pointer;
-    padding-bottom: 10px;
 }
 
 .today-badge {
-  border-radius: 6px;
-  padding: 2px 6px;
+  border-radius: 7px;
   display: inline-block;
-  width: 35px;
-  height: 30px;
+  width: 40px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  padding-top: 5px;
+  margin: -5px;
 }
 
 .event-labels {
   position: absolute;
-  top: -25px;
+  top: -15px;
   left: 50%;
   transform: translateX(-50%);
   display: none;

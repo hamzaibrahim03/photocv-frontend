@@ -3,14 +3,16 @@
     <Loader :show="isLoading" />
     <div v-if="!isLoading">
         <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: Color.background_color, height: '108px' }">
-            <div class="container-fluid">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
                 <a class="navbar-brand d-flex align-items-center" href="/">
                     <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px" />
                 </a>
-                <button class="navbar-toggler" type="button" @click="toggleNav">
+                
+                <button class="navbar-toggler ms-auto me-2" type="button" @click="toggleNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
+
+                <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
                             <a class="nav-link" :class="{ active: $route.path === '/' }" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
@@ -18,62 +20,61 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#events" @click="closeNav" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="#events" :style="{ color: Color.text_color }">
                                 Events
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#events" @click="closeNav" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="#events" :style="{ color: Color.text_color }">
                                 Competitions
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#gal" @click="closeNav" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="#gal" :style="{ color: Color.text_color }">
                                 Galleries
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#newscontainer" @click="closeNav" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="#newscontainer" :style="{ color: Color.text_color }">
                                 News
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#joincontainer" @click="closeNav" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="#joincontainer" :style="{ color: Color.text_color }">
                                 Club
                             </a>
                         </li>
                     </ul>
-                </div>  
-                <div class="right-header d-flex align-items-center">
-                    <a href="notification.html" class="icon">
-                        <i class="fa-regular fa-bell text-lg mx-3" :style="{ fontSize: '18px' }"></i>
-                    </a>
-                    <div class="divider" :style="{ width: '2px', height: '46px', margin: '0 10px', background:'#333' }"></div>
+                </div>
 
+                <div class="right-header d-flex align-items-center ms-3">
+                    <a href="notification.html" class="icon">
+                        <i class="fa-regular fa-bell text-lg mx-3" :style="{ fontSize: '22px' }"></i>
+                    </a>
+                    <div class="divider" :style="{ width: '2px', height: '46px', margin: '0 10px', border:'1px #333' }"></div>
                     <div class="admin-dropdown position-relative">
                         <a href="#" class="icon" >
                             <img v-if="User && User.isLoggedIn && User.profile_image_url" :src="User.profile_image_url" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-                            <i v-else class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '38px' }"></i>
+                            <i v-else class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i>
                         </a>
-
-                        <router-link v-if="!User || !User.isLoggedIn" to="/login" custom v-slot="{ navigate }">
+                        <router-link v-if="!User || !User.isLoggedIn" to="/login" custom v-slot="{ navigate }" style="cursor: pointer">
                             <span id="login">
-  <span @click="navigate">Login</span>
-  <i 
-    class="fa-solid fa-chevron-down text-xs text-gray-500" 
-    @click.stop.prevent="toggleDropdown"
-  ></i>
-</span>
-
+                                <span @click="navigate">
+                                    Login
+                                </span>&nbsp;
+                                <i class="fa-solid fa-chevron-down text-xs text-gray-500" @click.stop.prevent="toggleDropdown"></i>
+                            </span>
                         </router-link>
                         <div class="dropdown-menu" v-show="isDropdownOpen">
-                            <a href="#" @click.prevent="handleLogout">Log Out</a>
+                            <a href="#" @click.prevent="handleLogout">
+                                Log Out
+                            </a>
                         </div>
                     </div>
                 </div>
+
             </div>
         </nav>
-
 
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -93,9 +94,9 @@
                                 <button id="overlay-button" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }"> Join Our Club </button>
                                 <p class="prehead" :style="{ color: Color.background_color, paddingTop: '20px' }">An NYCE Club based in Apps, North East England</p>
                                 <div class="row" style="padding-left: 3%">
-                                    <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }"><i class="fab fa-facebook-f"></i></div>
-                                    <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }"><i class="fab fa-instagram"></i></div>
-                                    <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }"><span class="flickr-dots"><i class="fa-solid fa-circle"></i><i class="fa-solid fa-circle"></i></span></div>
+                                    <a href="#" target="_blank" rel="noopener noreferrer" class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color, textDecoration: 'none' }"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#" target="_blank" rel="noopener noreferrer" class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color, textDecoration: 'none' }"><i class="fab fa-instagram"></i></a>
+                                    <a href="#" target="_blank" rel="noopener noreferrer" class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color, textDecoration: 'none' }"><span class="flickr-dots"><i class="fa fa-circle"></i><i class="fa fa-circle"></i></span></a>
                                 </div>
                             </div>
                         </div>
@@ -255,15 +256,16 @@
                         </div>
 
                         <div class="d-flex gap-2" style="margin-right: 5px">
-                            <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }">
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color, textDecoration: 'none' }">
                                 <i class="fab fa-facebook-f"></i>
-                            </div>
-                            <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }">
+                            </a>
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color, textDecoration: 'none' }">
                                 <i class="fab fa-instagram"></i>
-                            </div>
-                            <div class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color }">
-                                <span class="flickr-dots"><i class="fa-solid fa-circle"></i><i class="fa-solid fa-circle"></i></span>
-                            </div>
+                            </a>
+
+                            <a href="#" target="_blank" rel="noopener noreferrer" class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color, textDecoration: 'none' }">
+                                <span class="flickr-dots" style="font-weight: bold"><i class="fa fa-circle" aria-hidden="true"></i><i class="fa fa-circle" aria-hidden="true"></i></span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -334,7 +336,7 @@
                                 </div>
                             </div>
 
-                            <div class="cardddd" :style="{border: '1px solid' + Color.primary_color, padding: '0px'}">
+                            <div class="cardddd" id="calendar" :style="{border: '1px solid' + Color.primary_color, padding: '0px', height: 'auto'}">
                                 <Calendar />
                             </div>
 
@@ -397,7 +399,7 @@
                                 </div>
                             </div>
 
-                            <div class="cardddd" style="background-color: #EBE6E1; padding: 35px; height: 360px" :style="{backgroundColor: Color.secondary_color, opacity: '60%',color: Color.text_color}">
+                            <div class="lcardddd" style="background-color: #EBE6E1; padding: 40px; height: 360px" :style="{backgroundColor: hexToRgba(Color.secondary_color, 0.7) ,color: Color.text_color}">
                                 <h5 class="head" :style="{color: Color.text_color}">Latest Members</h5>
                                 <div class="row" style="padding-top: 30px;">
                                     <div class="col-6" style="margin-bottom: 20px;" v-for="latestMember in homeStore.homeData?.data?.latestMembers?.members.slice(0, 6)" :key="latestMember.id">
@@ -417,8 +419,8 @@
                 </div>
             </section>
 
-            <section class="container" :style="{backgroundColor: Color.secondary_color, maxWidth: '1920px'}">
-                <div id="latest-interaction" style="background-color: #99816B;" :style="{backgroundColor: Color.secondary_color}">
+            <section id="latest-interaction" :style="{backgroundColor: Color.secondary_color}">
+                <div class="container" style="background-color: #99816B;" :style="{backgroundColor: Color.secondary_color}">
                     <h5 id="clubheading" class="heading" :style="{color: Color.text_color, marginBottom: '12px'}">Latest interactions</h5>
                     <h6 id="clubsub" class="subhead" :style="{color: Color.text_color}">A preview of comments and reactions on the photos & other posts on the club website</h6>
                     <div class="row" style="margin-top: 30px;">
@@ -429,27 +431,29 @@
                                 </div>
 
                                 <div class="card-body overflow-auto" style="max-height: 360px; margin-left: -21px; padding:5px">
-                                    <div class="row g-2 align-items-start pb-2 mb-3" v-for="interaction in Interaction" :key="interaction.id">
-                                        <div class="col-3 col-sm-2 text-center">
-                                            <img :src="interaction.image_url" alt="Interaction Image" class="img-fluid" id="comimg" />
-                                        </div>
+                                    <div class="event-item" v-for="interaction in Interaction" :key="interaction.id" style="padding: 0px 35px; gap: 30px; margin-bottom: 20px">
+                                        <img :src="interaction.image_url" alt="Interaction Image" class="img-fluid" id="comimg" />
 
-                                        <div class="col-9 col-sm-7">
-                                            <p id="comtext" :style="{ color: Color.text_color }">
-                                                <strong>
-                                                    {{ interaction.comments[0]?.interacted_by?.username || interaction.uploaded_by.username }}
-                                                </strong>
-                                                &nbsp; {{ interaction.comments[0]?.comment || 'No comment yet' }}
-                                            </p>
-                                            <div>
-                                                <a href="#" id="comreply" class="small me-3" :style="{ color: Color.text_color }">Reply</a>
+                                        <div class="event-details d-flex justify-content-between align-items-start">
+                                            <div class="event-info">
+                                                <div class="d-flex align-items-center">
+                                                    <p id="comtext" :style="{ color: Color.text_color }">
+                                                        <strong>
+                                                            {{ interaction.comments[0]?.interacted_by?.username || interaction.uploaded_by.username }}
+                                                        </strong>
+                                                        &nbsp; {{ interaction.comments[0]?.comment || 'No comment yet' }}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <a href="#" id="comreply" class="small me-3" :style="{ color: Color.text_color }">Reply</a>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-12 col-sm-3 text-sm-end mt-2 mt-sm-0">
-                                            <span class="small" id="comdate" :style="{ color: Color.text_color }">
-                                                {{ timeAgo(interaction.comments[0]?.created_at || interaction.created_at) }}
-                                            </span>
+                                            <div class="galtext ms-3">
+                                                <span class="small" id="comdate" :style="{ color: Color.text_color }">
+                                                    {{ timeAgo(interaction.comments[0]?.created_at || interaction.created_at) }}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -493,15 +497,15 @@
                         </button>
                     </div>
                     <div class="upcoming-section" style="display: flex">
-                        <div class="cardddd" style="margin-left: 0px; background-color: #EBE6E1; padding: 35px; height: 380px" :style="{backgroundColor: Color.secondary_color}">
+                        <div class="cardddd d-flex flex-column" style="margin-left: 0px; background-color: #EBE6E1; padding: 25px 35px 40px; height: 380px" :style="{backgroundColor: Color.secondary_color}">
                             <h5 class="head" :style="{color: Color.text_color}">Latest News</h5>
-                            <div class="event-list" v-if="News.length">
+                            <div class="event-list" v-if="News.length" style="padding-top: 20px">
                                 <div class="event-item" v-for="clubnew in News" :key="clubnew.id || index" style="margin-bottom: 10px;">
                                     <img v-if="clubnew.featured_image_url" class="img-fluid event-img" :src="clubnew.featured_image_url" alt="News" @error="clubnew.featured_image_url = null" />
                                     <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                     </div>
                                     <div class="event-details">
-                                        <span class="prehead" id="pname" :style="{color: Color.text_color, fontWeight: '400'}">{{ clubnew.title }}</span>
+                                        <span class="prehead" id="pname" :style="{color: Color.text_color, fontWeight: '600'}">{{ clubnew.title }}</span>
                                         <div class="galtext" id="edate">
                                             <small class="galtext" :style="{color: Color.text_color}">{{ formatDate(clubnew.created_at) }}</small><br />
                                         </div>
@@ -515,7 +519,7 @@
                             </div>
                         </div>
 
-                        <div class="card" :style="{ backgroundColor: Color.background_color, width: '60%', height: 'auto', border: 'none', borderRadius: '10px' }">
+                        <div class="card" :style="{ backgroundColor: Color.background_color, width: '60%', height: 'auto', border: 'none', borderRadius: '10px', marginTop: '13px' }">
                             <div class="resultpics">
                                 <div v-for="(item, index) in chunkedcards.flat()" :key="item.id || index" class="resultpics-items" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}">
                                     <div v-if="item.image && item.image.length">
@@ -564,10 +568,9 @@
             <section>
                 <div class="container footer-section">
                     <div class="row align-items-center text-center text-md-start">
-
                         <div class="col-12 col-md-4 mb-4 mb-md-0 text-md-end">
                             <div class="contact-col">
-                                <h5 class="head mb-4" :style="{ color: Color.text_color, paddingBottom: '15px' }">Contact</h5>
+                                <h5 class="head mb-4" :style="{ color: Color.text_color, paddingBottom: '10px' }">Contact</h5>
 
                                 <div class="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" :style="{paddingBottom: '10px'}">
                                     <p class="footer-text mb-0" :style="{ color: Color.text_color, textAlign: 'left' }">{{ User.address }}</p>
@@ -598,7 +601,7 @@
                             <div class="social-col">
                                 <h5 class="head mb-4 text-md-start text-center" :style="{ color: Color.text_color, paddingBottom: '10px' }">Social Links</h5>
 
-                                <div v-if="Color.fb_link_option === 1 && Color.fb_link" class="social-item d-flex align-items-center justify-content-md-start justify-content-center mb-3" id="cle">
+                                <div v-if="Color.fb_link_option === 1 && Color.fb_link" class="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
                                     <div class="ficon-circles me-3" :style="{ color: Color.background_color, backgroundColor: Color.text_color }">
                                         <i class="fab fa-facebook-f"></i>
                                     </div>
@@ -610,7 +613,7 @@
                                     </div>
                                 </div>
 
-                                <div v-if="Color.insta_link_option === 1 && Color.insta_link" class="social-item d-flex align-items-center justify-content-md-start justify-content-center mb-3" id="cle">
+                                <div v-if="Color.insta_link_option === 1 && Color.insta_link" class="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
                                     <div class="ficon-circles me-3" :style="{ color: Color.background_color, backgroundColor: Color.text_color }">
                                         <i class="fab fa-instagram"></i>
                                     </div>
@@ -624,7 +627,7 @@
 
                                 <div v-if="Color.flickr_link_option === 1 && Color.flickr_link" class="social-item d-flex align-items-center justify-content-md-start justify-content-center" id="cle">
                                     <div class="ficon-circles me-3" :style="{ color: Color.background_color, backgroundColor: Color.text_color }">
-                                        <span class="flickr-dots"><i class="fa-solid fa-circle"></i><i class="fa-solid fa-circle"></i></span>
+                                        <span class="flickr-dots"><i class="fa fa-circle"></i><i class="fa fa-circle"></i></span>
                                     </div>
                                     <div>
                                         <p class="footer-text fw-bold mb-1" :style="{ color: Color.text_color }">Flickr</p>
@@ -641,7 +644,7 @@
             
             <footer class="site-footer">
                 <div class="footer-content">
-                    <p class="memtext">Copyright &copy; 2025 – {{Club.club_name}}</p>
+                    <p class="memtext" id="fcopy">Copyright &copy; 2025 – {{Club.club_name}}</p>
                     <p class="memtext">Powered by <a href="https://cameraclub.website" target="_blank" :style="{color: Color.text_color, fontWeight: 'bold'}">cameraclub.website</a></p>
                 </div>
             </footer>
@@ -761,7 +764,7 @@ function updateColumns() {
     columns.value = 1; // mobile
   } else if (window.innerWidth < 576) {
     columns.value = 2; // tablet
-  }else if (window.innerWidth < 992) {
+  } else if (window.innerWidth < 992) {
     columns.value = 3;
   } else {
     columns.value = 5; // desktop
@@ -952,7 +955,7 @@ function getPositionClass(index, total) {
 
 .comments-card {
     width: 97%;
-    height: 350px;
+    height: 340px;
     overflow-y: auto;
     margin-left: 0%;
     border-radius: 10px;
@@ -962,7 +965,7 @@ function getPositionClass(index, total) {
 .comments-cards {
     margin-left: -2%;
     width: 97%;
-    height: 350px;
+    height: 340px;
 }
 
 .site-footer {
@@ -1075,11 +1078,12 @@ function getPositionClass(index, total) {
     color: #888;
 }
 
-.flickr-dots i {
-    font-size: 3px;
-    padding-bottom: 12px;
+.flickr-dots i{
+    font-size: 8px;
+    padding-bottom: 8px;
     margin: 1px;
 }
+
 .clubpics-item.top-left img {
     border-top-left-radius: 10px !important;
 }
@@ -1146,5 +1150,12 @@ function getPositionClass(index, total) {
 
 .resultpics-infos.bottom-right {
     border-bottom-right-radius: 10px;
+}
+
+@media only screen and (max-width: 767px) {
+.comments-cards{
+    width: 100%;
+    margin: 0 auto;
+}
 }
 </style>
