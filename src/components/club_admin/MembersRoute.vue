@@ -44,7 +44,9 @@
                 <div class="edit-icon" @click="editMember(member)">
                     <img :src="Edit" alt="icon" style="width:24px; height: 24px" />
                 </div>
-                <img :src="member.profile_image_url" alt="Profile Picture" class="profile-pic" />
+                <img v-if="member.profile_image_url" class="img-fluid event-img" :src="member.profile_image_url" alt="News" @error="member.profile_image_url = null" />
+                <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
+                </div>
                 <div class="social-media-icons">
                     <a href="#" style="background-color: #99816b; color: white"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" style="background-color: #cc445e; color: white"><i class="fab fa-instagram"></i></a>
@@ -200,5 +202,23 @@ function goToPage(page) {
 
 .icon i {
     font-size: 22px;
+}
+
+.event-img,
+.fallback-box {
+    width: 192px;
+  height: 192px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  margin-left: 22%;
+    object-fit: cover;
+    background-color: #f0f0f0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.fallback-box {
+    font-size: 14px;
+    color: #888;
 }
 </style>

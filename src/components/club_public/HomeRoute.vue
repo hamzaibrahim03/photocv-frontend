@@ -2,8 +2,9 @@
 <div :style="{ backgroundColor: Color.background_color, fontFamily: Color.fonts }">
     <Loader :show="isLoading" />
     <div v-if="!isLoading">
+        
         <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: Color.background_color, height: '108px' }">
-            <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand d-flex align-items-center" href="/">
                     <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px" />
                 </a>
@@ -66,8 +67,8 @@
                             </span>
                         </router-link>
                         <div class="dropdown-menu" v-show="isDropdownOpen">
-                            <a href="#" @click.prevent="handleLogout">
-                                Log Out
+                            <a class="nav-link" href="#" @click.prevent="handleLogout">
+                                Register
                             </a>
                         </div>
                     </div>
@@ -93,7 +94,7 @@
                                 <p class="cabout" :style="{ color: Color.background_color, fontWeight: '200' }">{{Club.about}}</p>
                                 <button id="overlay-button" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }"> Join Our Club </button>
                                 <p class="prehead" :style="{ color: Color.background_color, paddingTop: '20px' }">An NYCE Club based in Apps, North East England</p>
-                                <div class="row" style="padding-left: 3%">
+                                <div class="d-flex">
                                     <a href="#" target="_blank" rel="noopener noreferrer" class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color, textDecoration: 'none' }"><i class="fab fa-facebook-f"></i></a>
                                     <a href="#" target="_blank" rel="noopener noreferrer" class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color, textDecoration: 'none' }"><i class="fab fa-instagram"></i></a>
                                     <a href="#" target="_blank" rel="noopener noreferrer" class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color, textDecoration: 'none' }"><span class="flickr-dots"><i class="fa fa-circle"></i><i class="fa fa-circle"></i></span></a>
@@ -131,7 +132,7 @@
                                         <div>
                                             <div class="events-card">
                                                 <h5 class="mb-2">{{ Events[0].name || 'Untitled Event' }}</h5>
-                                                <div class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex w-100 justify-content-between align-items-center">
                                                     <p class="date mb-0">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
                                                         <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
@@ -145,7 +146,7 @@
                                                 {{ Events[0].description || 'No description provided.' }}
                                             </p>
                                         </div>
-                                        <div class="button-group mt-3 d-flex">
+                                        <div class="button-group mt-3 d-flex event-button">
                                             <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
                                         </div>
                                     </div>
@@ -384,12 +385,12 @@
                             </button>
                         </div>
                         <div class="upcoming-section" style="display:flex">
-                            <div class="card" style="height: auto; border: none; margin-top: -1px" :style="{backgroundColor: Color.background_color, margin: '0px'}">
+                            <div class="card" style="height: auto; border: none; margin-top: -1px; padding-bottom: 0" :style="{backgroundColor: Color.background_color, margin: '0px'}">
                                 <div class="pics">
-                                    <div v-for="(item, index) in chunkedCards.flat()" :key="item.id || index" class="pics-items" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}">
+                                    <div v-for="(item, index) in chunkedCards.flat()" :key="item.id || index" class="pics-items" :class="getPositionClass(index, chunkedCards.flat().length)">
                                         <div v-if="item.image_url">
                                             <img :src="item.image_url" :alt="item.username" style="object-fit: cover; object-position: top;" />
-                                            <div class="pics-infos" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}" :style="{backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
+                                            <div class="pics-infos" :class="getPositionClass(index, chunkedCards.flat().length)" :style="{backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
                                                 <div :style="{color: Color.background_color}">
                                                     {{ item.gallery_name.length > 7 ? item.gallery_name.slice(0, 7) + '...' : item.gallery_name }}
                                                 </div>
@@ -399,7 +400,7 @@
                                 </div>
                             </div>
 
-                            <div class="lcardddd" style="background-color: #EBE6E1; padding: 40px; height: 360px" :style="{backgroundColor: hexToRgba(Color.secondary_color, 0.7) ,color: Color.text_color}">
+                            <div class="lcardddd" style="background-color: #EBE6E1;" :style="{backgroundColor: hexToRgba(Color.secondary_color, 0.7) ,color: Color.text_color}">
                                 <h5 class="head" :style="{color: Color.text_color}">Latest Members</h5>
                                 <div class="row" style="padding-top: 30px;">
                                     <div class="col-6" style="margin-bottom: 20px;" v-for="latestMember in homeStore.homeData?.data?.latestMembers?.members.slice(0, 6)" :key="latestMember.id">
@@ -496,8 +497,8 @@
                             View All Results
                         </button>
                     </div>
-                    <div class="upcoming-section" style="display: flex">
-                        <div class="cardddd d-flex flex-column" style="margin-left: 0px; background-color: #EBE6E1; padding: 25px 35px 40px; height: 380px" :style="{backgroundColor: Color.secondary_color}">
+                    <div class="upcoming-sectionss" style="display: flex">
+                        <div class="ncardddd d-flex flex-column" style="background-color: #EBE6E1;" :style="{backgroundColor: Color.secondary_color}">
                             <h5 class="head" :style="{color: Color.text_color}">Latest News</h5>
                             <div class="event-list" v-if="News.length" style="padding-top: 20px">
                                 <div class="event-item" v-for="clubnew in News" :key="clubnew.id || index" style="margin-bottom: 10px;">
@@ -521,10 +522,10 @@
 
                         <div class="card" :style="{ backgroundColor: Color.background_color, width: '60%', height: 'auto', border: 'none', borderRadius: '10px', marginTop: '13px' }">
                             <div class="resultpics">
-                                <div v-for="(item, index) in chunkedcards.flat()" :key="item.id || index" class="resultpics-items" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}">
+                                <div v-for="(item, index) in chunkedcards.flat()" :key="item.id || index" class="resultpics-items" :class="getPositionClass(index, chunkedcards.flat().length)">
                                     <div v-if="item.image && item.image.length">
                                         <img v-if="item.image" :src="item.image" :alt="item.gallery_name" style="object-fit: cover; object-position: top;" />
-                                        <div class="resultpics-infos" :style="{backgroundColor: hexToRgba(Color.primary_color, 0.7) }" :class="{ 'top-left': index === 0, 'top-right': index === 4, 'bottom-left': index === 5, 'bottom-right': index === 9}">
+                                        <div class="resultpics-infos" :style="{backgroundColor: hexToRgba(Color.primary_color, 0.7) }" :class="getPositionClass(index, chunkedcards.flat().length)">
                                             <div :style="{ color: Color.background_color }">
                                                 {{ item.gallery_name.length > 7 ? item.gallery_name.slice(0, 7) + '...' : item.gallery_name }}
                                             </div>
@@ -544,7 +545,7 @@
                             <h5 id="clubheading" class="heading" :style="{color: Color.text_color}">
                                 Ready to join the club & work on something exciting?
                             </h5>
-                            <p id="clubsub" class="head" :style="{color: Color.text_color}">
+                            <p id="clubsub" class="head" :style="{color: Color.text_color, marginBottom: '0px'}">
                                 Join the club and let’s create something amazing.
                             </p>
                         </div>
@@ -605,7 +606,7 @@
                                     <div class="ficon-circles me-3" :style="{ color: Color.background_color, backgroundColor: Color.text_color }">
                                         <i class="fab fa-facebook-f"></i>
                                     </div>
-                                    <div>
+                                    <div id="facebook">
                                         <p class="footer-text fw-bold mb-1" :style="{ color: Color.text_color }">Facebook</p>
                                         <a :href="Color.fb_link" target="_blank" class="footer-link" :style="{ color: Color.text_color }">
                                             {{ Color.fb_link }}
@@ -617,7 +618,7 @@
                                     <div class="ficon-circles me-3" :style="{ color: Color.background_color, backgroundColor: Color.text_color }">
                                         <i class="fab fa-instagram"></i>
                                     </div>
-                                    <div>
+                                    <div id="facebook">
                                         <p class="footer-text fw-bold mb-1" :style="{ color: Color.text_color }">Instagram</p>
                                         <a :href="Color.insta_link" target="_blank" class="footer-link" :style="{ color: Color.text_color }">
                                             {{ Color.insta_link }}
@@ -629,7 +630,7 @@
                                     <div class="ficon-circles me-3" :style="{ color: Color.background_color, backgroundColor: Color.text_color }">
                                         <span class="flickr-dots"><i class="fa fa-circle"></i><i class="fa fa-circle"></i></span>
                                     </div>
-                                    <div>
+                                    <div id="facebook">
                                         <p class="footer-text fw-bold mb-1" :style="{ color: Color.text_color }">Flickr</p>
                                         <a :href="Color.flickr_link" class="footer-link" :style="{ color: Color.text_color }">
                                             {{ Color.flickr_link }}
@@ -664,7 +665,6 @@ import Cal from "@/assets/icons/event_list/cal.svg"
 import Cam from "@/assets/icons/event_list/cam.svg"
 import Mess from "@/assets/icons/event_list/mess.svg"
 import Heart from "@/assets/icons/Heart.svg"
-import '@/assets/css/clubstyle.css'
 import '@/assets/dist/calendar-gc.min.css'
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -760,12 +760,12 @@ const chunkCards = computed(() => {
 });
 
 function updateColumns() {
-  if (window.innerWidth < 360) {
-    columns.value = 1; // mobile
-  } else if (window.innerWidth < 576) {
-    columns.value = 2; // tablet
-  } else if (window.innerWidth < 992) {
-    columns.value = 3;
+  if (window.innerWidth < 575) {
+    columns.value = 1; // tablet
+  } else if (window.innerWidth < 991) {
+    columns.value =2;
+  } else if (window.innerWidth < 1199) {
+    columns.value = 3; // tablet
   } else {
     columns.value = 5; // desktop
   }
@@ -821,13 +821,18 @@ const chunkedcards = computed(() => {
     }
     return chunkds;
 });
-
+const userRole = "club_admin"
 onMounted(async () => {
     document.addEventListener("click", (e) => {
     if (!e.target.closest(".admin-dropdown")) {
       isDropdownOpen.value = false;
     }
   });
+  if (userRole === "club_admin") {
+    await import("@/assets/css/clubstyle.css");
+  } else {
+    await import("@/assets/css/style.css");
+  }
   updateColumns();
   window.addEventListener("resize", updateColumns);
     const carouselEl = document.querySelector('#carouselExampleIndicators')
@@ -954,8 +959,8 @@ function getPositionClass(index, total) {
 }
 
 .comments-card {
-    width: 97%;
-    height: 340px;
+    width: 99%;
+    height: 330px;
     overflow-y: auto;
     margin-left: 0%;
     border-radius: 10px;
@@ -963,9 +968,9 @@ function getPositionClass(index, total) {
 }
 
 .comments-cards {
-    margin-left: -2%;
-    width: 97%;
-    height: 340px;
+    margin-left: 1%;
+    width: 99%;
+    height: 330px;
 }
 
 .site-footer {
@@ -1078,7 +1083,7 @@ function getPositionClass(index, total) {
     color: #888;
 }
 
-.flickr-dots i{
+.icon-circles .flickr-dots i, .flickr-dots i{
     font-size: 8px;
     padding-bottom: 8px;
     margin: 1px;

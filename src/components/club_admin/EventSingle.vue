@@ -159,7 +159,7 @@
         </div>
         <div class="col-md-4">
             <div class="calen">
-                <CalendarAll />
+                <CalendarEvent />
             </div>
             <div id="news">
                 <RecentComments style="width: 90%" />
@@ -176,7 +176,7 @@ import { onMounted, computed } from 'vue'
 import { useEventStore } from '@/stores/club_admin/EventStore'
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
-import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue"
+import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
 import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
 import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
 import dayjs from 'dayjs'

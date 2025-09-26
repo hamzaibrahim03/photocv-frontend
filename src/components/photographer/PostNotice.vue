@@ -26,7 +26,7 @@
         <NoticeForm />
         <div class="col-md-4">
             <div class="calen">
-                <CalendarAll />
+                <CalendarEvent />
             </div>
             <div id="news">
                 <RecentComments style="width: 90%" />
@@ -42,7 +42,7 @@ import { onMounted } from 'vue'
 import { useNoticeStore } from '@/stores/club_admin/NoticeStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue";
+import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
 import RecentComments from "@/partials/club_admin/notices/RecentComments.vue";
 import MoreNotices from "@/partials/club_admin/notices/MoreNotices.vue";
 import ProfileWithoutSearch from "@/partials/club_admin/competitionsadd/ProfileWithoutSearch.vue";

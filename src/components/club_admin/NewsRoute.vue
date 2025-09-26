@@ -100,7 +100,7 @@
         </div>
         <div class="col-md-4">
             <div class="calen">
-                <CalendarAll />
+                <CalendarEvent />
             </div>
             <div id="news">
                 <RecentComments style="width: 90%" />
@@ -117,7 +117,7 @@ import apiClient from 'axios'
 import { useNewsStore } from '@/stores/club_admin/NewsStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue";
+import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
 import RecentComments from "@/partials/club_admin/news/RecentComments.vue";
 import MoreNews from "@/partials/club_admin/news/MoreNews.vue";
 import Pro from "@/assets/icons/event_list/pro.svg"

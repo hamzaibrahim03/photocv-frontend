@@ -5,20 +5,16 @@
   object-fit: cover;
 }
 
-#logo {
-  padding-left: 60px;
-}
-
 .custom-nav {
   margin-left: 315px;
 }
 
-#fcopy{
+#fcopy {
   margin-bottom: 10px
 }
 
 #login {
-  padding: 0px 70px 0px 0px;
+  padding: 0px;
   font-weight: 500;
   font-size: 16px;
   line-height: 100%;
@@ -32,6 +28,28 @@
   justify-content: flex-end;
   position: relative;
 }
+
+.dropdown-menu {
+  background: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu .nav-link {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu .nav-link:hover {
+  color: #007bff;
+  transform: translateX(6px);
+}
+
 
 .navbar-nav .nav-link {
   font-weight: 400;
@@ -72,6 +90,11 @@
   color: #DD9757 !important;
 }
 
+.events-card {
+  margin-bottom: 20px;
+  width: 485px
+}
+
 .container {
   max-width: 1810px;
   padding: 0 15px;
@@ -107,7 +130,7 @@
 }
 
 #latest-interaction {
-  padding: 75px 15px 40px 55px;
+  padding: 75px 60px 55px;
 }
 
 #ename {
@@ -153,7 +176,7 @@
 .hero-overlay {
   position: relative;
   z-index: 2;
-  background: rgba(76, 64, 54, 0.4);
+  background: rgba(76, 64, 54, 0.5);
   padding: 53px 42px;
   width: 825px;
   margin-left: 2%;
@@ -172,7 +195,16 @@
 .lcardddd {
   background: white;
   width: 32%;
-  padding: 20px;
+  padding: 40px;
+  height: 360px;
+  border-radius: 10px;
+}
+
+.ncardddd {
+  margin-left: 0;
+  background: white;
+  width: 31%;
+  padding: 25px 35px 40px;
   height: 390px;
   border-radius: 10px;
 }
@@ -470,11 +502,11 @@
   justify-content: center;
 }
 
-.contact-col{
+.contact-col {
   margin-right: -14px;
 }
 
-.social-col{
+.social-col {
   margin-left: -13px;
 }
 
@@ -482,7 +514,7 @@
   padding-bottom: 4px;
 }
 
-.contact-item:last-child{
+.contact-item:last-child {
   padding-bottom: 0px;
 }
 
@@ -490,9 +522,10 @@
   padding-bottom: 10px;
 }
 
-.social-item:last-child{
+.social-item:last-child {
   padding-bottom: 0px;
 }
+
 .icon-circles, .ficon-circles {
   width: 40px;
   height: 40px;
@@ -673,6 +706,15 @@
   width: 100%;
   flex-wrap: wrap;
   gap: 40px;
+}
+
+.upcoming-sectionss {
+  display: flex;
+  border-radius: 10px;
+  align-items: start;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .upcoming-sections {
@@ -891,10 +933,6 @@
   max-height: calc(2 * 180px);
 }
 
-.interaction-item {
-  display: flex;
-}
-
 .hero-content #clubheading {
   margin-top: 0px;
 }
@@ -908,12 +946,12 @@
 
 /* 1399px and below */
 @media only screen and (max-width: 1399px) {
-  #logo {
-    padding-left: 35px;
-  }
-
   .custom-nav {
     margin-left: 35px;
+  }
+
+  .admin-dropdown {
+    width: 180px;
   }
 
   .hero-content #clubheading {
@@ -927,6 +965,11 @@
     object-fit: cover;
     object-position: top;
     border-radius: 7px;
+  }
+
+  #latest-interaction {
+    padding: 75px 0px 55px;
+    width: 102%;
   }
 
   #login {
@@ -975,6 +1018,13 @@
   .hero-image img {
     width: 100%;
     height: auto;
+  }
+
+  .pics-items img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    object-position: top;
   }
 
   #clubheading {
@@ -1151,6 +1201,7 @@
 
   #joincontainer #clubheading {
     font-size: 34px;
+    margin-bottom: 0;
   }
 
   #learn-more {
@@ -1177,24 +1228,43 @@
   }
 
   .lcardddd {
-    width: 47% !important;
+    width: 45% !important;
     margin: 0;
+    height: 300px;
+    padding: 20px 40px;
   }
 
   .lcardddd:last-child {
     margin: 0 auto;
   }
+
+  .ncardddd {
+    width: 45% !important;
+    margin: 0;
+    height: 340px;
+  }
+
+  .ncardddd:last-child {
+    margin: 0 auto;
+  }
+
+  .resultpics-infos {
+    font-size: 1rem;
+  }
+
+  #facebook {
+    width: 250px;
+  }
 }
 
 /* 1199px and below */
 @media only screen and (max-width: 1199px) {
-  #logo {
-    max-width: 150px;
-    padding-left: 5px;
-  }
-
   .hero-content #clubheading {
     margin-top: 0px;
+  }
+
+  .admin-dropdown {
+    width: 100%;
   }
 
   .custom-nav {
@@ -1468,10 +1538,21 @@
   .lcardddd {
     width: 47% !important;
     margin: 0;
+    height: 390px;
   }
 
   .lcardddd:last-child {
     margin: 0 auto;
+  }
+
+  .ncardddd:last-child {
+    margin: 0 auto;
+  }
+
+  .ncardddd {
+    width: 47% !important;
+    margin: 0;
+    height: 390px;
   }
 
   .comments-card img {
@@ -1564,11 +1645,12 @@
 
   .custom-collapse {
     position: absolute;
-    top: 100%; /* just below navbar */
+    top: 100%;
     left: 0;
     width: 100%;
-    background: white; /* ya API color */
+    background: white;
     z-index: 1000;
+    margin-top: 10px;
   }
 
   .hero-overlay {
@@ -1624,16 +1706,21 @@
   }
 
   .cardddd {
-    width: 95% !important;
+    width: 97% !important;
     margin: 0;
   }
 
-  .cardddd:last-child, .lcardddd:last-child {
+  .cardddd:last-child, .lcardddd:last-child, .ncardddd:last-child {
     margin: 0;
   }
 
   .lcardddd {
-    width: 95% !important;
+    width: 100% !important;
+    margin: 0;
+  }
+
+  .ncardddd {
+    width: 100% !important;
     margin: 0;
   }
 
@@ -1648,6 +1735,12 @@
     max-width: 300px;
     margin-bottom: 15px;
   }
+
+  .events-card {
+    width: auto;
+    text-align: left;
+  }
+
 
   .cabout {
     font-size: 26px;
@@ -1747,8 +1840,12 @@
   }
 
   .button-group {
-    justify-content: center;
+    justify-content: left;
     margin-top: 20px;
+  }
+
+  #facebook {
+    width: 170px
   }
 
   #view-all {
@@ -1954,7 +2051,12 @@
   }
 
   .footer-text {
-    width: 75%;
+    width: 100%;
+  }
+
+  #facebook {
+    width: 100%;
+    text-align: center;
   }
 
   #cla {
@@ -2009,6 +2111,11 @@
   }
 
   .lcardddd {
+    width: 100% !important;
+    margin: 0;
+  }
+
+  .ncardddd {
     width: 100% !important;
     margin: 0;
   }
@@ -2398,10 +2505,6 @@
     display: flex-column
   }
 
-  #join-club {
-    margin-left: 10px;
-  }
-
   .card {
     width: 90%;
     margin-left: auto;
@@ -2530,6 +2633,11 @@
   }
 
   .lcardddd {
+    padding: 20px !important;
+    width: 100%;
+  }
+
+  .ncardddd {
     padding: 20px !important;
     width: 100%;
   }

@@ -34,7 +34,7 @@
         <FormAdd />
         <div class="col-md-4">
             <div class="calen">
-                <CalendarAll />
+                <CalendarEvent />
             </div>
             <div id="news">
                 <RecentSubmissions />
@@ -49,7 +49,7 @@
 <script setup>
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarAll from "@/partials/club_admin/events/CalendarAll.vue";
+import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
 import RecentSubmissions from "@/partials/club_admin/competitions/RecentSubmissions.vue";
 import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetitions.vue";
 import FormAdd from "@/partials/club_admin/competitionsadd/FormAdd.vue";

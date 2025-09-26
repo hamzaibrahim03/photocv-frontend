@@ -5,13 +5,7 @@
 
     <div class="login-box">
         <div class="left-box">
-            <h2 style="font-family: Inter;
-font-weight: 600;
-font-style: Semi Bold;
-font-size: 48px;
-text-align: center;
-color: #4C4036
-">Login</h2>
+            <h2 style="font-family: Inter; font-weight: 600; font-style: Semi Bold; font-size: 48px; text-align: center; color: #4C4036">Login</h2>
 
             <p class="text-secondary" style="text-align: center;">Log in to access your club dashboard.</p>
 

@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-3">
         <img
-          src="@/assets/images/members/pro.png"
+          src="@/assets/images/dashboard/simple.png"
           alt="Profile Picture"
           class="profile-pic"
         />
