@@ -135,18 +135,18 @@ onMounted(() => {
     setTimeout(() => {
         cards.value = [{
                 id: 1,
-                image: require("@/assets/images/gallery/m1.png"),
-                img: require("@/assets/images/gallery/pro.jpg"),
+                image: require("@/assets/images/dashboard/m1.png"),
+                img: require("@/assets/images/dashboard/pro.png"),
             },
             {
                 id: 2,
-                image: require("@/assets/images/gallery/m2.jpg"),
-                img: require("@/assets/images/gallery/pro.jpg"),
+                image: require("@/assets/images/dashboard/m2.jpg"),
+                img: require("@/assets/images/dashboard/pro.png"),
             },
             {
                 id: 3,
-                image: require("@/assets/images/gallery/m3.jpg"),
-                img: require("@/assets/images/gallery/pro.jpg"),
+                image: require("@/assets/images/dashboard/m3.jpg"),
+                img: require("@/assets/images/dashboard/pro.png"),
             },
         ]
         loading.value = false

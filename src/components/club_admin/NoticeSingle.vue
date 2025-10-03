@@ -26,7 +26,7 @@
         <NoticeForm />
         <div class="col-md-4">
             <div class="calen">
-                <CalendarEvent />
+                <CalendarDashboard />
             </div>
             <div id="news">
                 <RecentComments style="width: 90%" />
@@ -42,12 +42,11 @@ import { onMounted } from 'vue'
 import { useNoticeStore } from '@/stores/club_admin/NoticeStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
+import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
 import RecentComments from "@/partials/club_admin/notices/RecentComments.vue";
 import MoreNotices from "@/partials/club_admin/notices/MoreNotices.vue";
 import ProfileWithoutSearch from "@/partials/club_admin/competitionsadd/ProfileWithoutSearch.vue";
 import NoticeForm from "@/partials/club_admin/noticesingle/NoticeForm.vue";
-/* global $ */
 
 const {
     completedDaysAgo,
@@ -58,7 +57,6 @@ const {
 const MemberCount = memberCount
 const EventDay = completedDaysAgo
 onMounted(() => {
-    $("#datepicker").datepicker()
     fetchNotices()
 })
 </script>

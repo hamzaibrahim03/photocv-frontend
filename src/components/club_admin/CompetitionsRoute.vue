@@ -1,126 +1,143 @@
 <template>
-<NavigationRoute />
-<HeaderRoute title="Competitions" />
-<section class="content">
-    <div class="dashboard-card">
-        <div class="profile-card">
-            <div class="profile-left">
-                <div class="profile-info">
-                    <small class="greeting">Planned and regular club competition</small>
-                    <h2 class="name">2024 - 2025 Season</h2>
-                    <p class="role">{{CompetitionCount}} Competitions to go</p>
-                </div>
-            </div>
-            <div class="dt-search mx-auto">
-                <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search competitions..." aria-controls="example1" />
-            </div>
-            <div class="quick-filter text-end">
-                <strong>Filter</strong>
-                <small class="d-block">(Click icons to filter)</small>
-                <div class="d-flex gap-2 justify-content-end">
-                    <img :src="Pri" alt="icon" style="width: 20px; height: 20px" />
-                    <img :src="Fax" alt="icon" style="width: 20px; height: 20px" />
-                    <img :src="Pai" alt="icon" style="width: 20px; height: 20px" />
-                </div>
-                <div class="d-flex gap-2 justify-content-end mt-2">
-                    <img :src="Flo" alt="icon" style="width: 20px; height: 20px" />
-                    <img :src="Prof" alt="icon" style="width: 20px; height: 20px" />
-                    <img :src="Ima" alt="icon" style="width: 20px; height: 20px" />
-                </div>
-            </div>
-        </div>
-        <div class="card-section">
-            <div class="stat-card">
-                <small class="ca-details">Competitions</small>
-                <h3 class="number">{{ MemberCount }}</h3>
-            </div>
-            <div class="event-card">
-                <small class="ca-details">Next Competition</small>
-                <div class="row">
-                    <div class="col-md-5">
-                        <h3 class="number">{{EventDay}}</h3>
-                    </div>
-                    <div class="days col-md-7">
-                        <span>days to go</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="container mt-4">
-                <div v-if="filteredCompetitions.length">
-                    <div v-for="competition in filteredCompetitions" :key="competition.id" class="custom-card mb-3 p-3">
-                        <div class="d-flex gap-3" style="flex: 1">
-                            <img :src="competition.featured_image" alt="Competition Image" />
-                            <div class="flex-grow-1 d-flex flex-column justify-content-between">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <h5>{{ competition.name || 'Untitled Competition' }}</h5>
-                                    <div class="icon-container ms-3">
-                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
-                                    </div>
+<div :style="{ backgroundColor: 'white' }">
+    <Loader :show="isLoading" />
+    <div v-if="!isLoading">
+        <NavigationRoute />
+        <HeaderRoute title="Competitions" />
+        <div class="content">
+            <section>
+                <div class="container">
+                    <div class="dashboard-card">
+                        <div class="profile-card">
+                            <div class="profile-left">
+                                <div class="profile-info">
+                                    <small class="greeting">Planned and regular club competition</small>
+                                    <h2 class="name">2024 - 2025 Season</h2>
+                                    <p class="role">{{CompetitionCount}} Competitions to go</p>
                                 </div>
-                                <p style="margin: 5px 0; font-size: 14px; columns: 2">
-                                    <strong style="color: red">Open:</strong>{{formatDate(competition.start_date)}}
-                                    <br />
-                                    <strong style="color: brown">Result:</strong> {{formatDate(competition.result_announcement_date)}}
-                                    <br />
-                                    <strong style="color: brown">Theme:</strong>{{competition.theme_id}}<br />
-                                    <strong style="color: red">Close:</strong>{{formatDate(competition.submission_deadline)}}
-                                    <br />
-                                    <strong style="color: brown">Max:</strong>{{competition.max_entries_print}}
-                                    <br />
-                                    <strong style="color: brown">Format:</strong> {{competition.allowed_image_formats}}
-                                </p>
-                                <p class="text-secondary">
-                                    {{ competition.description || 'No description provided.' }}
-                                </p>
-                                <div class="button-group mt-3 d-flex">
-                                    <router-link :to="{ name: 'competitionsingle', params: { id: competition.id } }" custom v-slot="{ navigate }">
-                                        <button class="btn me-2" id="view" @click="navigate">View</button>
-                                    </router-link>
-                                    <router-link :to="{ name: 'comp_edit', params: { id: competition.id } }" custom v-slot="{ navigate }">
-                                        <button class="btn" id="edit" @click="navigate">Edit</button>
-                                    </router-link>
+                            </div>
+                            <div class="dt-search mx-auto">
+                                <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search competitions..." aria-controls="example1" />
+                            </div>
+                            <div class="quick-filter text-end">
+                                <strong>Filter</strong>
+                                <small class="d-block">(Click icons to filter)</small>
+                                <div class="d-flex gap-2 justify-content-end">
+                                    <img :src="Pri" alt="icon" style="width: 20px; height: 20px" />
+                                    <img :src="Fax" alt="icon" style="width: 20px; height: 20px" />
+                                    <img :src="Pai" alt="icon" style="width: 20px; height: 20px" />
+                                </div>
+                                <div class="d-flex gap-2 justify-content-end mt-2">
+                                    <img :src="Flo" alt="icon" style="width: 20px; height: 20px" />
+                                    <img :src="Prof" alt="icon" style="width: 20px; height: 20px" />
+                                    <img :src="Ima" alt="icon" style="width: 20px; height: 20px" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-section">
+                            <div class="stat-card">
+                                <small class="ca-details">Competitions</small>
+                                <h3 class="number">{{ MemberCount }}</h3>
+                            </div>
+                            <div class="event-card">
+                                <small class="ca-details">Next Competition</small>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <h3 class="number">{{EventDay}}</h3>
+                                    </div>
+                                    <div class="days col-md-7">
+                                        <span>days to go</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </section>
+            <div class="row">
+                <div class="col-md-8">
+                    <section>
+                        <div class="container">
+                            <div class="mt-4">
+                                <div v-if="filteredCompetitions.length">
+                                    <div v-for="competition in filteredCompetitions" :key="competition.id" class="custom-card mb-3 p-3">
+                                        <div class="d-flex gap-3" style="flex: 1">
+                                            <img :src="competition.featured_image" alt="Competition Image" />
+                                            <div class="flex-grow-1 d-flex flex-column justify-content-between">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h5>{{ competition.name || 'Untitled Competition' }}</h5>
+                                                    <div class="icon-container ms-3">
+                                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
+                                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
+                                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
+                                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+                                                    </div>
+                                                </div>
+                                                <p style="margin: 5px 0; font-size: 14px; columns: 2">
+                                                    <strong style="color: red">Open:</strong>{{formatDate(competition.start_date)}}
+                                                    <br />
+                                                    <strong style="color: brown">Result:</strong> {{formatDate(competition.result_announcement_date)}}
+                                                    <br />
+                                                    <strong style="color: brown">Theme:</strong>{{competition.theme_id}}<br />
+                                                    <strong style="color: red">Close:</strong>{{formatDate(competition.submission_deadline)}}
+                                                    <br />
+                                                    <strong style="color: brown">Max:</strong>{{competition.max_entries_print}}
+                                                    <br />
+                                                    <strong style="color: brown">Format:</strong> {{competition.allowed_image_formats}}
+                                                </p>
+                                                <p class="text-secondary">
+                                                    {{ competition.description || 'No description provided.' }}
+                                                </p>
+                                                <div class="button-group mt-3 d-flex">
+                                                    <router-link :to="{ name: 'competitionsingle', params: { id: competition.id } }" custom v-slot="{ navigate }">
+                                                        <button class="btn me-2" id="view" @click="navigate">View</button>
+                                                    </router-link>
+                                                    <router-link :to="{ name: 'comp_edit', params: { id: competition.id } }" custom v-slot="{ navigate }">
+                                                        <button class="btn" id="edit" @click="navigate">Edit</button>
+                                                    </router-link>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <div v-else class="text-center text-muted">No competitions found.</div>
-                <nav v-if="filteredCompetitions.length">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                            <button class="page-link" @click="prevPage">Previous</button>
-                        </li>
-                        <li class="page-item disabled">
-                            <span class="page-link">
-                                Page {{ currentPage }} of {{ totalPages }}
-                            </span>
-                        </li>
-                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                            <button class="page-link" @click="nextPage">Next</button>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="calen">
-                <CalendarEvent />
-            </div>
-            <div id="news">
-                <RecentSubmissions />
-                <MoreCompetitions />
+                                <div v-else class="text-center text-muted">No competitions found.</div>
+                                <nav v-if="filteredCompetitions.length">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                                            <button class="page-link" @click="prevPage">Previous</button>
+                                        </li>
+                                        <li class="page-item disabled">
+                                            <span class="page-link">
+                                                Page {{ currentPage }} of {{ totalPages }}
+                                            </span>
+                                        </li>
+                                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                                            <button class="page-link" @click="nextPage">Next</button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-4">
+                    <section>
+                        <div class="container" id="right">
+                            <div class="cardddd" style="padding: 0">
+                                <CalendarDashboard />
+                            </div>
+                            <div id="news">
+                                <RecentSubmissions />
+                                <MoreCompetitions />
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 </template>
 
 <script setup>
@@ -129,7 +146,7 @@ import apiClient from 'axios'
 import { useCompetitionStore } from '@/stores/club_admin/CompetitionStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
+import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
 import RecentSubmissions from "@/partials/club_admin/competitions/RecentSubmissions.vue";
 import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetitions.vue";
 import Pro from "@/assets/icons/event_list/pro.svg"
@@ -142,7 +159,7 @@ import Fax from "@/assets/icons/quick_comp/fax.svg"
 import Pri from "@/assets/icons/quick_comp/print.svg"
 import Pai from "@/assets/icons/quick_comp/paint.svg"
 import Prof from "@/assets/icons/quick_comp/profile.svg"
-/* global $ */
+import Loader from "@/components/LoaderAll.vue";
 
 const {
     competitions,
@@ -156,6 +173,7 @@ const MemberCount = memberCount
 const EventDay = eventDay
 const search = ref('')
 const currentPage = ref(1)
+const isLoading = ref(true);
 const rowsPerPage = 4
 
 let debounceTimeout
@@ -189,6 +207,17 @@ const fetchSearchedCompetitions = debounce(async (query) => {
     }
 }, 400)
 
+const loadCompetitions = async () => {
+  isLoading.value = true
+  try {
+    await fetchCompetitions()   // ⬅️ calls store function
+  } catch (error) {
+    console.error("Error fetching competitions:", error)
+  } finally {
+    isLoading.value = false   // ✅ hide loader always
+  }
+}
+
 watch(search, (newSearch) => {
     if (newSearch.length >= 3) {
         fetchSearchedCompetitions(newSearch)
@@ -198,8 +227,7 @@ watch(search, (newSearch) => {
 })
 
 onMounted(() => {
-    $("#datepicker").datepicker()
-    fetchCompetitions()
+    loadCompetitions()
 })
 
 const filteredCompetitions = computed(() => {
@@ -242,17 +270,208 @@ const formatDate = (date) => {
 </script>
 
 <style scoped>
-.calen {
-    margin-top: 15px;
+.container {
+  max-width: 1810px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+.dashboard-card {
+  gap: 15px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.icon-container i {
-    color: #666;
-    font-size: 16px;
+.profile-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding: 15px 25px;
+  border-radius: 12px;
+  width: 68%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  height: 158px;
+}
+
+.profile-left {
+  display: flex;
+  align-items: left;
+}
+
+.profile-left img {
+  width: 100%;
+  max-width: 108px;
+  height: 108px;
+  border-radius: 50%;
+}
+
+.greeting {
+  color: #99816b;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  font-family: Inter;
+}
+
+.name {
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 100%;
+  color: #4c4036;
+  font-family: Inter;
+}
+
+.names {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 18.68px;
+  line-height: 20.76px;
+  letter-spacing: 0%;
+}
+
+.namess {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  color: #4c4036;
+  padding-left: 20px;
+  font-family: Inter;
+  text-align: justify;
+}
+
+.left-header-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.role {
+  color: #cc445e;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  font-family: Inter;
+}
+
+.profile-icons {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.profile-icon {
+  display: flex;
+  flex-direction: column;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 14px;
+  gap: 5px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  color: #cc445e;
+  font-size: 14px;
+  gap: 5px;
+}
+
+.icon i {
+  margin-right: 5px;
+}
+
+.stat-card {
+  background: #cc445e;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 50%;
+  font-family: Inter;
+  font-size: 1.2rem;
+  height: 158px;
+}
+
+.event-card {
+  background: #755840;
+  color: white;
+  padding: 20px;
+  height: 158px;
+  border-radius: 8px;
+  text-align: center;
+  font-family: Inter;
+  font-size: 1.2rem;
+  width: 50%;
+}
+
+.number {
+  font-weight: 500;
+  font-size: 48px;
+  font-family: Inter;
+  line-height: 100%;
+  color: white;
+  margin-top: 30px;
+}
+
+.ca-details {
+  font-weight: 400;
+  font-size: 20px;
+  font-family: Inter;
+  line-height: 100%;
+}
+
+.days {
+  margin-top: 35px;
+  font-weight: 400;
+  font-family: Inter;
+  font-size: 16px;
+  line-height: 100%;
+}
+.card-section {
+  display: flex;
+  gap: 15px;
+  width: 30%;
+}
+.cardddd:first-child {
+  background: white;
+  width: 95%;
+  padding: 20px;
+  height: 390px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.cardddd {
+  background: white;
+  width: 95%;
+  padding: 20px;
+  height: 390px;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
 .custom-card {
-    margin-left: 1%;
-    width: 103%;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 103.5%;
+  margin-right: auto;
+  flex-direction: row;
+}
+
+#right {
+    margin-left: 20px;
 }
 </style>
+

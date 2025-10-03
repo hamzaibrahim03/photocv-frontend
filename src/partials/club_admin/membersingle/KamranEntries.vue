@@ -3,13 +3,13 @@
     <h5>{{title}}</h5>
     <div class="row">
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e1_1.jpg" />
+        <img src="@/assets/images/dashboard/c1.jpg" />
       </div>
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e1_2.jpg" />
+        <img src="@/assets/images/dashboard/c2.jpg" />
       </div>
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e1_3.jpg" />
+        <img src="@/assets/images/dashboard/c3.jpg" />
       </div>
       <div class="col-md-6">
         <p><label class="role">Colour Competition</label></p>
@@ -18,13 +18,13 @@
     <div class="divider2"></div>
     <div class="row">
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e2_1.jpg" />
+        <img src="@/assets/images/dashboard/c1.jpg" />
       </div>
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e2_2.jpg" />
+        <img src="@/assets/images/dashboard/c2.jpg" />
       </div>
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e2_3.jpg" />
+        <img src="@/assets/images/dashboard/c3.jpg" />
       </div>
       <div class="col-md-6">
         <p><label class="role">Print Competition</label></p>
@@ -33,13 +33,13 @@
     <div class="divider2"></div>
     <div class="row">
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e3_1.jpg" />
+        <img src="@/assets/images/dashboard/c1.jpg" />
       </div>
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e3_2.jpg" />
+        <img src="@/assets/images/dashboard/c2.jpg" />
       </div>
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e3_3.jpg" />
+        <img src="@/assets/images/dashboard/c3.jpg" />
       </div>
       <div class="col-md-6">
         <p><label class="role">Potrait Competition</label></p>
@@ -48,13 +48,13 @@
     <div class="divider2"></div>
     <div class="row">
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e1_1.jpg" />
+        <img src="@/assets/images/dashboard/c1.jpg" />
       </div>
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e1_2.jpg" />
+        <img src="@/assets/images/dashboard/c2.jpg" />
       </div>
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e1_3.jpg" />
+        <img src="@/assets/images/dashboard/c3.jpg" />
       </div>
       <div class="col-md-6">
         <p><label class="role">Colour Competition</label></p>
@@ -63,13 +63,13 @@
     <div class="divider2"></div>
     <div class="row">
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e2_1.jpg" />
+        <img src="@/assets/images/dashboard/c1.jpg" />
       </div>
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e2_2.jpg" />
+        <img src="@/assets/images/dashboard/c2.jpg" />
       </div>
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e2_3.jpg" />
+        <img src="@/assets/images/dashboard/c3.jpg" />
       </div>
       <div class="col-md-6">
         <p><label class="role">Print Competition</label></p>
@@ -78,13 +78,13 @@
     <div class="divider2"></div>
     <div class="row">
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e3_1.jpg" />
+        <img src="@/assets/images/dashboard/c1.jpg" />
       </div>
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e3_2.jpg" />
+        <img src="@/assets/images/dashboard/c2.jpg" />
       </div>
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/e3_3.jpg" />
+        <img src="@/assets/images/dashboard/c3.jpg" />
       </div>
       <div class="col-md-6">
         <p><label class="role">Potrait Competition</label></p>

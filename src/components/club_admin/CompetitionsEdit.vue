@@ -34,7 +34,7 @@
         <FormAdd />
         <div class="col-md-4">
             <div class="calen">
-                <CalendarEvent />
+                <CalendarDashboard />
             </div>
             <div id="news">
                 <RecentSubmissions />
@@ -49,14 +49,13 @@
 <script setup>
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
+import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
 import RecentSubmissions from "@/partials/club_admin/competitions/RecentSubmissions.vue";
 import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetitions.vue";
 import FormAdd from "@/partials/club_admin/competitionsadd/FormAdd.vue";
 import GlobalSettings from "@/partials/club_admin/competitionsadd/GlobalSettings.vue";
 import { onMounted } from 'vue'
 import { useCompetitionStore } from '@/stores/club_admin/CompetitionStore'
-/* global $ */
 
 const {
     fetchCompetitions,
@@ -70,7 +69,6 @@ const EventDay = eventDay
 
 // Fetch evencompetitionsts on mount
 onMounted(() => {
-    $("#datepicker").datepicker()
     fetchCompetitions()
 })
 </script>

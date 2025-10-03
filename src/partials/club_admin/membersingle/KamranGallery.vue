@@ -69,7 +69,7 @@ export default {
         setTimeout(() => {
             this.cards = [{
                     id: 1,
-                    image: require("@/assets/images/gallery/c1.jpg"),
+                    image: require("@/assets/images/dashboard/c1.jpg"),
                     name: "Nature",
                     count: "20",
                     heart: "15",
@@ -77,7 +77,7 @@ export default {
                 },
                 {
                     id: 2,
-                    image: require("@/assets/images/gallery/c2.jpg"),
+                    image: require("@/assets/images/dashboard/c2.jpg"),
                     name: "Indoors",
                     count: "20",
                     heart: "25",
@@ -85,7 +85,7 @@ export default {
                 },
                 {
                     id: 3,
-                    image: require("@/assets/images/gallery/c3.jpg"),
+                    image: require("@/assets/images/dashboard/c3.jpg"),
                     name: "Street",
                     count: "20",
                     heart: "15",
@@ -93,7 +93,7 @@ export default {
                 },
                 {
                     id: 4,
-                    image: require("@/assets/images/gallery/c4.jpg"),
+                    image: require("@/assets/images/dashboard/c4.jpg"),
                     name: "Potrait",
                     count: "20",
                     heart: "15",
@@ -101,7 +101,7 @@ export default {
                 },
                 {
                     id: 5,
-                    image: require("@/assets/images/gallery/c5.jpg"),
+                    image: require("@/assets/images/dashboard/c5.jpg"),
                     name: "Event",
                     count: "20",
                     heart: "15",
@@ -109,7 +109,7 @@ export default {
                 },
                 {
                     id: 6,
-                    image: require("@/assets/images/gallery/c6.jpg"),
+                    image: require("@/assets/images/dashboard/c6.jpg"),
                     name: "Weather",
                     count: "20",
                     heart: "15",
@@ -117,7 +117,7 @@ export default {
                 },
                 {
                     id: 7,
-                    image: require("@/assets/images/gallery/c7.jpg"),
+                    image: require("@/assets/images/dashboard/c7.jpg"),
                     name: "Mono",
                     count: "20",
                     heart: "15",
@@ -125,7 +125,7 @@ export default {
                 },
                 {
                     id: 8,
-                    image: require("@/assets/images/gallery/c8.jpg"),
+                    image: require("@/assets/images/dashboard/c8.jpg"),
                     name: "Sunset",
                     count: "20",
                     heart: "15",

@@ -189,7 +189,7 @@
                                         <img :src="item.image_url" :alt="item.username" style="object-fit: cover; object-position: top;"/>
                                         <div class="pics-infos" :class="getPositionClass(index, chunkedCards.flat().length)" :style="{ backgroundColor: hexToRgba('#7FA483', 0.7) }">
                                             <div :style="{ color: 'white' }">
-                                                {{ item.gallery_name.length > 7 ? item.gallery_name.slice(0, 7) + '...' : item.gallery_name }}
+                                                {{ item.gallery_name }}
                                             </div>
                                         </div>
                                     </div>
@@ -332,7 +332,7 @@
                                     <div v-if="item.photos && item.photos.length">
                                         <img :src="item.photos[0].image" :alt="item.photos[0].title"/>
                                         <div class="pics-infos" :class="getPositionClass(index, chunkCards.flat().length)" :style="{ backgroundColor: hexToRgba('#7FA483', 0.7) }">
-                                            {{ item.gallery_name.length > 10 ? item.gallery_name.slice(0, 10) + "..." : item.gallery_name }}
+                                            {{ item.gallery_name }}
                                         </div>
                                     </div>
                                 </div>

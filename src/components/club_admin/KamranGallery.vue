@@ -35,11 +35,11 @@ export default {
     data() {
         return {
             galleryImages: [{
-                    src: require("@/assets/images/gallery/c1.jpg"),
+                    src: require("@/assets/images/dashboard/c1.jpg"),
                     description: "Beautiful landscape",
                 },
                 {
-                    src: require("@/assets/images/gallery/c2.jpg"),
+                    src: require("@/assets/images/dashboard/c2.jpg"),
                     description: "Urban night scene",
                 },
             ],

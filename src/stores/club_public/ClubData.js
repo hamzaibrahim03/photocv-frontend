@@ -1,6 +1,6 @@
 // src/stores/HomeStore.js
 import { defineStore } from 'pinia';
-import api from '@/api/clubdata'; // Corrected import
+import api from '@/api/club_public/clubdata'; // Corrected import
 
 export const useHomeStore = defineStore('home', {
   state: () => ({

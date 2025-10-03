@@ -5,7 +5,7 @@
             <div class="form-containers">
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="@/assets/images/comp/c1.png" alt="Meeting" />
+                        <img src="@/assets/images/dashboard/c1.jpg" alt="Meeting" />
                     </div>
                     <div class="col-md-8 mb-3">
                         <label for="title"> Notice Title </label>

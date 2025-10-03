@@ -1,6 +1,6 @@
 <template>
-<div class="cardddd d-flex flex-column">
-    <h5 style="font-size: 20px">{{ heading }}</h5>
+<div class="cardddd d-flex flex-column" :style="{padding: '35px'}">
+    <h5  class="head">{{ heading }}</h5>
 
     <div class="row" style="margin-bottom: 10px" v-for="c in eventcomments.slice(0, 4)" :key="c.id">
         <div v-for="comment in c.comments" :key="comment.id" class="row">

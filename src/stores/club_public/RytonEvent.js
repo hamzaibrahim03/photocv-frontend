@@ -1,27 +1,27 @@
 // src/stores/HomeStore.js
 import { defineStore } from 'pinia';
-import api from '@/api/club_public/rytonevent';
+import api from '@/api/club_public/rytonevent'; // Corrected import
 
-export const useRytonEvents = defineStore('rytonevent', {
+export const useRytonEventStore = defineStore('event', {
   state: () => ({
-    rytonEvent: {},
+    eventData: {},
     loading: false,
     error: null
   }),
 
   actions: {
-    async fetchRytonEvents() {
+    async fetchRytonEventData(domain) {
       this.loading = true;
       try {
-        const response = await api.getAllRytonEvents();
-        this.rytonEvent = response.data;
+        const response = await api.getAllRytonEvents(domain); // pass domain here
+        this.eventData = response.data;
+        console.log("Event data =>", this.eventData);
         this.error = null;
       } catch (err) {
-        console.error('Failed to load ryton events data:', err);
         this.error = err;
       } finally {
         this.loading = false;
       }
-    }
+    }    
   }
 });

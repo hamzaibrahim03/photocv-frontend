@@ -15,7 +15,7 @@ export function useCompetitionStore() {
 
     try {
       const res = await CompetitionsAPI.getAllCompetitions()
-      const competitionList = res?.data?.data?.original?.data || []
+      const competitionList = res?.data?.data?.competitions?.original?.data || []
       competitions.value = competitionList
       memberCount.value = competitionList.length
 

@@ -14,8 +14,8 @@ export function useEventStore() {
     error.value = null
 
     try {
-      const res = await apiClient.get('/events')
-      const eventList = res?.data?.data?.original?.data || []
+      const response = await apiClient.get('/events')
+      const eventList = response?.data?.data?.original?.data || []
       events.value = eventList
       memberCount.value = eventList.length
 

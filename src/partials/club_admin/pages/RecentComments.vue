@@ -1,20 +1,21 @@
 <template>
-<div class="cardddd d-flex flex-column">
-    <h5 style="font-size: 20px">{{ heading }}</h5>
+<div class="cardddd d-flex flex-column" style="padding: 35px">
+    <h5 class="head">{{ heading }}</h5>
 
-    <div class="row" style="margin-bottom: 10px" v-for="c in pagecomments.slice(0, 4)" :key="c.id">
-        <div v-for="comment in c.comments" :key="comment.id" class="row">
-            <div class="col-md-2">
-                <img :src="comment.user?.profile_image_url" alt="Com" style="width: 50px; height: 50px" />
+    <div class="event-list" style="margin-bottom: 10px" v-for="c in pagecomments.slice(0, 4)" :key="c.id">
+        <div v-for="comment in c.comments" :key="comment.id" class="event-item">
+            <img v-if="comment.user?.profile_image_url" class="img-fluid event-img" :src="comment.user.profile_image_url" @error="comment.user.profile_image_url = null" />
+            <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
+                <i class="fa-regular fa-user" style="font-size: 24px; color: gray"></i>
             </div>
-            <div class="col-md-6">
-                <p class="text-secondary">{{ comment.comment }}</p>
-            </div>
-            <div class="col-md-4">
-                <div class="event-time" style="text-align: right">
-                    <small class="event-date">{{ formatDate(comment.created_at) }}</small><br />
-                    <small class="event-time-details">{{ formatTime(comment.created_at) }}</small>
+            <div class="event-details">
+                <div class="event-info" style="display: flex; flex-direction: column">
+                    <span id="ename">{{ comment.comment }}</span>
                 </div>
+            </div>
+            <div class="event-time" id="edate">
+                <small class="event-date galtext">{{ formatDate(comment.created_at) }}</small><br />
+                <small class="event-time-details galtext">{{ formatTime(comment.created_at) }}</small>
             </div>
         </div>
     </div>

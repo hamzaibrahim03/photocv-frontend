@@ -29,7 +29,7 @@
                     <div class="custom-card">
                         <div class="row">
                             <div class="col-md-4">
-                                <img src="@/assets/images/comp/c1.png" alt="Meeting" />
+                                <img src="@/assets/images/dashboard/c1.jpg" alt="Meeting" />
                             </div>
                             <div class="col-md-8" style="padding-left: 30px">
                                 <div class="d-flex align-items-center justify-content-between">
@@ -157,7 +157,7 @@
         </div>
         <div class="col-md-4">
             <div class="calen">
-                <CalendarEvent />
+                <CalendarDashboard />
             </div>
             <div id="news">
                 <RecentComments style="width: 90%" />
@@ -174,12 +174,11 @@ import { onMounted, computed } from 'vue'
 import { useEventStore } from '@/stores/club_admin/EventStore'
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
-import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
+import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
 import QuickFilters from "@/partials/club_admin/events/QuickFilters.vue"
 import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
 import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
 import dayjs from 'dayjs'
-    /* global $ */
 
 const {
   events,
@@ -198,7 +197,6 @@ const formattedStartDate = computed(() =>
 )
 
 onMounted(() => {
-  $("#datepicker").datepicker() // Only works if jQuery UI is loaded
   fetchEvents()
 })
 

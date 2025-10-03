@@ -61,7 +61,7 @@
                 <h5>Comments</h5>
                 <div class="row">
                     <div class="col-md-1">
-                        <img src="@/assets/images/comments/c1.png" />
+                        <img src="@/assets/images/dashboard/c1.jpg" />
                     </div>
                     <div class="col-md-9">
                         <p>
@@ -78,7 +78,7 @@
                 <div class="divider2"></div>
                 <div class="row">
                     <div class="col-md-1">
-                        <img src="@/assets/images/comments/c2.png" />
+                        <img src="@/assets/images/dashboard/c2.jpg" />
                     </div>
                     <div class="col-md-9">
                         <p>
@@ -95,7 +95,7 @@
                 <div class="divider2"></div>
                 <div class="row">
                     <div class="col-md-1">
-                        <img src="@/assets/images/comments/c3.png" />
+                        <img src="@/assets/images/dashboard/c3.jpg" />
                     </div>
                     <div class="col-md-9">
                         <p>
@@ -112,7 +112,7 @@
                 <div class="divider2"></div>
                 <div class="row">
                     <div class="col-md-1">
-                        <img src="@/assets/images/comments/c3.png" />
+                        <img src="@/assets/images/dashboard/c3.jpg" />
                     </div>
                     <div class="col-md-9">
                         <p>
@@ -133,53 +133,53 @@
                 <h5>Likes</h5>
                 <div class="row">
                     <div class="col-md-2 like-item">
-                        <img src="@/assets/images/likes/l1.png" class="profile-img" />
+                        <img src="@/assets/images/dashboard/c1.jpg" class="profile-img" />
                         <span class="heart-icon">❤</span>
                     </div>
                     <div class="col-md-2 like-item">
-                        <img src="@/assets/images/likes/l2.png" class="profile-img" />
+                        <img src="@/assets/images/dashboard/c2.jpg" class="profile-img" />
                         <span class="heart-icon">❤</span>
                     </div>
                     <div class="col-md-2 like-item">
-                        <img src="@/assets/images/likes/l3.png" class="profile-img" />
+                        <img src="@/assets/images/dashboard/c3.jpg" class="profile-img" />
                         <span class="heart-icon">❤</span>
                     </div>
                     <div class="col-md-2 like-item">
-                        <img src="@/assets/images/likes/l4.png" class="profile-img" />
+                        <img src="@/assets/images/dashboard/c4.jpg" class="profile-img" />
                         <span class="heart-icon">❤</span>
                     </div>
                     <div class="col-md-2 like-item">
-                        <img src="@/assets/images/likes/l5.png" class="profile-img" />
+                        <img src="@/assets/images/dashboard/c5.jpg" class="profile-img" />
                         <span class="heart-icon">❤</span>
                     </div>
                     <div class="col-md-2 like-item">
-                        <img src="@/assets/images/likes/l6.png" class="profile-img" />
+                        <img src="@/assets/images/dashboard/c6.jpg" class="profile-img" />
                         <span class="heart-icon">❤</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-2 like-item">
-                        <img src="@/assets/images/likes/l7.png" class="profile-img" />
+                        <img src="@/assets/images/dashboard/c7.jpg" class="profile-img" />
                         <span class="heart-icon">❤</span>
                     </div>
                     <div class="col-md-2 like-item">
-                        <img src="@/assets/images/likes/l1.png" class="profile-img" />
+                        <img src="@/assets/images/dashboard/c1.jpg" class="profile-img" />
                         <span class="heart-icon">❤</span>
                     </div>
                     <div class="col-md-2 like-item">
-                        <img src="@/assets/images/likes/l2.png" class="profile-img" />
+                        <img src="@/assets/images/dashboard/c2.jpg" class="profile-img" />
                         <span class="heart-icon">❤</span>
                     </div>
                     <div class="col-md-2 like-item">
-                        <img src="@/assets/images/likes/l3.png" class="profile-img" />
+                        <img src="@/assets/images/dashboard/c3.jpg" class="profile-img" />
                         <span class="heart-icon">❤</span>
                     </div>
                     <div class="col-md-2 like-item">
-                        <img src="@/assets/images/likes/l4.png" class="profile-img" />
+                        <img src="@/assets/images/dashboard/c4.jpg" class="profile-img" />
                         <span class="heart-icon">❤</span>
                     </div>
                     <div class="col-md-2 like-item">
-                        <img src="@/assets/images/likes/l5.png" class="profile-img" />
+                        <img src="@/assets/images/dashboard/c5.jpg" class="profile-img" />
                         <span class="heart-icon">❤</span>
                     </div>
                 </div>

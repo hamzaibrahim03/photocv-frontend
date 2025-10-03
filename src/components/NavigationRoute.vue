@@ -1,11 +1,8 @@
 <template>
 <div class="sidebar">
-    <!-- Common Top Image -->
     <img src="@/assets/images/photo.png" style="margin-left: 25px" />
     <div class="divider3"></div>
-    <!-- Conditional Menu Based on Role -->
     <template v-if="user.role === 'club_admin'">
-        <!-- Club Admin Menu -->
         <a href="#"><img src="@/assets/images/eye.png" alt="Logo" class="img-fluid mb-3" />&nbsp;&nbsp;My Club</a>
         <a href="/dashboard"><img :src="Dashboard" alt="point-icon" style="width: 15px; height: 15px;" /> Dashboard</a>
         <a href="/event"><img :src="Event" alt="event" style="width: 15px; height: 15px" /> Events</a>
@@ -19,7 +16,6 @@
     </template>
 
     <template v-else-if="user.role === 'member'">
-        <!-- photographer Menu -->
         <a href="#"><img src="@/assets/images/eyep.png" alt="Logo" class="img-fluid mb-3" />&nbsp;My Profile</a>
         <a href="/about"><img :src="About" alt="point-icon" style="width: 15px; height: 15px" /> About Me</a>
         <a href="/portfolio"><img :src="Portfolio" alt="point-icon" style="width: 15px; height: 15px" /> Portfolio</a>
@@ -31,7 +27,6 @@
 
     <div class="divider1"></div>
 
-    <!-- Common Links -->
     <a href="/settings"><img :src="Settings" alt="point-icon" style="width: 15px; height: 15px" /> Settings</a>
     <a href="#" @click.prevent="handleLogout"><img :src="Logout" alt="point-icon" style="width: 15px; height: 15px" /> Logout</a>
 </div>

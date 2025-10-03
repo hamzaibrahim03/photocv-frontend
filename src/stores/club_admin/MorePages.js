@@ -21,7 +21,7 @@ randompages.value = randomList
 
       const today = new Date()
       const upcoming = randomList
-        .map(e => new Date(e.created_at))
+        .map(e => new Date(e.publish_date))
         .filter(d => d > today)
         .sort((a, b) => a - b)[0]
 

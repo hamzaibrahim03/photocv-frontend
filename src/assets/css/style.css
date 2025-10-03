@@ -166,7 +166,6 @@ body {
   display: none;
   position: absolute;
   top: 100%;
-  right: 0;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -395,13 +394,6 @@ h4 {
   margin-left: 20px;
 }
 
-.ui-datepicker table {
-  height: 340px;
-  width: 100%;
-  font-size: 0.9em;
-  border-collapse: collapse;
-  margin: 0 0 0.4em;
-}
 
 .event-list {
   display: flex;
@@ -696,7 +688,6 @@ h4 {
   margin-top: 10px;
   display: flex;
   width: 100%;
-  margin-left: 20px;
   gap: 20px;
   flex-wrap: wrap;
 }
@@ -781,24 +772,27 @@ h4 {
 
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 20px;
 }
 
 /* Track */
+/* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #ECEDE6;
   border-radius: 10px;
+; 
 }
-
+ 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #a0846c;
+  background: #ffffff; 
   border-radius: 10px;
+  width: 14px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #8a6f58;
+  background: #ECEDE6; 
 }
 
 /* gallery */
@@ -888,7 +882,6 @@ h4 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex: 1;
   font-size: 14px;
   font-family: Inter;
   width: 100%;
@@ -934,18 +927,7 @@ h4 {
 
 
 /* competitions */
-.custom-card {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px;
-  padding: 20px;
-  border-radius: 10px;
-  width: 100%;
-  margin-right: auto;
-  flex-direction: row;
-}
+
 
 .right {
   width: 100%;
@@ -994,27 +976,7 @@ h4 {
   justify-content: center;
 }
 
-.ui-datepicker .ui-datepicker-header {
-  background-color: #99816b;
-  color: white;
-}
 
-.ui-corner-all {
-  border-radius: 10px;
-}
-
-.ui-state-default,
-.ui-widget-content .ui-state-default {
-  font-weight: normal;
-  background: none;
-  color: #454545;
-  border: none;
-  text-align: center;
-}
-
-.ui-datepicker {
-  width: 100%;
-}
 
 
 .commentss-card img {

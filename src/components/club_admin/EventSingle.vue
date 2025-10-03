@@ -159,7 +159,7 @@
         </div>
         <div class="col-md-4">
             <div class="calen">
-                <CalendarEvent />
+                <CalendarDashboard />
             </div>
             <div id="news">
                 <RecentComments style="width: 90%" />
@@ -176,7 +176,7 @@ import { onMounted, computed } from 'vue'
 import { useEventStore } from '@/stores/club_admin/EventStore'
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
-import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
+import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
 import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
 import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
 import dayjs from 'dayjs'
@@ -185,7 +185,6 @@ import Cal from "@/assets/icons/event_list/cal.svg"
 import Cam from "@/assets/icons/event_list/cam.svg"
 import Mess from "@/assets/icons/event_list/mess.svg"
 import { useRoute } from 'vue-router';
-    /* global $ */
 
 const route = useRoute();
 const id = route.params.id;
@@ -210,7 +209,6 @@ const formattedStartDate = computed(() =>
 )
 
 onMounted(() => {
-  $("#datepicker").datepicker() // Only works if jQuery UI is loaded
   fetchEvents()
 })
 

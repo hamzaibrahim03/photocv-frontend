@@ -103,7 +103,7 @@
         </div>
         <div class="col-md-4">
             <div class="calen">
-                <CalendarEvent />
+                <CalendarDashboard />
             </div>
             <div id="news">
                 <RecentComments style="width: 90%" />
@@ -120,10 +120,9 @@ import apiClient from '@/api/axios'
 import { useEventStore } from '@/stores/club_admin/EventStore'
 import HeaderRoute from '@/components/HeaderRoute.vue'
 import NavigationRoute from '@/components/NavigationRoute.vue'
-import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
+import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
 import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
 import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
-/* global $ */
 
 const {
     events,
@@ -177,7 +176,6 @@ watch(search, (newSearch) => {
 })
 
 onMounted(() => {
-    $("#datepicker").datepicker()
     fetchEvents()
 })
 

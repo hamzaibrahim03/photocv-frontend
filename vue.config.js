@@ -4,7 +4,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
 
   devServer: {
-    host: 'johnphotocv.staging.cameraclub.website',
+    host: 'rytonlocal-staging.cameraclub.website',
     allowedHosts: 'all',
     port: 8080,
     hot: true,

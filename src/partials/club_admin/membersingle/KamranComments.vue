@@ -3,7 +3,7 @@
     <h5>{{title}}</h5>
     <div class="row">
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/c1.jpg" />
+        <img src="@/assets/images/dashboard/c1.jpg" />
       </div>
       <div class="col-md-7">
         <p>
@@ -19,7 +19,7 @@
     <div class="divider2"></div>
     <div class="row">
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/c2.jpg" />
+        <img src="@/assets/images/dashboard/c2.jpg" />
       </div>
       <div class="col-md-7">
         <p>
@@ -36,7 +36,7 @@
     <div class="divider2"></div>
     <div class="row">
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/c3.jpg" />
+        <img src="@/assets/images/dashboard/c3.jpg" />
       </div>
       <div class="col-md-7">
         <p>
@@ -53,7 +53,7 @@
     <div class="divider2"></div>
     <div class="row">
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/c1.jpg" />
+        <img src="@/assets/images/dashboard/c1.jpg" />
       </div>
       <div class="col-md-7">
         <p>
@@ -70,7 +70,7 @@
     <div class="divider2"></div>
     <div class="row">
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/c2.jpg" />
+        <img src="@/assets/images/dashboard/c2.jpg" />
       </div>
       <div class="col-md-7">
         <p>
@@ -87,7 +87,7 @@
     <div class="divider2"></div>
     <div class="row">
       <div class="col-md-2">
-        <img src="@/assets/images/member_single/c3.jpg" />
+        <img src="@/assets/images/dashboard/c3.jpg" />
       </div>
       <div class="col-md-7">
         <p>

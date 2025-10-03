@@ -178,7 +178,7 @@
         </div>
         <div class="col-md-4">
             <div class="calen">
-                <CalendarEvent />
+                <CalendarDashboard />
             </div>
             <div id="news">
                 <RecentSubmissions />
@@ -198,7 +198,7 @@ import { useCompetitionStore } from '@/stores/club_admin/CompetitionStore'
 
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
-import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
+import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
 import ProfileWithoutSearch from "@/partials/club_admin/competitionsadd/ProfileWithoutSearch.vue"
 import RecentSubmissions from "@/partials/club_admin/competitions/RecentSubmissions.vue"
 import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetitions.vue"

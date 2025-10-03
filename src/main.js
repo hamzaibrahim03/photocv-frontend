@@ -4,6 +4,7 @@ import { createPinia } from "pinia";
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import router from "./routes/navigation";
 import "./assets/css/style.css";
+import "./assets/css/clubstyle.css";
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);

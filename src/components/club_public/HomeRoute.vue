@@ -8,10 +8,11 @@
                 <a class="navbar-brand d-flex align-items-center" href="/">
                     <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px" />
                 </a>
+
+                    <button class="navbar-toggler me-2" type="button" @click="toggleNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                 
-                <button class="navbar-toggler ms-auto me-2" type="button" @click="toggleNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
@@ -46,33 +47,34 @@
                             </a>
                         </li>
                     </ul>
-                </div>
 
-                <div class="right-header d-flex align-items-center ms-3">
-                    <a href="notification.html" class="icon">
-                        <i class="fa-regular fa-bell text-lg mx-3" :style="{ fontSize: '22px' }"></i>
-                    </a>
-                    <div class="divider" :style="{ width: '2px', height: '46px', margin: '0 10px', border:'1px #333' }"></div>
-                    <div class="admin-dropdown position-relative">
-                        <a href="#" class="icon" >
-                            <img v-if="User && User.isLoggedIn && User.profile_image_url" :src="User.profile_image_url" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-                            <i v-else class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i>
+                    <div class="right-header d-flex align-items-center">
+                        <a href="notification.html" class="icon notification-desktop">
+                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
                         </a>
-                        <router-link v-if="!User || !User.isLoggedIn" to="/login" custom v-slot="{ navigate }" style="cursor: pointer">
-                            <span id="login">
-                                <span @click="navigate">
-                                    Login
-                                </span>&nbsp;
-                                <i class="fa-solid fa-chevron-down text-xs text-gray-500" @click.stop.prevent="toggleDropdown"></i>
-                            </span>
-                        </router-link>
-                        <div class="dropdown-menu" v-show="isDropdownOpen">
-                            <a class="nav-link" href="#" @click.prevent="handleLogout">
-                                Register
+                        <div class="divider"></div>
+                        <div class="admin-dropdown position-relative">
+                            <a href="#" class="icon profile-mobile" >
+                                <img v-if="User && User.isLoggedIn && User.profile_image_url" :src="User.profile_image_url" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
+                                <i v-else class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i>
                             </a>
+                            <router-link v-if="!User || !User.isLoggedIn" to="/login" custom v-slot="{ navigate }" style="cursor: pointer">
+                                <span class="nav-item" id="login">
+                                    <span @click="navigate">
+                                        Login
+                                    </span>&nbsp;
+                                    <i class="fa-solid fa-chevron-down text-xs text-gray-500 down" @click.stop.prevent="toggleDropdown"></i>
+                                </span>
+                            </router-link>
+                            <div class="dropdown-menu" v-show="isDropdownOpen">
+                                <a class="nav-link" href="#" @click.prevent="handleLogout">
+                                    Register
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+
 
             </div>
         </nav>
@@ -106,7 +108,7 @@
                 <div class="carousel-item">
                     <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[1]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
                         <div class="hero-overlay">
-                            <div class="card-section" style="width: 100%;" id="cl">
+                            <div class="card-section" style="width: 100%;">
                                 <div class="stat-card" :style="{width: '50%', backgroundColor: Color.accent_color, color: Color.background_color}">
                                     <small class="ca-details">Members</small>
                                     <h3 class="number">{{ memData.total_members }}</h3>
@@ -114,7 +116,10 @@
                                 <div class="event-card" :style="{width: '50%', backgroundColor: Color.primary_color}">
                                     <small class="ca-details">Next Event</small>
                                     <div class="row">
-                                        <h3 class="number">{{ evData.remaining_days }}&nbsp;<span class="days">days to go</span></h3>
+                                        <h3 class="number">
+                                            {{ String(evData.remaining_days).padStart(2, '0') }}
+                                            &nbsp;<span class="days">days to go</span>
+                                        </h3>
                                     </div>
                                 </div>
                             </div>
@@ -235,10 +240,10 @@
                             </div>
 
                             <div class="hero-content">
-                                <h1 id="clubheading" class="heading" :style="{ color: Color.text_color }">
+                                <h1 id="clubheading" class="heading" :style="{ color: Color.text_color, fontWeight: '400' }">
                                     {{ Color.header_title }}
                                 </h1>
-                                <p id="clubsub" class="subhead" v-html="Color.header_description" :style="{ color: Color.text_color, marginTop: '20px'}"></p>
+                                <p id="clubsub" class="subhead" v-html="Color.header_description" :style="{ color: Color.text_color}"></p>
                                 <button class="btn" id="learn-more" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.accent_color}">
                                     Learn More
                                 </button>
@@ -293,7 +298,7 @@
                                     <img :src="item.photos[0].image" :alt="item.photos[0].title" style="object-fit: cover; object-position: top;"/>
                                     <div class="clubpics-info" :class="getPositionClass(index, chunkCards.flat().length)" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
                                         <span :style="{ color: Color.background_color }">
-                                            {{ item.gallery_name.length > 7 ? item.gallery_name.slice(0, 7) + '...' : item.gallery_name }}
+                                            {{ item.gallery_name}}
                                         </span>
                                     </div>
                                 </div>
@@ -384,6 +389,7 @@
                                 View All Member Galleries
                             </button>
                         </div>
+                        
                         <div class="upcoming-section" style="display:flex">
                             <div class="card" style="height: auto; border: none; margin-top: -1px; padding-bottom: 0" :style="{backgroundColor: Color.background_color, margin: '0px'}">
                                 <div class="pics">
@@ -392,7 +398,7 @@
                                             <img :src="item.image_url" :alt="item.username" style="object-fit: cover; object-position: top;" />
                                             <div class="pics-infos" :class="getPositionClass(index, chunkedCards.flat().length)" :style="{backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
                                                 <div :style="{color: Color.background_color}">
-                                                    {{ item.gallery_name.length > 7 ? item.gallery_name.slice(0, 7) + '...' : item.gallery_name }}
+                                                    {{ item.gallery_name}}
                                                 </div>
                                             </div>
                                         </div>
@@ -431,28 +437,31 @@
                                     <h5 class="mb-0" :style="{ color: Color.text_color, paddingLeft: '-25px'}">Recent Comments</h5>
                                 </div>
 
-                                <div class="card-body overflow-auto" style="max-height: 360px; margin-left: -21px; padding:5px">
-                                    <div class="event-item" v-for="interaction in Interaction" :key="interaction.id" style="padding: 0px 35px; gap: 30px; margin-bottom: 20px">
-                                        <img :src="interaction.image_url" alt="Interaction Image" class="img-fluid" id="comimg" />
+                                <div class="card-body overflow-auto" style="max-height: 360px; margin-left: -21px; padding:5px" >
+                                    <div class="event-item d-flex" v-for="comment in flatComments" :key="comment.id" style="padding: 0px 35px; gap: 30px; margin-bottom: 20px">
+                                        <!-- Image -->
+                                        <img :src="comment.image_url" alt="Interaction Image" class="img-fluid" id="comimg" />
 
+                                        <!-- Comment -->
                                         <div class="event-details d-flex justify-content-between align-items-start">
                                             <div class="event-info">
                                                 <div class="d-flex align-items-center">
                                                     <p id="comtext" :style="{ color: Color.text_color }">
                                                         <strong>
-                                                            {{ interaction.comments[0]?.interacted_by?.username || interaction.uploaded_by.username }}
+                                                            {{ comment.interacted_by?.username || comment.uploaded_by.username }}
                                                         </strong>
-                                                        &nbsp; {{ interaction.comments[0]?.comment || 'No comment yet' }}
+                                                        &nbsp; {{ comment.comment || 'No comments yet' }}
                                                     </p>
                                                 </div>
                                                 <div>
-                                                    <a href="#" id="comreply" class="small me-3" :style="{ color: Color.text_color }">Reply</a>
+                                                    <a href="#" id="comreply" class="small me-3" :style="{ color: Color.text_color }">
+                                                        Reply
+                                                    </a>
                                                 </div>
                                             </div>
-
                                             <div class="galtext ms-3">
                                                 <span class="small" id="comdate" :style="{ color: Color.text_color }">
-                                                    {{ timeAgo(interaction.comments[0]?.created_at || interaction.created_at) }}
+                                                    {{ timeAgo(comment.created_at) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -525,9 +534,13 @@
                                 <div v-for="(item, index) in chunkedcards.flat()" :key="item.id || index" class="resultpics-items" :class="getPositionClass(index, chunkedcards.flat().length)">
                                     <div v-if="item.image && item.image.length">
                                         <img v-if="item.image" :src="item.image" :alt="item.gallery_name" style="object-fit: cover; object-position: top;" />
-                                        <div class="resultpics-infos" :style="{backgroundColor: hexToRgba(Color.primary_color, 0.7) }" :class="getPositionClass(index, chunkedcards.flat().length)">
+                                        <div class="resultpics-infos" :style="{
+    backgroundColor: index < 5 
+      ? hexToRgba(Color.primary_color, 0.7) 
+      : hexToRgba('#99816B', 0.6),
+  }" :class="getPositionClass(index, chunkedcards.flat().length)">
                                             <div :style="{ color: Color.background_color }">
-                                                {{ item.gallery_name.length > 7 ? item.gallery_name.slice(0, 7) + '...' : item.gallery_name }}
+                                                {{ item.gallery_name}}
                                             </div>
                                         </div>
                                     </div>
@@ -574,7 +587,7 @@
                                 <h5 class="head mb-4" :style="{ color: Color.text_color, paddingBottom: '10px' }">Contact</h5>
 
                                 <div class="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" :style="{paddingBottom: '10px'}">
-                                    <p class="footer-text mb-0" :style="{ color: Color.text_color, textAlign: 'left' }">{{ User.address }}</p>
+                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.address }}</p>
                                     <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </div>
@@ -642,7 +655,7 @@
                     </div>
                 </div>
             </section>
-            
+
             <footer class="site-footer">
                 <div class="footer-content">
                     <p class="memtext" id="fcopy">Copyright &copy; 2025 – {{Club.club_name}}</p>
@@ -659,7 +672,7 @@ import { ref, onMounted, computed, onUnmounted } from 'vue';
 import { useHomeStore } from '@/stores/club_public/ClubData';
 import { storeToRefs } from 'pinia';
 import Loader from "@/components/LoaderAll.vue";
-import Calendar from "@/components/club_public/CalendarRyton.vue";
+import Calendar from "@/components/club_public/Calendars/CalendarRyton.vue";
 import Pro from "@/assets/icons/event_list/pro.svg"
 import Cal from "@/assets/icons/event_list/cal.svg"
 import Cam from "@/assets/icons/event_list/cam.svg"
@@ -724,6 +737,32 @@ const Interaction = computed(() =>
     : []
 );
 
+const flatComments = computed(() => {
+  if (!Array.isArray(Interaction.value)) return [];
+
+  let all = [];
+
+  Interaction.value.forEach((interaction) => {
+    if (Array.isArray(interaction.comments)) {
+      interaction.comments.forEach((comment) => {
+        all.push({
+          ...comment,
+          image_url: interaction.image_url,
+          uploaded_by: interaction.uploaded_by,
+        });
+      });
+    }
+  });
+
+  // 🔽 Sort sabhi comments ek hi timeline par
+  return all.sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
+});
+
+
+
+
 const picture = computed(() => {
     const competitions = homeStore.homeData?.data?.latestResults?.original?.data || [];
 
@@ -743,12 +782,22 @@ const picture = computed(() => {
 });
 const User = computed(() => homeStore.homeData.data?.user || {});
 
-const formatDate = (date) =>
-    new Date(date).toLocaleDateString("en-GB", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-    });
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  if (isNaN(date)) return "";
+
+  const day = date.getDate();
+  const month = date.toLocaleString("en-GB", { month: "short" });
+  const year = date.getFullYear();
+
+  // Add suffix
+  const suffix =
+    day % 10 === 1 && day !== 11 ? "st" :
+    day % 10 === 2 && day !== 12 ? "nd" :
+    day % 10 === 3 && day !== 13 ? "rd" : "th";
+
+  return `${day}${suffix} ${month} ${year}`;
+};
 
 const chunkCards = computed(() => {
     const chunkSize = 5;
@@ -936,16 +985,29 @@ function getPositionClass(index, total) {
   const col = index % columns.value;
   const lastIndex = total - 1;
 
-  if (index === 0) return "top-left";
+  let classes = [];
 
-  if (row === 0 && col === columns.value - 1) return "top-right";
+  if (index === 0) classes.push("top-left");
 
-  if (row === Math.floor(lastIndex / columns.value) && col === 0) return "bottom-left";
+  if (row === 0 && col === columns.value - 1) {
+    classes.push("top-right");
 
-  if (index === lastIndex) return "bottom-right";
+    // ✅ add special-radius too if total is between 6 and 9
+    if (total >= 6 && total <= 9) {
+      classes.push("special-radius");
+    }
+  }
 
-  return "";
+  if (row === Math.floor(lastIndex / columns.value) && col === 0) {
+    classes.push("bottom-left");
+  }
+
+  if (index === lastIndex) classes.push("bottom-right");
+
+  return classes.join(" ");
 }
+
+
 </script>
 
 <style scoped>
@@ -1068,9 +1130,9 @@ function getPositionClass(index, total) {
     width: 100%;
     max-width: 50px;
     height: 50px;
-    border-radius: 5px;
+    border-radius: 7px;
     object-fit: cover;
-    background-color: #f0f0f0;
+    background-color: #D6DFD2;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -1080,12 +1142,13 @@ function getPositionClass(index, total) {
 
 .fallback-box {
     font-size: 14px;
-    color: #888;
+    color: #D6DFD2;
+;
 }
 
 .icon-circles .flickr-dots i, .flickr-dots i{
     font-size: 8px;
-    padding-bottom: 8px;
+    padding-bottom: 10px;
     margin: 1px;
 }
 
@@ -1157,10 +1220,57 @@ function getPositionClass(index, total) {
     border-bottom-right-radius: 10px;
 }
 
+.clubpics-item.special-radius img,
+.clubpics-info.special-radius{
+  border-bottom-right-radius: 10px;
+}
+
+.pics-items.special-radius img,
+.pics-infos.special-radius{
+  border-bottom-right-radius: 10px;
+}
+
+.resultpics-items.special-radius img,
+.resultpics-infos.special-radius{
+  border-bottom-right-radius: 10px;
+}
+
+
 @media only screen and (max-width: 767px) {
 .comments-cards{
     width: 100%;
     margin: 0 auto;
 }
 }
+@media only screen and (max-width: 991px) {
+  .right-header .profile-mobile,
+  .right-header .divider,
+  .notification-desktop,
+  .down {
+    display: none !important;
+  }
+
+  .notification-mobile {
+    display: inline-flex !important;
+    margin-right: 10px;
+  }
+
+  #login {
+      padding: 0px 15px 20px 45px;
+      display: flex;
+      font-size: 18px;
+      font-family: Inter;
+      font-weight: 400;
+  }
+
+  .navbar .right-header {
+      margin-left: 0;
+  }
+}
+
+/* Default: hide mobile notification */
+.notification-mobile {
+  display: none;
+}
+
 </style>

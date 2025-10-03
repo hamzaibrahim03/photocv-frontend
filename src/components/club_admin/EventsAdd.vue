@@ -34,7 +34,7 @@
         <EventsForm />
         <div class="col-md-4">
             <div class="calen">
-                <CalendarEvent />
+                <CalendarDashboard />
             </div>
             <div id="news">
                 <RecentComments style="width: 90%; margin-top: 15%" />
@@ -50,12 +50,11 @@ import { onMounted } from 'vue'
 import { useEventStore } from '@/stores/club_admin/EventStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
+import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
 import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
 import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
 import EventsForm from "@/partials/club_admin/eventsedit/EventsForm.vue";
 
-/* global $ */
 
 // Store
 const {
@@ -71,7 +70,6 @@ const EventCount = eventCount
 
 // Fetch events on mount
 onMounted(() => {
-    $("#datepicker").datepicker()
     fetchEvents()
 })
 </script>

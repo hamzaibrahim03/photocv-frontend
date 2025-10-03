@@ -23,14 +23,14 @@ export function usePagesStore() {
       // Calculate upcoming event day difference
       const today = new Date()
       currentMonthCount.value = pageList.filter(e => {
-        const date = new Date(e.created_at)
+        const date = new Date(e.publish_date)
         return (
           date.getMonth() === today.getMonth() &&
           date.getFullYear() === today.getFullYear()
         )
       }).length
       const upcoming = pageList
-        .map(e => new Date(e.created_at))
+        .map(e => new Date(e.publish_date))
         .filter(d => d > today)
         .sort((a, b) => a - b)[0]
 

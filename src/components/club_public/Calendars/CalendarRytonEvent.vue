@@ -1,120 +1,49 @@
 <template>
-  <div class="calendar" :style="{ '--border-color': Color.primary_color }">
-    <!-- Calendar Header -->
-    <div
-      class="calendar-header"
-      :style="{
-        backgroundColor: Color.primary_color,
-        color: Color.background_color,
-      }"
-    >
-      <button
-        class="previous"
-        @click="prevMonth"
-        :style="{
-          backgroundColor: Color.primary_color,
-          color: Color.background_color,
-        }"
-      >
-        <i class="fa-solid fa-chevron-left"></i>
-      </button>
-      <h2>{{ monthNames[currentMonth] }} {{ currentYear }}</h2>
-      <button
-        class="next"
-        @click="nextMonth"
-        :style="{
-          backgroundColor: Color.primary_color,
-          color: Color.background_color,
-        }"
-      >
-        <i class="fa-solid fa-chevron-right"></i>
-      </button>
-    </div>
+    <div class="calendar" :style="{ '--border-color': Color.primary_color }">
 
-    <!-- Weekdays -->
-    <!-- Weekdays -->
-    <div class="calendar-grid weekdays">
-      <div
-        v-for="(day, idx) in weekDays"
-        :key="day"
-        class="weekday"
-        :style="idx === 0 ? { color: Color.accent_color } : {}"
-      >
-        {{ day }}
-      </div>
-    </div>
-
-    <!-- Days -->
-    <div class="calendar-grid days">
-      <div
-        v-for="n in firstDayOffset"
-        :key="'empty-' + n"
-        class="day empty"
-      ></div>
-
-      <div
-        v-for="day in daysInMonth"
-        :key="day"
-        class="day hoverable"
-        :style="isSunday(day) ? { color: Color.accent_color } : {}"
-        >
-        <!-- Event Labels -->
-        <div class="labels-container">
-          <div
-            v-if="eventsByDate[`${currentYear}-${currentMonth}-${day}`]"
-            class="event-labels"
-          >
-            <div
-              v-if="eventsByDate[`${currentYear}-${currentMonth}-${day}`]"
-              class="event-label"
-              :style="{
-                color:
-                  eventsByDate[`${currentYear}-${currentMonth}-${day}`]
-                    .length === 1
-                    ? Color.primary_color
-                    : Color.accent_color,
-                backgroundColor: Color.background_color,
-              }"
-            >
-              {{
-                eventsByDate[`${currentYear}-${currentMonth}-${day}`].length ===
-                1
-                  ? eventsByDate[`${currentYear}-${currentMonth}-${day}`][0]
-                      .eventName
-                  : eventsByDate[`${currentYear}-${currentMonth}-${day}`]
-                      .map((ev) => ev.eventName)
-                      .join(", ")
-              }}
-            </div>
-          </div>
-
-          <!-- Day Number -->
-          <span
-            class="day-number"
-            :class="{ 'today-badge': isToday(day) }"
-            :style="
-              isToday(day)
-                ? {
-                    backgroundColor: Color.primary_color,
-                    color: Color.background_color,
-                  }
-                : {}
-            "
-          >
-            {{ day }}
-          </span>
+        <div class="calendar-header" :style="{ backgroundColor: Color.primary_color, color: Color.background_color, }">
+            <button class="previous" @click="prevMonth" :style="{ backgroundColor: Color.primary_color, color: Color.background_color }">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <h2>{{ monthNames[currentMonth] }} {{ currentYear }}</h2>
+            <button class="next" @click="nextMonth" :style="{ backgroundColor: Color.primary_color, color: Color.background_color }">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
         </div>
-      </div>
+
+        <div class="calendar-grid weekdays">
+            <div v-for="(day, idx) in weekDays" :key="day" class="weekday" :style="idx === 0 ? { color: Color.accent_color } : {}" >
+                {{ day }}
+            </div>
+        </div>
+
+        <div class="calendar-grid days">
+            <div v-for="n in firstDayOffset" :key="'empty-' + n" class="day empty" ></div>
+
+            <div v-for="day in daysInMonth" :key="day" class="day hoverable" :class="getDayClass(day)" :style="isSunday(day) ? { color: Color.accent_color } : {}">
+                
+                <div class="labels-container">
+                    <div v-if="eventsByDate[`${currentYear}-${currentMonth}-${day}`]" class="event-labels">
+                        <div v-for="ev in eventsByDate[`${currentYear}-${currentMonth}-${day}`]" :key="ev.eventName" class="event-label" :style="{ color: ev.type === 'events' ? Color.accent_color : Color.primary_color, backgroundColor: Color.background_color }">
+                            {{ ev.eventName }}
+                        </div>
+                    </div>
+
+                    <span class="day-number" :class="{ 'today-badge': isToday(day) }" :style=" isToday(day) ? { backgroundColor: Color.primary_color, color: Color.background_color, } : {} ">
+                        {{ day }}
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup>
 import { computed, ref, onMounted } from "vue";
-import { useHomeStore } from "@/stores/club_public/ClubData";
+import { useRytonEventStore } from "@/stores/club_public/RytonEvent";
 
-const homeStore = useHomeStore();
-const Color = computed(() => homeStore.clubSettings || {});
+const rytoneventStore = useRytonEventStore();
+const Color = computed(() => rytoneventStore.eventData?.data?.clubSettings?.original?.data.settings || {});
 
 // ✅ System (real) month/year
 const today = new Date();
@@ -151,7 +80,7 @@ const firstDayOffset = computed(() => {
 });
 
 // API calendar data
-const calendarData = computed(() => homeStore.homeData?.data?.calendar || {});
+const calendarData = computed(() => rytoneventStore.eventData?.data?.calendar || {});
 
 // ✅ Events only from system's real month (not navigated month)
 const allEvents = computed(() => {
@@ -220,6 +149,21 @@ const nextMonth = () => {
     currentMonth.value++;
   }
 };
+
+const getDayClass = (day) => {
+  const key = `${currentYear.value}-${currentMonth.value}-${day}`;
+  const events = eventsByDate.value[key];
+
+  if (!events) return "";
+
+  if (events.some((ev) => ev.type === "competitions")) {
+    return "has-competition";
+  } else if (events.some((ev) => ev.type === "events")) {
+    return "has-event";
+  }
+  return "";
+};
+
 
 onMounted(async () => {
   console.log(calendarData);
@@ -303,7 +247,7 @@ h2 {
   margin: auto;
 }
 
-.day.hoverable:hover span {
+.day.hoverable:not(.has-event):not(.has-competition):hover .day-number {
   border: 2px solid var(--border-color);
   cursor: pointer;
 }
@@ -339,6 +283,29 @@ h2 {
 .day.hoverable:hover .event-labels {
   display: flex;
 }
+
+.day.has-event .day-number {
+  border: 2px solid var(--border-color); /* Always outline */
+}
+
+.day.has-competition .day-number {
+  border: 2px solid v-bind('Color.primary_color');
+}
+
+.day.has-event .day-number {
+  border: 2px solid v-bind('Color.accent_color');
+}
+
+.day.has-competition:hover .event-labels {
+  display: flex;
+  color: v-bind('Color.primary_color');
+}
+
+.day.has-event:hover .event-labels {
+  display: flex;
+  color: v-bind('Color.accent_color');
+}
+
 
 @media only screen and (max-width: 575px) {
   .day-number {

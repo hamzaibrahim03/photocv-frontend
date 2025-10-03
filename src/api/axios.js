@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useUserStore } from '@/stores/club_admin/UserStore'
 import router from "@/routes/navigation"
 
-// Get subdomain (e.g., "johnphotocv" from "johnphotocv.staging.cameraclub.website")
+// Get subdomain (e.g., "rytonlocal" from "rytonlocal-staging.cameraclub.website")
 const getSubdomain = () => {
   const hostParts = window.location.hostname.split('.')
   return hostParts[0] || 'default'

@@ -1,4 +1,4 @@
-import CalendarEvent from '@/components/club_admin/Calendars/CalendarEvent.vue'
+import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
 import QuickFilters from "@/partials/club_admin/events/QuickFilters.vue";
 import MoreEvents from "@/partials/club_admin/events/MoreEvents.vue";
 import RecentComments from "@/partials/club_admin/events/RecentComments.vue";
@@ -6,8 +6,8 @@ import RecentComments from "@/partials/club_admin/events/RecentComments.vue";
 export default [
   {
     path: "/events/calendar",
-    name: "CalendarEvent",
-    component: CalendarEvent,
+    name: "CalendarDashboard",
+    component: CalendarDashboard,
     meta: { requiresAuth: true }
   },
   {
