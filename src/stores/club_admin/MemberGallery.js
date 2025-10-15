@@ -19,7 +19,6 @@ export function useMemberGallery() {
       member_gallery.value = galleryList
       memberCount.value = galleryList.length
       console.log(galleryList)
-      // Loop through each member and their galleries
       galleryList.forEach((member) => {
         console.log(`👤 Member: ${member.first_name} ${member.last_name}`)
         

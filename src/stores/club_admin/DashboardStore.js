@@ -1,6 +1,5 @@
-// src/stores/HomeStore.js
 import { defineStore } from 'pinia';
-import api from '@/api/club_admin/dashboard'; // Corrected import
+import api from '@/api/club_admin/dashboard';
 
 export const useDashboardStore = defineStore('dashboard', {
   state: () => ({

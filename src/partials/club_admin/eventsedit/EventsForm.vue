@@ -260,15 +260,13 @@ export default {
 
             try {
                 if (eventId) {
-                    // Edit existing
                     await apiClient.put(`/events/${eventId}`, payload);
                 } else {
-                    // Create new
                     await apiClient.post(`/events`, payload);
                 }
 
                 alert('Event saved successfully!');
-                this.$router.push('/event'); // or wherever you want to go
+                this.$router.push('/event');
 
             } catch (error) {
                 console.error('Error submitting event:', error);

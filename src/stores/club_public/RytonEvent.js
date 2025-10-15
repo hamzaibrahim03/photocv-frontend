@@ -1,6 +1,5 @@
-// src/stores/HomeStore.js
 import { defineStore } from 'pinia';
-import api from '@/api/club_public/rytonevent'; // Corrected import
+import api from '@/api/club_public/rytonevent';
 
 export const useRytonEventStore = defineStore('event', {
   state: () => ({
@@ -13,7 +12,7 @@ export const useRytonEventStore = defineStore('event', {
     async fetchRytonEventData(domain) {
       this.loading = true;
       try {
-        const response = await api.getAllRytonEvents(domain); // pass domain here
+        const response = await api.getAllRytonEvents(domain); 
         this.eventData = response.data;
         console.log("Event data =>", this.eventData);
         this.error = null;

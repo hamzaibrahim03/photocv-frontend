@@ -40,8 +40,20 @@ import PhotographerLearning from "@/components/photographer/PhotographerLearning
 import PhotographerPlans from "@/components/photographer/PhotographerPlans.vue"
 import LearningNotes from "@/components/photographer/LearningNotes.vue"
 // club public
+import RytonHomeRoute from "@/components/club_public/RytonHomeRoute.vue"
 import HomeRoute from "@/components/club_public/HomeRoute.vue"
 import EventPublic from "@/components/club_public/EventPublic.vue"
+import EventSinglePublic from "@/components/club_public/EventSinglePublic.vue"
+import CompetitionSinglePublic from "@/components/club_public/CompetitionSinglePublic.vue"
+import CompetitionPublic from "@/components/club_public/CompetitionPublic.vue"
+import GalleryPublic from "@/components/club_public/GalleryPublic.vue"
+import MemberGalleryPublic from "@/components/club_public/MemberGalleryPublic.vue"
+import MemberGallerySingle from "@/components/club_public/MemberGallerySingle.vue"
+import ClubGalleryPublic from "@/components/club_public/ClubGalleryPublic.vue"
+import RytonClubGallerySingle from "@/components/club_public/RytonClubGallerySingle.vue"
+import NewsSinglePublic from "@/components/club_public/NewsSinglePublic.vue"
+import NewsPublic from "@/components/club_public/NewsPublic.vue"
+import ClubPublic from "@/components/club_public/ClubPublic.vue"
 const routes = [
   {
     name: "Login",
@@ -271,9 +283,69 @@ const routes = [
     component: HomeRoute,
   },
   {
+    name: "RytonHomeRoute",
+    path: "/ryton",
+    component: RytonHomeRoute,
+  },
+  {
     name: "EventPublic",
     path: "/rytonevent",
     component: EventPublic,
+  },
+  {
+    name: "EventSinglePublic",
+    path: "/rytonsingleevent",
+    component: EventSinglePublic,
+  },
+  {
+    name: "CompetitionPublic",
+    path: "/rytoncomp",
+    component: CompetitionPublic,
+  },
+  {
+    name: "CompetitionSinglePublic",
+    path: "/rytonsinglecomp",
+    component: CompetitionSinglePublic,
+  },
+  {
+    name: "GalleryPublic",
+    path: "/rytongal",
+    component: GalleryPublic,
+  },
+  {
+    name: "ClubGalleryPublic",
+    path: "/rytonclubgallery",
+    component: ClubGalleryPublic,
+  },
+  {
+    name: "RytonClubGallerySingle",
+    path: "/rytonsinclubgal/:id",
+    component: RytonClubGallerySingle,
+  },
+  {
+    name: "MemberGalleryPublic",
+    path: "/rytonmembergallery",
+    component: MemberGalleryPublic,
+  },
+  {
+    name: "MemberGallerySingle",
+    path: "/rytonsinmemgal/:id",
+    component: MemberGallerySingle,
+  },
+  {
+    name: "NewsPublic",
+    path: "/rytonnews",
+    component: NewsPublic,
+  },
+  {
+    name: "NewsSinglePublic",
+    path: "/rytonsinglenews",
+    component: NewsSinglePublic,
+  },
+  {
+    name: "ClubPublic",
+    path: "/rytonclub",
+    component: ClubPublic,
   },
 ];
 

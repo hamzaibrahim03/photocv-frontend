@@ -143,14 +143,14 @@ const itemsPerPage = 24
 
 const MemberCount = computed(() => memberStore.memberCount)
 const EventCount = computed(() => memberStore.eventCount)
-const isLoading = ref(true) // ✅ loader state
+const isLoading = ref(true) 
 
 onMounted(async () => {
   console.log("Total Interactions (Comments + Likes):", EventCount);
 
-  await memberStore.fetchMembers(); // wait for data
+  await memberStore.fetchMembers(); 
 
-  isLoading.value = false; // ✅ loader hide
+  isLoading.value = false;
 });
 
 

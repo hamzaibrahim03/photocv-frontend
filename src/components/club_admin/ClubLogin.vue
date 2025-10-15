@@ -63,7 +63,6 @@ const login = () => {
         password: password.value,
         remember: remember.value
     });
-    // Add your login logic here
 };
 </script>
 

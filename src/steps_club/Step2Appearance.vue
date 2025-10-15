@@ -84,7 +84,7 @@ function onLogoChange(event) {
   const file = event.target.files[0];
   if (file) {
     logoFile.value = file;
-    clubStore.step2.logo = file; // Optional: bind to your store
+    clubStore.step2.logo = file;
   }
 }
 
@@ -92,7 +92,7 @@ function onCoverImageChange(event) {
   const file = event.target.files[0];
   if (file) {
     coverimageFile.value = file;
-    clubStore.step2.cover_image = file; // Optional: bind to your store
+    clubStore.step2.cover_image = file; 
   }
 }
 
@@ -100,7 +100,7 @@ function onHeaderImageChange(event) {
   const file = event.target.files[0];
   if (file) {
     headerimageFile.value = file;
-    clubStore.step2.header_img = file; // Optional: bind to your store
+    clubStore.step2.header_img = file;
   }
 }
 
@@ -108,11 +108,11 @@ function onFooterImageChange(event) {
   const file = event.target.files[0];
   if (file) {
     footerimageFile.value = file;
-    clubStore.step2.footer_img = file; // Optional: bind to your store
+    clubStore.step2.footer_img = file; 
   }
 }
 
-// You can bind values directly or use v-model with local state + watcher
+
 </script>
 
 <style scoped>

@@ -50,7 +50,6 @@ export default {
       fetchRandomNotices();
     });
 
-    // ✅ Only one formatDate here
     const formatDate = (date) => {
       const d = new Date(date);
       return isNaN(d)

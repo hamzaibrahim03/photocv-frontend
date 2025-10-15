@@ -19,7 +19,6 @@ export function useCompetitionStore() {
       competitions.value = competitionList
       memberCount.value = competitionList.length
 
-      // Calculate upcoming event day difference
       const today = new Date()
       const upcomingCompetitions = competitionList.filter(e => new Date(e.start_date) > today)
       competitionCount.value = upcomingCompetitions.length

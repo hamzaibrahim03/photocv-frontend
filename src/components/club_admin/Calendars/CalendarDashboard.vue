@@ -106,7 +106,7 @@ const isToday = (day) => {
     const comps = computed(() => Comps.value.map(comp => ({ date: new Date(comp.start_date), eventName: comp.name, dateColor: comp.color || "#CC445E", })) ); 
     const isSunday = (day) => { const date = new Date(currentYear.value, currentMonth.value, day); return date.getDay() === 0; 
     }; 
-    const allEvents = computed(() => [...events.value, ...comps.value]); // Calendar logic 
+    const allEvents = computed(() => [...events.value, ...comps.value]); 
     const today = new Date(); const currentMonth = ref(today.getMonth()); 
     const currentYear = ref(today.getFullYear()); 
     const monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]; 
@@ -117,7 +117,7 @@ const eventsByDate = computed(() => {
   let grouped = {};
   allEvents.value.forEach(ev => {
     const y = ev.date.getFullYear();
-    const m = String(ev.date.getMonth() + 1).padStart(2, "0"); // +1 because months are 0-based
+    const m = String(ev.date.getMonth() + 1).padStart(2, "0");
     const d = String(ev.date.getDate()).padStart(2, "0");
     const key = `${y}-${m}-${d}`;
     if (!grouped[key]) grouped[key] = [];

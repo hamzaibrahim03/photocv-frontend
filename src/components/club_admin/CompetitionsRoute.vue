@@ -210,11 +210,11 @@ const fetchSearchedCompetitions = debounce(async (query) => {
 const loadCompetitions = async () => {
   isLoading.value = true
   try {
-    await fetchCompetitions()   // ⬅️ calls store function
+    await fetchCompetitions()  
   } catch (error) {
     console.error("Error fetching competitions:", error)
   } finally {
-    isLoading.value = false   // ✅ hide loader always
+    isLoading.value = false  
   }
 }
 

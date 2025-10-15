@@ -63,7 +63,6 @@ const {
 const MemberCount = memberCount
 const EventDay = eventDay
 
-// Fetch evencompetitionsts on mount
 onMounted(() => {
     fetchCompetitions()
 })

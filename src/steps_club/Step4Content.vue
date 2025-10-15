@@ -141,7 +141,6 @@ import { useClubFormStore } from '@/stores/club_admin/ClubFormData';
 
 const clubStore = useClubFormStore();
 
-// You can bind values directly or use v-model with local state + watcher
 </script>
 
 <style scoped>

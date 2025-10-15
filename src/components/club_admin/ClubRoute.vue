@@ -32,7 +32,6 @@
         </div>
     </div>
 
-    <!-- Step Components -->
     <Step1General v-if="currentStep === 0" />
     <Step2Appearance v-if="currentStep === 1" />
     <Step3Membership v-if="currentStep === 2" />
@@ -53,7 +52,6 @@ import {
     useEventStore
 } from "@/stores/club_admin/EventStore";
 
-// Step Components
 import Step1General from '@/steps_club/Step1General.vue';
 import Step2Appearance from '@/steps_club/Step2Appearance.vue';
 import Step3Membership from '@/steps_club/Step3Membership.vue';

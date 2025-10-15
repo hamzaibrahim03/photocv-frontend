@@ -359,7 +359,6 @@ import HeaderRoute from "@/components/HeaderRoute.vue";
 import Calendar from "@/components/club_admin/Calendars/CalendarDashboard.vue"
 import Loader from "@/components/LoaderAll.vue";
 
-// Store & Data Setup
 const dashboardStore = useDashboardStore();
 const dashboardData = computed(() => dashboardStore.dashboardData);
 const columns = ref(5); 
@@ -367,7 +366,6 @@ const isLoading = ref(true);
 const MemberCount = dashboardStore?.dashboardData?.data?.total_members_count
 const EventDay = dashboardStore?.dashboardData?.data?.upcoming_event?.remaining_days
 
-// Greeting message logic
 const hour = new Date().getHours();
 const greetingMessage = computed(() => {
   if (hour >= 5 && hour < 12) return "Good morning!";
@@ -377,7 +375,6 @@ const greetingMessage = computed(() => {
   return "Good night!";
 });
 
-// Format functions
 const formatDate = (date) =>
   new Date(date).toLocaleDateString("en-US", {
     month: "short",
@@ -393,7 +390,6 @@ const formatTime = (datetimeStr) => {
     minute: "2-digit",
   });
 };
-// Upcoming Events
 const upcomingEvents = computed(() => {
   const allEvents = dashboardStore.dashboardData?.data?.events || [];
   const now = new Date();
@@ -406,7 +402,6 @@ const upcomingEvents = computed(() => {
     .sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
 });
 
-// Upcoming Competitions
 const upcomingCompetitions = computed(() => {
   const allCompetitions =
     dashboardStore.dashboardData?.data?.competitions || [];
@@ -420,7 +415,6 @@ const upcomingCompetitions = computed(() => {
     .sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
 });
 
-// Latest News
 const latestNews = computed(() => {
   const allNews = dashboardStore.dashboardData?.data?.club_news || [];
   const now = new Date();
@@ -431,7 +425,6 @@ const latestNews = computed(() => {
     .slice(0, 6);
 });
 
-// Recent Notices
 const recentNotices = computed(() => {
   const notices = dashboardStore.dashboardData?.data?.member_notices || [];
   const now = new Date();
@@ -447,7 +440,6 @@ const recentNotices = computed(() => {
     .slice(0, 6);
 });
  
-// Cards from member_galleries
 const cards = computed(() => {
     const members = dashboardData.value?.data?.member_galleries || [];
 
@@ -466,7 +458,6 @@ const cardes = computed(
   () => dashboardData.value?.data?.clubGalleries?.original?.data || []
 );
 
-// Chunked cards for layout
 const chunkedCards = computed(() => {
   const chunkSize = 5;
   const chunks = [];
@@ -505,13 +496,13 @@ const picture = computed(() => {
 
 function updateColumns() {
   if (window.innerWidth < 575) {
-    columns.value = 1; // tablet
+    columns.value = 1; 
   } else if (window.innerWidth < 991) {
     columns.value =2;
   } else if (window.innerWidth < 1199) {
-    columns.value = 3; // tablet
+    columns.value = 3;
   } else {
-    columns.value = 5; // desktop
+    columns.value = 5;
   }
 }
 
@@ -533,7 +524,6 @@ const hexToRgba = (hex, alpha) => {
 }
 
 
-// Fetch on mount
 onMounted(async () => {
   try {
     await dashboardStore.fetchDashboardData();
@@ -542,7 +532,7 @@ onMounted(async () => {
   } catch (error) {
     console.error("Error fetching home data:", error);
   } finally {
-        isLoading.value = false; // ✅ loader hide
+        isLoading.value = false; 
     }
   updateColumns();
 

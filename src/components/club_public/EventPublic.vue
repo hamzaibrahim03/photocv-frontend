@@ -16,32 +16,32 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" :class="{ active: $route.path === '/' }" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
                                 Home
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#events" :style="{ color: Color.text_color }">
+                            <a class="nav-link" :class="{ active: $route.path === '/rytonevent' }" href="/rytonevent" :style="{ color: Color.text_color }">
                                 Events
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#events" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="/rytoncomp" :style="{ color: Color.text_color }">
                                 Competitions
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#gal" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="/rytongal" :style="{ color: Color.text_color }">
                                 Galleries
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#newscontainer" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="/rytonnews" :style="{ color: Color.text_color }">
                                 News
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#joincontainer" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="/rytonclub" :style="{ color: Color.text_color }">
                                 Club
                             </a>
                         </li>
@@ -82,63 +82,21 @@
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ backgroundImage: `url(${Color.cover_images[0]?.url})` }">
-                        <div class="hero-overlay">
-                            <div>
-                                <h1 :style="{ color: Color.background_color, fontWeight: '400'}">{{Club.club_name}}</h1>
-                                <p class="cabout" :style="{ color: Color.background_color, fontWeight: '200' }">{{Club.about}}</p>
-                                <button id="overlay-button" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }"> Join Our Club </button>
-                                <p class="prehead" :style="{ color: Color.background_color, paddingTop: '20px' }">An NYCE Club based in Apps, North East England</p>
-                                <div class="d-flex">
-                                    <a href="#" target="_blank" rel="noopener noreferrer" class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color, textDecoration: 'none' }"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#" target="_blank" rel="noopener noreferrer" class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color, textDecoration: 'none' }"><i class="fab fa-instagram"></i></a>
-                                    <a href="#" target="_blank" rel="noopener noreferrer" class="icon-circles" :style="{ color: Color.primary_color, backgroundColor: Color.background_color, textDecoration: 'none' }"><span class="flickr-dots"><i class="fa fa-circle"></i><i class="fa fa-circle"></i></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[1]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
-                        <div class="hero-overlay">
-                            <div class="card-section" style="width: 100%;" id="cl">
-                                <div class="stat-card" :style="{width: '50%', backgroundColor: Color.accent_color, color: Color.background_color}">
-                                    <small class="ca-details">Members</small>
-                                    <h3 class="number">{{ memData.total_members }}</h3>
-                                </div>
-                                <div class="event-card" :style="{width: '50%', backgroundColor: Color.primary_color}">
-                                    <small class="ca-details">Next Event</small>
-                                    <div class="row">
-                                        <h3 class="number">
-                                            {{ String(evData.remaining_days).padStart(2, '0') }}
-                                            &nbsp;<span class="days">days to go</span>
-                                        </h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
                     <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[2]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
                         <div class="hero-overlay">
                             <div v-if="Events.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
                                 <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img v-if="Events[0].images" :src="Events[0].featured_image_url" alt="Event Image" />
+                                    <img v-if="Events[0].images" :src="Events[0].featured_image_url" :alt="Events[0].name" />
 
                                     <div>
                                         <div>
                                             <div class="events-card">
-                                                <h5 class="mb-2">{{ Events[0].name || 'Untitled Event' }}</h5>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="date mb-0">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
+                                                <h5 class="mb-2" :style="{color: Color.text_color}">{{ Events[0].name || 'Untitled Event' }}</h5>
+                                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                                    <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
                                                         <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
                                                         <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
@@ -147,79 +105,12 @@
                                                     </div>
                                                 </div>
                                             </div>                  
-                                            <p class="text-secondary">
+                                            <p class="text-secondary" :style="{color: Color.text_color}">
                                                 {{ Events[0].description || 'No description provided.' }}
                                             </p>
                                         </div>
-                                        <div class="button-group mt-3 d-flex">
+                                        <div class="button-group mt-auto d-flex event-button">
                                             <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[3]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
-                        <div class="hero-overlay">
-                            <div class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
-                                <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img :src="Notice.featured_image_url" alt="Notice Image" />
-
-                                    <div>
-                                        <div>
-                                            <div class="events-card">
-                                                <h5 class="mb-2">{{ Notice.title || 'Untitled Event' }}</h5>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="date mb-0">{{ formatDate(Notice.created_at) || 'Date Not Available' }}</p>
-                                                    <div class="icon-container d-flex gap-2">
-                                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="text-secondary">
-                                                {{ Notice.description || 'No description provided.' }}
-                                            </p>
-                                        </div>
-                                        <div class="button-group mt-3 d-flex">
-                                            <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[4]?.url}) no-repeat center center / cover`}">
-                        <div class="hero-overlay">
-                            <div v-if="News.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%;">
-                                <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img :src="News[0].featured_image_url" alt="News Image" />
-                                    <div>
-                                        <div>
-                                            <div class="events-card">
-                                                <h5 class="mb-2">{{ News[0].title || 'Untitled Event' }}</h5>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="date mb-0">{{ formatDate(News[0].created_at) || 'Date Not Available' }}</p>
-                                                    <div class="icon-container d-flex gap-2">
-                                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="text-secondary">
-                                                {{ News[0].description || 'No description provided.' }}
-                                            </p>
-                                        </div>
-                                        <div class="button-group mt-3 d-flex">
-                                            <button class="btn me-2" id="view" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
                                         </div>
                                     </div>
                                 </div>
@@ -231,60 +122,145 @@
         </div>
 
         <div class="contents">
-            <div class="row">
-                <div class="col-md-8">
-                    <section>
-                        <div class="container">
-                            <div class="mt-4">
-                                <div v-for="e in Events" :key="e.id" class="custom-card mb-3 p-3">
-                                    <div class="hero-grid">
-                                    <div class="hero-image">
-                                            <img v-if="e.featured_image_url" :src="e.featured_image_url" alt="Event Image" />
-                                        </div>
-                                    <div class="hero-content">
+            <section>
+                <div class="container" id="heads">
+                    <div class="events-header">
+                        <h2 class="events-title" :style="{ color: Color.text_color }">Events</h2>
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search events..." aria-controls="example1" />
+                        </div>
+                    </div>
+                </div>
+            </section>    
 
-                                            <div class="flex-grow-1 d-flex flex-column justify-content-between">
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <h5 id="ename" :style="{color: Color.text_color}">{{ e.name || 'Untitled Event' }}</h5>
-                                                    <div class="icon-container ms-3">
-                                                        <img :src="Video" alt="icon"  :style="{color: Color.accent_color}" style="width: 20px; height: 20px" />
+            <section>
+                <div class="container"  id="overall">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <section>
+                                <div class="container">
+                                    <div class="filter-buttons">
+                                        <button v-for="filter in filters" :key="filter" :class="['filter-btn', { active: activeFilter === filter }]" @click="setActiveFilter(filter)">
+                                            {{ filter }}
+                                        </button>
+                                    </div>
+                                    <div class="mt-4">
+                                        <div v-if="paginatedEvents.length">
+                                            <div v-for="e in paginatedEvents" :key="e.id" class="custom-card p-3">
+                                                <img v-if="e.featured_image_url" :src="e.featured_image_url" :alt="e.name" :style="{width: '550px'}"/>
+                                                <div class="flex-grow-1 d-flex flex-column justify-content-between" id="detail">
+                                                    <div class="d-flex w-100 justify-content-between align-items-center">
+                                                        <h5 id="ename" :style="{color: Color.text_color}">{{ e.name || 'Untitled Event' }}</h5>
+                                                        <div class="icon-container d-flex gap-2">
+                                                            <img :src="Video" alt="icon"  :style="{color: Color.accent_color}" style="width: 25px; height: 25px" />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <p class="galtext" id="edate" :style="{color: Color.accent_color}">
-                                                    {{ formatDate(e.event_date) || 'Date Not Available' }}
-                                                </p>
-                                                <p class="text-secondary"  :style="{color: Color.text_color}">
-                                                    {{ e.description || 'No description provided.' }}
-                                                </p>
-                                                <p id="espeaker" :style="{color: Color.accent_color}">
-                                                    {{"Speaker: " + e.speaker}}
-                                                </p>
-                                                <div class="button-group mt-3 d-flex">
-                                                    <button class="btn me-2" id="view" :style="{color: Color.background_color, backgroundColor: Color.primary_color}">View Details</button>
-                                                    
+                                                    <p class="galtext" id="edate" :style="{color: Color.accent_color}">
+                                                        {{ formatDate(e.event_date) || 'Date Not Available' }}
+                                                    </p>
+                                                    <p class="text-secondary"  :style="{color: Color.text_color}">
+                                                        {{ e.description || 'No description provided.' }}
+                                                    </p>
+                                                    <p id="espeaker" :style="{color: Color.accent_color}">
+                                                        {{"Speaker: " + e.speaker}}
+                                                    </p>
+                                                    <div class="button-group mt-auto d-flex">
+                                                        <router-link :to="{ name: 'EventSinglePublic', params: { id: e.id } }" custom v-slot="{ navigate }">
+                                                            <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.primary_color}">View Details</button>
+                                                        </router-link>                                                
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div v-else class="text-center text-muted">No events found.</div>
+
+                                        <nav v-if="paginatedEvents.length">
+                                            <ul class="pagination justify-content-center">
+                                                <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                                                    <button class="page-link" @click="prevPage">Previous</button>
+                                                </li>
+                                                <li class="page-item disabled">
+                                                    <span class="page-link">
+                                                        Page {{ currentPage }} of {{ totalPages }}
+                                                    </span>
+                                                </li>
+                                                <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                                                    <button class="page-link" @click="nextPage">Next</button>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="col-md-4">
+                            <section>
+                                <div class="container" id="right">
+
+                                    <div class="cardddd" style="padding: 0px" id="cal">
+                                        <CalendarEvent />
+                                    </div>
+
+                                    <div class="cardddd d-flex flex-column" :style="{ padding: '35px'}" id="eve">
+                                        <h5 class="head">More Events</h5>
+                                        <div class="event-list" v-if="Events.length">
+                                            <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
+                                                <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" :alt="c.name" @error="c.featured_image_url = null"/>
+                                                <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                </div>
+                                                <div class="event-details">
+                                                    <div class="event-info" style="display: flex; flex-direction: column">
+                                                        <span id="ename">{{ c.name }}</span>
+                                                        <span id="espeaker" :style="{color: Color.accent_color}">Speaker: {{ c.speaker }}</span>
+                                                    </div>
+
+                                                    <div class="event-time" id="edate">
+                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.event_date) }}</small><br />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
 
-                <div class="col-md-4">
-                    <section>
-                        <div class="container" id="right">
-                            <div class="cardddd" style="padding: 0px">
-                                <CalendarEvent />
-                            </div>
-                            <div id="news">
-                                <MoreEvents />
-                            </div>
+                                    <div class="cardddd" :style="{padding: '35px'}">
+                                        <h5 class="head">Seasons</h5>
+                                        <div class="session-container" v-if="sessions.length">
+                                            <div v-for="session in sessions" :key="session.id" class="session-card" :class="session.status">
+                                                <div class="session-header">
+                                                    <h3 class="clubhead">{{ formatedDate(session.start_date) }} - {{ formatedDate(session.end_date) }}</h3>
+                                                    <span class="status" :class="session.status.toLowerCase()">
+                                                    <span class="dot"></span> {{ session.status }}</span>
+                                                </div>
+
+                                                <div class="session-body">
+                                                    <div class="info">
+                                                        <i class="icon">🏅</i> {{ session.competitions_count }} Competitions
+                                                    </div>
+                                                    <div class="info">
+                                                        <i class="icon">📅</i> {{ session.events_count }} Events
+                                                    </div>
+                                                </div>
+
+                                                <div class="session-footer" :style="{color: Color.primary_color}">
+                                                    {{ formatsDate(session.start_date) }} – {{ formatsDate(session.end_date) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div v-else class="text-center text-muted py-4">
+                                            No seasons found.
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
-                    </section>
+                    </div>
+
                 </div>
-            </div>
+            </section>
 
             <section id="joincontainer">
                 <div class="container">
@@ -399,165 +375,244 @@
         </div>
     </div>
 </div>
-<pre>{{eventData}}</pre>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useRytonEventStore } from '@/stores/club_public/RytonEvent';
 import Loader from "@/components/LoaderAll.vue";
 import CalendarEvent from "@/components/club_public/Calendars/CalendarRytonEvent.vue";
-import Video from "@/assets/icons/event_list/vid.svg"
+import Video from "@/assets/icons/event_list/vid.svg";
+import Pro from "@/assets/icons/event_list/pro.svg"
+import Cal from "@/assets/icons/event_list/cal.svg"
+import Cam from "@/assets/icons/event_list/cam.svg"
+import Mess from "@/assets/icons/event_list/mess.svg"
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useRouter } from "vue-router";
+import apiClient from '@/api/axios'
 
 
 const router = useRouter();
 const isNavOpen = ref(false);
 const isDropdownOpen = ref(false);
-const toggleNav = () => {
-  isNavOpen.value = !isNavOpen.value;
+const toggleNav = () => (isNavOpen.value = !isNavOpen.value);
+const closeNav = () => (isNavOpen.value = false);
+const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
+const filters = ['All', 'Virtual', 'In-Person', 'In a Studio', 'Walking Out'];
+const activeFilter = ref('Virtual');
+const search = ref('')
+const eventsList = ref([]);
+
+const setActiveFilter = (filter) => {
+  activeFilter.value = filter;
 };
-const closeNav = () => {
-  isNavOpen.value = false;
-};
-const toggleDropdown = () => {
-  isDropdownOpen.value = !isDropdownOpen.value;
-};
+
 const rytoneventStore = useRytonEventStore();
-
 dayjs.extend(relativeTime);
-
 const isLoading = ref(true);
-const memData = computed(() => rytoneventStore.eventData?.data?.clubSettings?.original?.data || {});
-const evData = computed(() => rytoneventStore.eventData?.data?.clubSettings?.original?.data?.upcoming_event_days_count || {});
-const Events = computed(() => rytoneventStore.eventData?.data?.events?.original?.data?.original?.data || []);
-const News = computed(() => rytoneventStore.eventData?.data?.clubNews || {});
-const Notice = computed(() => rytoneventStore.eventData?.data?.latest_notice?.original?.data || {});
-const Club = computed(() => rytoneventStore.eventData?.data?.clubSettings?.original?.data.club || {});
-const Color = computed(() => rytoneventStore.eventData?.data?.clubSettings?.original?.data.settings || {});
 
+
+const memData = computed(() => rytoneventStore.eventData?.data?.clubSettings?.original?.data || {});
+const Events = computed(() => rytoneventStore.eventData?.data?.events?.original?.data?.original?.data || []);
+const sessions = computed(() => rytoneventStore.eventData?.data?.clubSettings?.original?.data?.seasons || {});
+const Club = computed(() => memData.value.club || {});
+const Color = computed(() => memData.value.settings || {});
+const domain = window.location.hostname.split('.')[0];
+
+const currentPage = ref(1);
+const rowsPerPage = ref(4);
+
+let debounceTimeout
+const debounce = (func, delay) => {
+    return (...args) => {
+        clearTimeout(debounceTimeout)
+        debounceTimeout = setTimeout(() => {
+            func(...args)
+        }, delay)
+    }
+}
+
+let lastSearched = ''
+
+const fetchSearchedEvents = debounce(async (query) => {
+    if (query.length >= 3 && query !== lastSearched) {
+        lastSearched = query
+        try {
+            const response = await apiClient.get('/club/public/event', {
+                params: {
+                    search_term: query
+                }
+            })
+            const result = response?.data?.data?.events?.original?.data?.original?.data || [];
+            eventsList.value = result;
+            currentPage.value = 1;
+        } catch (error) {
+            console.error('Error fetching searched events:', error)
+            eventsList.value = []
+        }
+    }
+}, 400)
+
+watch(search, (newSearch) => {
+    if (newSearch.length >= 3) {
+        fetchSearchedEvents(newSearch)
+    } else {
+        eventsList.value = rytoneventStore.eventData?.data?.events?.original?.data?.original?.data || [];
+    }
+})
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
   if (isNaN(date)) return "";
-
   const day = date.getDate();
   const month = date.toLocaleString("en-GB", { month: "long" });
   const year = date.getFullYear();
-
-  // Add suffix
   const suffix =
     day % 10 === 1 && day !== 11 ? "st" :
     day % 10 === 2 && day !== 12 ? "nd" :
     day % 10 === 3 && day !== 13 ? "rd" : "th";
-
   return `${day}${suffix} ${month} ${year}`;
+};
+
+const formatsDate = (dateString) => {
+  const date = new Date(dateString);
+  if (isNaN(date)) return "";
+  const month = date.toLocaleString("en-GB", { month: "short" });
+  const year = date.getFullYear();
+  
+  return ` ${month} ${year}`;
+};
+
+const formatedDate = (dateString) => {
+  const date = new Date(dateString);
+  if (isNaN(date)) return "";
+  const year = date.getFullYear();
+  
+  return ` ${year}`;
 };
 
 
 onMounted(async () => {
-    document.addEventListener("click", (e) => {
-    if (!e.target.closest(".admin-dropdown")) {
-      isDropdownOpen.value = false;
-    }
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".admin-dropdown")) isDropdownOpen.value = false;
   });
-  
-    const carouselEl = document.querySelector('#carouselExampleIndicators')
-    if (carouselEl && window.bootstrap) {
-        new window.bootstrap.Carousel(carouselEl)
-    }
 
-    let domain = window.location.hostname.split('.')[0];
-    try {
-        await rytoneventStore.fetchRytonEventData(domain);
+  const carouselEl = document.querySelector('#carouselExampleIndicators');
+  if (carouselEl && window.bootstrap) {
+    new window.bootstrap.Carousel(carouselEl);
+  }
 
-    } catch (error) {
-        console.error("Error fetching ryton event data:", error);
-    } finally {
-        isLoading.value = false; // ✅ loader hide
-    }
-
+  try {
+    await rytoneventStore.fetchRytonEventData(domain);
+    eventsList.value = rytoneventStore.eventData?.data?.events?.original?.data?.original?.data || [];
+  } catch (error) {
+    console.error("Error fetching ryton event data:", error);
+  } finally {
+    isLoading.value = false; 
+  }
 });
 
+const paginatedEvents = computed(() => {
+  const start = (currentPage.value - 1) * rowsPerPage.value;
+  return eventsList.value.slice(start, start + rowsPerPage.value);
+});
+
+const totalPages = computed(() =>
+  Math.max(Math.ceil(eventsList.value.length / rowsPerPage.value), 1)
+);
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) currentPage.value++;
+};
+const prevPage = () => {
+  if (currentPage.value > 1) currentPage.value--;
+};
+
 </script>
+
 <style src="@/assets/css/clubstyle.css"></style>
 <style scoped>
-.custom-card {
+.hero-overlay {
+    width: 1025px;
+}
+#overall {
+     padding: 0 25px 50px 80px;
+}
+#heads {
+    padding: 60px 70px 48px 90px;
+}
+.events-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  background-color: white;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px;
-  padding: 20px;
-  border-radius: 10px;
-  width: 975px;
-  height: 310px;
-  margin-right: auto;
-  flex-direction: row;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.custom-card img {
-    max-width: 300px;
-    width: 300px;
-height: 250px;
-border-radius: 8px;
-opacity: 1;
-}
-
-.custom-card #ename {
-    font-family: Inter;
+.events-title {
+  font-family: Inter;
 font-weight: 500;
 font-style: Medium;
-font-size: 24px;
+font-size: 36px;
 line-height: 100%;
 letter-spacing: 0%;
-
+margin: 0;
 }
 
-.custom-card #edate {
-    font-family: Inter;
-font-weight: 400;
-font-style: Regular;
-font-size: 12px;
-line-height: 100%;
-letter-spacing: 0%;
-
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 6px 10px;
+  width: 470px;
+  height: 60px;
+  transition: border-color 0.2s ease;
 }
 
-.custom-card .text-secondary {
-    font-family: Inter;
-font-weight: 400;
-font-style: Regular;
-font-size: 14px;
-line-height: 20px;
-letter-spacing: 0%;
-
+.search-bar:hover,
+.search-bar:focus-within {
+  border-color: #d1d5db;
 }
 
-.custom-card #espeaker {
-    font-family: Inter;
-font-weight: 400;
-font-style: Regular;
-font-size: 12px;
-line-height: 100%;
-letter-spacing: 0%;
-
+.search-bar i {
+  color: #c0c0c0;
+  font-size: 14px;
+  margin-right: 8px;
 }
 
-.button-group #view {
-    max-width: 150px;
-height: 40px;
-opacity: 1;
-top: 228px;
-left: 380px;
-padding-top: 10px;
-padding-right: 18px;
-padding-bottom: 10px;
-padding-left: 18px;
-gap: 10px;
-font-family: Inter;
+.search-input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #333;
+  flex: 1;
+  background: transparent;
+}
+
+.search-input::placeholder {
+  color: #c0c0c0;
+}
+.filter-buttons {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding-bottom: 50px;
+}
+
+.filter-btn {
+  padding: 10px 16px;
+  border: 1px solid rgba(127, 164, 131, 1);
+  border-radius: 8px;
+  background-color: transparent;
+  color: rgba(127, 164, 131, 1);
+  width: 165px;
+  height: 40px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: Inter;
 font-weight: 400;
 font-style: Regular;
 font-size: 16px;
@@ -565,214 +620,390 @@ line-height: 100%;
 letter-spacing: 0%;
 }
 
-.site-footer {
-    padding-top: 25px;
-    padding-bottom: 10px;
-    text-align: center;
-    font-size: 14px;
-    color: #555;
-    border-top: 1px solid #ddd;
-    margin-top: 40px;
+.filter-btn:hover {
+  border-color: #6f8c6f;
+  color: #2e2e2e;
 }
 
-.site-footer a {
-    color: #007bff;
-    text-decoration: none;
+.filter-btn.active {
+  background-color: #7a9c7a; /* soft green */
+  color: #fff;
+  border-color: #7a9c7a;
 }
 
-.site-footer a:hover {
-    text-decoration: underline;
+ .custom-card {
+     display: flex;
+     align-items: center;
+     background-color: white;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     margin-bottom: 35px;
+     border-radius: 10px;
+     width: 975px;
+     height: 310px;
+     flex-direction: row;
+     gap: 50px
+}
+ .custom-card img {
+     max-width: 300px;
+     width: 300px;
+     height: 250px;
+     border-radius: 8px;
+     opacity: 1;
+     margin-left: 20px;
+     margin-right: 0;
+}
+ .custom-card #ename {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 24px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     margin-bottom: 10px;
+}
+ .custom-card #edate {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     text-align: left;
+}
+ .custom-card .text-secondary {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 20px;
+     letter-spacing: 0%;
+     margin-bottom: 25px;
+}
+#detail {
+    margin-right: 20px;
+    width: 99%;
+}
+ .custom-card #espeaker {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     text-align: left;
+}
+ #right {
+     margin-left: 20px;
+}
+ .button-group #view {
+     max-width: 130px;
+     height: 40px;
+     opacity: 1;
+     padding: 10px 17px;
+     gap: 10px;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .site-footer {
+     padding-top: 25px;
+     padding-bottom: 10px;
+     text-align: center;
+     font-size: 14px;
+     color: #555;
+     border-top: 1px solid #ddd;
+     margin-top: 40px;
+}
+ .site-footer a {
+     color: #007bff;
+     text-decoration: none;
+}
+ .site-footer a:hover {
+     text-decoration: underline;
+}
+ .ultrahead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 72px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .heading {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .head {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 24px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .clubhead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 20px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .subhead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 18px;
+     line-height: 36px;
+     letter-spacing: 0%;
+}
+ .memtext {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .prehead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .galtext {
+     font-family: Inter;
+     font-weight: 400;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .event-img, .fallback-box {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 7px;
+     object-fit: cover;
+     background-color: #f0f0f0;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+ .event-item {
+     gap: 20px;
+}
+ .fallback-box {
+     font-size: 14px;
+     color: #888;
+}
+ .icon-circles .flickr-dots i, .flickr-dots i{
+     font-size: 8px;
+     padding-bottom: 10px;
+     margin: 1px;
+}
+ .cardddd {
+     background: white;
+     width: 470px;
+     padding: 20px;
+     height: 390px;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+}
+ .cardddd:first-child {
+     background: white;
+     width: 470px;
+     padding: 20px;
+     height: auto;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
-.ultrahead {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 72px;
-    line-height: 20px;
-    letter-spacing: 0%;
+.cardddd:last-child {
+    height: 470px;
 }
-
-.heading {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 36px;
-    line-height: 100%;
-    letter-spacing: 0%;
+#cal {
+    height: auto;
 }
-
-.head {
-    font-family: Inter;
-    font-weight: 500;
-    font-style: Medium;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
+#eve {
+    height: 580px;
 }
-
-.clubhead {
-    font-family: Inter;
-    font-weight: 600;
-    font-style: Semi Bold;
-    font-size: 20px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .button-group button {
+     margin-right: 8px;
 }
-
-.subhead {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 18px;
-    line-height: 36px;
-    letter-spacing: 0%;
+ .event-list {
+     padding-top: 30px;
 }
-
-.memtext {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 16px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .event-list {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
 }
-
-.prehead {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0%;
+ .event-item {
+     display: flex;
+     align-items: center;
+     gap: 10px;
 }
-
-.galtext {
-    font-family: Inter;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .event-item img {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 5px;
+     object-fit: cover;
 }
-
-.event-img,
-.fallback-box {
-    width: 100%;
-    max-width: 50px;
-    height: 50px;
-    border-radius: 7px;
-    object-fit: cover;
-    background-color: #f0f0f0;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+ .event-details {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     flex: 1;
+     font-size: 0.875rem;
+     width: 100%;
 }
-
-.event-item {
-    gap: 20px;
+ #ename {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.fallback-box {
-    font-size: 14px;
-    color: #888;
-}
-
-.icon-circles .flickr-dots i, .flickr-dots i{
-    font-size: 8px;
-    padding-bottom: 10px;
-    margin: 1px;
-}
-
-.cardddd {
-    background: white;
-  width: 90%;
-  padding: 20px;
-  height: 390px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.button-group button {
-    margin-right: 8px;
-}
-
-.event-list {
-  padding-top: 30px;
-}
-
-.event-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.event-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.event-item img {
-  width: 100%;
-  max-width: 50px;
-  height: 50px;
-  border-radius: 5px;
-  object-fit: cover;
-}
-
-.event-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex: 1;
-  font-size: 0.875rem;
-  width: 100%;
-}
-
-#ename {
+#espeaker {
   font-family: Inter;
   font-weight: 400;
   font-style: Regular;
-  font-size: 20px;
-  line-height: 100%;
+  font-size: 10px;
+  line-height: 20px;
   letter-spacing: 0%;
 }
-
-
-
-@media only screen and (max-width: 767px) {
-.comments-cards{
-    width: 100%;
-    margin: 0 auto;
+ @media only screen and (max-width: 767px) {
+     .comments-cards{
+         width: 100%;
+         margin: 0 auto;
+    }
 }
+ @media only screen and (max-width: 991px) {
+     .right-header .profile-mobile, .right-header .divider, .notification-desktop, .down {
+         display: none !important;
+    }
+     .notification-mobile {
+         display: inline-flex !important;
+         margin-right: 10px;
+    }
+     #login {
+         padding: 0px 15px 20px 45px;
+         display: flex;
+         font-size: 18px;
+         font-family: Inter;
+         font-weight: 400;
+    }
+     .navbar .right-header {
+         margin-left: 0;
+    }
 }
-@media only screen and (max-width: 991px) {
-  .right-header .profile-mobile,
-  .right-header .divider,
-  .notification-desktop,
-  .down {
-    display: none !important;
-  }
-
-  .notification-mobile {
-    display: inline-flex !important;
-    margin-right: 10px;
-  }
-
-  #login {
-      padding: 0px 15px 20px 45px;
-      display: flex;
-      font-size: 18px;
-      font-family: Inter;
-      font-weight: 400;
-  }
-
-  .navbar .right-header {
-      margin-left: 0;
-  }
-}
-
 /* Default: hide mobile notification */
-.notification-mobile {
-  display: none;
+ .notification-mobile {
+     display: none;
+}
+
+.session-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 350px;
+}
+
+.session-card {
+    width: 410px;
+    height: 160px;
+  background: rgba(236, 237, 230, 0.3);
+  border: 1px solid rgba(51, 51, 51, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.session-card:hover {
+  transform: translateY(-2px);
+}
+
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.session-header h3 {
+  font-size: 20px;
+  color: #333;
+  margin: 0;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+.status .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.status.active {
+  background: #eaf8ef;
+  color: #22c55e;
+}
+
+.status.active .dot {
+  background: #22c55e;
+}
+
+.status.inactive {
+  background: #f0f0f0;
+  color: #777;
+}
+
+.status.inactive .dot {
+  background: #bdbdbd;
+}
+
+.session-body {
+  display: flex;
+  justify-content: space-between;
+  margin: 16px 0;
+}
+
+.info {
+  font-size: 15px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon {
+  font-size: 16px;
+}
+
+.session-footer {
+  font-size: 14px;
+  color: #999;
 }
 
 </style>

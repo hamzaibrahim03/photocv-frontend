@@ -1,4 +1,3 @@
-// stores/ClubFormStore.js
 import apiClient from '@/api/axios';
 import { defineStore } from 'pinia';
 
@@ -19,14 +18,11 @@ export const useClubFormStore = defineStore('clubForm', {
             end_date: '',
         },
         step2: {
-            // typography: '',
             header_text: '',
             footer_text: '',
             footer_img: '',
             logo: '',
             cover_image: '',
-            // theme: '',
-            // color: '',
             header_desc: '',
             footer_desc: '',
             header_img: '',
@@ -47,9 +43,6 @@ export const useClubFormStore = defineStore('clubForm', {
             fb_link: '',
             insta_link: '',
             flickr_link: '',
-            //   email:'',
-            //   phone:'',
-            //   address:''
         },
         step5: {
             gdpr_privacy_policy_management: '',

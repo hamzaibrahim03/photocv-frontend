@@ -45,12 +45,10 @@ import { useRytonEventStore } from "@/stores/club_public/RytonEvent";
 const rytoneventStore = useRytonEventStore();
 const Color = computed(() => rytoneventStore.eventData?.data?.clubSettings?.original?.data.settings || {});
 
-// ✅ System (real) month/year
 const today = new Date();
-const systemMonth = today.getMonth(); // Sept = 8
+const systemMonth = today.getMonth(); 
 const systemYear = today.getFullYear();
 
-// ✅ Calendar navigation state
 const currentMonth = ref(systemMonth);
 const currentYear = ref(systemYear);
 
@@ -70,7 +68,6 @@ const monthNames = [
 ];
 const weekDays = ["S", "M", "T", "W", "T", "F", "S"];
 
-// Calendar structure
 const daysInMonth = computed(() => {
   return new Date(currentYear.value, currentMonth.value + 1, 0).getDate();
 });
@@ -79,10 +76,8 @@ const firstDayOffset = computed(() => {
   return new Date(currentYear.value, currentMonth.value, 1).getDay();
 });
 
-// API calendar data
 const calendarData = computed(() => rytoneventStore.eventData?.data?.calendar || {});
 
-// ✅ Events only from system's real month (not navigated month)
 const allEvents = computed(() => {
   const currentKey = `${systemYear}-${String(systemMonth + 1).padStart(
     2,
@@ -106,7 +101,6 @@ const allEvents = computed(() => {
   ];
 });
 
-// Group events by date
 const eventsByDate = computed(() => {
   let grouped = {};
   allEvents.value.forEach((ev) => {
@@ -117,7 +111,6 @@ const eventsByDate = computed(() => {
   return grouped;
 });
 
-// Helpers
 const isToday = (day) => {
   return (
     day === today.getDate() &&
@@ -131,7 +124,6 @@ const isSunday = (day) => {
   return date.getDay() === 0;
 };
 
-// Navigation
 const prevMonth = () => {
   if (currentMonth.value === 0) {
     currentMonth.value = 11;

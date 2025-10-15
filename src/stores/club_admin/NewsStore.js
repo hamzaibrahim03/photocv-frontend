@@ -20,7 +20,6 @@ export function useNewsStore() {
       news.value = newsList
       memberCount.value = newsList.length
 
-      // Calculate upcoming event day difference
 
       const today = new Date()
       currentMonthCount.value = newsList.filter(e => {
@@ -30,7 +29,8 @@ export function useNewsStore() {
           date.getFullYear() === today.getFullYear()
         )
       }).length
-      // Get all past events
+      
+      
       const isValidDate = (d) => d instanceof Date && !isNaN(d)
 
       const pastNews = newsList

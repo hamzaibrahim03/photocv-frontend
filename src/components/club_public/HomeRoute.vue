@@ -17,32 +17,32 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" :class="{ active: $route.path === '/' }" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" :class="{ active: $route.path === '/ryton' }" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
                                 Home
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#events" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="/rytonevent" :style="{ color: Color.text_color }">
                                 Events
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#events" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="/rytoncomp" :style="{ color: Color.text_color }">
                                 Competitions
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#gal" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="/rytongal" :style="{ color: Color.text_color }">
                                 Galleries
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#newscontainer" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="/rytonnews" :style="{ color: Color.text_color }">
                                 News
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#joincontainer" :style="{ color: Color.text_color }">
+                            <a class="nav-link" href="/rytonclub" :style="{ color: Color.text_color }">
                                 Club
                             </a>
                         </li>
@@ -136,9 +136,9 @@
                                     <div>
                                         <div>
                                             <div class="events-card">
-                                                <h5 class="mb-2">{{ Events[0].name || 'Untitled Event' }}</h5>
+                                                <h5 class="mb-2" :style="{color: Color.text_color}">{{ Events[0].name || 'Untitled Event' }}</h5>
                                                 <div class="d-flex w-100 justify-content-between align-items-center">
-                                                    <p class="date mb-0">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
+                                                    <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
                                                         <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
                                                         <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
@@ -147,7 +147,7 @@
                                                     </div>
                                                 </div>
                                             </div>                  
-                                            <p class="text-secondary">
+                                            <p class="text-secondary" :style="{color: Color.text_color}">
                                                 {{ Events[0].description || 'No description provided.' }}
                                             </p>
                                         </div>
@@ -172,7 +172,7 @@
                                             <div class="events-card">
                                                 <h5 class="mb-2">{{ Notice.title || 'Untitled Event' }}</h5>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="date mb-0">{{ formatDate(Notice.created_at) || 'Date Not Available' }}</p>
+                                                    <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Notice.created_at) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
                                                         <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
                                                         <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
@@ -205,7 +205,7 @@
                                             <div class="events-card">
                                                 <h5 class="mb-2">{{ News[0].title || 'Untitled Event' }}</h5>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="date mb-0">{{ formatDate(News[0].created_at) || 'Date Not Available' }}</p>
+                                                    <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(News[0].created_at) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
                                                         <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
                                                         <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
@@ -317,7 +317,7 @@
                             <div class="cardddd d-flex flex-column" :style="{backgroundColor: Color.secondary_color, padding: '35px'}">
                                 <h5 class="head" :style="{color: Color.text_color}">Upcoming Events</h5>
                                 <div class="event-list" v-if="Events.length">
-                                    <div class="event-item" v-for="event in Events" :key="event.id || index" style="margin-bottom: 10px">
+                                    <div class="event-item" v-for="event in Events.slice(0, 3)" :key="event.id || index" style="margin-bottom: 10px">
                                         <img v-if="event.featured_image_url" class="img-fluid event-img" :src="event.featured_image_url" alt="Event" @error="event.featured_image_url = null" :style="{backgroundColor: Color.primary_color}" />
                                         <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                         </div>
@@ -349,7 +349,7 @@
                             <div class="cardddd d-flex flex-column" :style="{backgroundColor: Color.secondary_color, padding: '35px'}">
                                 <h5 class="head" :style="{color: Color.text_color}">Upcoming Competitions</h5>
                                 <div class="event-list" v-if="Comps.length">
-                                    <div class="event-item" v-for="comp in Comps" :key="comp.id || index" style="margin-bottom: 10px">
+                                    <div class="event-item" v-for="comp in Comps.slice(0, 3)" :key="comp.id || index" style="margin-bottom: 10px">
                                         <img v-if="comp.featured_image_url" class="img-fluid event-img" :src="comp.featured_image_url" alt="Comp" @error="comp.featured_image_url = null" :style="{backgroundColor: Color.primary_color}"/>
                                         <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                         </div>
@@ -510,7 +510,7 @@
                         <div class="ncardddd d-flex flex-column" style="background-color: #EBE6E1;" :style="{backgroundColor: Color.secondary_color}">
                             <h5 class="head" :style="{color: Color.text_color}">Latest News</h5>
                             <div class="event-list" v-if="News.length" style="padding-top: 20px">
-                                <div class="event-item" v-for="clubnew in News" :key="clubnew.id || index" style="margin-bottom: 10px;">
+                                <div class="event-item" v-for="clubnew in News.slice(0, 3)" :key="clubnew.id || index" style="margin-bottom: 10px;">
                                     <img v-if="clubnew.featured_image_url" class="img-fluid event-img" :src="clubnew.featured_image_url" alt="News" @error="clubnew.featured_image_url = null" />
                                     <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                     </div>
@@ -534,11 +534,7 @@
                                 <div v-for="(item, index) in chunkedcards.flat()" :key="item.id || index" class="resultpics-items" :class="getPositionClass(index, chunkedcards.flat().length)">
                                     <div v-if="item.image && item.image.length">
                                         <img v-if="item.image" :src="item.image" :alt="item.gallery_name" style="object-fit: cover; object-position: top;" />
-                                        <div class="resultpics-infos" :style="{
-    backgroundColor: index < 5 
-      ? hexToRgba(Color.primary_color, 0.7) 
-      : hexToRgba('#99816B', 0.6),
-  }" :class="getPositionClass(index, chunkedcards.flat().length)">
+                                        <div class="resultpics-infos" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7) }" :class="getPositionClass(index, chunkedcards.flat().length)">
                                             <div :style="{ color: Color.background_color }">
                                                 {{ item.gallery_name}}
                                             </div>
@@ -678,7 +674,6 @@ import Cal from "@/assets/icons/event_list/cal.svg"
 import Cam from "@/assets/icons/event_list/cam.svg"
 import Mess from "@/assets/icons/event_list/mess.svg"
 import Heart from "@/assets/icons/Heart.svg"
-import '@/assets/dist/calendar-gc.min.css'
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useRouter } from "vue-router";
@@ -754,7 +749,6 @@ const flatComments = computed(() => {
     }
   });
 
-  // 🔽 Sort sabhi comments ek hi timeline par
   return all.sort(
     (a, b) => new Date(b.created_at) - new Date(a.created_at)
   );
@@ -790,7 +784,6 @@ const formatDate = (dateString) => {
   const month = date.toLocaleString("en-GB", { month: "short" });
   const year = date.getFullYear();
 
-  // Add suffix
   const suffix =
     day % 10 === 1 && day !== 11 ? "st" :
     day % 10 === 2 && day !== 12 ? "nd" :
@@ -810,24 +803,15 @@ const chunkCards = computed(() => {
 
 function updateColumns() {
   if (window.innerWidth < 575) {
-    columns.value = 1; // tablet
+    columns.value = 1;
   } else if (window.innerWidth < 991) {
     columns.value =2;
   } else if (window.innerWidth < 1199) {
-    columns.value = 3; // tablet
+    columns.value = 3;
   } else {
-    columns.value = 5; // desktop
+    columns.value = 5; 
   }
 }
-
-// const formatTime = (datetimeStr) => {
-//     const date = new Date(datetimeStr);
-//     return date.toLocaleTimeString("en-US", {
-//         weekday: "short",
-//         hour: "2-digit",
-//         minute: "2-digit",
-//     });
-// };
 
 const chunkedCards = computed(() => {
     const chunkSize = 5;
@@ -896,7 +880,7 @@ onMounted(async () => {
     } catch (error) {
         console.error("Error fetching home data:", error);
     } finally {
-        isLoading.value = false; // ✅ loader hide
+        isLoading.value = false; 
     }
 
     const option = {
@@ -992,7 +976,6 @@ function getPositionClass(index, total) {
   if (row === 0 && col === columns.value - 1) {
     classes.push("top-right");
 
-    // ✅ add special-radius too if total is between 6 and 9
     if (total >= 6 && total <= 9) {
       classes.push("special-radius");
     }

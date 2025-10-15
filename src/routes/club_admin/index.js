@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-// Load all *.routes.js files from router/ folder (no subfolders)
 const routeFiles = require.context("./", false, /\.routes\.js$/);
 
 const routes = [];

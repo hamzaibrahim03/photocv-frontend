@@ -30,7 +30,6 @@ const requests = ref([
     message: 'Requested your photo',
     time: '5 min ago'
   },
-  // Duplicate for demo
   ...Array(90).fill().map((_, i) => ({
     id: i + 2,
     name: 'Kamran Chohdry',

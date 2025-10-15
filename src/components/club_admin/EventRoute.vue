@@ -219,11 +219,11 @@ const fetchSearchedEvents = debounce(async (query) => {
 const loadEvents = async () => {
   isLoading.value = true
   try {
-    await fetchEvents()   // ⬅️ calls store function
+    await fetchEvents()
   } catch (error) {
     console.error("Error fetching events:", error)
   } finally {
-    isLoading.value = false   // ✅ hide loader always
+    isLoading.value = false  
   }
 }
 

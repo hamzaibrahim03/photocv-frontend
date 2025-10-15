@@ -212,7 +212,6 @@ const formatDate = (date) => {
     })
 }
 
-// ✅ Access user store
 const user = useUserStore();
 
 </script>

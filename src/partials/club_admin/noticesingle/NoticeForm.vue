@@ -269,7 +269,7 @@ export default {
             images: [],
             documents: [],
             showLightbox: false,
-            allTags: ["announcement", "event", "urgent", "school", "community"], // 🔧 Example list, adjust as needed
+            allTags: ["announcement", "event", "urgent", "school", "community"],
         };
     },
     computed: {
@@ -300,15 +300,13 @@ export default {
 
             try {
                 if (noticeId) {
-                    // Edit existing
                     await apiClient.put(`/notices/${noticeId}`, payload);
                 } else {
-                    // Create new
                     await apiClient.post(`/notices`, payload);
                 }
 
                 alert('Notice saved successfully!');
-                this.$router.push('/notices'); // or wherever you want to go
+                this.$router.push('/notices');
 
             } catch (error) {
                 console.error('Error submitting notice:', error);
@@ -426,26 +424,26 @@ export default {
     watch: {
   comment_allowed(newVal) {
     this.$nextTick(() => {
-      $('.icheck-comment').iCheck('uncheck') // clear all first
-      $(`.icheck-comment[value="${newVal}"]`).iCheck('check') // check matching
+      $('.icheck-comment').iCheck('uncheck')
+      $(`.icheck-comment[value="${newVal}"]`).iCheck('check')
     })
   },
   urgency_importance(newVal) {
     this.$nextTick(() => {
-      $('.icheck-urgency').iCheck('uncheck') // clear all first
-      $(`.icheck-urgency[value="${newVal}"]`).iCheck('check') // check matching
+      $('.icheck-urgency').iCheck('uncheck') 
+      $(`.icheck-urgency[value="${newVal}"]`).iCheck('check')
     })
   },
   poll(newVal) {
     this.$nextTick(() => {
-      $('.icheck-poll').iCheck('uncheck') // clear all first
-      $(`.icheck-poll[value="${newVal}"]`).iCheck('check') // check matching
+      $('.icheck-poll').iCheck('uncheck')
+      $(`.icheck-poll[value="${newVal}"]`).iCheck('check')
     })
   },
   status(newVal) {
     this.$nextTick(() => {
-      $('.icheck-status').iCheck('uncheck') // clear all first
-      $(`.icheck-status[value="${newVal}"]`).iCheck('check') // check matching
+      $('.icheck-status').iCheck('uncheck') 
+      $(`.icheck-status[value="${newVal}"]`).iCheck('check')
     })
   }
 }

@@ -34,12 +34,10 @@ import {
     computed
 } from 'vue';
 
-// ✅ Access store
 const user = useUserStore();
 const dashboardStore = useDashboardStore();
 const dashboardData = computed(() => dashboardStore.dashboardData);
 
-// ✅ Define props
 defineProps({
   title: {
     type: String,
@@ -47,7 +45,6 @@ defineProps({
   }
 });
 
-// ✅ Logout function
 const handleLogout = async () => {
   await user.logout();
 };

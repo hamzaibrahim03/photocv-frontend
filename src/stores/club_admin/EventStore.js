@@ -19,7 +19,6 @@ export function useEventStore() {
       events.value = eventList
       memberCount.value = eventList.length
 
-      // Calculate upcoming event day difference
       const today = new Date()
       const upcomingEvents = eventList.filter(e => new Date(e.event_date) > today)
       eventCount.value = upcomingEvents.length

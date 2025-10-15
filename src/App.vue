@@ -30,4 +30,5 @@ onMounted(() => {
   -moz-osx-font-smoothing: grayscale;
   width: 100.5%;
 }
+
 </style>

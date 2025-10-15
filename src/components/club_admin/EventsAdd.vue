@@ -56,7 +56,6 @@ import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
 import EventsForm from "@/partials/club_admin/eventsedit/EventsForm.vue";
 
 
-// Store
 const {
     memberCount,
     eventCount,
@@ -66,9 +65,7 @@ const {
 const MemberCount = memberCount
 const EventDay = eventDay
 const EventCount = eventCount
-// Local state
 
-// Fetch events on mount
 onMounted(() => {
     fetchEvents()
 })

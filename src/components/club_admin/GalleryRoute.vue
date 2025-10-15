@@ -145,7 +145,6 @@ import {
     onMounted, ref
 } from 'vue'
 
-// Component imports
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
 import Ima from "@/assets/icons/gallery/image.svg"
@@ -153,7 +152,6 @@ import Hea from "@/assets/icons/gallery/heart.svg"
 import Com from "@/assets/icons/gallery/comment.svg"
 import Loader from "@/components/LoaderAll.vue";
 
-// Stores
 import {
     useMemberGallery
 } from '@/stores/club_admin/MemberGallery'
@@ -163,13 +161,11 @@ import {
 
 const isLoading = ref(true);
 
-// Member Gallery Store
 const {
     member_gallery,
     fetchMemberGallery
 } = useMemberGallery()
 
-// Club Gallery Store
 const {
     club_gallery,
     fetchClubGallery
@@ -183,11 +179,10 @@ const loadGalleries = async () => {
   } catch (error) {
     console.error("Error fetching galleries:", error)
   } finally {
-    isLoading.value = false   // ✅ hide loader always
+    isLoading.value = false   
   }
 }
 
-// Fetch both on mount
 onMounted(() => {
     loadGalleries()
 })

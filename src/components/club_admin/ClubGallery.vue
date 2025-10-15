@@ -116,24 +116,20 @@ const {
     fetchClubGallery
 } = useClubGallery()
 
-// Local state
 const cards = ref([])
 const loading = ref(true)
 const currentPage = ref(1)
 const pageSize = 9
 
-// Computed total pages
 const totalPages = computed(() => {
     return Math.ceil(cards.value.length / pageSize)
 })
 
-// Computed paginated cards
 const paginatedCards = computed(() => {
     const start = (currentPage.value - 1) * pageSize
     return cards.value.slice(start, start + pageSize)
 })
 
-// Chunked into 3 per row
 const chunkedCards = computed(() => {
     const chunkSize = 3
     const chunks = []
@@ -144,14 +140,12 @@ const chunkedCards = computed(() => {
     return chunks
 })
 
-// Pagination navigation
 function goToPage(page) {
     if (page >= 1 && page <= totalPages.value) {
         currentPage.value = page
     }
 }
 
-// Fetch data
 onMounted(async () => {
     await fetchClubGallery()
     cards.value = club_gallery.value

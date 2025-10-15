@@ -214,11 +214,11 @@ watch(search, (newSearch) => {
 const loadNotices = async () => {
   isLoading.value = true
   try {
-    await fetchNotices()   // ⬅️ calls store function
+    await fetchNotices() 
   } catch (error) {
     console.error("Error fetching notices:", error)
   } finally {
-    isLoading.value = false   // ✅ hide loader always
+    isLoading.value = false  
   }
 }
 

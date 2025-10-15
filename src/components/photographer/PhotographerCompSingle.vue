@@ -243,7 +243,7 @@ export default {
             fetchCompetitions()
         })
 
-        const competition = computed(() => competitions.value[0] || {}) // Get first competition
+        const competition = computed(() => competitions.value[0] || {}) 
 
         return {
             competition,

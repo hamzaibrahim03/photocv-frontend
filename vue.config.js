@@ -16,10 +16,8 @@ module.exports = defineConfig({
   chainWebpack: config => {
     const svgRule = config.module.rule('svg')
 
-    // Exclude SVGs in `src/assets/icons` from default svg loader
     svgRule.exclude.add(/src\/assets\/icons/)
 
-    // Add new rule for inline SVGs using vue-svg-loader
     config.module
       .rule('inline-svg')
       .test(/\.svg$/)

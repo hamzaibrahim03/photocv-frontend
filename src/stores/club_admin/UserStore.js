@@ -4,10 +4,6 @@ import { useRouter } from "vue-router";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    // username: localStorage.getItem("username") || "",
-    // first_name: localStorage.getItem("first_name") || "",
-    // profile_image: localStorage.getItem("profile_image") || "",
-    // tag_line: localStorage.getItem("tag_line") || "",
 
     username: "", 
     first_name: "",

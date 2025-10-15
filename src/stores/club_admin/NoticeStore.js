@@ -20,7 +20,6 @@ export function useNoticeStore() {
       notices.value = noticeList
       memberCount.value = noticeList.length
 
-      // Calculate upcoming event day difference
 
       const today = new Date()
 
@@ -31,7 +30,7 @@ export function useNoticeStore() {
           date.getFullYear() === today.getFullYear()
         )
       }).length
-      // Get all past notices
+
       const isValidDate = (d) => d instanceof Date && !isNaN(d)
 
       const pastNotices = noticeList

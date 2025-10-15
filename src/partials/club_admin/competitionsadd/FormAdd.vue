@@ -305,15 +305,13 @@ export default {
 
             try {
                 if (competitionId) {
-                    // Edit existing
                     await apiClient.put(`/competitions/${competitionId}`, payload);
                 } else {
-                    // Create new
                     await apiClient.post(`/competitions`, payload);
                 }
 
                 alert('Competition saved successfully!');
-                this.$router.push('/competitions'); // or wherever you want to go
+                this.$router.push('/competitions');
 
             } catch (error) {
                 console.error('Error submitting competition:', error);
@@ -370,8 +368,8 @@ export default {
     watch: {
         status(newVal) {
             this.$nextTick(() => {
-                $('.icheck-status').iCheck('uncheck') // clear all first
-                $(`.icheck-status[value="${newVal}"]`).iCheck('check') // check matching
+                $('.icheck-status').iCheck('uncheck') 
+                $(`.icheck-status[value="${newVal}"]`).iCheck('check') 
             })
         }
     }

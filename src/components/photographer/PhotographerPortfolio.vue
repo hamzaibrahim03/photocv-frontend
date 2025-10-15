@@ -116,11 +116,9 @@ import PhotographerGalleries from "@/partials/post/PhotographerGalleries.vue"
 import SalesCards from "@/partials/post/SalesCards.vue"
 const user = useUserStore()
 
-// State
 const cards = ref([])
 const loading = ref(true)
 
-// Computed for chunking
 const chunkedCards = computed(() => {
     const chunkSize = 3
     const chunks = []
@@ -130,7 +128,6 @@ const chunkedCards = computed(() => {
     return chunks
 })
 
-// Lifecycle hook
 onMounted(() => {
     setTimeout(() => {
         cards.value = [{

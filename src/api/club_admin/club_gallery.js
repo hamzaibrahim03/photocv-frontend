@@ -1,4 +1,3 @@
-// src/api/api.js
 import apiClient from '@/api/axios';
 
 export default {

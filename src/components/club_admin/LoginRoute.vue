@@ -88,13 +88,12 @@ export default {
           role: user.roles[0].name,
         });
 
-        // Redirect based on role
         if (user.roles[0].name === "club_admin") {
           router.push("/dashboard");
         } else if (user.roles[0].name === "member") {
           router.push("/about");
-        } else {
-          router.push("/");
+        } else if (user.roles[0].name === "Internal Comp Secretary"){
+          router.push("/ryton");
         }
       } catch (err) {
         error.value = err.response?.data?.message || "Login failed.";

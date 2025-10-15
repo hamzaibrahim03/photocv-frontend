@@ -200,11 +200,11 @@ watch(search, (newSearch) => {
 const loadPages = async () => {
   isLoading.value = true
   try {
-    await fetchPages()   // ⬅️ calls store function
+    await fetchPages()   
   } catch (error) {
     console.error("Error fetching pages:", error)
   } finally {
-    isLoading.value = false   // ✅ hide loader always
+    isLoading.value = false 
   }
 }
 

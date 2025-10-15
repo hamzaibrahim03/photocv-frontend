@@ -32,7 +32,6 @@ import { ref, onMounted } from 'vue'
 const sales = ref([])
 
 onMounted(() => {
-  // Simulated Data (You can replace this with API call)
   sales.value = [
     {
       id: 1,

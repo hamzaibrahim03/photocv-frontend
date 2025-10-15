@@ -208,11 +208,11 @@ watch(search, (newSearch) => {
 const loadNews = async () => {
   isLoading.value = true
   try {
-    await fetchNews()   // ⬅️ calls store function
+    await fetchNews()   
   } catch (error) {
     console.error("Error fetching news:", error)
   } finally {
-    isLoading.value = false   // ✅ hide loader always
+    isLoading.value = false  
   }
 }
 onMounted(() => {

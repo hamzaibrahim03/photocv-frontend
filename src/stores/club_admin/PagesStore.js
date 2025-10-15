@@ -20,7 +20,6 @@ export function usePagesStore() {
       pages.value = pageList
       memberCount.value = pageList.length
 
-      // Calculate upcoming event day difference
       const today = new Date()
       currentMonthCount.value = pageList.filter(e => {
         const date = new Date(e.publish_date)
