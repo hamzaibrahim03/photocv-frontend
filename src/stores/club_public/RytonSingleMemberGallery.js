@@ -17,7 +17,6 @@ export const useRytonSingleMemGalStore = defineStore('singleMemberGallery', {
         const response = await api.getAllRytonMemberSingleGalleries(galleryId);
         console.log("Single Member Gallery data =>", response.data);
 
-        // ✅ Now adjust to real API structure:
         const gallery = response.data?.data?.memberGalleries?.original?.data?.galleries
                      || response.data?.data?.galleries
                      || response.data?.galleries

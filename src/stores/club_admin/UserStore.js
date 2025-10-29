@@ -7,7 +7,7 @@ export const useUserStore = defineStore("user", {
 
     username: "", 
     first_name: "",
-    profile_image: "",
+    profile_image_url: "",
     tag_line: "",
     role: "",
     role2: "",
@@ -21,7 +21,7 @@ export const useUserStore = defineStore("user", {
 
       this.username = userData.username || "";
       this.first_name = userData.first_name || "";
-      this.profile_image = userData.profile_image || "";
+      this.profile_image_url = userData.profile_image_url || "";
       this.tag_line = userData.tag_line || "";
       this.token = userData.token || "";
       this.role = userData.role
@@ -33,7 +33,7 @@ export const useUserStore = defineStore("user", {
     resetUser() {
       this.username = "";
       this.first_name = "";
-      this.profile_image = "";
+      this.profile_image_url = "";
       this.tag_line = "";
       this.token = "";
       this.users = [];
@@ -55,7 +55,7 @@ export const useUserStore = defineStore("user", {
 
     async fetchUsers() {
       try {
-        const response = await apiClient.get("/users");
+        const response = await apiClient.post("/login");
         this.users = response.data;
         console.log(response.data)
       } catch (err) {

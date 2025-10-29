@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
                                 Home
                             </a>
                         </li>
@@ -55,20 +55,30 @@
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
                             <a href="#" class="icon profile-mobile" >
-                                <img v-if="User && User.isLoggedIn && User.profile_image_url" :src="User.profile_image_url" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-                                <i v-else class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i>
+                                <div style="cursor: pointer">
+                                    <template v-if="profile_image_url">
+                                        <img
+                                        :src="profile_image_url"
+                                        alt="User profile"
+                                        style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;"
+                                        />
+                                    </template>
+                                    <template v-else>
+                                        <i
+                                        class="fa-regular fa-user-circle"
+                                        :style="{ color: Color.accent_color, fontSize: '44px' }"
+                                        ></i>
+                                    </template>
+                                </div>
+
+                                
                             </a>
-                            <router-link v-if="!User || !User.isLoggedIn" to="/login" custom v-slot="{ navigate }" style="cursor: pointer">
-                                <span class="nav-item" id="login">
-                                    <span @click="navigate">
-                                        Login
-                                    </span>&nbsp;
-                                    <i class="fa-solid fa-chevron-down text-xs text-gray-500 down" @click.stop.prevent="toggleDropdown"></i>
-                                </span>
-                            </router-link>
+                            <span v-if="username" class="notification-desktop">Welcome, {{ username }}</span>
+                            <span v-else class="notification-desktop">Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
+
                             <div class="dropdown-menu" v-show="isDropdownOpen">
                                 <a class="nav-link" href="#" @click.prevent="handleLogout">
-                                    Register
+                                    Log Out
                                 </a>
                             </div>
                         </div>
@@ -272,7 +282,9 @@ import { useRytonGalleryStore } from '@/stores/club_public/RytonGallery';
 import Loader from "@/components/LoaderAll.vue";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useUserStore } from '@/stores/club_admin/UserStore';
 import { useRouter } from "vue-router";
+import { storeToRefs } from 'pinia'
 
 const router = useRouter();
 const isNavOpen = ref(false);
@@ -280,18 +292,20 @@ const isDropdownOpen = ref(false);
 const toggleNav = () => (isNavOpen.value = !isNavOpen.value);
 const closeNav = () => (isNavOpen.value = false);
 const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
+const user = useUserStore();
 
 
 const rytongalleryStore = useRytonGalleryStore();
 dayjs.extend(relativeTime);
 const isLoading = ref(true);
 
-
+const { username, profile_image_url } = storeToRefs(user)
 const memData = computed(() => rytongalleryStore.galleryData?.data?.clubSettings?.original?.data || {});
 const Club = computed(() => memData.value.club || {});
 const Color = computed(() => memData.value.settings || {});
 const clubgal = computed(() => rytongalleryStore.galleryData?.data?.clubGalleries?.original?.data || {});
 const domain = window.location.hostname.split('.')[0];
+
 const hexToRgba = (hex, alpha) => {
   let r = 0, g = 0, b = 0;
 
@@ -308,6 +322,10 @@ const hexToRgba = (hex, alpha) => {
 
   return `rgba(${r},${g},${b},${alpha})`;
 }
+
+const handleLogout = async () => {
+  await user.logout();
+};
 
 const goToGallery = (id) => {
     console.log(rytongalleryStore)

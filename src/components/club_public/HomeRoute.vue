@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" :class="{ active: $route.path === '/ryton' }" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" :class="{ active: $route.path === '/ryton' }" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
                                 Home
                             </a>
                         </li>
@@ -694,7 +694,6 @@ const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
 };
 
-/* global $ */
 dayjs.extend(relativeTime);
 
 const isLoading = ref(true);
@@ -883,80 +882,9 @@ onMounted(async () => {
         isLoading.value = false; 
     }
 
-    const option = {
-        dayNames: ["su", "mo", "tu", "we", "th", "fr", "sa"],
-        render: function (date, items) {
-            if (!items || items.length === 0) {
-                return `
-        <td class="day current-month">
-          <a type="button" class="btn-gc-cell">
-            <span class="day-number">${date.getDate()}</span>
-          </a>
-        </td>
-      `;
-            }
 
-            if (items.length === 1) {
-                const ev = items[0];
-                return `
-        <td class="day current-month event">
-          <a type="button" class="btn-gc-cell">
-            <span class="day-number" style="color:${ev.dateColor}">${date.getDate()}</span>
-          </a>
-          <div class="gc-event ${ev.className}">${ev.eventName}</div>
-        </td>
-      `;
-            }
 
-            let badges = items
-                .map(
-                    ev =>
-                    `<div class="gc-event style="margin-bottom:0px; display:flex" ${ev.className}">${ev.eventName}</div>`
-                )
-                .join("");
 
-            return `
-      <td class="day current-month event">
-        <a type="button" class="btn-gc-cell">
-          <span class="day-number" style="color:#CC445E">${date.getDate()}</span>
-        </a>
-        <div style="margin:0;display:flex;overflow-x:auto;width:70px;gap:5px;">
-          ${badges}
-        </div>
-      </td>
-    `;
-        }
-    };
-
-    const events = computed(() =>
-        Events.value.map((event, index) => ({
-            date: new Date(event.event_date),
-            eventName: event.name?.length > 7 ?
-                event.name.substring(0, 7) + "..." :
-                event.name || `Event #${index + 1}`,
-            type: "event",
-            className: "badge bg-info",
-            dateColor: "#99816B"
-        }))
-    );
-
-    const comps = computed(() =>
-        Comps.value.map((comp, index) => ({
-            date: new Date(comp.start_date),
-            eventName: comp.name?.length > 7 ?
-                comp.name.substring(0, 7) + "..." :
-                comp.name || `Comps #${index + 1}`,
-            type: "competition",
-            className: "badge bg-success",
-            dateColor: "#CC445E"
-        }))
-    );
-
-    const allEvents = computed(() => [...events.value, ...comps.value]);
-
-    let calendar = $("#calendar").calendarGC(option);
-
-    calendar.setEvents(allEvents.value);
 
 });
 

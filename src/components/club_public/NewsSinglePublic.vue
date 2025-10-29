@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
                                 Home
                             </a>
                         </li>
@@ -54,20 +54,30 @@
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
                             <a href="#" class="icon profile-mobile" >
-                                <img v-if="User && User.isLoggedIn && User.profile_image_url" :src="User.profile_image_url" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-                                <i v-else class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i>
+                                <div style="cursor: pointer">
+                                    <template v-if="profile_image_url">
+                                        <img
+                                        :src="profile_image_url"
+                                        alt="User profile"
+                                        style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;"
+                                        />
+                                    </template>
+                                    <template v-else>
+                                        <i
+                                        class="fa-regular fa-user-circle"
+                                        :style="{ color: Color.accent_color, fontSize: '44px' }"
+                                        ></i>
+                                    </template>
+                                </div>
+
+                                
                             </a>
-                            <router-link v-if="!User || !User.isLoggedIn" to="/login" custom v-slot="{ navigate }" style="cursor: pointer">
-                                <span class="nav-item" id="login">
-                                    <span @click="navigate">
-                                        Login
-                                    </span>&nbsp;
-                                    <i class="fa-solid fa-chevron-down text-xs text-gray-500 down" @click.stop.prevent="toggleDropdown"></i>
-                                </span>
-                            </router-link>
+                            <span v-if="username" class="notification-desktop">Welcome, {{ username }}</span>
+                            <span v-else class="notification-desktop">Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
+
                             <div class="dropdown-menu" v-show="isDropdownOpen">
                                 <a class="nav-link" href="#" @click.prevent="handleLogout">
-                                    Register
+                                    Log Out
                                 </a>
                             </div>
                         </div>
@@ -161,7 +171,7 @@
                             <section>
                                 <div class="container" id="right">
 
-                                    <div class="cardddd d-flex flex-column" :style="{ padding: '35px'}" id="eve">
+                                    <div class="cardddd d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
                                         <h5 class="head">Photo Events</h5>
                                         <div class="event-list" v-if="Events.length">
                                             <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
@@ -316,11 +326,15 @@ import Cal from "@/assets/icons/event_list/cal.svg";
 import Cam from "@/assets/icons/event_list/cam.svg";
 import Mess from "@/assets/icons/event_list/mess.svg";
 import dayjs from 'dayjs';
+import { useUserStore } from '@/stores/club_admin/UserStore';
+import { useHomeStore } from '@/stores/club_public/ClubData';
 import relativeTime from 'dayjs/plugin/relativeTime';
-dayjs.extend(relativeTime);
+import { storeToRefs } from 'pinia'
 
+dayjs.extend(relativeTime);
 const route = useRoute();
 const router = useRouter();
+const user = useUserStore();
 
 const rytonsinglenewsStore = useRytonSingleNewsStore();
 const rytonnewsStore = useRytonNewsStore();
@@ -332,8 +346,10 @@ const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
 
  
 const isLoading = ref(true);
+const homeStore = useHomeStore();
 
 
+const { username, profile_image_url } = storeToRefs(user)
 const News = computed(() => rytonnewsStore.newsData?.data?.clubNews?.original?.data?.original?.data || []);
 const Events = computed(() => rytonnewsStore.newsData?.data?.upcomingEvents || []);
 const sinnews = computed(() => rytonsinglenewsStore.sinnewsData?.data?.news?.original?.data || {});
@@ -342,6 +358,11 @@ const Color = computed(() => clubSettings.value.settings || {});
 const Club = computed(() => clubSettings.value.club || {});
 const domain = window.location.hostname.split('.')[0];
 
+
+
+const handleLogout = async () => {
+  await user.logout();
+};
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -370,6 +391,7 @@ onMounted(async () => {
     const id = route.params.id;
     await rytonsinglenewsStore.fetchRytonSingleNewsData(id);
     await rytonnewsStore.fetchRytonNewsData(domain);
+    await homeStore.fetchHomeData(domain);
   } catch (error) {
     console.error("Error fetching ryton single news data:", error);
   } finally {

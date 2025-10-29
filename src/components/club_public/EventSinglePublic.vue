@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
                                 Home
                             </a>
                         </li>
@@ -54,20 +54,30 @@
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
                             <a href="#" class="icon profile-mobile" >
-                                <img v-if="User && User.isLoggedIn && User.profile_image_url" :src="User.profile_image_url" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-                                <i v-else class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i>
+                                <div style="cursor: pointer">
+                                    <template v-if="profile_image_url">
+                                        <img
+                                        :src="profile_image_url"
+                                        alt="User profile"
+                                        style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;"
+                                        />
+                                    </template>
+                                    <template v-else>
+                                        <i
+                                        class="fa-regular fa-user-circle"
+                                        :style="{ color: Color.accent_color, fontSize: '44px' }"
+                                        ></i>
+                                    </template>
+                                </div>
+
+                                
                             </a>
-                            <router-link v-if="!User || !User.isLoggedIn" to="/login" custom v-slot="{ navigate }" style="cursor: pointer">
-                                <span class="nav-item" id="login">
-                                    <span @click="navigate">
-                                        Login
-                                    </span>&nbsp;
-                                    <i class="fa-solid fa-chevron-down text-xs text-gray-500 down" @click.stop.prevent="toggleDropdown"></i>
-                                </span>
-                            </router-link>
+                            <span v-if="username" class="notification-desktop">Welcome, {{ username }}</span>
+                            <span v-else class="notification-desktop">Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
+
                             <div class="dropdown-menu" v-show="isDropdownOpen">
                                 <a class="nav-link" href="#" @click.prevent="handleLogout">
-                                    Register
+                                    Log Out
                                 </a>
                             </div>
                         </div>
@@ -144,7 +154,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <section>
-                                <div class="container">
+                                <div class="container" id="events-left">
                                     <div class="card">
                                         <img :src=" sinevent.featured_image_url" :alt=" sinevent.name" style="max-width: 850px; height: 350px; border-radius: 8px"/>
                                         <h5 class="head" :style="{ color: Color.text_color }">{{  sinevent.name }}</h5>
@@ -152,19 +162,20 @@
                                             {{ formatDate( sinevent.event_date) }}
                                         </p>
 
-                                        <p class="text-secondary" :style="{ color: Color.text_color }">
-                                            {{  sinevent.description }}
+                                        <p class="text-secondary" :style="{ color: Color.text_color }" v-html="sinevent.description"></p>
+                                        <p class="text-secondary" :style="{ color: Color.text_color }" v-html="sinevent.description"></p>
+                                        <p class="text-secondary" :style="{ color: Color.text_color }" v-html="sinevent.description">
                                         </p>
 
-                                        <div class="divider2"></div>
+                                        <div class="divider4"></div>
 
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{ color: Color.accent_color }">
                                                     Event Duration
                                                 </h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{ color: Color.text_color }">
                                                     {{  sinevent.duration }}
                                                 </h5>
@@ -174,12 +185,12 @@
                                         <div class="divider3"></div>
 
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{ color: Color.accent_color }">
                                                     Event Speaker
                                                 </h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{ color: Color.text_color }">
                                                     {{  sinevent.speaker }}
                                                 </h5>
@@ -189,12 +200,12 @@
                                         <div class="divider3"></div>
 
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{ color: Color.accent_color }">
                                                     Event Speaker Club
                                                 </h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{ color: Color.text_color }">
                                                     {{  sinevent.speaker_club }}
                                                 </h5>
@@ -204,12 +215,12 @@
                                         <div class="divider3"></div>
 
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{ color: Color.accent_color }">
                                                     Event Speaker Qualifications
                                                 </h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{ color: Color.text_color }">
                                                     {{  sinevent.speaker_qualification }}
                                                 </h5>
@@ -219,12 +230,12 @@
                                         <div class="divider3"></div>
 
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{ color: Color.accent_color }">
                                                     Event Status
                                                 </h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{ color: Color.text_color }">
                                                     {{  sinevent.status }}
                                                 </h5>
@@ -232,14 +243,32 @@
                                         </div>
 
                                         <div class="divider3"></div>
+
+                                        <template v-if=" sinevent.status !== 'completed'">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <h5 class="clubhead" :style="{ color: Color.accent_color }">
+                                                        Gear Required
+                                                    </h5>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <h5 class="clubhead" :style="{ color: Color.text_color }">
+                                                        {{  sinevent.required_gear }}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        <div class="divider3"></div>
+
+                                        </template>
+
                                         
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">
-                                                    Tags / Keywords Speaker
+                                                    Tags / Keywords
                                                 </h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{color: Color.text_color}">
                                                     {{ sinevent.tags_keywords}}
                                                 </h5>
@@ -249,12 +278,12 @@
                                         <div class="divider3"></div>
                                         
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">
                                                     Link to related page
                                                 </h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{color: Color.text_color}">
                                                     {{ sinevent.url}}
                                                 </h5>
@@ -265,27 +294,12 @@
 
                                         <template v-if=" sinevent.status !== 'completed'">
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <h5 class="clubhead" :style="{ color: Color.accent_color }">
-                                                        Gear Required
-                                                    </h5>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <h5 class="clubhead" :style="{ color: Color.text_color }">
-                                                        {{  sinevent.required_gear }}
-                                                    </h5>
-                                                </div>
-                                            </div>
-
-                                            <div class="divider3"></div>
-
-                                            <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-5">
                                                     <h5 class="clubhead" :style="{ color: Color.accent_color }">
                                                         RSVP Detail
                                                     </h5>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-7">
                                                     <h5 class="clubhead" :style="{ color: Color.text_color }">
                                                         {{  sinevent.rsvp_detail }}
                                                     </h5>
@@ -294,8 +308,7 @@
                                         </template>
 
                                         <template v-if=" sinevent.status === 'completed'">
-                                            <div class="divider1"></div>
-                                            <div class="divider2"></div>
+                                            <div class="divider5"></div>
 
                                             <div style="height: auto; border: none" :style="{backgroundColor: Color.background_color}">
                                                 <div class="d-flex justify-content-between align-items-end mb-3" id="cl">
@@ -321,14 +334,14 @@
                             <section>
                                 <div class="container" id="right">
 
-                                    <div class="cardddd" style="padding: 0px" id="cal">
+                                    <div class="calendar-card" style="padding: 0px" id="cal">
                                         <CalendarEvent />
                                     </div>
 
-                                    <div class="cardddd d-flex flex-column" :style="{ padding: '35px'}" id="eve">
+                                    <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
                                         <h5 class="head">More Events</h5>
                                         <div class="event-list" v-if="Events.length">
-                                            <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
+                                            <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px; gap: 20px">
                                                 <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" :alt="c.name" @error="c.featured_image_url = null"/>
                                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                                 </div>
@@ -346,7 +359,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="cardddd" :style="{padding: '35px'}">
+                                    <div class="season-card" :style="{padding: '35px'}">
                                         <h5 class="head">Seasons</h5>
                                         <div class="session-container" v-if="sessions.length">
                                             <div v-for="session in sessions" :key="session.id" class="session-card" :class="session.status.toLowerCase()">
@@ -358,10 +371,10 @@
 
                                                 <div class="session-body">
                                                     <div class="info">
-                                                        <i class="icon">🏅</i> {{ session.competitions_count }} Competitions
+                                                        <img :src="Competition" alt="point-icon" style="width: 16px; height: 16px" /> {{ session.competitions_count }} Competitions
                                                     </div>
                                                     <div class="info">
-                                                        <i class="icon">📅</i> {{ session.events_count }} Events
+                                                        <img :src="Event" alt="event" style="width: 16px; height: 16px" /> {{ session.events_count }} Events
                                                     </div>
                                                 </div>
 
@@ -511,11 +524,18 @@ import Cal from "@/assets/icons/event_list/cal.svg";
 import Cam from "@/assets/icons/event_list/cam.svg";
 import Mess from "@/assets/icons/event_list/mess.svg";
 import dayjs from 'dayjs';
+import { useUserStore } from '@/stores/club_admin/UserStore';
+import { useHomeStore } from '@/stores/club_public/ClubData';
 import relativeTime from 'dayjs/plugin/relativeTime';
-dayjs.extend(relativeTime);
+import { storeToRefs } from 'pinia'
+import Event from "@/assets/icons/navigation/events.svg"
+import Competition from "@/assets/icons/navigation/competition.svg"
 
+
+dayjs.extend(relativeTime);
 const route = useRoute();
 const router = useRouter();
+const user = useUserStore();
 
 const rytonsingleeventStore = useRytonSingleEventStore();
 const rytoneventStore = useRytonEventStore();
@@ -524,9 +544,10 @@ const isDropdownOpen = ref(false);
 const toggleNav = () => (isNavOpen.value = !isNavOpen.value);
 const closeNav = () => (isNavOpen.value = false);
 const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
-
+const homeStore = useHomeStore();
 const isLoading = ref(true);
 
+const { username, profile_image_url } = storeToRefs(user)
 const Events = computed(() => rytoneventStore.eventData?.data?.events?.original?.data?.original?.data || []);
 const sinevent = computed(() => rytonsingleeventStore.sineventData?.data?.event?.original?.data || {});
 const clubSettings = computed(() => rytonsingleeventStore.sineventData?.data?.clubSettings?.original?.data || {});
@@ -535,6 +556,12 @@ const Club = computed(() => clubSettings.value.club || {});
 const sessions = computed(() => clubSettings.value.seasons || []);
 const domain = window.location.hostname.split('.')[0];
 
+
+
+
+const handleLogout = async () => {
+  await user.logout();
+};
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -581,6 +608,7 @@ onMounted(async () => {
      const id = route.params.id;
     await rytonsingleeventStore.fetchRytonSingleEventData(id);
     await rytoneventStore.fetchRytonEventData(domain);
+    await homeStore.fetchHomeData(domain);
   } catch (error) {
     console.error("Error fetching ryton single event data:", error);
   } finally {
@@ -591,12 +619,13 @@ onMounted(async () => {
 </script>
 
 
+<style src="@/assets/css/clubstyle.css"></style>
 <style scoped>
 #overall {
-     padding: 0 25px 50px 30px;
+     padding: 0 0px 60px 48px;
 }
 #heads {
-    padding: 50px 70px 20px 70px;
+    padding: 70px 68px 38px 80px;
 }
 .events-header {
   display: flex;
@@ -605,7 +634,6 @@ onMounted(async () => {
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
-
 .events-title {
   font-family: Inter;
 font-weight: 500;
@@ -615,7 +643,6 @@ line-height: 100%;
 letter-spacing: 0%;
 margin: 0;
 }
-
 .search-bar {
   display: flex;
   align-items: center;
@@ -627,18 +654,15 @@ margin: 0;
   height: 60px;
   transition: border-color 0.2s ease;
 }
-
 .search-bar:hover,
 .search-bar:focus-within {
   border-color: #d1d5db;
 }
-
 .search-bar i {
   color: #c0c0c0;
   font-size: 14px;
   margin-right: 8px;
 }
-
 .search-input {
   border: none;
   outline: none;
@@ -647,7 +671,6 @@ margin: 0;
   flex: 1;
   background: transparent;
 }
-
 .search-input::placeholder {
   color: #c0c0c0;
 }
@@ -658,17 +681,14 @@ margin: 0;
   font-size: 14px;
   color: #6b7280;
 }
-
 .breadcrumb-item {
   text-decoration: none;
   color: #6b7280;
 }
-
 .breadcrumb-item.active {
   color: #111827;
   font-weight: 600;
 }
-
 .breadcrumb-separator {
   color: #9ca3af;
 }
@@ -688,26 +708,6 @@ font-style: Regular;
 font-size: 20px;
 line-height: 24px;
 letter-spacing: 0%;
-
-}
- #right {
-     margin-left: 20px;
-}
- .button-group #view {
-     max-width: 130px;
-     height: 40px;
-     opacity: 1;
-     padding-top: 10px;
-     padding-right: 18px;
-     padding-bottom: 10px;
-     padding-left: 18px;
-     gap: 10px;
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 16px;
-     line-height: 100%;
-     letter-spacing: 0%;
 }
 .resultpics {
   margin-top: -15px;
@@ -715,7 +715,6 @@ letter-spacing: 0%;
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
 }
-
 .resultpics-items {
   position: relative;
   overflow: hidden;
@@ -763,137 +762,6 @@ letter-spacing: 0%;
      padding-bottom: 10px;
      margin: 1px;
 }
-.cardddd {
-     background: white;
-     width: 470px;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-
-}
- .cardddd {
-     background: white;
-     width: 470px;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-
-}
- .cardddd:first-child {
-     background: white;
-     width: 470px;
-     padding: 20px;
-     height: auto;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-     margin-top: 20px;
-}
-
-.cardddd:last-child {
-    height: 470px;
-}
-#cal {
-    height: auto;
-}
-#eve {
-    height: 580px;
-}
-.session-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 350px;
-}
-
-.session-card {
-    width: 410px;
-    height: 160px;
-  background: rgba(236, 237, 230, 0.3);
-  border: 1px solid black;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease;
-}
-
-.session-card:hover {
-  transform: translateY(-2px);
-}
-
-.session-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.session-header h3 {
-  font-size: 20px;
-  color: #333;
-  margin: 0;
-}
-
-.status {
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: 20px;
-  padding: 3px 10px;
-}
-
-.status .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  margin-right: 6px;
-}
-
-.status.active {
-  background: #eaf8ef;
-  color: #22c55e;
-}
-
-.status.active .dot {
-  background: #22c55e;
-}
-
-.status.inactive {
-  background: #f0f0f0;
-  color: #777;
-}
-
-.status.inactive .dot {
-  background: #bdbdbd;
-}
-
-.session-body {
-  display: flex;
-  justify-content: space-between;
-  margin: 16px 0;
-}
-
-.info {
-  font-size: 15px;
-  color: #444;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.icon {
-  font-size: 16px;
-}
-
-.session-footer {
-  font-size: 14px;
-  color: #999;
-}
 #footer-heading {
   text-align: center;
   margin-bottom: 30px;
@@ -904,4 +772,691 @@ letter-spacing: 0%;
     line-height: 100%;
     letter-spacing: 0%;
 }
+ #events-left {
+     flex: 3;
+}
+ .ultrahead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 72px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .heading {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .head {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 24px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .clubhead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 20px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .subhead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 18px;
+     line-height: 36px;
+     letter-spacing: 0%;
+}
+ .memtext {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .prehead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .galtext {
+     font-family: Inter;
+     font-weight: 400;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .calendar-card {
+     background: white;
+     width: 470px;
+     padding: 20px;
+     height: auto;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-top: -5px;
+}
+ .season-card {
+     height: 470px;
+     background: white;
+     width: 470px;
+     padding: 20px;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+ .more-card {
+     height: 580px;
+     background: white;
+     width: 470px;
+     padding: 20px;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+ .event-list {
+     padding-top: 20px;
+}
+ .event-list {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+}
+ .event-item {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+}
+ .event-item img {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 5px;
+     object-fit: cover;
+}
+ .event-details {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     flex: 1;
+     font-size: 0.875rem;
+     width: 100%;
+}
+ #ename {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ #espeaker {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 10px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .notification-mobile {
+     display: none;
+}
+ .session-container {
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+     padding: 25px 0px;
+}
+ .session-card {
+     width: 410px;
+     height: 160px;
+     background: rgba(236, 237, 230, 0.3);
+     border: 1px solid rgba(51, 51, 51, 0.2);
+     border-radius: 12px;
+     padding: 15px 10px;
+     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+     transition: transform 0.2s ease;
+}
+ .session-card:hover {
+     transform: translateY(-2px);
+}
+ .session-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 12px;
+}
+ .session-header h3 {
+     font-size: 20px;
+     color: #333;
+     margin: 0;
+}
+ .status {
+     display: flex;
+     align-items: center;
+     border-radius: 20px;
+     padding: 3px 10px;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 11.85px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .status .dot {
+     width: 6px;
+     height: 6px;
+     border-radius: 50%;
+     margin-right: 6px;
+}
+ .status.active {
+     background: #eaf8ef;
+     color: #22c55e;
+}
+ .status.active .dot {
+     background: #22c55e;
+}
+ .status.inactive {
+     background: #f0f0f0;
+     color: #777;
+}
+ .status.inactive .dot {
+     background: #bdbdbd;
+}
+ .session-body {
+     display: flex;
+     justify-content: space-between;
+     margin: 40px 40px 20px 20px;
+}
+ .info {
+     font-size: 15px;
+     color: #444;
+     display: flex;
+     align-items: center;
+     gap: 6px;
+}
+ .icon {
+     font-size: 16px;
+}
+ .session-footer {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .dt-paging {
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     flex-wrap: wrap;
+     margin-top: 20px;
+     gap: 5px;
+}
+ .dt-paging-button {
+     border: 1px solid green;
+     background: #ffffff;
+     color: black;
+     margin: 2px;
+     border-radius: 5px;
+     cursor: pointer;
+     font-size: 16px;
+     transition: background 0.3s ease;
+     width: 40px;
+     height: 40px;
+     padding: 0;
+}
+ .dt-paging-button.disabled {
+     background: #ffffff;
+     color: black;
+     border: 1px solid #99816b;
+     cursor: not-allowed;
+     opacity: 0.6;
+}
+ .dt-paging-button.current {
+     background: orange;
+     font-weight: bold;
+     border: none;
+     color: white 
+}
+ @media only screen and (max-width: 1399px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+    .resultpics {
+  margin-top: -15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+}
+.resultpics-items {
+  position: relative;
+  overflow: hidden;
+}
+.resultpics-items img {
+  width: 100%;
+  height: 275px;
+  object-fit: cover;
+  object-position: top;
+}
+     .calendar-card, .season-card, .more-card {
+         width: 110% !important;
+    }
+     #right {
+         margin-left: -10px;
+    }
+     #edate {
+         width: 120px;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     .event-date {
+         width: 120px;
+         display: block;
+    }
+     #ename {
+         font-size: 13px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+ @media only screen and (max-width: 1199px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+    .resultpics {
+  margin-top: -15px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+}
+.resultpics-items {
+  position: relative;
+  overflow: hidden;
+}
+.resultpics-items img {
+  width: 100%;
+  height: 275px;
+  object-fit: cover;
+  object-position: top;
+}
+     .calendar-card, .season-card, .more-card {
+         width: 120% !important;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 180px;
+    }
+     .day-number {
+         width: 30px;
+    }
+     #right {
+         margin-left: -30px;
+    }
+     #edate {
+         width: 120px;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     .event-date {
+         width: 120px;
+         display: block;
+         text-align: left;
+    }
+     #ename {
+         font-size: 14px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 20px 20px 0;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+ @media only screen and (max-width: 991px) {
+     .right-header .profile-mobile, .right-header .divider, .notification-desktop, .down {
+         display: none !important;
+    }
+     .notification-mobile {
+         display: inline-flex !important;
+         margin-right: 10px;
+    }
+     #login {
+         padding: 0px 15px 20px 45px;
+         display: flex;
+         font-size: 18px;
+         font-family: Inter;
+         font-weight: 400;
+    }
+     .navbar .right-header {
+         margin-left: 0;
+    }
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 700px !important;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: row;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 40px 20px 20px;
+    }
+     .info {
+         font-size: 15px;
+    }
+}
+ @media only screen and (max-width: 767px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 300px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 500px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: row;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 40px 20px 20px;
+    }
+     .info {
+         font-size: 15px;
+    }
+}
+ @media only screen and (max-width: 575px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .events-title {
+         font-size: 20px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 200px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 320px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 20px 20px 0;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+ @media only screen and (max-width: 359px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .events-title {
+         font-size: 20px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 200px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 320px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 20px 20px 0;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+
 </style>

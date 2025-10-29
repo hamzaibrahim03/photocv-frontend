@@ -17,7 +17,6 @@ export const useRytonSingleClubGalStore = defineStore('singleClubGallery', {
         const response = await api.getAllRytonClubSingleGalleries(galleryId);
         console.log("✅ Single Club Gallery API Response =>", response.data);
     
-        // Correctly extract gallery object
         const galleryData = response.data?.data?.clubGallery?.original?.data || {};
     
         this.sinclubgalData = galleryData;

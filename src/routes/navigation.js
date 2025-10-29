@@ -49,8 +49,10 @@ import CompetitionPublic from "@/components/club_public/CompetitionPublic.vue"
 import GalleryPublic from "@/components/club_public/GalleryPublic.vue"
 import MemberGalleryPublic from "@/components/club_public/MemberGalleryPublic.vue"
 import MemberGallerySingle from "@/components/club_public/MemberGallerySingle.vue"
+import RytonMemberSlide from "@/components/club_public/RytonMemberSlide.vue"
 import ClubGalleryPublic from "@/components/club_public/ClubGalleryPublic.vue"
 import RytonClubGallerySingle from "@/components/club_public/RytonClubGallerySingle.vue"
+import RytonClubSlide from "@/components/club_public/RytonClubSlide.vue"
 import NewsSinglePublic from "@/components/club_public/NewsSinglePublic.vue"
 import NewsPublic from "@/components/club_public/NewsPublic.vue"
 import ClubPublic from "@/components/club_public/ClubPublic.vue"
@@ -323,6 +325,11 @@ const routes = [
     component: RytonClubGallerySingle,
   },
   {
+    name: "RytonClubslide",
+    path: "/rytonclubslide",
+    component: RytonClubSlide,
+  },
+  {
     name: "MemberGalleryPublic",
     path: "/rytonmembergallery",
     component: MemberGalleryPublic,
@@ -331,6 +338,11 @@ const routes = [
     name: "MemberGallerySingle",
     path: "/rytonsinmemgal/:id",
     component: MemberGallerySingle,
+  },
+  {
+    name: "RytonMemberslide",
+    path: "/rytonmemberslide",
+    component: RytonMemberSlide,
   },
   {
     name: "NewsPublic",

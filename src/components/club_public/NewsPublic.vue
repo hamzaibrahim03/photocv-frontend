@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
                                 Home
                             </a>
                         </li>
@@ -54,20 +54,30 @@
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
                             <a href="#" class="icon profile-mobile" >
-                                <img v-if="User && User.isLoggedIn && User.profile_image_url" :src="User.profile_image_url" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-                                <i v-else class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i>
+                                <div style="cursor: pointer">
+                                    <template v-if="profile_image_url">
+                                        <img
+                                        :src="profile_image_url"
+                                        alt="User profile"
+                                        style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;"
+                                        />
+                                    </template>
+                                    <template v-else>
+                                        <i
+                                        class="fa-regular fa-user-circle"
+                                        :style="{ color: Color.accent_color, fontSize: '44px' }"
+                                        ></i>
+                                    </template>
+                                </div>
+
+                                
                             </a>
-                            <router-link v-if="!User || !User.isLoggedIn" to="/login" custom v-slot="{ navigate }" style="cursor: pointer">
-                                <span class="nav-item" id="login">
-                                    <span @click="navigate">
-                                        Login
-                                    </span>&nbsp;
-                                    <i class="fa-solid fa-chevron-down text-xs text-gray-500 down" @click.stop.prevent="toggleDropdown"></i>
-                                </span>
-                            </router-link>
+                            <span v-if="username" class="notification-desktop">Welcome, {{ username }}</span>
+                            <span v-else class="notification-desktop">Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
+
                             <div class="dropdown-menu" v-show="isDropdownOpen">
                                 <a class="nav-link" href="#" @click.prevent="handleLogout">
-                                    Register
+                                    Log Out
                                 </a>
                             </div>
                         </div>
@@ -127,7 +137,7 @@
                         <h2 class="events-title" :style="{ color: Color.text_color }">Club News</h2>
                         <div class="search-bar">
                             <i class="fas fa-search"></i>
-                             <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search news..." aria-controls="example1" />
+                             <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                         </div>
                     </div>
                 </div>
@@ -138,11 +148,11 @@
                     <div class="row">
                         <div class="col-md-8">
                             <section>
-                                <div class="container">
+                                <div class="container" id="events-left">
                                     <div class="mt-4">
                                         <div v-if="paginatedNews.length">
-                                            <div v-for="e in paginatedNews" :key="e.id" class="custom-card p-3">
-                                                <img v-if="e.featured_image_url" :src="e.featured_image_url" alt="Event Image" :style="{width: '550px'}"/>
+                                            <div v-for="e in paginatedNews" :key="e.id" class="events-cards p-3">
+                                                <img v-if="e.featured_image_url" :src="e.featured_image_url" alt="Event Image"/>
                                                 <div class="flex-grow-1 d-flex flex-column justify-content-between" id="detail">
                                                     <div class="d-flex w-100 justify-content-between align-items-center">
                                                         <h5 id="ename" :style="{color: Color.text_color}">{{ e.title || 'Untitled News' }}</h5>
@@ -153,7 +163,7 @@
                                                     <p class="text-secondary"  :style="{color: Color.text_color}">
                                                         {{ e.description || 'No description provided.' }}
                                                     </p>
-                                                    <div class="button-group mt-3 d-flex">
+                                                    <div class="button-groups mt-3 d-flex">
                                                         <router-link :to="{ name: 'NewsSinglePublic', params: { id: e.id } }" custom v-slot="{ navigate }">
                                                             <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.primary_color}">View Details</button>
                                                         </router-link>                                                
@@ -164,21 +174,21 @@
 
                                         <div v-else class="text-center text-muted">No news found.</div>
 
-                                        <nav v-if="paginatedNews.length">
-                                            <ul class="pagination justify-content-center">
-                                                <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                                    <button class="page-link" @click="prevPage">Previous</button>
-                                                </li>
-                                                <li class="page-item disabled">
-                                                    <span class="page-link">
-                                                        Page {{ currentPage }} of {{ totalPages }}
-                                                    </span>
-                                                </li>
-                                                <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                                    <button class="page-link" @click="nextPage">Next</button>
-                                                </li>
-                                            </ul>
-                                        </nav>
+                                        <div class="dt-paging">
+                                            <nav aria-label="pagination">
+                                                <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
+                                                    ‹
+                                                </button>
+
+                                                <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
+                                                    {{ page }}
+                                                </button>
+
+                                                <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
+                                                    ›
+                                                </button>
+                                            </nav>
+                                        </div>
                                     </div>
                                 </div>
                             </section>
@@ -188,7 +198,7 @@
                             <section>
                                 <div class="container" id="right">
 
-                                    <div class="cardddd d-flex flex-column" :style="{ padding: '35px'}" id="eve">
+                                    <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
                                         <h5 class="head">Photo Events</h5>
                                         <div class="event-list" v-if="Events.length">
                                             <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
@@ -341,9 +351,11 @@ import Cam from "@/assets/icons/event_list/cam.svg"
 import Mess from "@/assets/icons/event_list/mess.svg"
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useUserStore } from '@/stores/club_admin/UserStore';
 import { useRouter } from "vue-router";
+import { useHomeStore } from '@/stores/club_public/ClubData';
 import apiClient from '@/api/axios'
-
+import { storeToRefs } from 'pinia'
 
 const router = useRouter();
 const isNavOpen = ref(false);
@@ -351,14 +363,17 @@ const isDropdownOpen = ref(false);
 const toggleNav = () => (isNavOpen.value = !isNavOpen.value);
 const closeNav = () => (isNavOpen.value = false);
 const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
+const user = useUserStore();
 
 const rytonnewsStore = useRytonNewsStore();
 dayjs.extend(relativeTime);
 const isLoading = ref(true);
 const search = ref('')
 const newsList = ref([]);
+const homeStore = useHomeStore();
 
 
+const { username, profile_image_url } = storeToRefs(user)
 const memData = computed(() => rytonnewsStore.newsData?.data?.clubSettings?.original?.data || {});
 const News = computed(() => rytonnewsStore.newsData?.data?.clubNews?.original?.data?.original?.data || []);
 const Events = computed(() => rytonnewsStore.newsData?.data?.upcomingEvents)
@@ -366,6 +381,12 @@ const Club = computed(() => memData.value.club || {});
 const Color = computed(() => memData.value.settings || {});
 const domain = window.location.hostname.split('.')[0];
 
+
+
+
+const handleLogout = async () => {
+  await user.logout();
+};
 
 const currentPage = ref(1);
 const rowsPerPage = ref(4);
@@ -435,6 +456,7 @@ onMounted(async () => {
 
   try {
     await rytonnewsStore.fetchRytonNewsData(domain);
+    await homeStore.fetchHomeData(domain);
   } catch (error) {
     console.error("Error fetching ryton news data:", error);
   } finally {
@@ -454,112 +476,106 @@ const paginatedNews = computed(() => {
 const totalPages = computed(() =>
   Math.max(Math.ceil(displayedNews.value.length / rowsPerPage.value), 1)
 );
-
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) currentPage.value++;
-};
-const prevPage = () => {
-  if (currentPage.value > 1) currentPage.value--;
-};
+function goToPage(page) {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page
+    }
+}
 
 </script>
 
 <style src="@/assets/css/clubstyle.css"></style>
 <style scoped>
-.hero-overlay {
-    width: 1025px;
+ #overall {
+     padding: 0 25px 60px 75px;
 }
-#overall {
-     padding: 0 25px 50px 80px;
+ #events-left {
+     flex: 3;
 }
-#heads {
-    padding: 60px 70px 48px 90px;
+ #heads {
+     padding: 60px 70px 48px 90px;
 }
-.events-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+ .events-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 1.5rem;
+     flex-wrap: wrap;
 }
-
-.events-title {
-  font-family: Inter;
-font-weight: 500;
-font-style: Medium;
-font-size: 36px;
-line-height: 100%;
-letter-spacing: 0%;
-margin: 0;
+ .events-title {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     margin: 0;
 }
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 6px 10px;
-  width: 470px;
-  height: 60px;
-  transition: border-color 0.2s ease;
+ .search-bar {
+     display: flex;
+     align-items: center;
+     background-color: #fff;
+     border: 1px solid #e5e7eb;
+     border-radius: 8px;
+     padding: 6px 30px;
+     width: 470px;
+     height: 60px;
+     transition: border-color 0.2s ease;
+     gap: 20px 
 }
-
-.search-bar:hover,
-.search-bar:focus-within {
-  border-color: #d1d5db;
+ .search-bar:hover, .search-bar:focus-within {
+     border-color: #d1d5db;
 }
-
-.search-bar i {
-  color: #c0c0c0;
-  font-size: 14px;
-  margin-right: 8px;
+ .search-bar i {
+     color: #c0c0c0;
+     font-size: 20px;
+     margin-right: 8px;
 }
-
-.search-input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  color: #333;
-  flex: 1;
-  background: transparent;
+ .search-input {
+     border: none;
+     outline: none;
+     font-size: 20px;
+     color: #333;
+     flex: 1;
+     background: transparent;
 }
-
-.search-input::placeholder {
-  color: #c0c0c0;
+ .search-input::placeholder {
+     color: #c0c0c0;
 }
-
- .custom-card {
+ .hero-overlay {
+     width: 820px;
+}
+ .events-cards {
      display: flex;
      align-items: center;
      background-color: white;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
      margin-bottom: 35px;
      border-radius: 10px;
      width: 975px;
      height: 310px;
      flex-direction: row;
-     gap: 50px
+     gap: 50px 
 }
- .custom-card img {
+ .events-cards img {
      max-width: 300px;
-     width: 300px;
+     width: 550px;
      height: 250px;
      border-radius: 8px;
      opacity: 1;
      margin-left: 20px;
      margin-right: 0;
 }
- .custom-card #ename {
+ .events-cards #ename {
      font-family: Inter;
      font-weight: 500;
      font-style: Medium;
      font-size: 24px;
      line-height: 100%;
      letter-spacing: 0%;
-     margin-bottom: 10px;
+     margin-top: -15px;
 }
- .custom-card #edate {
+ .events-cards #edate {
      font-family: Inter;
      font-weight: 400;
      font-style: Regular;
@@ -568,7 +584,7 @@ margin: 0;
      letter-spacing: 0%;
      text-align: left;
 }
- .custom-card .text-secondary {
+ .events-cards .text-secondary {
      font-family: Inter;
      font-weight: 400;
      font-style: Regular;
@@ -577,11 +593,11 @@ margin: 0;
      letter-spacing: 0%;
      margin-bottom: 25px;
 }
-#detail {
-    margin-right: 20px;
-    width: 99%;
+ #detail {
+     margin-right: 20px;
+     width: 99%;
 }
- .custom-card #espeaker {
+ .events-cards #espeaker {
      font-family: Inter;
      font-weight: 400;
      font-style: Regular;
@@ -592,11 +608,9 @@ margin: 0;
 }
  #right {
      margin-left: 20px;
+     flex: 1;
 }
-.cardddd #ename {
-    width: 200px
-}
- .button-group #view {
+ .button-groups #view {
      max-width: 130px;
      height: 40px;
      opacity: 1;
@@ -608,6 +622,7 @@ margin: 0;
      font-size: 16px;
      line-height: 100%;
      letter-spacing: 0%;
+     margin-top: 15px;
 }
  .site-footer {
      padding-top: 25px;
@@ -709,40 +724,20 @@ margin: 0;
      padding-bottom: 10px;
      margin: 1px;
 }
- .cardddd {
+ .more-card {
+     height: 580px;
      background: white;
      width: 470px;
      padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-
-}
- .cardddd:first-child {
-     background: white;
-     width: 470px;
-     padding: 20px;
-     height: auto;
      border-radius: 10px;
      margin-bottom: 20px;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-
-.cardddd:last-child {
-    height: 470px;
-}
-#cal {
-    height: auto;
-}
-#eve {
-    height: 580px;
 }
  .button-group button {
      margin-right: 8px;
 }
  .event-list {
-     padding-top: 30px;
+     padding-top: 20px;
 }
  .event-list {
      display: flex;
@@ -777,18 +772,208 @@ margin: 0;
      line-height: 100%;
      letter-spacing: 0%;
 }
-#espeaker {
-  font-family: Inter;
-  font-weight: 400;
-  font-style: Regular;
-  font-size: 10px;
-  line-height: 20px;
-  letter-spacing: 0%;
+ #espeaker {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 10px;
+     line-height: 20px;
+     letter-spacing: 0%;
 }
- @media only screen and (max-width: 767px) {
-     .comments-cards{
-         width: 100%;
-         margin: 0 auto;
+/* Default: hide mobile notification */
+ .notification-mobile {
+     display: none;
+}
+ .dt-paging {
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     flex-wrap: wrap;
+     margin-top: 20px;
+     gap: 5px;
+}
+ .dt-paging-button {
+     border: 1px solid green;
+     background: #ffffff;
+     color: black;
+     margin: 2px;
+     border-radius: 5px;
+     cursor: pointer;
+     font-size: 16px;
+     transition: background 0.3s ease;
+     width: 40px;
+     height: 40px;
+     padding: 0;
+}
+ .dt-paging-button.disabled {
+     background: #ffffff;
+     color: black;
+     border: 1px solid #99816b;
+     cursor: not-allowed;
+     opacity: 0.6;
+}
+ .dt-paging-button.current {
+     background: orange;
+     font-weight: bold;
+     border: none;
+     color: white 
+}
+ @media only screen and (max-width: 1399px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 710px;
+         height: 310px;
+         flex-direction: row;
+         gap: 50px 
+    }
+     .events-cards img {
+         max-width: 200px;
+         width: 450px;
+         height: 250px;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .more-card {
+         width: 110% !important;
+    }
+     #right {
+         margin-left: -10px;
+    }
+     #edate {
+         width: 120px;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     .event-date {
+         width: 120px;
+         display: block;
+    }
+     #ename {
+         font-size: 13px 
+    }
+}
+ @media only screen and (max-width: 1199px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 550px;
+         height: 310px;
+         flex-direction: row;
+         gap: 40px 
+    }
+     .events-cards img {
+         max-width: 150px;
+         width: 400px;
+         height: 200px;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 20px;
+    }
+     .events-cards .text-secondary {
+         font-size: 12px;
+         line-height: 16px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .more-card {
+         width: 120% !important;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 180px;
+    }
+     .day-number {
+         width: 30px;
+    }
+     #right {
+         margin-left: -30px;
+    }
+     #edate {
+         width: 120px;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     .event-date {
+         width: 120px;
+         display: block;
+         text-align: left;
+    }
+     #ename {
+         font-size: 14px 
     }
 }
  @media only screen and (max-width: 991px) {
@@ -809,111 +994,412 @@ margin: 0;
      .navbar .right-header {
          margin-left: 0;
     }
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 700px;
+         height: auto;
+         flex-direction: column;
+         gap: 40px;
+         text-align: center;
+         justify-content: center;
+    }
+     #detail {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+    }
+     .events-cards img {
+         max-width: 300px;
+         width: 550px;
+         height: auto;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 24px;
+    }
+     .events-cards .text-secondary {
+         font-size: 14px;
+         line-height: 20px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .more-card {
+         width: 700px !important;
+    }
+     #events-left {
+         order: 1;
+         width: 155%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: row;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
 }
-/* Default: hide mobile notification */
- .notification-mobile {
-     display: none;
+ @media only screen and (max-width: 767px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 250px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+    .events-title {
+        font-size: 30px;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 500px;
+         height: auto;
+         flex-direction: column;
+         gap: 40px;
+         text-align: center;
+         justify-content: center;
+    }
+     #detail {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+    }
+     .events-cards img {
+         max-width: 550px;
+         width: 300px;
+         height: auto;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 24px;
+    }
+     .events-cards .text-secondary {
+         font-size: 14px;
+         line-height: 20px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .more-card {
+         width: 500px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: row;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
 }
-
-.session-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 350px;
+ @media only screen and (max-width: 575px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+    .events-header {
+        gap: 20px;
+    }
+     .events-title {
+         font-size: 20px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 250px;
+         height: 50px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 300px;
+         height: auto;
+         flex-direction: column;
+         gap: 40px;
+         text-align: center;
+         justify-content: center;
+    }
+     #detail {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+    }
+     .events-cards img {
+         max-width: 400px;
+         width: 200px;
+         height: auto;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 24px;
+    }
+     .events-cards .text-secondary {
+         font-size: 14px;
+         line-height: 20px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .more-card {
+         width: 320px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
 }
-
-.session-card {
-    width: 410px;
-    height: 160px;
-  background: rgba(236, 237, 230, 0.3);
-  border: 1px solid rgba(51, 51, 51, 0.2);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease;
-}
-
-.session-card:hover {
-  transform: translateY(-2px);
-}
-
-.session-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.session-header h3 {
-  font-size: 20px;
-  color: #333;
-  margin: 0;
-}
-
-.status {
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: 20px;
-  padding: 3px 10px;
-}
-
-.status .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  margin-right: 6px;
-}
-
-.status.active {
-  background: #eaf8ef;
-  color: #22c55e;
-}
-
-.status.active .dot {
-  background: #22c55e;
-}
-
-.status.inactive {
-  background: #f0f0f0;
-  color: #777;
-}
-
-.status.inactive .dot {
-  background: #bdbdbd;
-}
-
-.session-body {
-  display: flex;
-  justify-content: space-between;
-  margin: 16px 0;
-}
-
-.info {
-  font-size: 15px;
-  color: #444;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.icon {
-  font-size: 16px;
-}
-
-.session-footer {
-  font-size: 14px;
-  color: #999;
-}
-#footer-heading {
-  text-align: center;
-  margin-bottom: 30px;
-  font-weight: 500;
-  font-family: Inter;
-    font-style: Regular;
-    font-size: 36px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ @media only screen and (max-width: 359px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .events-title {
+         font-size: 20px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 200px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 20px;
+         flex-wrap: wrap;
+         padding-bottom: 50px;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 300px;
+         height: auto;
+         flex-direction: column;
+         gap: 40px;
+         text-align: center;
+         justify-content: center;
+    }
+     #detail {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+    }
+     .events-cards img {
+         max-width: 400px;
+         width: 200px;
+         height: auto;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 24px;
+    }
+     .events-cards .text-secondary {
+         font-size: 14px;
+         line-height: 20px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .more-card {
+         width: 320px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
 }
 </style>

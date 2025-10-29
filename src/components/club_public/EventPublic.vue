@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
                                 Home
                             </a>
                         </li>
@@ -54,20 +54,30 @@
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
                             <a href="#" class="icon profile-mobile" >
-                                <img v-if="User && User.isLoggedIn && User.profile_image_url" :src="User.profile_image_url" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-                                <i v-else class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i>
+                                <div style="cursor: pointer">
+                                    <template v-if="profile_image_url">
+                                        <img
+                                        :src="profile_image_url"
+                                        alt="User profile"
+                                        style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;"
+                                        />
+                                    </template>
+                                    <template v-else>
+                                        <i
+                                        class="fa-regular fa-user-circle"
+                                        :style="{ color: Color.accent_color, fontSize: '44px' }"
+                                        ></i>
+                                    </template>
+                                </div>
+
+                                
                             </a>
-                            <router-link v-if="!User || !User.isLoggedIn" to="/login" custom v-slot="{ navigate }" style="cursor: pointer">
-                                <span class="nav-item" id="login">
-                                    <span @click="navigate">
-                                        Login
-                                    </span>&nbsp;
-                                    <i class="fa-solid fa-chevron-down text-xs text-gray-500 down" @click.stop.prevent="toggleDropdown"></i>
-                                </span>
-                            </router-link>
+                            <span v-if="username" class="notification-desktop">Welcome, {{ username }}</span>
+                            <span v-else class="notification-desktop">Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
+
                             <div class="dropdown-menu" v-show="isDropdownOpen">
                                 <a class="nav-link" href="#" @click.prevent="handleLogout">
-                                    Register
+                                    Log Out
                                 </a>
                             </div>
                         </div>
@@ -128,7 +138,7 @@
                         <h2 class="events-title" :style="{ color: Color.text_color }">Events</h2>
                         <div class="search-bar">
                             <i class="fas fa-search"></i>
-                            <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search events..." aria-controls="example1" />
+                            <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                         </div>
                     </div>
                 </div>
@@ -139,7 +149,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <section>
-                                <div class="container">
+                                <div class="container" id="events-left">
                                     <div class="filter-buttons">
                                         <button v-for="filter in filters" :key="filter" :class="['filter-btn', { active: activeFilter === filter }]" @click="setActiveFilter(filter)">
                                             {{ filter }}
@@ -147,8 +157,8 @@
                                     </div>
                                     <div class="mt-4">
                                         <div v-if="paginatedEvents.length">
-                                            <div v-for="e in paginatedEvents" :key="e.id" class="custom-card p-3">
-                                                <img v-if="e.featured_image_url" :src="e.featured_image_url" :alt="e.name" :style="{width: '550px'}"/>
+                                            <div v-for="e in paginatedEvents" :key="e.id" class="events-cards p-3">
+                                                <img v-if="e.featured_image_url" :src="e.featured_image_url" :alt="e.name"/>
                                                 <div class="flex-grow-1 d-flex flex-column justify-content-between" id="detail">
                                                     <div class="d-flex w-100 justify-content-between align-items-center">
                                                         <h5 id="ename" :style="{color: Color.text_color}">{{ e.name || 'Untitled Event' }}</h5>
@@ -159,13 +169,12 @@
                                                     <p class="galtext" id="edate" :style="{color: Color.accent_color}">
                                                         {{ formatDate(e.event_date) || 'Date Not Available' }}
                                                     </p>
-                                                    <p class="text-secondary"  :style="{color: Color.text_color}">
-                                                        {{ e.description || 'No description provided.' }}
+                                                    <p class="text-secondary"  :style="{color: Color.text_color}" v-html="e.description">
                                                     </p>
                                                     <p id="espeaker" :style="{color: Color.accent_color}">
                                                         {{"Speaker: " + e.speaker}}
                                                     </p>
-                                                    <div class="button-group mt-auto d-flex">
+                                                    <div class="button-groups mt-auto d-flex">
                                                         <router-link :to="{ name: 'EventSinglePublic', params: { id: e.id } }" custom v-slot="{ navigate }">
                                                             <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.primary_color}">View Details</button>
                                                         </router-link>                                                
@@ -176,21 +185,21 @@
 
                                         <div v-else class="text-center text-muted">No events found.</div>
 
-                                        <nav v-if="paginatedEvents.length">
-                                            <ul class="pagination justify-content-center">
-                                                <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                                    <button class="page-link" @click="prevPage">Previous</button>
-                                                </li>
-                                                <li class="page-item disabled">
-                                                    <span class="page-link">
-                                                        Page {{ currentPage }} of {{ totalPages }}
-                                                    </span>
-                                                </li>
-                                                <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                                    <button class="page-link" @click="nextPage">Next</button>
-                                                </li>
-                                            </ul>
-                                        </nav>
+                                        <div class="dt-paging">
+                                            <nav aria-label="pagination">
+                                                <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
+                                                    ‹
+                                                </button>
+
+                                                <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
+                                                    {{ page }}
+                                                </button>
+
+                                                <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
+                                                    ›
+                                                </button>
+                                            </nav>
+                                        </div>
                                     </div>
                                 </div>
                             </section>
@@ -200,14 +209,14 @@
                             <section>
                                 <div class="container" id="right">
 
-                                    <div class="cardddd" style="padding: 0px" id="cal">
+                                    <div class="calendar-card" id="calendar" :style="{border: '1px solid' + Color.primary_color, padding: '0px', height: 'auto'}">
                                         <CalendarEvent />
                                     </div>
 
-                                    <div class="cardddd d-flex flex-column" :style="{ padding: '35px'}" id="eve">
+                                    <div class="more-card d-flex flex-column" :style="{ padding: '30px', height: 'auto'}" id="eve">
                                         <h5 class="head">More Events</h5>
                                         <div class="event-list" v-if="Events.length">
-                                            <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
+                                            <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px; gap: 20px">
                                                 <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" :alt="c.name" @error="c.featured_image_url = null"/>
                                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                                 </div>
@@ -225,22 +234,22 @@
                                         </div>
                                     </div>
 
-                                    <div class="cardddd" :style="{padding: '35px'}">
+                                    <div class="season-card" :style="{padding: '30px'}">
                                         <h5 class="head">Seasons</h5>
                                         <div class="session-container" v-if="sessions.length">
                                             <div v-for="session in sessions" :key="session.id" class="session-card" :class="session.status">
                                                 <div class="session-header">
-                                                    <h3 class="clubhead">{{ formatedDate(session.start_date) }} - {{ formatedDate(session.end_date) }}</h3>
+                                                    <h3 class="clubhead">{{ formatedDate(session.start_date) }}-{{ formatedDate(session.end_date) }}</h3>
                                                     <span class="status" :class="session.status.toLowerCase()">
                                                     <span class="dot"></span> {{ session.status }}</span>
                                                 </div>
 
                                                 <div class="session-body">
                                                     <div class="info">
-                                                        <i class="icon">🏅</i> {{ session.competitions_count }} Competitions
+                                                        <img :src="Competition" alt="point-icon" style="width: 16px; height: 16px" /> {{ session.competitions_count }} Competitions
                                                     </div>
                                                     <div class="info">
-                                                        <i class="icon">📅</i> {{ session.events_count }} Events
+                                                        <img :src="Event" alt="event" style="width: 16px; height: 16px" /> {{ session.events_count }} Events
                                                     </div>
                                                 </div>
 
@@ -379,6 +388,7 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
+import { useUserStore } from '@/stores/club_admin/UserStore';
 import { useRytonEventStore } from '@/stores/club_public/RytonEvent';
 import Loader from "@/components/LoaderAll.vue";
 import CalendarEvent from "@/components/club_public/Calendars/CalendarRytonEvent.vue";
@@ -391,7 +401,9 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useRouter } from "vue-router";
 import apiClient from '@/api/axios'
-
+import Event from "@/assets/icons/navigation/events.svg"
+import Competition from "@/assets/icons/navigation/competition.svg"
+import { storeToRefs } from 'pinia'
 
 const router = useRouter();
 const isNavOpen = ref(false);
@@ -399,13 +411,48 @@ const isDropdownOpen = ref(false);
 const toggleNav = () => (isNavOpen.value = !isNavOpen.value);
 const closeNav = () => (isNavOpen.value = false);
 const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
-const filters = ['All', 'Virtual', 'In-Person', 'In a Studio', 'Walking Out'];
-const activeFilter = ref('Virtual');
+const filters = ['All', 'Music', 'Photography', 'Conference', 'Workshop'];
+const activeFilter = ref('All');
 const search = ref('')
 const eventsList = ref([]);
+const user = useUserStore();
 
+const { username, profile_image_url } = storeToRefs(user)
 const setActiveFilter = (filter) => {
   activeFilter.value = filter;
+};
+
+// Add this computed below `activeFilter`
+const filteredEvents = computed(() => {
+  let list = eventsList.value;
+
+  // Apply event type filter
+  if (activeFilter.value !== 'All') {
+    list = list.filter(event => {
+      // match type name from API response
+      return event.types?.some(t => 
+        t.name.toLowerCase().includes(activeFilter.value.toLowerCase())
+      );
+    });
+  }
+
+  // Apply search filter
+  if (search.value.trim() !== '') {
+    const term = search.value.toLowerCase();
+    list = list.filter(e => 
+      e.name?.toLowerCase().includes(term) ||
+      e.description?.toLowerCase().includes(term) ||
+      e.speaker?.toLowerCase().includes(term)
+    );
+  }
+
+  return list;
+});
+
+
+
+const handleLogout = async () => {
+  await user.logout();
 };
 
 const rytoneventStore = useRytonEventStore();
@@ -497,7 +544,7 @@ onMounted(async () => {
   document.addEventListener("click", (e) => {
     if (!e.target.closest(".admin-dropdown")) isDropdownOpen.value = false;
   });
-
+console.log(username)
   const carouselEl = document.querySelector('#carouselExampleIndicators');
   if (carouselEl && window.bootstrap) {
     new window.bootstrap.Carousel(carouselEl);
@@ -515,153 +562,148 @@ onMounted(async () => {
 
 const paginatedEvents = computed(() => {
   const start = (currentPage.value - 1) * rowsPerPage.value;
-  return eventsList.value.slice(start, start + rowsPerPage.value);
+  const filtered = filteredEvents.value;
+  return filtered.slice(start, start + rowsPerPage.value);
 });
 
-const totalPages = computed(() =>
-  Math.max(Math.ceil(eventsList.value.length / rowsPerPage.value), 1)
+
+const totalPages = computed(() => 
+  Math.max(Math.ceil(filteredEvents.value.length / rowsPerPage.value), 1)
 );
 
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) currentPage.value++;
-};
-const prevPage = () => {
-  if (currentPage.value > 1) currentPage.value--;
-};
+function goToPage(page) {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page
+    }
+}
 
 </script>
 
 <style src="@/assets/css/clubstyle.css"></style>
 <style scoped>
-.hero-overlay {
-    width: 1025px;
+ #overall {
+     padding: 0 25px 60px 75px;
 }
-#overall {
-     padding: 0 25px 50px 80px;
+ #events-left {
+     flex: 3;
 }
-#heads {
-    padding: 60px 70px 48px 90px;
+ #heads {
+     padding: 60px 70px 48px 90px;
 }
-.events-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+ .events-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 1.5rem;
+     flex-wrap: wrap;
 }
-
-.events-title {
-  font-family: Inter;
-font-weight: 500;
-font-style: Medium;
-font-size: 36px;
-line-height: 100%;
-letter-spacing: 0%;
-margin: 0;
+ .events-title {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     margin: 0;
 }
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 6px 10px;
-  width: 470px;
-  height: 60px;
-  transition: border-color 0.2s ease;
+ .search-bar {
+     display: flex;
+     align-items: center;
+     background-color: #fff;
+     border: 1px solid #e5e7eb;
+     border-radius: 8px;
+     padding: 6px 30px;
+     width: 470px;
+     height: 60px;
+     transition: border-color 0.2s ease;
+     gap: 20px 
 }
-
-.search-bar:hover,
-.search-bar:focus-within {
-  border-color: #d1d5db;
+ .search-bar:hover, .search-bar:focus-within {
+     border-color: #d1d5db;
 }
-
-.search-bar i {
-  color: #c0c0c0;
-  font-size: 14px;
-  margin-right: 8px;
+ .search-bar i {
+     color: #c0c0c0;
+     font-size: 20px;
+     margin-right: 8px;
 }
-
-.search-input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  color: #333;
-  flex: 1;
-  background: transparent;
+ .search-input {
+     border: none;
+     outline: none;
+     font-size: 20px;
+     color: #333;
+     flex: 1;
+     background: transparent;
 }
-
-.search-input::placeholder {
-  color: #c0c0c0;
+ .search-input::placeholder {
+     color: #c0c0c0;
 }
-.filter-buttons {
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
-  padding-bottom: 50px;
+ .filter-buttons {
+     display: flex;
+     gap: 40px;
+     flex-wrap: wrap;
+     padding-bottom: 50px;
 }
-
-.filter-btn {
-  padding: 10px 16px;
-  border: 1px solid rgba(127, 164, 131, 1);
-  border-radius: 8px;
-  background-color: transparent;
-  color: rgba(127, 164, 131, 1);
-  width: 165px;
-  height: 40px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  font-family: Inter;
-font-weight: 400;
-font-style: Regular;
-font-size: 16px;
-line-height: 100%;
-letter-spacing: 0%;
+ .filter-btn {
+     padding: 10px 16px;
+     border: 1px solid rgba(127, 164, 131, 1);
+     border-radius: 8px;
+     background-color: transparent;
+     color: rgba(127, 164, 131, 1);
+     width: 165px;
+     height: 40px;
+     cursor: pointer;
+     transition: all 0.25s ease;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.filter-btn:hover {
-  border-color: #6f8c6f;
-  color: #2e2e2e;
+ .filter-btn:hover {
+     border-color: #6f8c6f;
+     color: #2e2e2e;
 }
-
-.filter-btn.active {
-  background-color: #7a9c7a; /* soft green */
-  color: #fff;
-  border-color: #7a9c7a;
+ .filter-btn.active {
+     background-color: #7a9c7a;
+    /* soft green */
+     color: #fff;
+     border-color: #7a9c7a;
 }
-
- .custom-card {
+ .hero-overlay {
+     width: 820px;
+}
+ .events-cards {
      display: flex;
      align-items: center;
      background-color: white;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
      margin-bottom: 35px;
      border-radius: 10px;
      width: 975px;
      height: 310px;
      flex-direction: row;
-     gap: 50px
+     gap: 50px 
 }
- .custom-card img {
+ .events-cards img {
      max-width: 300px;
-     width: 300px;
+     width: 550px;
      height: 250px;
      border-radius: 8px;
      opacity: 1;
      margin-left: 20px;
      margin-right: 0;
 }
- .custom-card #ename {
+ .events-cards #ename {
      font-family: Inter;
      font-weight: 500;
      font-style: Medium;
      font-size: 24px;
      line-height: 100%;
      letter-spacing: 0%;
-     margin-bottom: 10px;
+     margin-top: -15px;
 }
- .custom-card #edate {
+ .events-cards #edate {
      font-family: Inter;
      font-weight: 400;
      font-style: Regular;
@@ -670,7 +712,7 @@ letter-spacing: 0%;
      letter-spacing: 0%;
      text-align: left;
 }
- .custom-card .text-secondary {
+ .events-cards .text-secondary {
      font-family: Inter;
      font-weight: 400;
      font-style: Regular;
@@ -679,11 +721,11 @@ letter-spacing: 0%;
      letter-spacing: 0%;
      margin-bottom: 25px;
 }
-#detail {
-    margin-right: 20px;
-    width: 99%;
+ #detail {
+     margin-right: 20px;
+     width: 99%;
 }
- .custom-card #espeaker {
+ .events-cards #espeaker {
      font-family: Inter;
      font-weight: 400;
      font-style: Regular;
@@ -694,8 +736,9 @@ letter-spacing: 0%;
 }
  #right {
      margin-left: 20px;
+     flex: 1;
 }
- .button-group #view {
+ .button-groups #view {
      max-width: 130px;
      height: 40px;
      opacity: 1;
@@ -707,6 +750,7 @@ letter-spacing: 0%;
      font-size: 16px;
      line-height: 100%;
      letter-spacing: 0%;
+     margin-top: 15px;
 }
  .site-footer {
      padding-top: 25px;
@@ -808,17 +852,7 @@ letter-spacing: 0%;
      padding-bottom: 10px;
      margin: 1px;
 }
- .cardddd {
-     background: white;
-     width: 470px;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-
-}
- .cardddd:first-child {
+ .calendar-card {
      background: white;
      width: 470px;
      padding: 20px;
@@ -826,22 +860,31 @@ letter-spacing: 0%;
      border-radius: 10px;
      margin-bottom: 20px;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-top: -5px;
 }
-
-.cardddd:last-child {
-    height: 470px;
+ .season-card {
+     height: 470px;
+     background: white;
+     width: 470px;
+     padding: 20px;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
-#cal {
-    height: auto;
-}
-#eve {
-    height: 580px;
+ .more-card {
+     height: 580px;
+     background: white;
+     width: 470px;
+     padding: 20px;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
  .button-group button {
      margin-right: 8px;
 }
  .event-list {
-     padding-top: 30px;
+     padding-top: 20px;
 }
  .event-list {
      display: flex;
@@ -876,18 +919,354 @@ letter-spacing: 0%;
      line-height: 100%;
      letter-spacing: 0%;
 }
-#espeaker {
-  font-family: Inter;
-  font-weight: 400;
-  font-style: Regular;
-  font-size: 10px;
-  line-height: 20px;
-  letter-spacing: 0%;
+ #espeaker {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 10px;
+     line-height: 20px;
+     letter-spacing: 0%;
 }
- @media only screen and (max-width: 767px) {
-     .comments-cards{
+/* Default: hide mobile notification */
+ .notification-mobile {
+     display: none;
+}
+ .session-container {
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+     padding: 25px 0px;
+}
+ .session-card {
+     width: 410px;
+     height: 160px;
+     background: rgba(236, 237, 230, 0.3);
+     border: 1px solid rgba(51, 51, 51, 0.2);
+     border-radius: 12px;
+     padding: 15px 10px;
+     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+     transition: transform 0.2s ease;
+}
+ .session-card:hover {
+     transform: translateY(-2px);
+}
+ .session-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 12px;
+}
+ .session-header h3 {
+     font-size: 20px;
+     color: #333;
+     margin: 0;
+}
+ .status {
+     display: flex;
+     align-items: center;
+     border-radius: 20px;
+     padding: 3px 10px;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 11.85px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .status .dot {
+     width: 6px;
+     height: 6px;
+     border-radius: 50%;
+     margin-right: 6px;
+}
+ .status.active {
+     background: #eaf8ef;
+     color: #22c55e;
+}
+ .status.active .dot {
+     background: #22c55e;
+}
+ .status.inactive {
+     background: #f0f0f0;
+     color: #777;
+}
+ .status.inactive .dot {
+     background: #bdbdbd;
+}
+ .session-body {
+     display: flex;
+     justify-content: space-between;
+     margin: 40px 40px 20px 20px;
+}
+ .info {
+     font-size: 15px;
+     color: #444;
+     display: flex;
+     align-items: center;
+     gap: 6px;
+}
+ .icon {
+     font-size: 16px;
+}
+ .session-footer {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .dt-paging {
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     flex-wrap: wrap;
+     margin-top: 20px;
+     gap: 5px;
+}
+ .dt-paging-button {
+     border: 1px solid green;
+     background: #ffffff;
+     color: black;
+     margin: 2px;
+     border-radius: 5px;
+     cursor: pointer;
+     font-size: 16px;
+     transition: background 0.3s ease;
+     width: 40px;
+     height: 40px;
+     padding: 0;
+}
+ .dt-paging-button.disabled {
+     background: #ffffff;
+     color: black;
+     border: 1px solid #99816b;
+     cursor: not-allowed;
+     opacity: 0.6;
+}
+ .dt-paging-button.current {
+     background: orange;
+     font-weight: bold;
+     border: none;
+     color: white 
+}
+ @media only screen and (max-width: 1399px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 25px;
+         flex-wrap: wrap;
+         padding-bottom: 50px;
+    }
+     .filter-btn {
+         padding: 10px 16px;
+         border: 1px solid rgba(127, 164, 131, 1);
+         border-radius: 8px;
+         background-color: transparent;
+         color: rgba(127, 164, 131, 1);
+         width: 124px;
+         height: 40px;
+         cursor: pointer;
+         transition: all 0.25s ease;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 16px;
+         line-height: 100%;
+         letter-spacing: 0%;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 710px;
+         height: 310px;
+         flex-direction: row;
+         gap: 50px 
+    }
+     .events-cards img {
+         max-width: 200px;
+         width: 450px;
+         height: 250px;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 110% !important;
+    }
+     #right {
+         margin-left: -10px;
+    }
+     #edate {
+         width: 120px;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     .event-date {
+         width: 120px;
+         display: block;
+    }
+     #ename {
+         font-size: 13px 
+    }
+     .session-card {
          width: 100%;
-         margin: 0 auto;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+ @media only screen and (max-width: 1199px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 20px;
+         flex-wrap: wrap;
+         padding-bottom: 50px;
+    }
+     .filter-btn {
+         padding: 8px;
+         border: 1px solid rgba(127, 164, 131, 1);
+         border-radius: 8px;
+         background-color: transparent;
+         color: rgba(127, 164, 131, 1);
+         width: 100px;
+         height: 40px;
+         cursor: pointer;
+         transition: all 0.25s ease;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 14px;
+         line-height: 100%;
+         letter-spacing: 0%;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 550px;
+         height: 310px;
+         flex-direction: row;
+         gap: 40px 
+    }
+     .events-cards img {
+         max-width: 150px;
+         width: 400px;
+         height: 200px;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 20px;
+    }
+     .events-cards .text-secondary {
+         font-size: 12px;
+         line-height: 16px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 120% !important;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 180px;
+    }
+     .day-number {
+         width: 30px;
+    }
+     #right {
+         margin-left: -30px;
+    }
+     #edate {
+         width: 120px;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     .event-date {
+         width: 120px;
+         display: block;
+         text-align: left;
+    }
+     #ename {
+         font-size: 14px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 20px 20px 0;
+    }
+     .info {
+         font-size: 13px;
     }
 }
  @media only screen and (max-width: 991px) {
@@ -908,102 +1287,530 @@ letter-spacing: 0%;
      .navbar .right-header {
          margin-left: 0;
     }
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 20px;
+         flex-wrap: nowrap;
+         padding-bottom: 50px;
+    }
+     .filter-btn {
+         padding: 8px;
+         border: 1px solid rgba(127, 164, 131, 1);
+         border-radius: 8px;
+         background-color: transparent;
+         color: rgba(127, 164, 131, 1);
+         width: 200px;
+         height: 40px;
+         cursor: pointer;
+         transition: all 0.25s ease;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 14px;
+         line-height: 100%;
+         letter-spacing: 0%;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 700px;
+         height: auto;
+         flex-direction: column;
+         gap: 40px;
+         text-align: center;
+         justify-content: center;
+    }
+     #detail {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+    }
+     .events-cards img {
+         max-width: 300px;
+         width: 550px;
+         height: auto;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 24px;
+    }
+     .events-cards .text-secondary {
+         font-size: 14px;
+         line-height: 20px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 700px !important;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: row;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 40px 20px 20px;
+    }
+     .info {
+         font-size: 15px;
+    }
 }
-/* Default: hide mobile notification */
- .notification-mobile {
-     display: none;
+ @media only screen and (max-width: 767px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 300px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 20px;
+         flex-wrap: wrap;
+         padding-bottom: 50px;
+    }
+     .filter-btn {
+         padding: 5px;
+         border: 1px solid rgba(127, 164, 131, 1);
+         border-radius: 8px;
+         background-color: transparent;
+         color: rgba(127, 164, 131, 1);
+         width: 100px;
+         height: 40px;
+         cursor: pointer;
+         transition: all 0.25s ease;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 14px;
+         line-height: 100%;
+         letter-spacing: 0%;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 500px;
+         height: auto;
+         flex-direction: column;
+         gap: 40px;
+         text-align: center;
+         justify-content: center;
+    }
+     #detail {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+    }
+     .events-cards img {
+         max-width: 550px;
+         width: 300px;
+         height: auto;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 24px;
+    }
+     .events-cards .text-secondary {
+         font-size: 14px;
+         line-height: 20px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 500px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: row;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 40px 20px 20px;
+    }
+     .info {
+         font-size: 15px;
+    }
+}
+ @media only screen and (max-width: 575px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .events-title {
+         font-size: 20px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 200px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 20px;
+         flex-wrap: wrap;
+         padding-bottom: 50px;
+    }
+     .filter-btn {
+         padding: 5px;
+         border: 1px solid rgba(127, 164, 131, 1);
+         border-radius: 8px;
+         background-color: transparent;
+         color: rgba(127, 164, 131, 1);
+         width: 100px;
+         height: 40px;
+         cursor: pointer;
+         transition: all 0.25s ease;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 14px;
+         line-height: 100%;
+         letter-spacing: 0%;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 300px;
+         height: auto;
+         flex-direction: column;
+         gap: 40px;
+         text-align: center;
+         justify-content: center;
+    }
+     #detail {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+    }
+     .events-cards img {
+         max-width: 400px;
+         width: 200px;
+         height: auto;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 24px;
+    }
+     .events-cards .text-secondary {
+         font-size: 14px;
+         line-height: 20px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 320px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 20px 20px 0;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+ @media only screen and (max-width: 359px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .events-title {
+         font-size: 20px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 200px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 20px;
+         flex-wrap: wrap;
+         padding-bottom: 50px;
+    }
+     .filter-btn {
+         padding: 5px;
+         border: 1px solid rgba(127, 164, 131, 1);
+         border-radius: 8px;
+         background-color: transparent;
+         color: rgba(127, 164, 131, 1);
+         width: 100px;
+         height: 40px;
+         cursor: pointer;
+         transition: all 0.25s ease;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 14px;
+         line-height: 100%;
+         letter-spacing: 0%;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 300px;
+         height: auto;
+         flex-direction: column;
+         gap: 40px;
+         text-align: center;
+         justify-content: center;
+    }
+     #detail {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+    }
+     .events-cards img {
+         max-width: 400px;
+         width: 200px;
+         height: auto;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 24px;
+    }
+     .events-cards .text-secondary {
+         font-size: 14px;
+         line-height: 20px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 320px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 20px 20px 0;
+    }
+     .info {
+         font-size: 13px;
+    }
 }
 
-.session-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 350px;
-}
-
-.session-card {
-    width: 410px;
-    height: 160px;
-  background: rgba(236, 237, 230, 0.3);
-  border: 1px solid rgba(51, 51, 51, 0.2);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease;
-}
-
-.session-card:hover {
-  transform: translateY(-2px);
-}
-
-.session-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.session-header h3 {
-  font-size: 20px;
-  color: #333;
-  margin: 0;
-}
-
-.status {
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: 20px;
-  padding: 3px 10px;
-}
-
-.status .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  margin-right: 6px;
-}
-
-.status.active {
-  background: #eaf8ef;
-  color: #22c55e;
-}
-
-.status.active .dot {
-  background: #22c55e;
-}
-
-.status.inactive {
-  background: #f0f0f0;
-  color: #777;
-}
-
-.status.inactive .dot {
-  background: #bdbdbd;
-}
-
-.session-body {
-  display: flex;
-  justify-content: space-between;
-  margin: 16px 0;
-}
-
-.info {
-  font-size: 15px;
-  color: #444;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.icon {
-  font-size: 16px;
-}
-
-.session-footer {
-  font-size: 14px;
-  color: #999;
-}
 
 </style>

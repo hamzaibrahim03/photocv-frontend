@@ -1,14 +1,9 @@
 import apiClient from '@/api/axios'
 
 export const getAllRytonComps = () => {
-  return apiClient.post('/club/public/competitions'); 
-}
-
-export const getRytonCompById = (id) => {
-  return apiClient.post(`/club/public/competitions/${id}`); 
+  return apiClient.get('/club/public/competitions'); 
 }
 
 export default {
-  getAllRytonComps,
-  getRytonCompById,
+  getAllRytonComps
 }

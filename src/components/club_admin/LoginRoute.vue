@@ -82,7 +82,7 @@ export default {
         userStore.login({
           username: user.username || "",
           first_name: user.first_name || "",
-          profile_image: user.profile_image || "",
+          profile_image_url: user.profile_image_url || "",
           tag_line: user.tag_line || "",
           token: token,
           role: user.roles[0].name,

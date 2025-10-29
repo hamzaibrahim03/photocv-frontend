@@ -9,8 +9,8 @@
         ><i class="bi bi-bell mx-3"></i
       ></a>
       <div class="admin-dropdown">
-        <img :src="dashboardData?.data?.user_details?.profile_image" alt="profile image" style="cursor: pointer" />
-        <span v-if="dashboardData?.data?.user_details?.username">Welcome, {{ dashboardData?.data?.user_details?.username }}</span>
+        <img :src="profile_image_url" alt="profile image" style="cursor: pointer" />
+        <span v-if="username">Welcome, {{ username }}</span>
         <span v-else>Welcome, Guest</span>
 
         <div class="dropdown-menu">
@@ -24,19 +24,13 @@
 
 <script setup>
 import {
-    useDashboardStore
-} from '@/stores/club_admin/DashboardStore';
-import {
     useUserStore
 } from '@/stores/club_admin/UserStore';
 import defineProps from 'vue'
-import {
-    computed
-} from 'vue';
+import { storeToRefs } from 'pinia'
 
 const user = useUserStore();
-const dashboardStore = useDashboardStore();
-const dashboardData = computed(() => dashboardStore.dashboardData);
+const { username, profile_image_url } = storeToRefs(user)
 
 defineProps({
   title: {

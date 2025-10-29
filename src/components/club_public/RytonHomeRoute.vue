@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" :class="{ active: $route.path === '/ryton' }" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" :class="{ active: $route.path === '/ryton' }" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
                                 Home
                             </a>
                         </li>
@@ -56,9 +56,9 @@
                         <div class="admin-dropdown position-relative">
                             <a href="#" class="icon profile-mobile" >
                                 <div style="cursor: pointer">
-                                    <template v-if="dashboardData?.data?.user_details?.profile_image">
+                                    <template v-if="profile_image_url">
                                         <img
-                                        :src="dashboardData.data.user_details.profile_image"
+                                        :src="profile_image_url"
                                         alt="User profile"
                                         style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;"
                                         />
@@ -73,8 +73,8 @@
 
                                 
                             </a>
-                            <span v-if="dashboardData?.data?.user_details?.username">Welcome, {{ dashboardData?.data?.user_details?.username }}</span>
-                            <span v-else>Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down" @click.stop.prevent="toggleDropdown"></i>
+                            <span v-if="username" class="notification-desktop">Welcome, {{ username }}</span>
+                            <span v-else class="notification-desktop">Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
 
                             <div class="dropdown-menu" v-show="isDropdownOpen">
                                 <a class="nav-link" href="#" @click.prevent="handleLogout">
@@ -688,7 +688,6 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useUserStore } from '@/stores/club_admin/UserStore';
 import { useRouter } from "vue-router";
-import { useDashboardStore } from '@/stores/club_admin/DashboardStore';
 
 const columns = ref(5); 
 
@@ -706,11 +705,12 @@ const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
 };
 const user = useUserStore();
-const dashboardStore = useDashboardStore();
-const dashboardData = computed(() => dashboardStore.dashboardData);
+const { username, profile_image_url } = storeToRefs(user)
 
+const handleLogout = async () => {
+  await user.logout();
+};
 
-/* global $ */
 dayjs.extend(relativeTime);
 
 const isLoading = ref(true);
@@ -771,9 +771,6 @@ const flatComments = computed(() => {
 });
 
 
-const handleLogout = async () => {
-  await user.logout();
-};
 
 const picture = computed(() => {
     const competitions = homeStore.homeData?.data?.latestResults?.original?.data || [];
@@ -799,7 +796,7 @@ const formatDate = (dateString) => {
   if (isNaN(date)) return "";
 
   const day = date.getDate();
-  const month = date.toLocaleString("en-GB", { month: "short" });
+  const month = date.toLocaleString("en-GB", { month: "long" });
   const year = date.getFullYear();
 
   const suffix =
@@ -900,81 +897,6 @@ onMounted(async () => {
     } finally {
         isLoading.value = false; 
     }
-
-    const option = {
-        dayNames: ["su", "mo", "tu", "we", "th", "fr", "sa"],
-        render: function (date, items) {
-            if (!items || items.length === 0) {
-                return `
-        <td class="day current-month">
-          <a type="button" class="btn-gc-cell">
-            <span class="day-number">${date.getDate()}</span>
-          </a>
-        </td>
-      `;
-            }
-
-            if (items.length === 1) {
-                const ev = items[0];
-                return `
-        <td class="day current-month event">
-          <a type="button" class="btn-gc-cell">
-            <span class="day-number" style="color:${ev.dateColor}">${date.getDate()}</span>
-          </a>
-          <div class="gc-event ${ev.className}">${ev.eventName}</div>
-        </td>
-      `;
-            }
-
-            let badges = items
-                .map(
-                    ev =>
-                    `<div class="gc-event style="margin-bottom:0px; display:flex" ${ev.className}">${ev.eventName}</div>`
-                )
-                .join("");
-
-            return `
-      <td class="day current-month event">
-        <a type="button" class="btn-gc-cell">
-          <span class="day-number" style="color:#CC445E">${date.getDate()}</span>
-        </a>
-        <div style="margin:0;display:flex;overflow-x:auto;width:70px;gap:5px;">
-          ${badges}
-        </div>
-      </td>
-    `;
-        }
-    };
-
-    const events = computed(() =>
-        Events.value.map((event, index) => ({
-            date: new Date(event.event_date),
-            eventName: event.name?.length > 7 ?
-                event.name.substring(0, 7) + "..." :
-                event.name || `Event #${index + 1}`,
-            type: "event",
-            className: "badge bg-info",
-            dateColor: "#99816B"
-        }))
-    );
-
-    const comps = computed(() =>
-        Comps.value.map((comp, index) => ({
-            date: new Date(comp.start_date),
-            eventName: comp.name?.length > 7 ?
-                comp.name.substring(0, 7) + "..." :
-                comp.name || `Comps #${index + 1}`,
-            type: "competition",
-            className: "badge bg-success",
-            dateColor: "#CC445E"
-        }))
-    );
-
-    const allEvents = computed(() => [...events.value, ...comps.value]);
-
-    let calendar = $("#calendar").calendarGC(option);
-
-    calendar.setEvents(allEvents.value);
 
 });
 
