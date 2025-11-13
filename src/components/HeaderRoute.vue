@@ -10,7 +10,7 @@
       ></a>
       <div class="admin-dropdown">
         <img :src="profile_image_url" alt="profile image" style="cursor: pointer" />
-        <span v-if="username">Welcome, {{ username }}</span>
+        <span v-if="username"> {{ username }}</span>
         <span v-else>Welcome, Guest</span>
 
         <div class="dropdown-menu">

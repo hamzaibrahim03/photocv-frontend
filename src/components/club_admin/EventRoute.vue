@@ -17,7 +17,7 @@
                                 </div>
                             </div>
                             <div class="dt-search mx-auto">
-                                <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search events..." aria-controls="example1" />
+                                <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                             </div>
                             <div class="quick-filter text-end">
                                 <strong>Quick Filter</strong>
@@ -36,14 +36,14 @@
                         </div>
                         <div class="card-section">
                             <div class="stat-card">
-                                <small class="ca-details">Events</small>
+                                <small class="ca-details">Total Events</small>
                                 <h3 class="number">{{ MemberCount }}</h3>
                             </div>
                             <div class="event-card">
                                 <small class="ca-details">Next Event</small>
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <h3 class="number">{{EventDay}}</h3>
+                                        <h3 class="number">{{ String(EventDay).padStart(2, '0') }}</h3>
                                     </div>
                                     <div class="days col-md-7">
                                         <span>days to go</span>
@@ -62,6 +62,7 @@
                     <section>
                         <div class="container">
                             <div class="mt-4">
+                                <button class="btn" id="edit" style="max-width: 158px; width: 158px; height: 40px;" @click="navigate">Export Events&nbsp;<i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i></button>
                                 <div v-if="filteredEvents.length">
                                     <div v-for="event in filteredEvents" :key="event.id" class="custom-card mb-3 p-3">
                                         <div class="d-flex gap-3" style="flex: 1;">
@@ -85,15 +86,21 @@
                                                     </p>
                                                 </div>
 
-                                        <!-- Button Group at Bottom -->
-                                                <div class="button-group mt-3 d-flex">
-                                                    <router-link :to="{ name: 'eventsingle', params: { id: event.id } }" custom v-slot="{ navigate }">
-                                                        <button class="btn me-2" id="view" @click="navigate">View</button>
-                                                    </router-link>
+                                                <div class="d-flex justify-content-between align-items-center mt-3 w-100">
+                                                    <div class="button-group d-flex align-items-center gap-2">
+                                                        <router-link :to="{ name: 'eventsingle', params: { id: event.id } }" custom v-slot="{ navigate }">
+                                                            <button class="btn" id="view" @click="navigate">View</button>
+                                                        </router-link>
 
-                                                    <router-link :to="{ name: 'events_add', params: { id: event.id } }" custom v-slot="{ navigate }">
-                                                        <button class="btn me-2" id="edit" @click="navigate">Edit</button>
-                                                    </router-link>
+                                                        <router-link :to="{ name: 'events_add', params: { id: event.id } }" custom v-slot="{ navigate }">
+                                                            <button class="btn" id="edit" @click="navigate">Edit</button>
+                                                        </router-link>
+                                                    </div>
+
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <img :src="Book" alt="icon" style="width:20px; height:20px" />
+                                                        <img :src="Share" alt="icon" style="width:20px; height:20px" />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,21 +110,21 @@
 
                                 <div v-else class="text-center text-muted">No events found.</div>
 
-                                <nav v-if="filteredEvents.length">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                                            <button class="page-link" @click="prevPage">Previous</button>
-                                        </li>
-                                        <li class="page-item disabled">
-                                            <span class="page-link">
-                                                Page {{ currentPage }} of {{ totalPages }}
-                                            </span>
-                                        </li>
-                                        <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                                            <button class="page-link" @click="nextPage">Next</button>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                <div class="dt-paging">
+                                    <nav aria-label="pagination">
+                                        <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
+                                            ‹
+                                        </button>
+
+                                        <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
+                                            {{ page }}
+                                        </button>
+
+                                        <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
+                                            ›
+                                        </button>
+                                    </nav>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -125,12 +132,12 @@
                 <div class="col-md-4">
                     <section>
                         <div class="container" id="right">
-                            <div class="cardddd" style="padding: 0px">
+                            <div class="cardddd" style="padding: 0px; height: auto">
                                 <CalendarDashboard />
                             </div>
                             <div id="news">
                                 <RecentComments />
-                                <MoreEvents />
+                                <MoreEvents style="height: auto"/>
                             </div>
                         </div>
                     </section>
@@ -163,6 +170,8 @@ import Pro from "@/assets/icons/event_list/pro.svg"
 import Cal from "@/assets/icons/event_list/cal.svg"
 import Cam from "@/assets/icons/event_list/cam.svg"
 import Mess from "@/assets/icons/event_list/mess.svg"
+import Share from "@/assets/icons/event_list/share.svg"
+import Book from "@/assets/icons/event_list/bookmark.svg"
 import HeaderRoute from '@/components/HeaderRoute.vue'
 import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
 import NavigationRoute from '@/components/NavigationRoute.vue'
@@ -249,18 +258,10 @@ const totalPages = computed(() => {
     return Math.max(Math.ceil(events.value.length / rowsPerPage), 1)
 })
 
-const nextPage = () => {
-    if (currentPage.value < totalPages.value) currentPage.value++
-}
-const prevPage = () => {
-    if (currentPage.value > 1) currentPage.value--
-}
-
 const formatDate = (date) => {
     const d = new Date(date)
-    return isNaN(d) ? '' : d.toLocaleDateString(undefined, {
-        weekday: 'long',
-        month: 'short',
+    return isNaN(d) ? '' : d.toLocaleDateString('en-US', {
+        month: 'long',
         day: 'numeric',
         year: 'numeric'
     })
@@ -273,6 +274,9 @@ const formatDate = (date) => {
   padding: 0 15px;
   margin: 0 auto;
 }
+.content {
+    padding: 0 30px;
+}
 .dashboard-card {
   gap: 15px;
   border-radius: 10px;
@@ -280,6 +284,7 @@ const formatDate = (date) => {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding: 20px 0px 40px;
 }
 
 .profile-card {
@@ -287,11 +292,11 @@ const formatDate = (date) => {
   align-items: center;
   justify-content: space-between;
   background: white;
-  padding: 15px 25px;
-  border-radius: 12px;
-  width: 68%;
+  padding: 30px;
+  border-radius: 10px;
+  width: 975px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  height: 158px;
+  height: 148px;
 }
 
 .profile-left {
@@ -309,8 +314,9 @@ const formatDate = (date) => {
 .greeting {
   color: #99816b;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 100%;
+  font-style: Regular;
   font-family: Inter;
 }
 
@@ -319,6 +325,7 @@ const formatDate = (date) => {
   font-size: 30px;
   line-height: 100%;
   color: #4c4036;
+  font-style: Medium;
   font-family: Inter;
 }
 
@@ -349,9 +356,10 @@ const formatDate = (date) => {
 .role {
   color: #cc445e;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 100%;
   font-family: Inter;
+  font-style: Regular;
 }
 
 .profile-icons {
@@ -391,22 +399,22 @@ const formatDate = (date) => {
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  width: 50%;
+  width: 219px;
   font-family: Inter;
   font-size: 1.2rem;
-  height: 158px;
+  height: 148px;
 }
 
 .event-card {
   background: #755840;
   color: white;
   padding: 20px;
-  height: 158px;
+  height: 148px;
   border-radius: 8px;
   text-align: center;
   font-family: Inter;
   font-size: 1.2rem;
-  width: 50%;
+  width: 219px;
 }
 
 .number {
@@ -434,12 +442,12 @@ const formatDate = (date) => {
 }
 .card-section {
   display: flex;
-  gap: 15px;
-  width: 30%;
+  gap: 35px;
+  width: 31.5%;
 }
 .cardddd:first-child {
   background: white;
-  width: 95%;
+  width: 100%;
   padding: 20px;
   height: 390px;
   border-radius: 10px;
@@ -448,7 +456,7 @@ const formatDate = (date) => {
 }
 .cardddd {
   background: white;
-  width: 95%;
+  width: 100%;
   padding: 20px;
   height: 390px;
   border-radius: 10px;
@@ -461,14 +469,43 @@ const formatDate = (date) => {
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 15px;
-  padding: 20px;
+  padding: 30px;
   border-radius: 10px;
-  width: 103.5%;
+  width: 975px;
+  height: 310px;
   margin-right: auto;
   flex-direction: row;
+  margin-top: 30px;
+}
+.custom-card img {
+    max-width: 300px;
+  height: 250px;
+  width: 300px;
+  border-radius: 7px;
+}
+#view {
+  width: 120px;
+  max-width: 120px;
+  height: 40px;
+  border-radius: 7px;
+  background-color: #99816b;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  font-family: Inter;
+  color: white;
 }
 
-#right {
-    margin-left: 20px;
+#edit {
+  width: 120px;
+  max-width: 120px;
+  height: 40px;
+  border-radius: 7px;
+  background-color: #4c4036;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  color: white;
+  font-family: Inter;
 }
 </style>

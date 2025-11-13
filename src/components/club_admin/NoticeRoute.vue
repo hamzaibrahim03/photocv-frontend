@@ -117,12 +117,12 @@
                 <div class="col-md-4">
                     <section>
                         <div class="container" id="right">
-                            <div class="cardddd" style="padding: 0">
+                            <div class="cardddd" style="padding: 0; height: auto">
                                 <CalendarDashboard />
                             </div>
                             <div id="news">
                                 <RecentComments />
-                                <MoreNotices />
+                                <MoreNotices style=" height: auto" />
                             </div>
                         </div>
                     </section>
@@ -272,12 +272,16 @@ const formatDate = (date) => {
   padding: 0 15px;
   margin: 0 auto;
 }
+.content {
+    padding: 0 30px;
+}
 .dashboard-card {
   gap: 15px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 20px 0px;
   width: 100%;
 }
 
@@ -288,9 +292,9 @@ const formatDate = (date) => {
   background: white;
   padding: 15px 25px;
   border-radius: 12px;
-  width: 68%;
+  width: 975px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  height: 158px;
+  height: 148px;
 }
 
 .profile-left {
@@ -390,22 +394,22 @@ const formatDate = (date) => {
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  width: 50%;
+  width: 219px;
   font-family: Inter;
   font-size: 1.2rem;
-  height: 158px;
+  height: 148px;
 }
 
 .event-card {
   background: #755840;
   color: white;
   padding: 20px;
-  height: 158px;
+  height: 148px;
   border-radius: 8px;
   text-align: center;
   font-family: Inter;
   font-size: 1.2rem;
-  width: 50%;
+  width: 219px;
 }
 
 .number {
@@ -433,8 +437,8 @@ const formatDate = (date) => {
 }
 .card-section {
   display: flex;
-  gap: 15px;
-  width: 30%;
+  gap: 35px;
+  width: 31.5%;
 }
 .cardddd:first-child {
   background: white;

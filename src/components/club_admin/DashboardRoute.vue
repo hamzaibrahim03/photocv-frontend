@@ -43,14 +43,14 @@
                     <div class="card-section">
                         <div class="stat-card">
                             <small class="ca-details">Members</small>
-                            <h3 class="number">{{ MemberCount }}</h3>
+                            <h3 class="number">{{ dashboardStore?.dashboardData?.data?.total_members_count }}</h3>
                         </div>
 
                         <div class="event-card">
                             <small class="ca-details">Next Event</small>
                             <div class="row">
                                 <div class="col-md-5">
-                                    <h3 class="number">{{EventDay}}</h3>
+                                    <h3 class="number">{{ String(dashboardStore?.dashboardData?.data?.upcoming_event?.remaining_days).padStart(2, 0) }}</h3>
                                 </div>
                                 <div class="days col-md-7">
                                     <span>days to go</span>
@@ -203,20 +203,18 @@
             <section>
                 <div class="container">
                     <div class="upcoming-sections">
-                        <div class="cardddd d-flex flex-column" style="padding: 35px">
-                            <div class="d-flex justify-content-between mb-3">
+                        <div class="cardddd d-flex flex-column" style="padding: 0">
+                            <div class="d-flex justify-content-between mb-3" style="padding-left: 35px; padding-top: 35px; padding-right: 35px">
                                 <h5 class="head">Recent Results</h5>
                                 <button class="btn btn-sm" id="view">View All</button>
                             </div>
 
-                            <div class="row" style="padding-top: 30px">
-                                <div class="col-6" style="margin-bottom: 20px" v-for="item in picture.slice(0, 6)" :key="item.id">
-                                    <div class="event-items text-center" style="gap: 20px">
-                                        <img v-if="item.image" class="img-fluid event-img" :src="item.image" :alt="item.gallery_name" @error="item.image = null"/>
-                                        <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
-                                        </div>
-                                        <div class="memtext" id="memname" :style="{ color: '#333333' }">
-                                            <span>{{ item.gallery_name }}</span>
+                            <div class="pic">
+                                <div v-for="(item, index) in picture.slice(0, 6) || []" :key="item.id || index" class="pic-item" :class="getPositionClass(index, picture.length)">
+                                    <img v-if="item.image" class="img-fluid" :src="item.image" :alt="item.gallery_name" @error="item.image = null" style="object-fit: cover; object-position: top;"/>
+                                    <div class="pic-info" :class="getPositionClass(index, picture.length)" :style="{ backgroundColor: hexToRgba('#7FA483', 0.7) }">
+                                        <div :style="{ color: 'white' }">
+                                            {{ item.gallery_name }}
                                         </div>
                                     </div>
                                 </div>
@@ -341,7 +339,11 @@
                     </div>
                 </div>
             </section>
-            <footer class="site-footer">Copyright &copy; 2024 photo.cv</footer>
+            <footer class="site-footer">
+                <div class="footer-content">
+                    <p class="memtext" id="fcopy">Copyright &copy; 2025 – {{dashboardStore?.dashboardData?.data?.user_details?.username}}</p>
+                </div>
+            </footer>
         </div>
         
     </div>
@@ -363,8 +365,7 @@ const dashboardStore = useDashboardStore();
 const dashboardData = computed(() => dashboardStore.dashboardData);
 const columns = ref(5); 
 const isLoading = ref(true);
-const MemberCount = dashboardStore?.dashboardData?.data?.total_members_count
-const EventDay = dashboardStore?.dashboardData?.data?.upcoming_event?.remaining_days
+
 
 const hour = new Date().getHours();
 const greetingMessage = computed(() => {
@@ -564,12 +565,16 @@ function getPositionClass(index, total) {
   padding: 0 15px;
   margin: 0 auto;
 }
+.content {
+    padding: 0 30px;
+}
 .dashboard-card {
   gap: 15px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 20px 0px;
   width: 100%;
 }
 
@@ -580,9 +585,9 @@ function getPositionClass(index, total) {
   background: white;
   padding: 15px 25px;
   border-radius: 12px;
-  width: 68%;
+  width: 975px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  height: 158px;
+  height: 148px;
 }
 
 .profile-left {
@@ -682,22 +687,22 @@ function getPositionClass(index, total) {
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  width: 50%;
+  width: 219px;
   font-family: Inter;
   font-size: 1.2rem;
-  height: 158px;
+  height: 148px;
 }
 
 .event-card {
   background: #755840;
   color: white;
   padding: 20px;
-  height: 158px;
+  height: 148px;
   border-radius: 8px;
   text-align: center;
   font-family: Inter;
   font-size: 1.2rem;
-  width: 50%;
+  width: 219px;
 }
 
 .number {
@@ -725,8 +730,8 @@ function getPositionClass(index, total) {
 }
 .card-section {
   display: flex;
-  gap: 15px;
-  width: 30%;
+  gap: 35px;
+  width: 31.5%;
 }
 
 .upcoming-sections {
@@ -744,7 +749,7 @@ function getPositionClass(index, total) {
   background: white;
   width: 32%;
   padding: 20px;
-  height: 390px;
+  height: 410px;
   border-radius: 10px;
 }
 
@@ -752,7 +757,7 @@ function getPositionClass(index, total) {
   background: white;
   width: 30%;
   padding: 20px;
-  height: 390px;
+  height: 410px;
   border-radius: 10px;
 }
 
@@ -899,21 +904,54 @@ function getPositionClass(index, total) {
   justify-content: center;
   height: 32px
 }
+.pic {
+    display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 99.8%;
+  padding: 0
+}
+
+.pic-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.pic-item img {
+    max-width: 100%;
+    width: 191px;
+    height: 157px;
+}
+
+.pic-info {
+    background: #4C403699;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+    padding: 5px;
+    font-size: 12px;
+    font-family: Inter;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .site-footer {
-  padding: 15px 0;
-  text-align: center;
-  font-size: 14px;
-  color: #99816b;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  position: relative;
-  font-family: Inter;
-  font-weight: 400;
-  font-style: Regular;
-  line-height: 100%;
-  letter-spacing: 0%;
+     padding-top: 25px;
+     padding-bottom: 10px;
+     text-align: center;
+     font-size: 14px;
+     color: #555;
+     border-top: 1px solid #ddd;
+     margin-top: 40px;
+}
+ .site-footer a {
+     color: #007bff;
+     text-decoration: none;
+}
+ .site-footer a:hover {
+     text-decoration: underline;
 }
 
 .ultrahead {

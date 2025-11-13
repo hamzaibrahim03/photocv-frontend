@@ -120,7 +120,9 @@
                                             </p>
                                         </div>
                                         <div class="button-group mt-auto d-flex event-button">
-                                            <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            <router-link :to="{ name: 'EventSinglePublic', params: { id: Events[0].id } }" custom v-slot="{ navigate }">
+                                                <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            </router-link>
                                         </div>
                                     </div>
                                 </div>
@@ -138,7 +140,7 @@
                         <nav class="breadcrumb">
                             <router-link to="/rytonevent" class="events-title breadcrumb-item" :style="{color: Color.accent_color}">Events</router-link>
                             <span class="events-title breadcrumb-separator" :style="{color: Color.accent_color}">></span>
-                            <span class="events-title breadcrumb-item active">{{  sinevent.name || 'Loading...' }}</span>
+                            <span class="events-title breadcrumb-item active">{{  sinevent.name }}</span>
                         </nav>
                         <div class="search-bar">
                             <i class="fas fa-search"></i>
@@ -162,14 +164,13 @@
                                             {{ formatDate( sinevent.event_date) }}
                                         </p>
 
+                                        <p class="text-secondary" :style="{ color: Color.text_color }" style="margin-bottom: 25px" v-html="sinevent.description"></p>
+                                        <p class="text-secondary" :style="{ color: Color.text_color }" style="margin-bottom: 25px" v-html="sinevent.description"></p>
                                         <p class="text-secondary" :style="{ color: Color.text_color }" v-html="sinevent.description"></p>
-                                        <p class="text-secondary" :style="{ color: Color.text_color }" v-html="sinevent.description"></p>
-                                        <p class="text-secondary" :style="{ color: Color.text_color }" v-html="sinevent.description">
-                                        </p>
 
                                         <div class="divider4"></div>
 
-                                        <div class="row">
+                                        <div class="row" id="eventdetails">
                                             <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{ color: Color.accent_color }">
                                                     Event Duration
@@ -184,7 +185,7 @@
 
                                         <div class="divider3"></div>
 
-                                        <div class="row">
+                                        <div class="row" id="eventdetails">
                                             <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{ color: Color.accent_color }">
                                                     Event Speaker
@@ -199,7 +200,7 @@
 
                                         <div class="divider3"></div>
 
-                                        <div class="row">
+                                        <div class="row" id="eventdetails">
                                             <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{ color: Color.accent_color }">
                                                     Event Speaker Club
@@ -214,7 +215,7 @@
 
                                         <div class="divider3"></div>
 
-                                        <div class="row">
+                                        <div class="row" id="eventdetails">
                                             <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{ color: Color.accent_color }">
                                                     Event Speaker Qualifications
@@ -229,7 +230,7 @@
 
                                         <div class="divider3"></div>
 
-                                        <div class="row">
+                                        <div class="row" id="eventdetails">
                                             <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{ color: Color.accent_color }">
                                                     Event Status
@@ -245,7 +246,7 @@
                                         <div class="divider3"></div>
 
                                         <template v-if=" sinevent.status !== 'completed'">
-                                            <div class="row">
+                                            <div class="row" id="eventdetails">
                                                 <div class="col-md-5">
                                                     <h5 class="clubhead" :style="{ color: Color.accent_color }">
                                                         Gear Required
@@ -262,7 +263,7 @@
                                         </template>
 
                                         
-                                        <div class="row">
+                                        <div class="row" id="eventdetails">
                                             <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">
                                                     Tags / Keywords
@@ -277,7 +278,7 @@
                                         
                                         <div class="divider3"></div>
                                         
-                                        <div class="row">
+                                        <div class="row" id="eventdetails">
                                             <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">
                                                     Link to related page
@@ -293,10 +294,10 @@
                                         <div class="divider3"></div>
 
                                         <template v-if=" sinevent.status !== 'completed'">
-                                            <div class="row">
+                                            <div class="row" id="eventdetails">
                                                 <div class="col-md-5">
                                                     <h5 class="clubhead" :style="{ color: Color.accent_color }">
-                                                        RSVP Detail
+                                                        RSVP Details
                                                     </h5>
                                                 </div>
                                                 <div class="col-md-7">
@@ -306,14 +307,15 @@
                                                 </div>
                                             </div>
                                         </template>
+                                            
+
 
                                         <template v-if=" sinevent.status === 'completed'">
                                             <div class="divider5"></div>
-
                                             <div style="height: auto; border: none" :style="{backgroundColor: Color.background_color}">
                                                 <div class="d-flex justify-content-between align-items-end mb-3" id="cl">
                                                     <div style="align-items: flex-end">
-                                                        <h5 class="head" :style="{color: Color.text_color, marginBottom: '15px'}">Event Gallery</h5>
+                                                        <h5 class="head" :style="{color: Color.text_color, marginBottom: '15px'}" style="margin-top: 0px;">Event Gallery</h5>
                                                     </div>
                                                 </div>
 
@@ -356,6 +358,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div v-else class="text-center text-muted py-4">
+                                            No events found.
                                         </div>
                                     </div>
 
@@ -624,106 +629,119 @@ onMounted(async () => {
 #overall {
      padding: 0 0px 60px 48px;
 }
-#heads {
-    padding: 70px 68px 38px 80px;
+ #heads {
+     padding: 70px 68px 38px 80px;
 }
-.events-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+ #eventdetails {
+     margin-left: -20px 
 }
-.events-title {
-  font-family: Inter;
-font-weight: 500;
-font-style: Medium;
-font-size: 36px;
-line-height: 100%;
-letter-spacing: 0%;
-margin: 0;
+ .events-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 1.5rem;
+     flex-wrap: wrap;
 }
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 6px 10px;
-  width: 470px;
-  height: 60px;
-  transition: border-color 0.2s ease;
+ .events-title {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     margin: 0;
 }
-.search-bar:hover,
-.search-bar:focus-within {
-  border-color: #d1d5db;
+ .search-bar {
+     display: flex;
+     align-items: center;
+     background-color: #fff;
+     border: 1px solid #e5e7eb;
+     border-radius: 8px;
+     padding: 6px 10px;
+     width: 470px;
+     height: 60px;
+     transition: border-color 0.2s ease;
 }
-.search-bar i {
-  color: #c0c0c0;
-  font-size: 14px;
-  margin-right: 8px;
+ .search-bar:hover, .search-bar:focus-within {
+     border-color: #d1d5db;
 }
-.search-input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  color: #333;
-  flex: 1;
-  background: transparent;
+ .search-bar i {
+     color: #c0c0c0;
+     font-size: 14px;
+     margin-right: 8px;
 }
-.search-input::placeholder {
-  color: #c0c0c0;
+ .search-input {
+     border: none;
+     outline: none;
+     font-size: 14px;
+     color: #333;
+     flex: 1;
+     background: transparent;
 }
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #6b7280;
+ .search-input::placeholder {
+     color: #c0c0c0;
 }
-.breadcrumb-item {
-  text-decoration: none;
-  color: #6b7280;
+ .breadcrumb {
+     display: flex;
+     align-items: center;
+     gap: 8px;
+     font-size: 14px;
+     color: #6b7280;
 }
-.breadcrumb-item.active {
-  color: #111827;
-  font-weight: 600;
+ .breadcrumb-item {
+     text-decoration: none;
+     color: #6b7280;
 }
-.breadcrumb-separator {
-  color: #9ca3af;
+ .breadcrumb-item.active {
+     color: #111827;
+     font-weight: 600;
 }
-.card .head {
-    font-family: Inter;
-font-weight: 500;
-font-style: Medium;
-font-size: 28px;
-line-height: 100%;
-letter-spacing: 0%;
-margin-top: 50px;
+ .breadcrumb-separator {
+     color: #9ca3af;
 }
-.card .text-secondary {
-    font-family: Inter;
-font-weight: 400;
-font-style: Regular;
-font-size: 20px;
-line-height: 24px;
-letter-spacing: 0%;
+ .card .head {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 28px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     margin-top: 50px;
 }
-.resultpics {
-  margin-top: -15px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  width: 100%;
+ .card #edate {
+     margin-bottom: 50px;
+     margin-top: 5px;
 }
-.resultpics-items {
-  position: relative;
-  overflow: hidden;
+ .card .text-secondary {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 20px;
+     line-height: 24px;
+     letter-spacing: 0%;
+     margin-left: -10px;
+     margin-right: 10px;
+     width: 1100px;
 }
-.resultpics-items img {
-  width: 100%;
-  height: 275px;
-  object-fit: cover;
-  object-position: top;
+ .resultpics {
+     margin-top: 50px;
+     display: grid;
+     grid-template-columns: repeat(4, 1fr);
+     width: 100%;
+     margin-bottom: -107px;
+}
+ .resultpics-items {
+     position: relative;
+     overflow: hidden;
+}
+ .resultpics-items img {
+     width: 100%;
+     height: 275px;
+     object-fit: cover;
+     object-position: top;
+}
+ #joincontainer {
+     margin-top: 330px;
 }
  .site-footer {
      padding-top: 25px;
@@ -741,7 +759,7 @@ letter-spacing: 0%;
  .site-footer a:hover {
      text-decoration: underline;
 }
-.event-img, .fallback-box {
+ .event-img, .fallback-box {
      width: 100%;
      max-width: 50px;
      height: 50px;
@@ -762,15 +780,15 @@ letter-spacing: 0%;
      padding-bottom: 10px;
      margin: 1px;
 }
-#footer-heading {
-  text-align: center;
-  margin-bottom: 30px;
-  font-weight: 500;
-  font-family: Inter;
-    font-style: Regular;
-    font-size: 36px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ #footer-heading {
+     text-align: center;
+     margin-bottom: 30px;
+     font-weight: 500;
+     font-family: Inter;
+     font-style: Regular;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
  #events-left {
      flex: 3;
@@ -1032,6 +1050,9 @@ letter-spacing: 0%;
      border: none;
      color: white 
 }
+ #right {
+     margin-left: 20px;
+}
  @media only screen and (max-width: 1399px) {
      #overall {
          padding: 0 25px 60px 35px;
@@ -1051,22 +1072,25 @@ letter-spacing: 0%;
          transition: border-color 0.2s ease;
          gap: 20px 
     }
-    .resultpics {
-  margin-top: -15px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  width: 100%;
-}
-.resultpics-items {
-  position: relative;
-  overflow: hidden;
-}
-.resultpics-items img {
-  width: 100%;
-  height: 275px;
-  object-fit: cover;
-  object-position: top;
-}
+     .resultpics {
+         margin-top: -15px;
+         display: grid;
+         grid-template-columns: repeat(3, 1fr);
+         width: 100%;
+    }
+     .divider4, .divider5 {
+         width: 100% 
+    }
+     .resultpics-items {
+         position: relative;
+         overflow: hidden;
+    }
+     .resultpics-items img {
+         width: 100%;
+         height: 275px;
+         object-fit: cover;
+         object-position: top;
+    }
      .calendar-card, .season-card, .more-card {
          width: 110% !important;
     }
@@ -1074,7 +1098,7 @@ letter-spacing: 0%;
          margin-left: -10px;
     }
      #edate {
-         width: 120px;
+         width: 130px;
          font-family: Inter;
          font-weight: 400;
          font-style: Regular;
@@ -1084,7 +1108,7 @@ letter-spacing: 0%;
          text-align: left;
     }
      .event-date {
-         width: 120px;
+         width: 130px;
          display: block;
     }
      #ename {
@@ -1116,22 +1140,22 @@ letter-spacing: 0%;
          transition: border-color 0.2s ease;
          gap: 20px 
     }
-    .resultpics {
-  margin-top: -15px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  width: 100%;
-}
-.resultpics-items {
-  position: relative;
-  overflow: hidden;
-}
-.resultpics-items img {
-  width: 100%;
-  height: 275px;
-  object-fit: cover;
-  object-position: top;
-}
+     .resultpics {
+         margin-top: -15px;
+         display: grid;
+         grid-template-columns: repeat(2, 1fr);
+         width: 100%;
+    }
+     .resultpics-items {
+         position: relative;
+         overflow: hidden;
+    }
+     .resultpics-items img {
+         width: 100%;
+         height: 275px;
+         object-fit: cover;
+         object-position: top;
+    }
      .calendar-card, .season-card, .more-card {
          width: 120% !important;
     }
@@ -1149,7 +1173,7 @@ letter-spacing: 0%;
          margin-left: -30px;
     }
      #edate {
-         width: 120px;
+         width: 130px;
          font-family: Inter;
          font-weight: 400;
          font-style: Regular;
@@ -1159,7 +1183,7 @@ letter-spacing: 0%;
          text-align: left;
     }
      .event-date {
-         width: 120px;
+         width: 130px;
          display: block;
          text-align: left;
     }
@@ -1201,8 +1225,15 @@ letter-spacing: 0%;
          display: flex;
          flex-direction: column;
     }
+     .card .row {
+         display: flex;
+         flex-direction: row;
+    }
      #heads {
          padding: 50px 25px 50px 50px;
+    }
+     .events-title {
+         font-size: 32px;
     }
      .search-bar {
          display: flex;
@@ -1211,10 +1242,27 @@ letter-spacing: 0%;
          border: 1px solid #e5e7eb;
          border-radius: 8px;
          padding: 6px 30px;
-         width: 400px;
-         height: 60px;
+         width: 300px;
+         height: 50px;
          transition: border-color 0.2s ease;
          gap: 20px 
+    }
+     .card img {
+         width: 670px;
+    }
+     .card .text-secondary {
+         width: 680px;
+    }
+     .divider4, .divider5 {
+         width: 150% 
+    }
+     .resultpics {
+         grid-template-columns: repeat(3, 1fr) !important;
+         width: 150%;
+    }
+     .resultpics-items img {
+         width: 100% !important;
+         max-width: 100% !important;
     }
      .calendar-card, .season-card, .more-card {
          width: 700px !important;
@@ -1300,6 +1348,16 @@ letter-spacing: 0%;
      .event-info {
          width: 100%;
     }
+     .card img, .card .text-secondary {
+         width: 500px;
+    }
+     .divider4, .divider5 {
+         width: 100%;
+    }
+     .resultpics {
+         grid-template-columns: repeat(2, 1fr) !important;
+         width: 100%;
+    }
      #edate {
          font-family: Inter;
          font-weight: 400;
@@ -1367,6 +1425,15 @@ letter-spacing: 0%;
     }
      .event-info {
          width: 100%;
+    }
+     .card img, .card .text-secondary {
+         width: 300px;
+    }
+     .divider4, .divider5 {
+         width: 100%;
+    }
+     .resultpics {
+         grid-template-columns: repeat(1, 1fr) !important;
     }
      #edate {
          font-family: Inter;
@@ -1458,5 +1525,4 @@ letter-spacing: 0%;
          font-size: 13px;
     }
 }
-
 </style>

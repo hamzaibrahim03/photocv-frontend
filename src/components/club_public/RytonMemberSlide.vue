@@ -21,7 +21,7 @@
       :wrap-around="true"
       :transition="800"
       :model-value="startIndex"
-      @slide-start="onSlideChange"
+      @slide-end="onSlideChange"
       class="gallery-carousel"
     >
       <Slide
@@ -122,8 +122,12 @@ const nextSlide = () => carousel.value.next();
 
 // Track current slide for center highlight
 const onSlideChange = ({ currentSlide }) => {
-  currentIndex.value = currentSlide;
+  const total = galleryImages.value.length;
+  const visibleCount = 3; // same as :items-to-show="3"
+  const centerOffset = Math.floor(visibleCount / 2);
+  currentIndex.value = (currentSlide + centerOffset) % total;
 };
+
 </script>
 
 <style scoped>

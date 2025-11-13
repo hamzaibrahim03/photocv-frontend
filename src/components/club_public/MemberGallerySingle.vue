@@ -631,4 +631,23 @@ text-align: right;
   position: relative;
   overflow: hidden;
 }
+ @media only screen and (max-width: 991px) {
+     .right-header .profile-mobile, .right-header .divider, .notification-desktop, .down {
+         display: none !important;
+    }
+     .notification-mobile {
+         display: inline-flex !important;
+         margin-right: 10px;
+    }
+     #login {
+         padding: 0px 15px 20px 45px;
+         display: flex;
+         font-size: 18px;
+         font-family: Inter;
+         font-weight: 400;
+    }
+     .navbar .right-header {
+         margin-left: 0;
+    }
+ }
 </style>

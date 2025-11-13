@@ -145,8 +145,8 @@
                                         <img :src="group[0].image" :alt="group[0].title" @click="openSlide(gIndex)"/>
                                         <div class="overlay d-flex justify-content-between align-items-center" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.65) }">
                                             <div class="d-flex align-items-center gap-3">
-                                                <img v-if="group[0].uploaded_by_profile_image" class="event-img" :src="group[0].uploaded_by_profile_image" alt="Uploader" @error="group[0].uploaded_by_profile_image = null" />
-                                                <div v-else class="fallback-box d-flex justify-content-center align-items-center"></div>
+                                                <img v-if="group[0].uploaded_by_profile_image" class="event-img" style="border-radius: 50%" :src="group[0].uploaded_by_profile_image" alt="Uploader" @error="group[0].uploaded_by_profile_image = null" />
+                                                <div v-else class="fallback-box d-flex justify-content-center align-items-center" style="border-radius: 50%"><i class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i></div>
 
                                                 <div class="d-flex flex-column">
                                                     <h4 class="title" :style="{ color: Color.background_color }">{{ group[0].title }}</h4>
@@ -173,8 +173,8 @@
                                             <img :src="img.image" :alt="img.title" @click="openSlide(index)"/>
                                             <div class="overlay d-flex justify-content-between align-items-center" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.65) }">
                                                 <div class="d-flex align-items-center gap-3">
-                                                    <img v-if="img.uploaded_by_profile_image" class="event-img" :src="img.uploaded_by_profile_image" alt="Uploader" @error="img.uploaded_by_profile_image = null" />
-                                                    <div v-else class="fallback-box d-flex justify-content-center align-items-center"></div>
+                                                    <img v-if="img.uploaded_by_profile_image" class="event-img" style="border-radius: 50%" :src="img.uploaded_by_profile_image" alt="Uploader" @error="img.uploaded_by_profile_image = null" />
+                                                    <div v-else class="fallback-box d-flex justify-content-center align-items-center" style="border-radius: 50%"><i class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i></div>
 
                                                     <div class="d-flex flex-column">
                                                         <h4 class="title" :style="{ color: Color.background_color }">{{ img.title }}</h4>
@@ -203,8 +203,8 @@
                                         <img :src="img.image" :alt="img.title" @click="openSlide(index)"/>
                                         <div class="overlay d-flex justify-content-between align-items-center" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.65) }">
                                             <div class="d-flex align-items-center gap-3">
-                                                <img v-if="img.uploaded_by_profile_image" class="event-img" :src="img.uploaded_by_profile_image" alt="Uploader" @error="img.uploaded_by_profile_image = null" />
-                                                <div v-else class="fallback-box d-flex justify-content-center align-items-center"></div>
+                                                <img v-if="img.uploaded_by_profile_image" class="event-img" style="border-radius: 50%" :src="img.uploaded_by_profile_image" alt="Uploader" @error="img.uploaded_by_profile_image = null" />
+                                                <div v-else class="fallback-box d-flex justify-content-center align-items-center" style="border-radius: 50%"><i class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i></div>
 
                                                 <div class="d-flex flex-column">
                                                     <h4 class="title" :style="{ color: Color.background_color }">{{ img.title }}</h4>
@@ -637,4 +637,23 @@ width: 816px;
   position: relative;
   overflow: hidden;
 }
+ @media only screen and (max-width: 991px) {
+     .right-header .profile-mobile, .right-header .divider, .notification-desktop, .down {
+         display: none !important;
+    }
+     .notification-mobile {
+         display: inline-flex !important;
+         margin-right: 10px;
+    }
+     #login {
+         padding: 0px 15px 20px 45px;
+         display: flex;
+         font-size: 18px;
+         font-family: Inter;
+         font-weight: 400;
+    }
+     .navbar .right-header {
+         margin-left: 0;
+    }
+ }
 </style>

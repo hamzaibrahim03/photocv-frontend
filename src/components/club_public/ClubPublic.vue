@@ -118,7 +118,7 @@
             <section>
                 <div class="container" id="heads">
                     <div class="events-header">
-                        <h2 class="events-title" :style="{ color: Color.text_color }">{{about.title}}</h2>
+                        <h2 class="heading" :style="{ color: Color.text_color }">{{about.title}}</h2>
                         <div class="search-bar">
                             <i class="fas fa-search"></i>
                             <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search" aria-controls="example1" />
@@ -131,19 +131,19 @@
                 <div class="container" id="overall">
                     <span class="head" v-html="about.description"></span>
 
-                    <div class="divider1"></div>
+                    <div class="divider4"></div>
                     <section>
                         <div class="container">
-                            <h5 class="events-title" :style="{ color: Color.text_color }">Club Officials</h5>
+                            <h5 class="heading" :style="{ color: Color.text_color }">Club Officials</h5>
 
                             <div class="row">
                                 <div class="col-md-4">
-                                    <h2 class="head">Executive Committee</h2>
+                                    <h2 class="main">Executive Committee</h2>
                                     <div v-for="person in getByRole('President')" :key="person.email" class="official" >
-                                        <h1 :style="{ color: Color.accent_color }">
+                                        <h1 class="list" :style="{ color: Color.accent_color }">
                                             President
                                         </h1>
-                                        <h1 :style="{ color: Color.text_color }">
+                                        <h1 class="list" :style="{ color: Color.text_color }">
                                             {{ person.first_name }} {{ person.last_name }}
                                         </h1>
                                         <small class="email" :style="{ color: Color.text_color }">
@@ -152,10 +152,10 @@
                                     </div>
 
                                     <div v-for="person in getByRole('super_admin')" :key="person.email" class="official" >
-                                        <h1 :style="{color: Color.accent_color}">
+                                        <h1 class="list" :style="{color: Color.accent_color}">
                                             Chairman
                                         </h1>
-                                        <h1 :style="{ color: Color.text_color }">
+                                        <h1 class="list" :style="{ color: Color.text_color }">
                                             {{ person.first_name }} {{ person.last_name }}
                                         </h1>
                                         <small class="email" :style="{ color: Color.text_color }">
@@ -164,10 +164,10 @@
                                     </div>
 
                                     <div v-for="person in getByRole('club-admin')" :key="person.email" class="official" >
-                                        <h1 :style="{color: Color.accent_color}">
+                                        <h1 class="list" :style="{color: Color.accent_color}">
                                             Vice-Chair
                                         </h1>
-                                        <h1 :style="{ color: Color.text_color }">
+                                        <h1 class="list" :style="{ color: Color.text_color }">
                                             {{ person.first_name }} {{ person.last_name }}
                                         </h1>
                                         <small class="email" :style="{ color: Color.text_color }">
@@ -176,10 +176,10 @@
                                     </div>
 
                                     <div v-for="person in getByRole('Publicity & Events Officer')" :key="person.email" class="official" >
-                                        <h1 :style="{color: Color.accent_color}">
+                                        <h1 class="list" :style="{color: Color.accent_color}">
                                             Secretary
                                         </h1>
-                                        <h1 :style="{ color: Color.text_color }">
+                                        <h1 class="list" :style="{ color: Color.text_color }">
                                             {{ person.first_name }} {{ person.last_name }}
                                         </h1>
                                         <small class="email" :style="{ color: Color.text_color }">
@@ -188,10 +188,10 @@
                                     </div>
 
                                     <div v-for="person in getByRole('General Members')" :key="person.email" class="official" >
-                                        <h1 :style="{color: Color.accent_color}">
+                                        <h1 class="list" :style="{color: Color.accent_color}">
                                             Programme Secretary
                                         </h1>
-                                        <h1 :style="{ color: Color.text_color }">
+                                        <h1 class="list" :style="{ color: Color.text_color }">
                                             {{ person.first_name }} {{ person.last_name }}
                                         </h1>
                                         <small class="email" :style="{ color: Color.text_color }">
@@ -200,10 +200,10 @@
                                     </div>
 
                                     <div v-for="person in getByRole('General Members')" :key="person.email" class="official" >
-                                        <h1 :style="{color: Color.accent_color}">
+                                        <h1 class="list" :style="{color: Color.accent_color}">
                                             Treasurer
                                         </h1>
-                                        <h1 :style="{ color: Color.text_color }">
+                                        <h1 class="list" :style="{ color: Color.text_color }">
                                             {{ person.first_name }} {{ person.last_name }}
                                         </h1>
                                         <small class="email" :style="{ color: Color.text_color }">
@@ -212,12 +212,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <h2 class="head">Competition Secretaries</h2>
+                                    <h2 class="main">Competition Secretaries</h2>
                                     <div v-for="person in getByRole('General Members')" :key="person.email" class="official" >
-                                        <h1 :style="{color: Color.accent_color}">
+                                        <h1 class="list" :style="{color: Color.accent_color}">
                                             Prints
                                         </h1>
-                                        <h1 :style="{ color: Color.text_color }">
+                                        <h1 class="list" :style="{ color: Color.text_color }">
                                             {{ person.first_name }} {{ person.last_name }}
                                         </h1>
                                         <small class="email" :style="{ color: Color.text_color }">
@@ -226,10 +226,10 @@
                                     </div>
 
                                     <div v-for="person in getByRole('General Members')" :key="person.email" class="official" >
-                                        <h1 :style="{color: Color.accent_color}">
+                                        <h1 class="list" :style="{color: Color.accent_color}">
                                             PDI
                                         </h1>
-                                        <h1 :style="{ color: Color.text_color }">
+                                        <h1 class="list" :style="{ color: Color.text_color }">
                                             {{ person.first_name }} {{ person.last_name }}
                                         </h1>
                                         <small class="email" :style="{ color: Color.text_color }">
@@ -238,10 +238,10 @@
                                     </div>
 
                                     <div v-for="person in getByRole('General Members')" :key="person.email" class="official" >
-                                        <h1 :style="{color: Color.accent_color}">
+                                        <h1 class="list" :style="{color: Color.accent_color}">
                                             External
                                         </h1>
-                                        <h1 :style="{ color: Color.text_color }">
+                                        <h1 class="list" :style="{ color: Color.text_color }">
                                             {{ person.first_name }} {{ person.last_name }}
                                         </h1>
                                         <small class="email" :style="{ color: Color.text_color }">
@@ -250,12 +250,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <h2 class="head">Technical & Committee</h2>
+                                    <h2 class="main">Technical & Committee</h2>
                                     <div v-for="person in getByRole('General Members')" :key="person.email" class="official" >
-                                        <h1 :style="{color: Color.accent_color}">
+                                        <h1 class="list" :style="{color: Color.accent_color}">
                                             Webmaster
                                         </h1>
-                                        <h1 :style="{ color: Color.text_color }">
+                                        <h1 class="list" :style="{ color: Color.text_color }">
                                             {{ person.first_name }} {{ person.last_name }}
                                         </h1>
                                         <small class="email" :style="{ color: Color.text_color }">
@@ -264,10 +264,10 @@
                                     </div>
 
                                     <div v-for="person in getByRole('Internal Comp Secretary')" :key="person.email" class="official" >
-                                        <h1 :style="{color: Color.accent_color}">
+                                        <h1 class="list" :style="{color: Color.accent_color}">
                                             IT Co-ordinator
                                         </h1>
-                                        <h1 :style="{ color: Color.text_color }">
+                                        <h1 class="list" :style="{ color: Color.text_color }">
                                             {{ person.first_name }} {{ person.last_name }}
                                         </h1>
                                         <small class="email" :style="{ color: Color.text_color }">
@@ -276,10 +276,10 @@
                                     </div>
 
                                     <div v-for="person in getByRole('Social Secretary')" :key="person.email" class="official" >
-                                        <h1 :style="{color: Color.accent_color}">
+                                        <h1 class="list" :style="{color: Color.accent_color}">
                                             Social Secretary
                                         </h1>
-                                        <h1 :style="{ color: Color.text_color }">
+                                        <h1 class="list" :style="{ color: Color.text_color }">
                                             {{ person.first_name }} {{ person.last_name }}
                                         </h1>
                                         <small class="email" :style="{ color: Color.text_color }">
@@ -288,11 +288,11 @@
                                     </div>
 
                                     <div>
-                                        <h1 :style="{color: Color.accent_color}">
+                                        <h1 class="list" :style="{color: Color.accent_color}">
                                             Committee Members
                                         </h1>
-                                        <div v-for="person in getByRole('member')" :key="person.email" class="official">
-                                            <h1 :style="{ color: Color.text_color }">
+                                        <div v-for="person in getByRole('member').slice(0, 3)" :key="person.email" class="official">
+                                            <h1 class="list" :style="{ color: Color.text_color }">
                                                 {{ person.first_name }} {{ person.last_name }}
                                             </h1>
                                             <small class="email" :style="{ color: Color.text_color }">
@@ -488,14 +488,32 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-h1 {
+.heading {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+#cluboff {
+    margin-bottom: 70px;
+}
+.list {
     font-family: Inter;
 font-weight: 400;
 font-style: Regular;
 font-size: 20px;
 line-height: 36px;
 letter-spacing: 0%;
-
+}
+.main{
+    font-family: Inter;
+font-weight: 500;
+font-style: Medium;
+font-size: 28px;
+line-height: 100%;
+letter-spacing: 0%;
 }
 .email {
     font-family: Inter;
@@ -506,18 +524,29 @@ line-height: 20px;
 letter-spacing: 0%
 }
 #overall {
-     padding: 0 90px 50px 70px;
+     padding: 80px 70px 50px 100px;
 }
 #heads {
-    padding: 50px 70px 20px 70px;
+    padding: 60px 70px 20px 90px;
+}
+.divider4 {
+  width: 1100px;
+  height: 1px;
+  background-color: rgba(217, 217, 217, 1);
+  margin-top: 75px;
+  margin-bottom: 70px;
+  border-bottom: 1px solid rgba(217, 217, 217, 1);
 }
 .head {
     font-family: Inter;
-    font-weight: 500;
-    font-style: Medium;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
+font-weight: 500;
+font-style: Medium;
+font-size: 24px;
+line-height: 100%;
+letter-spacing: 0%;
+width: 100%;
+max-width: 1150px;
+
 }
 .events-header {
   display: flex;
@@ -603,4 +632,23 @@ margin: 0;
     line-height: 100%;
     letter-spacing: 0%;
 }
+ @media only screen and (max-width: 991px) {
+     .right-header .profile-mobile, .right-header .divider, .notification-desktop, .down {
+         display: none !important;
+    }
+     .notification-mobile {
+         display: inline-flex !important;
+         margin-right: 10px;
+    }
+     #login {
+         padding: 0px 15px 20px 45px;
+         display: flex;
+         font-size: 18px;
+         font-family: Inter;
+         font-weight: 400;
+    }
+     .navbar .right-header {
+         margin-left: 0;
+    }
+ }
 </style>

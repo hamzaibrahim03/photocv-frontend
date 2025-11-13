@@ -143,7 +143,7 @@
                         <nav class="breadcrumb">
                             <router-link to="/rytoncomp" class="events-title breadcrumb-item" :style="{color: Color.accent_color}">Competitions</router-link>
                             <span class="events-title breadcrumb-separator" :style="{color: Color.accent_color}">></span>
-                            <span class="events-title breadcrumb-item active">{{ sincomp.name || 'Loading...' }}</span>
+                            <span class="events-title breadcrumb-item active">{{ sincomp.name }}</span>
                         </nav>
                         <div class="search-bar">
                             <i class="fas fa-search"></i>
@@ -159,81 +159,87 @@
                     <div class="row">
                         <div class="col-md-8">
                             <section>
-                                <div class="container">
+                                <div class="container" id="events-left">
                                     <div class="card">
                                         <img :src="sincomp.featured_image" alt="Meeting" style="max-width: 850px; height: 350px; border-radius: 8px"/>
-                                        <h5 class="head" :style="{color: Color.text_color}">{{sincomp.name}}</h5>
+                                        <h5 class="head" :style="{color: Color.text_color, marginBottom: '0px'}">{{sincomp.name}}</h5>
                                         <p id="edate" :style="{color: Color.accent_color}">{{formatDate(sincomp.start_date)}}</p>
+                                        <p class="text-secondary" style="margin-bottom: 25px" :style="{color: Color.text_color}">
+                                            {{sincomp.description}}
+                                        </p>
+                                        <p class="text-secondary" style="margin-bottom: 25px" :style="{color: Color.text_color}">
+                                            {{sincomp.description}}
+                                        </p>
                                         <p class="text-secondary" :style="{color: Color.text_color}">
                                             {{sincomp.description}}
                                         </p>
                                             
-                                        <div class="divider2"></div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                        <div class="divider4"></div>
+                                        <div class="row" id="eventdetails">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">Competition Type</h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{color: Color.text_color}">{{sincomp.print_vs_digital}}</h5>
                                             </div>
                                         </div>
 
                                         <div class="divider3"></div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                        <div class="row" id="eventdetails">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">Competition Judge</h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{color: Color.text_color}">{{sincomp.judging_panel}}</h5>
                                             </div>
                                         </div>
             
                                         <div class="divider3"></div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                        <div class="row" id="eventdetails">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">Theme</h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{color: Color.text_color}">{{sincomp.theme_id}}</h5>
                                             </div>
                                         </div>
         
                                         <div class="divider3"></div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                        <div class="row" id="eventdetails">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">Colour/Monochrome</h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{color: Color.text_color}">{{sincomp.color_vs_mono}}</h5>
                                             </div>
                                         </div>
         
                                         <div class="divider3"></div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                        <div class="row" id="eventdetails">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">Status</h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{color: Color.text_color}">{{sincomp.status}}</h5>
                                             </div>
                                         </div>
         
                                         <div class="divider3"></div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                        <div class="row" id="eventdetails">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">Gear Required</h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{color: Color.text_color}">Yes</h5>
                                             </div>
                                         </div>
         
                                         <div class="divider3"></div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                        <div class="row" id="eventdetails">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">Max Number of Entries per Participants</h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{color: Color.text_color}">
                                                     {{sincomp.max_entries_print + " Images"}}
                                                 </h5>
@@ -241,21 +247,21 @@
                                         </div>
                                             
                                         <div class="divider3"></div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                        <div class="row" id="eventdetails">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">Deadline for Submission</h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{color: Color.text_color}">{{ formatDate(sincomp.submission_deadline )}}</h5>
                                             </div>
                                         </div>
                 
                                         <div class="divider3"></div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                        <div class="row" id="eventdetails">
+                                            <div class="col-md-5">
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">Result Announcement Date</h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <h5 class="clubhead" :style="{color: Color.text_color}">
                                                     {{ formatDate(sincomp.result_announcement_date) }}
                                                 </h5>
@@ -264,23 +270,26 @@
 
                                         <div class="divider3"></div>
                                         <template v-if="sincomp.status === 'completed'">
-                                            <div class="divider1"></div>
-                                            <div class="divider2"></div>
+                                            <div class="divider5"></div>
 
                                             <div style="height: auto; border: none" :style="{backgroundColor: Color.background_color}">
                                                 <div class="d-flex justify-content-between align-items-end mb-3" id="cl">
                                                     <div style="align-items: flex-end">
-                                                        <h5 class="head" :style="{color: Color.text_color, marginBottom: '15px'}">Competition Result</h5>
+                                                        <h5 class="head" :style="{color: Color.text_color}">Competition Results</h5>
                                                     </div>
                                                 </div>
                                                 <div class="resultpics">
-                                                    <div v-for="(item, index) in sincomp.entries" :key="item.id || index" class="resultpics-items">
+                                                    <div v-for="(item, index) in filteredEntries" :key="item.id || index" class="resultpics-items">
                                                         <div v-if="item.entry_image && item.entry_image.length">
                                                             <img :src="item.entry_image" :alt="item.entry_image_title || 'Competition entry image'" />
-                                                            <div class="resultpics-infos" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7) }" >
-                                                                <div :style="{ color: Color.background_color, width: '200px', textAlign: 'left' }">
-                                                                    {{ item.entry_image_title + " by " + item.member_name}}
+                                                            <div class="resultpics-infos d-flex flex-row justify-content-between" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7) }"  >
+                                                                <div class="d-flex flex-column">
+                                                                    <h4 class="title" :style="{ color: Color.background_color }">{{ item.entry_image_title }}</h4>
+                                                                    <span class="name" :style="{ color: hexToRgba(Color.secondary_color, 0.85) }" style="text-align: left">
+                                                                        by {{ item.member_name }}
+                                                                    </span>
                                                                 </div>
+                                                                <img v-if="getMedalIcon(item.position)" :src="getMedalIcon(item.position).src" :alt="getMedalIcon(item.position).name" id="medal-inline" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -296,14 +305,14 @@
                             <section>
                                 <div class="container" id="right">
 
-                                    <div class="cardddd" style="padding: 0px" id="cal">
+                                    <div class="calendar-card" style="padding: 0px" id="cal">
                                         <CalendarEvent />
                                     </div>
 
-                                    <div class="cardddd d-flex flex-column" :style="{ padding: '35px'}" id="eve">
+                                    <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
                                         <h5 class="head">More Competitions</h5>
                                         <div class="event-list" v-if="Comps.length">
-                                            <div class="event-item" v-for="c in Comps.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
+                                            <div class="event-item" v-for="c in Comps.slice(0, 6)" :key="c.id">
                                                 <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" :alt="c.name" @error="c.featured_image_url = null"/>
                                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                                 </div>
@@ -319,9 +328,12 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div v-else class="text-center text-muted py-4">
+                                            No competitions found.
+                                        </div>
                                     </div>
 
-                                    <div class="cardddd" :style="{padding: '35px'}">
+                                    <div class="season-card" :style="{padding: '35px'}">
                                         <h5 class="head">Seasons</h5>
                                         <div class="session-container" v-if="sessions.length">
                                             <div v-for="session in sessions" :key="session.id" class="session-card" :class="session.status.toLowerCase()">
@@ -333,10 +345,10 @@
 
                                                 <div class="session-body">
                                                     <div class="info">
-                                                        <i class="icon">🏅</i> {{ session.competitions_count }} Competitions
+                                                        <img :src="Competition" alt="point-icon" style="width: 16px; height: 16px" /> {{ session.competitions_count }} Competitions
                                                     </div>
                                                     <div class="info">
-                                                        <i class="icon">📅</i> {{ session.events_count }} Events
+                                                        <img :src="Event" alt="event" style="width: 16px; height: 16px" /> {{ session.events_count }} Events
                                                     </div>
                                                 </div>
 
@@ -487,6 +499,8 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useUserStore } from '@/stores/club_admin/UserStore';
 import { useHomeStore } from '@/stores/club_public/ClubData';
 import { storeToRefs } from 'pinia'
+import Event from "@/assets/icons/navigation/events.svg"
+import Competition from "@/assets/icons/navigation/competition.svg"
 
 
 
@@ -573,6 +587,51 @@ const hexToRgba = (hex, alpha) => {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
+const filteredEntries = computed(() => {
+  const entries = sincomp.value?.entries || [];
+  const validPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const seen = new Set();
+
+  return entries
+    .filter(item => {
+      if (validPositions.includes(item.position) && !seen.has(item.position)) {
+        seen.add(item.position);
+        return true;
+      }
+      return false;
+    })
+    .sort((a, b) => validPositions.indexOf(a.position) - validPositions.indexOf(b.position));
+});
+
+
+
+
+const getMedalIcon = (position) => {
+  switch (position) {
+    case 1:
+      return { src: new URL('@/assets/icons/positions/1.svg', import.meta.url).href, name: 'First Medal' };
+    case 2:
+      return { src: new URL('@/assets/icons/positions/2.svg', import.meta.url).href, name: 'Second Medal' };
+    case 3:
+      return { src: new URL('@/assets/icons/positions/3.svg', import.meta.url).href, name: 'Third Medal' };
+    case 4:
+      return { src: new URL('@/assets/icons/positions/4.svg', import.meta.url).href, name: 'Forth Medal' };
+    case 5:
+      return { src: new URL('@/assets/icons/positions/5.svg', import.meta.url).href, name: 'Fifth Medal' };
+    case 6:
+      return { src: new URL('@/assets/icons/positions/6.svg', import.meta.url).href, name: 'Sixth Medal' };
+    case 7:
+      return { src: new URL('@/assets/icons/positions/c.svg', import.meta.url).href, name: 'Commended' };
+    case 8:
+      return { src: new URL('@/assets/icons/positions/h.svg', import.meta.url).href, name: 'Highly' };
+    case 9:
+      return { src: new URL('@/assets/icons/positions/i.svg', import.meta.url).href, name: 'Intermediate' };
+    default:
+      return null;
+  }
+};
+
+
 onMounted(async () => {
     console.log(Comps)
   document.addEventListener("click", (e) => {
@@ -600,9 +659,23 @@ onMounted(async () => {
 </script>
 
 
+<style src="@/assets/css/clubstyle.css"></style>
 <style scoped>
+#overall {
+     padding: 0px 0px 20px 75px;
+}
 #heads {
-    padding: 60px 70px 48px 50px;
+    padding: 70px 68px 38px 100px;
+}
+#right {
+    margin-left: 10px
+}
+#eventdetails {
+    margin-left: -20px
+}
+#edate {
+    margin-top: 5px;
+    margin-bottom: 47px
 }
 .events-header {
   display: flex;
@@ -611,7 +684,6 @@ onMounted(async () => {
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
-
 .events-title {
   font-family: Inter;
 font-weight: 500;
@@ -621,7 +693,6 @@ line-height: 100%;
 letter-spacing: 0%;
 margin: 0;
 }
-
 .search-bar {
   display: flex;
   align-items: center;
@@ -633,18 +704,15 @@ margin: 0;
   height: 60px;
   transition: border-color 0.2s ease;
 }
-
 .search-bar:hover,
 .search-bar:focus-within {
   border-color: #d1d5db;
 }
-
 .search-bar i {
   color: #c0c0c0;
   font-size: 14px;
   margin-right: 8px;
 }
-
 .search-input {
   border: none;
   outline: none;
@@ -653,7 +721,6 @@ margin: 0;
   flex: 1;
   background: transparent;
 }
-
 .search-input::placeholder {
   color: #c0c0c0;
 }
@@ -664,19 +731,26 @@ margin: 0;
   font-size: 14px;
   color: #6b7280;
 }
-
 .breadcrumb-item {
   text-decoration: none;
   color: #6b7280;
 }
-
 .breadcrumb-item.active {
   color: #111827;
   font-weight: 600;
 }
-
 .breadcrumb-separator {
   color: #9ca3af;
+}
+.card {
+  background: white;
+  border-radius: 10px;
+  flex: 1;
+  margin: 0px 0 10px 20px;
+  width: 97.4%;
+  height: auto;
+  padding-bottom: 15px;
+  border: none;
 }
 .card .head {
     font-family: Inter;
@@ -686,6 +760,7 @@ font-size: 28px;
 line-height: 100%;
 letter-spacing: 0%;
 margin-top: 50px;
+margin-bottom: 70px;
 }
 .card .text-secondary {
     font-family: Inter;
@@ -694,26 +769,31 @@ font-style: Regular;
 font-size: 20px;
 line-height: 24px;
 letter-spacing: 0%;
+margin-left: -10px;
+width: 1100px;
+}
 
+.title {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0;
 }
- #right {
-     margin-left: 20px;
+
+.name {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  opacity: 0.9;
+  margin-top: 2px;
 }
- .button-group #view {
-     max-width: 130px;
-     height: 40px;
-     opacity: 1;
-     padding-top: 10px;
-     padding-right: 18px;
-     padding-bottom: 10px;
-     padding-left: 18px;
-     gap: 10px;
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 16px;
-     line-height: 100%;
-     letter-spacing: 0%;
+.divider4 {
+  width: 1100px;
+  height: 1px;
+  background-color: rgba(217, 217, 217, 1);
+  margin-top: 35px;
+  margin-bottom: 90px;
+  border-bottom: 1px solid rgba(217, 217, 217, 1);
 }
 .resultpics {
   margin-top: -15px;
@@ -721,18 +801,16 @@ letter-spacing: 0%;
   grid-template-columns: repeat(3, 1fr);
   width: 100%;
 }
-
 .resultpics-items {
   position: relative;
   overflow: hidden;
 }
 .resultpics-items img {
   width: 100%;
-  height: 365px;
+  height: 364px;
   object-fit: cover;
   object-position: top;
 }
-
 .resultpics-infos {
   background: #4c403699;
   position: absolute;
@@ -745,9 +823,17 @@ letter-spacing: 0%;
   font-weight: 600;
   font-family: Inter;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
   height: 60px;
+  padding: 14px 28px;
+}
+.resultpics-infos #medal-inline {
+    width: 30px !important;
+    height: 36px !important;
+}
+#joincontainer {
+  margin-top: 180px;
 }
  .site-footer {
      padding-top: 25px;
@@ -786,137 +872,6 @@ letter-spacing: 0%;
      padding-bottom: 10px;
      margin: 1px;
 }
-.cardddd {
-     background: white;
-     width: 470px;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-
-}
- .cardddd {
-     background: white;
-     width: 470px;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-
-}
- .cardddd:first-child {
-     background: white;
-     width: 470px;
-     padding: 20px;
-     height: auto;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-     margin-top: 20px;
-}
-
-.cardddd:last-child {
-    height: 470px;
-}
-#cal {
-    height: auto;
-}
-#eve {
-    height: 580px;
-}
-.session-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 350px;
-}
-
-.session-card {
-    width: 410px;
-    height: 160px;
-  background: rgba(236, 237, 230, 0.3);
-  border: 1px solid black;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease;
-}
-
-.session-card:hover {
-  transform: translateY(-2px);
-}
-
-.session-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.session-header h3 {
-  font-size: 20px;
-  color: #333;
-  margin: 0;
-}
-
-.status {
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: 20px;
-  padding: 3px 10px;
-}
-
-.status .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  margin-right: 6px;
-}
-
-.status.active {
-  background: #eaf8ef;
-  color: #22c55e;
-}
-
-.status.active .dot {
-  background: #22c55e;
-}
-
-.status.inactive {
-  background: #f0f0f0;
-  color: #777;
-}
-
-.status.inactive .dot {
-  background: #bdbdbd;
-}
-
-.session-body {
-  display: flex;
-  justify-content: space-between;
-  margin: 16px 0;
-}
-
-.info {
-  font-size: 15px;
-  color: #444;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.icon {
-  font-size: 16px;
-}
-
-.session-footer {
-  font-size: 14px;
-  color: #999;
-}
 #footer-heading {
   text-align: center;
   margin-bottom: 30px;
@@ -927,4 +882,744 @@ letter-spacing: 0%;
     line-height: 100%;
     letter-spacing: 0%;
 }
+ #events-left {
+     flex: 3;
+}
+ .ultrahead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 72px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .heading {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .head {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 24px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .clubhead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 20px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .subhead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 18px;
+     line-height: 36px;
+     letter-spacing: 0%;
+}
+ .memtext {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .prehead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .galtext {
+     font-family: Inter;
+     font-weight: 400;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .calendar-card {
+     background: white;
+     width: 470px;
+     padding: 20px;
+     height: auto;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-top: -5px;
+}
+ .season-card {
+     height: 470px;
+     background: white;
+     width: 470px;
+     padding: 20px;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+ .more-card {
+     height: 580px;
+     background: white;
+     width: 470px;
+     padding: 20px;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+ .event-list {
+     padding-top: 0px;
+}
+ .event-list {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+}
+ .event-item {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+}
+ .event-item img {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 5px;
+     object-fit: cover;
+}
+ .event-details {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     flex: 1;
+     font-size: 0.875rem;
+     width: 100%;
+}
+ #ename {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ #espeaker {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 10px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .notification-mobile {
+     display: none;
+}
+ .session-container {
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+     padding: 25px 0px;
+}
+ .session-card {
+     width: 410px;
+     height: 160px;
+     background: rgba(236, 237, 230, 0.3);
+     border: 1px solid rgba(51, 51, 51, 0.2);
+     border-radius: 12px;
+     padding: 15px 10px;
+     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+     transition: transform 0.2s ease;
+}
+ .session-card:hover {
+     transform: translateY(-2px);
+}
+ .session-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 12px;
+}
+ .session-header h3 {
+     font-size: 20px;
+     color: #333;
+     margin: 0;
+}
+ .status {
+     display: flex;
+     align-items: center;
+     border-radius: 20px;
+     padding: 3px 10px;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 11.85px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .status .dot {
+     width: 6px;
+     height: 6px;
+     border-radius: 50%;
+     margin-right: 6px;
+}
+ .status.active {
+     background: #eaf8ef;
+     color: #22c55e;
+}
+ .status.active .dot {
+     background: #22c55e;
+}
+ .status.inactive {
+     background: #f0f0f0;
+     color: #777;
+}
+ .status.inactive .dot {
+     background: #bdbdbd;
+}
+ .session-body {
+     display: flex;
+     justify-content: space-between;
+     margin: 40px 40px 20px 20px;
+}
+ .info {
+     font-size: 15px;
+     color: #444;
+     display: flex;
+     align-items: center;
+     gap: 6px;
+}
+ .icon {
+     font-size: 16px;
+}
+ .session-footer {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .dt-paging {
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     flex-wrap: wrap;
+     margin-top: 20px;
+     gap: 5px;
+}
+ .dt-paging-button {
+     border: 1px solid green;
+     background: #ffffff;
+     color: black;
+     margin: 2px;
+     border-radius: 5px;
+     cursor: pointer;
+     font-size: 16px;
+     transition: background 0.3s ease;
+     width: 40px;
+     height: 40px;
+     padding: 0;
+}
+ .dt-paging-button.disabled {
+     background: #ffffff;
+     color: black;
+     border: 1px solid #99816b;
+     cursor: not-allowed;
+     opacity: 0.6;
+}
+ .dt-paging-button.current {
+     background: orange;
+     font-weight: bold;
+     border: none;
+     color: white 
+}
+.divider5{
+    width: 1100px;
+    height: 1px;
+  background-color: rgba(217, 217, 217, 1);
+  margin-top: 30px;
+  border-bottom: 1px solid rgba(217, 217, 217, 1);
+}
+ @media only screen and (max-width: 1399px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+    .resultpics {
+  margin-top: -15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+}
+.divider4, .divider5 {
+    width: 100%
+}
+.resultpics-items {
+  position: relative;
+  overflow: hidden;
+}
+.resultpics-items img {
+  width: 100%;
+  height: 275px;
+  object-fit: cover;
+  object-position: top;
+}
+     .calendar-card, .season-card, .more-card {
+         width: 110% !important;
+    }
+     #right {
+         margin-left: -10px;
+    }
+     #edate {
+         width: 120px;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     .event-date {
+         width: 120px;
+         display: block;
+    }
+     #ename {
+         font-size: 13px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+ @media only screen and (max-width: 1199px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+    .resultpics {
+  margin-top: -15px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+}
+.resultpics-items {
+  position: relative;
+  overflow: hidden;
+}
+.resultpics-items img {
+  width: 100%;
+  height: 275px;
+  object-fit: cover;
+  object-position: top;
+}
+     .calendar-card, .season-card, .more-card {
+         width: 120% !important;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 180px;
+    }
+     .day-number {
+         width: 30px;
+    }
+     #right {
+         margin-left: -30px;
+    }
+     #edate {
+         width: 120px;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     .event-date {
+         width: 120px;
+         display: block;
+         text-align: left;
+    }
+     #ename {
+         font-size: 14px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 20px 20px 0;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+ @media only screen and (max-width: 991px) {
+     .right-header .profile-mobile, .right-header .divider, .notification-desktop, .down {
+         display: none !important;
+    }
+     .notification-mobile {
+         display: inline-flex !important;
+         margin-right: 10px;
+    }
+     #login {
+         padding: 0px 15px 20px 45px;
+         display: flex;
+         font-size: 18px;
+         font-family: Inter;
+         font-weight: 400;
+    }
+     .navbar .right-header {
+         margin-left: 0;
+    }
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+    .card .row {
+        display: flex;
+        flex-direction: row;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+    .events-title {
+        font-size: 32px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 300px;
+         height: 50px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+    .card img {
+        width: 670px;
+    }
+    .card .text-secondary {
+        width: 680px;
+    }
+    .divider4, .divider5 {
+        width: 150%
+    }
+    .resultpics {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+    .resultpics-items img {
+        width: 100% !important;
+        max-width: 100% !important;
+
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 700px !important;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: row;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 40px 20px 20px;
+    }
+     .info {
+         font-size: 15px;
+    }
+}
+ @media only screen and (max-width: 767px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 300px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 500px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: row;
+    }
+     .event-info {
+         width: 100%;
+    }
+    .card img, .card .text-secondary {
+        width: 500px;
+    }
+    .divider4, .divider5 {
+        width: 100%;
+    }
+    .resultpics {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 40px 20px 20px;
+    }
+     .info {
+         font-size: 15px;
+    }
+}
+ @media only screen and (max-width: 575px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .events-title {
+         font-size: 20px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 200px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 320px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 100%;
+    }
+    .card img, .card .text-secondary {
+        width: 300px;
+    }
+    .divider4, .divider5 {
+        width: 100%;
+    }
+    .resultpics {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 20px 20px 0;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+ @media only screen and (max-width: 359px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .events-title {
+         font-size: 20px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 200px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 320px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 20px 20px 0;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+
 </style>
+

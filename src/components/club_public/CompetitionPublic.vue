@@ -219,7 +219,7 @@
                                         <CalendarEvent />
                                     </div>
 
-                                    <div class="more-card d-flex flex-column" :style="{ padding: '35px'}" id="eve">
+                                    <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
                                         <h5 class="head">More Competitions</h5>
                                         <div class="event-list" v-if="Comps.length">
                                             <div class="event-item" v-for="c in Comps.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
@@ -237,6 +237,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div v-else class="text-center text-muted py-4">
+                                            No competitions found.
                                         </div>
                                     </div>
 
@@ -765,6 +768,9 @@ function goToPage(page) {
      letter-spacing: 0%;
      margin-top: 15px;
 }
+#joincontainer {
+    margin-top: 160px;
+}
  .site-footer {
      padding-top: 25px;
      padding-bottom: 10px;
@@ -901,12 +907,9 @@ function goToPage(page) {
 }
  .event-list {
      display: flex;
-     flex-direction: column;
-     gap: 10px;
 }
  .event-item {
      display: flex;
-     align-items: center;
      gap: 10px;
 }
  .event-item img {

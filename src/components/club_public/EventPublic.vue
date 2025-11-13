@@ -2,7 +2,7 @@
 <div :style="{ backgroundColor: Color.background_color, fontFamily: Color.fonts }">
     <Loader :show="isLoading" />
     <div v-if="!isLoading">
-        <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: Color.background_color, height: '108px' }">
+        <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '5001', backgroundColor: Color.background_color, height: '108px' }">
             <div class="container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand d-flex align-items-center" href="/">
                     <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px" />
@@ -120,7 +120,9 @@
                                             </p>
                                         </div>
                                         <div class="button-group mt-auto d-flex event-button">
-                                            <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            <router-link :to="{ name: 'EventSinglePublic', params: { id: Events[0].id } }" custom v-slot="{ navigate }">
+                                                <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            </router-link>
                                         </div>
                                     </div>
                                 </div>
@@ -231,6 +233,9 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div v-else class="text-center text-muted py-4">
+                                            No events found.
                                         </div>
                                     </div>
 
@@ -751,6 +756,9 @@ function goToPage(page) {
      line-height: 100%;
      letter-spacing: 0%;
      margin-top: 15px;
+}
+#joincontainer {
+    margin-top: 160px;
 }
  .site-footer {
      padding-top: 25px;
@@ -1811,6 +1819,4 @@ function goToPage(page) {
          font-size: 13px;
     }
 }
-
-
 </style>

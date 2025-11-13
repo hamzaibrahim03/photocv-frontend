@@ -119,7 +119,9 @@
                                             </p>
                                         </div>
                                         <div class="button-group mt-3 d-flex">
-                                            <button class="btn me-2" id="view" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            <router-link :to="{ name: 'NewsSinglePublic', params: { id: News[0].id } }" custom v-slot="{ navigate }">
+                                                <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            </router-link>
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +139,7 @@
                         <nav class="breadcrumb">
                             <router-link to="/rytonnews" class="events-title breadcrumb-item" :style="{color: Color.accent_color}">News</router-link>
                             <span class="events-title breadcrumb-separator" :style="{color: Color.accent_color}">></span>
-                            <span class="events-title breadcrumb-item active">{{ sinnews.title || 'Loading...' }}</span>
+                            <span class="events-title breadcrumb-item active">{{ sinnews.title }}</span>
                         </nav>
                         <div class="search-bar">
                             <i class="fas fa-search"></i>
@@ -158,10 +160,16 @@
                                         <img :src="sinnews.featured_image_url" alt="Meeting" style="max-width: 850px; height: 350px; border-radius: 8px"/>
                                         <h5 class="head" :style="{color: Color.text_color}">{{sinnews.title}}</h5>
                                         <p id="edate" :style="{color: Color.accent_color}">{{formatDate(sinnews.publish_date)}}</p>
-                                        <p class="text-secondary" :style="{color: Color.text_color}">
-                                            {{sinnews.description}}
-                                        </p>
-                                            
+                                        <p class="text-secondary" :style="{color: Color.text_color, width: '1100px'}">
+                                            The much-anticipated St Oswald’s Calendar 2025 has now been released, celebrating the beauty and creativity of 
+                                            our community through stunning photography. We are delighted to share that Ryton Camera Club member, Fiona 
+                                            Haughton, has had two of her remarkable images selected to be featured in this year’s edition.<br>
+                                            Fiona’s photographs stood out among the many submissions, reflecting both her talent behind the lens and her eye 
+                                            for capturing moments that resonate with people. Having her work showcased in the calendar not only highlights her 
+                                            individual achievement but also brings pride to the Ryton Camera Club as a whole.<br>
+                                            The calendar serves as more than just a collection of images—it represents the passion and artistry of local 
+                                            photographers whose work will now be enjoyed throughout the year by households across the community.
+                                        </p>                
                                         
                                     </div>
                                 </div>
@@ -171,10 +179,10 @@
                             <section>
                                 <div class="container" id="right">
 
-                                    <div class="cardddd d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
+                                    <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
                                         <h5 class="head">Photo Events</h5>
                                         <div class="event-list" v-if="Events.length">
-                                            <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
+                                            <div class="event-item" v-for="c in Events.slice(0, 3)" :key="c.id" style="margin-bottom: 10px">
                                                 <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" alt="News" @error="c.featured_image_url = null"/>
                                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                                 </div>
@@ -183,11 +191,11 @@
                                                         <span id="ename">{{ c.name }}</span>
                                                     </div>
 
-                                                    <div class="event-time" id="edate">
-                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.event_date) }}</small><br />
-                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div v-else class="text-center text-muted py-4">
+                                            No events found.
                                         </div>
                                     </div>
 
@@ -402,9 +410,23 @@ onMounted(async () => {
 </script>
 
 
+<style src="@/assets/css/clubstyle.css"></style>
 <style scoped>
+#overall {
+     padding: 0 0px 20px 45px;
+}
 #heads {
-    padding: 60px 70px 48px 50px;
+    padding: 70px 68px 38px 80px;
+}
+#right {
+    margin-left: 10px
+}
+#eventdetails {
+    margin-left: -20px
+}
+#edate {
+    margin-top: 5px;
+    margin-bottom: 47px
 }
 .events-header {
   display: flex;
@@ -413,7 +435,6 @@ onMounted(async () => {
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
-
 .events-title {
   font-family: Inter;
 font-weight: 500;
@@ -423,7 +444,6 @@ line-height: 100%;
 letter-spacing: 0%;
 margin: 0;
 }
-
 .search-bar {
   display: flex;
   align-items: center;
@@ -435,18 +455,15 @@ margin: 0;
   height: 60px;
   transition: border-color 0.2s ease;
 }
-
 .search-bar:hover,
 .search-bar:focus-within {
   border-color: #d1d5db;
 }
-
 .search-bar i {
   color: #c0c0c0;
   font-size: 14px;
   margin-right: 8px;
 }
-
 .search-input {
   border: none;
   outline: none;
@@ -455,7 +472,6 @@ margin: 0;
   flex: 1;
   background: transparent;
 }
-
 .search-input::placeholder {
   color: #c0c0c0;
 }
@@ -466,17 +482,14 @@ margin: 0;
   font-size: 14px;
   color: #6b7280;
 }
-
 .breadcrumb-item {
   text-decoration: none;
   color: #6b7280;
 }
-
 .breadcrumb-item.active {
   color: #111827;
   font-weight: 600;
 }
-
 .breadcrumb-separator {
   color: #9ca3af;
 }
@@ -488,6 +501,7 @@ font-size: 28px;
 line-height: 100%;
 letter-spacing: 0%;
 margin-top: 50px;
+margin-bottom: 70px;
 }
 .card .text-secondary {
     font-family: Inter;
@@ -496,30 +510,26 @@ font-style: Regular;
 font-size: 20px;
 line-height: 24px;
 letter-spacing: 0%;
-
-}
- #right {
-     margin-left: 20px;
+margin-left: -10px;
+width: 1100px;
 }
 
-.cardddd #ename {
-    width: 200px
+.title {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0;
 }
- .button-group #view {
-     max-width: 130px;
-     height: 40px;
-     opacity: 1;
-     padding-top: 10px;
-     padding-right: 18px;
-     padding-bottom: 10px;
-     padding-left: 18px;
-     gap: 10px;
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 16px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.name {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+#joincontainer {
+  margin-top: 300px;
 }
  .site-footer {
      padding-top: 25px;
@@ -558,46 +568,6 @@ letter-spacing: 0%;
      padding-bottom: 10px;
      margin: 1px;
 }
-.cardddd {
-     background: white;
-     width: 470px;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-
-}
- .cardddd {
-     background: white;
-     width: 470px;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-
-}
- .cardddd:first-child {
-     background: white;
-     width: 470px;
-     padding: 20px;
-     height: auto;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-     margin-top: 20px;
-}
-
-.cardddd:last-child {
-    height: 470px;
-}
-#cal {
-    height: auto;
-}
-#eve {
-    height: 580px;
-}
 #footer-heading {
   text-align: center;
   margin-bottom: 30px;
@@ -607,5 +577,542 @@ letter-spacing: 0%;
     font-size: 36px;
     line-height: 100%;
     letter-spacing: 0%;
+}
+ #events-left {
+     flex: 3;
+}
+ .ultrahead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 72px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .heading {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .head {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 24px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .clubhead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 20px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .subhead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 18px;
+     line-height: 36px;
+     letter-spacing: 0%;
+}
+ .memtext {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .prehead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .galtext {
+     font-family: Inter;
+     font-weight: 400;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .more-card {
+     height: 580px;
+     background: white;
+     width: 470px;
+     padding: 20px;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+ .event-list {
+     padding-top: 0px;
+}
+ .event-list {
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+}
+ .event-item {
+     display: flex;
+     align-items: center;
+     gap: 20px;
+}
+ .event-item img {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 5px;
+     object-fit: cover;
+}
+ .event-details {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     flex: 1;
+     font-size: 0.875rem;
+     width: 100%;
+}
+ #ename {
+     font-family: Inter;
+     font-weight: 600;
+     font-style: Semi-Bold;
+     font-size: 14px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ #espeaker {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 10px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .notification-mobile {
+     display: none;
+}
+ .dt-paging {
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     flex-wrap: wrap;
+     margin-top: 20px;
+     gap: 5px;
+}
+ .dt-paging-button {
+     border: 1px solid green;
+     background: #ffffff;
+     color: black;
+     margin: 2px;
+     border-radius: 5px;
+     cursor: pointer;
+     font-size: 16px;
+     transition: background 0.3s ease;
+     width: 40px;
+     height: 40px;
+     padding: 0;
+}
+ .dt-paging-button.disabled {
+     background: #ffffff;
+     color: black;
+     border: 1px solid #99816b;
+     cursor: not-allowed;
+     opacity: 0.6;
+}
+ .dt-paging-button.current {
+     background: orange;
+     font-weight: bold;
+     border: none;
+     color: white 
+}
+.divider5{
+    width: 1100px;
+    height: 1px;
+  background-color: rgba(217, 217, 217, 1);
+  margin-top: 30px;
+  border-bottom: 1px solid rgba(217, 217, 217, 1);
+}
+ @media only screen and (max-width: 1399px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+.divider4, .divider5 {
+    width: 100%
+}
+ .more-card {
+         width: 110% !important;
+    }
+     #right {
+         margin-left: -10px;
+    }
+     #edate {
+         width: 120px;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     .event-date {
+         width: 120px;
+         display: block;
+    }
+     #ename {
+         font-size: 13px 
+    }
+}
+ @media only screen and (max-width: 1199px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+.more-card {
+         width: 120% !important;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 180px;
+    }
+     .day-number {
+         width: 30px;
+    }
+     #right {
+         margin-left: -30px;
+    }
+     #edate {
+         width: 120px;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     .event-date {
+         width: 120px;
+         display: block;
+         text-align: left;
+    }
+     #ename {
+         font-size: 14px 
+    }
+}
+ @media only screen and (max-width: 991px) {
+     .right-header .profile-mobile, .right-header .divider, .notification-desktop, .down {
+         display: none !important;
+    }
+     .notification-mobile {
+         display: inline-flex !important;
+         margin-right: 10px;
+    }
+     #login {
+         padding: 0px 15px 20px 45px;
+         display: flex;
+         font-size: 18px;
+         font-family: Inter;
+         font-weight: 400;
+    }
+     .navbar .right-header {
+         margin-left: 0;
+    }
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+    .card .row {
+        display: flex;
+        flex-direction: row;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+    .events-title {
+        font-size: 32px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 300px;
+         height: 50px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+    .card img {
+        width: 670px;
+    }
+    .card .text-secondary {
+        width: 680px;
+    }
+    .divider4, .divider5 {
+        width: 150%
+    }
+.more-card {
+         width: 700px !important;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: row;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+}
+ @media only screen and (max-width: 767px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 300px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .more-card {
+         width: 500px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: row;
+    }
+     .event-info {
+         width: 100%;
+    }
+    .card img, .card .text-secondary {
+        width: 500px;
+    }
+    .divider4, .divider5 {
+        width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+}
+ @media only screen and (max-width: 575px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .events-title {
+         font-size: 20px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 200px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .more-card {
+         width: 320px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 100%;
+    }
+    .card img, .card .text-secondary {
+        width: 300px;
+    }
+    .divider4, .divider5 {
+        width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+}
+ @media only screen and (max-width: 359px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .events-title {
+         font-size: 20px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 200px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .more-card {
+         width: 320px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
 }
 </style>

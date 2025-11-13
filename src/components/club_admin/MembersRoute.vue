@@ -198,12 +198,16 @@ function goToPage(page) {
   padding: 0 15px;
   margin: 0 auto;
 }
+.content {
+    padding: 0 30px;
+}
 .dashboard-card {
   gap: 15px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 20px 0px;
   width: 100%;
 }
 
@@ -214,9 +218,9 @@ function goToPage(page) {
   background: white;
   padding: 15px 25px;
   border-radius: 12px;
-  width: 68%;
+  width: 975px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  height: 158px;
+  height: 148px;
 }
 
 .profile-left {
@@ -316,22 +320,22 @@ function goToPage(page) {
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  width: 50%;
+  width: 219px;
   font-family: Inter;
   font-size: 1.2rem;
-  height: 158px;
+  height: 148px;
 }
 
 .event-card {
   background: #755840;
   color: white;
   padding: 20px;
-  height: 158px;
+  height: 148px;
   border-radius: 8px;
   text-align: center;
   font-family: Inter;
   font-size: 1.2rem;
-  width: 50%;
+  width: 219px;
 }
 
 .number {
@@ -359,8 +363,8 @@ function goToPage(page) {
 }
 .card-section {
   display: flex;
-  gap: 15px;
-  width: 30%;
+  gap: 35px;
+  width: 31.5%;
 }
 
 .social-icons {

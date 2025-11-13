@@ -162,7 +162,9 @@
                                             </p>
                                         </div>
                                         <div class="button-group mt-3 d-flex event-button">
-                                            <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            <router-link :to="{ name: 'EventSinglePublic', params: { id: Events[0].id } }" custom v-slot="{ navigate }">
+                                                <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View</button>
+                                            </router-link>
                                         </div>
                                     </div>
                                 </div>
@@ -196,7 +198,9 @@
                                             </p>
                                         </div>
                                         <div class="button-group mt-3 d-flex">
-                                            <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            <router-link :to="{ name: 'NewsSinglePublic', params: { id: News[0].id } }" custom v-slot="{ navigate }">
+                                                <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View</button>
+                                            </router-link>
                                         </div>
                                     </div>
                                 </div>
@@ -229,7 +233,9 @@
                                             </p>
                                         </div>
                                         <div class="button-group mt-3 d-flex">
-                                            <button class="btn me-2" id="view" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            <router-link :to="{ name: 'NewsSinglePublic', params: { id: News[0].id } }" custom v-slot="{ navigate }">
+                                                <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View</button>
+                                            </router-link>
                                         </div>
                                     </div>
                                 </div>
@@ -254,9 +260,9 @@
                                     {{ Color.header_title }}
                                 </h1>
                                 <p id="clubsub" class="subhead" v-html="Color.header_description" :style="{ color: Color.text_color}"></p>
-                                <button class="btn" id="learn-more" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.accent_color}">
-                                    Learn More
-                                </button>
+                                <router-link :to="{ name: 'ClubPublic' }" custom v-slot="{ navigate }">
+                                    <button class="btn" id="learn-more" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">Learn More</button>
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -298,9 +304,11 @@
                                 </p>
                             </div>
 
-                            <button class="btn" id="club-gallery" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.accent_color}">
-                                View All Club Galleries
-                            </button>
+                            <router-link :to="{ name: 'ClubGalleryPublic' }" custom v-slot="{ navigate }">
+                                <button class="btn" id="club-gallery" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.accent_color}">
+                                    View All Club Galleries
+                                </button>
+                            </router-link>
                         </div>
                         <div class="clubpics">
                             <div v-for="(item, index) in chunkCards.flat()" :key="item.id || index" class="clubpics-item" :class="getPositionClass(index, chunkCards.flat().length)">
@@ -346,9 +354,11 @@
                                 </div>
 
                                 <div class="button-group mt-auto">
-                                    <button class="btn btn-sm" id="view-all" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.primary_color}">
-                                        View All
-                                    </button>
+                                    <router-link :to="{ name: 'EventPublic' }" custom v-slot="{ navigate }">
+                                        <button class="btn btn-sm" id="view-all" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.primary_color}">
+                                            View All
+                                        </button>
+                                    </router-link>
                                 </div>
                             </div>
 
@@ -376,9 +386,11 @@
                                 </div>
 
                                 <div class="button-group mt-auto">
-                                    <button class="btn btn-sm" id="view-all" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.primary_color}">
-                                        View All
-                                    </button>
+                                    <router-link :to="{ name: 'CompetitionPublic' }" custom v-slot="{ navigate }">
+                                        <button class="btn btn-sm" id="view-all" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.primary_color}">
+                                            View All
+                                        </button>
+                                    </router-link>
                                 </div>
                             </div>
                         </div>
@@ -395,9 +407,11 @@
                                 <p id="clubsub" :style="{color: Color.text_color}">A preview of galleries uploaded by our amazing photographers from the club</p>
                             </div>
 
-                            <button class="btn" id="member-gallery" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">
-                                View All Member Galleries
-                            </button>
+                            <router-link :to="{ name: 'MemberGalleryPublic' }" custom v-slot="{ navigate }">
+                                <button class="btn" id="member-gallery" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">
+                                    View All Member Galleries
+                                </button>
+                            </router-link>
                         </div>
                         
                         <div class="upcoming-section" style="display:flex">
@@ -512,9 +526,11 @@
                             <p id="clubsub" class="subhead" :style="{color: Color.text_color}">Latest results from our camera club competitions, and news posted on our website</p>
                         </div>
 
-                        <button class="btn" id="view-results" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.primary_color}">
-                            View All Results
-                        </button>
+                        <router-link :to="{ name: 'CompetitionPublic' }" custom v-slot="{ navigate }">
+                            <button class="btn" id="view-results" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.primary_color}">
+                                View All Results
+                            </button>
+                        </router-link>
                     </div>
                     <div class="upcoming-sectionss" style="display: flex">
                         <div class="ncardddd d-flex flex-column" style="background-color: #EBE6E1;" :style="{backgroundColor: Color.secondary_color}">
@@ -533,9 +549,11 @@
                                 </div>
                             </div>
                             <div class="button-group mt-auto">
-                                <button class="btn btn-sm" id="view-all" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.primary_color}">
-                                    View All
-                                </button>
+                                <router-link :to="{ name: 'NewsPublic' }" custom v-slot="{ navigate }">
+                                    <button class="btn btn-sm" id="view-all" @click="navigate" :style="{ color: Color.background_color, backgroundColor: Color.primary_color}">
+                                        View All
+                                    </button>
+                                </router-link>
                             </div>
                         </div>
 

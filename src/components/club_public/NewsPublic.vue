@@ -119,7 +119,9 @@
                                             </p>
                                         </div>
                                         <div class="button-group mt-3 d-flex">
-                                            <button class="btn me-2" id="view" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            <router-link :to="{ name: 'NewsSinglePublic', params: { id: News[0].id } }" custom v-slot="{ navigate }">
+                                                <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
+                                            </router-link>
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +203,7 @@
                                     <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
                                         <h5 class="head">Photo Events</h5>
                                         <div class="event-list" v-if="Events.length">
-                                            <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
+                                            <div class="event-item" v-for="c in Events.slice(0, 3)" :key="c.id" style="margin-bottom: 10px">
                                                 <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" alt="Event" @error="c.featured_image_url = null"/>
                                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                                 </div>
@@ -209,12 +211,11 @@
                                                     <div class="event-info" style="display: flex; flex-direction: column">
                                                         <span id="ename">{{ c.name }}</span>
                                                     </div>
-
-                                                    <div class="event-time" id="edate">
-                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.event_date) }}</small><br />
-                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div v-else class="text-center text-muted py-4">
+                                            No events found.
                                         </div>
                                     </div>
 
@@ -742,12 +743,12 @@ function goToPage(page) {
  .event-list {
      display: flex;
      flex-direction: column;
-     gap: 10px;
+     gap: 20px;
 }
  .event-item {
      display: flex;
      align-items: center;
-     gap: 10px;
+     gap: 20px;
 }
  .event-item img {
      width: 100%;
@@ -766,10 +767,10 @@ function goToPage(page) {
 }
  #ename {
      font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
+     font-weight: 600;
+     font-style: Semi-Bold;
      font-size: 14px;
-     line-height: 100%;
+     line-height: 20px;
      letter-spacing: 0%;
 }
  #espeaker {
@@ -817,6 +818,9 @@ function goToPage(page) {
      font-weight: bold;
      border: none;
      color: white 
+}
+#joincontainer {
+    margin-top: 270px;
 }
  @media only screen and (max-width: 1399px) {
      #overall {
