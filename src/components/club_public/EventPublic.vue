@@ -5,7 +5,7 @@
         <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '5001', backgroundColor: Color.background_color, height: '108px' }">
             <div class="container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand d-flex align-items-center" href="/">
-                    <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px" />
+                    <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px; margin-left: 10px" />
                 </a>
 
                     <button class="navbar-toggler me-2" type="button" @click="toggleNav">
@@ -41,6 +41,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/rytonnotice" :style="{ color: Color.text_color }">
+                                Notice
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/rytonclub" :style="{ color: Color.text_color }">
                                 Club
                             </a>
@@ -48,7 +53,7 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.html" class="icon notification-desktop">
+                        <a href="notification.vue" class="icon notification-desktop">
                             <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
                         </a>
                         <div class="divider"></div>
@@ -72,8 +77,8 @@
 
                                 
                             </a>
-                            <span v-if="username" class="notification-desktop">Welcome, {{ username }}</span>
-                            <span v-else class="notification-desktop">Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
+                            <span v-if="username" class="notification-desktop">{{ username }}</span>
+                            <span v-else class="notification-desktop">Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
 
                             <div class="dropdown-menu" v-show="isDropdownOpen">
                                 <a class="nav-link" href="#" @click.prevent="handleLogout">
@@ -153,8 +158,9 @@
                             <section>
                                 <div class="container" id="events-left">
                                     <div class="filter-buttons">
-                                        <button v-for="filter in filters" :key="filter" :class="['filter-btn', { active: activeFilter === filter }]" @click="setActiveFilter(filter)">
-                                            {{ filter }}
+                                        <button v-for="filter in filters" :key="filter.name" :class="['filter-btn', { active: activeFilter === filter.name }]" @click="setActiveFilter(filter)">
+                                            <img :src="filter.icon" class="icones" />
+                                            <span class="label">{{ filter.name }}</span>
                                         </button>
                                     </div>
                                     <div class="mt-4">
@@ -165,7 +171,7 @@
                                                     <div class="d-flex w-100 justify-content-between align-items-center">
                                                         <h5 id="ename" :style="{color: Color.text_color}">{{ e.name || 'Untitled Event' }}</h5>
                                                         <div class="icon-container d-flex gap-2">
-                                                            <img :src="Video" alt="icon"  :style="{color: Color.accent_color}" style="width: 25px; height: 25px" />
+                                                            <img :src="Video" alt="icon" class="virtual" :style="{color: Color.accent_color}" style="width: 25px; height: 25px" />
                                                         </div>
                                                     </div>
                                                     <p class="galtext" id="edate" :style="{color: Color.accent_color}">
@@ -402,6 +408,10 @@ import Pro from "@/assets/icons/event_list/pro.svg"
 import Cal from "@/assets/icons/event_list/cal.svg"
 import Cam from "@/assets/icons/event_list/cam.svg"
 import Mess from "@/assets/icons/event_list/mess.svg"
+import Person from "@/assets/icons/event_list/person.svg";
+import Studio from "@/assets/icons/event_list/studio.svg";
+import Virtual from "@/assets/icons/event_list/virtual.svg";
+import Walk from "@/assets/icons/event_list/walk.svg";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useRouter } from "vue-router";
@@ -411,12 +421,22 @@ import Competition from "@/assets/icons/navigation/competition.svg"
 import { storeToRefs } from 'pinia'
 
 const router = useRouter();
+
 const isNavOpen = ref(false);
 const isDropdownOpen = ref(false);
+
 const toggleNav = () => (isNavOpen.value = !isNavOpen.value);
 const closeNav = () => (isNavOpen.value = false);
 const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
-const filters = ['All', 'Music', 'Photography', 'Conference', 'Workshop'];
+
+const filters = [
+  { name: "All", icon: null },
+  { name: "In-Person", icon: Person },
+  { name: "Virtual", icon: Virtual },
+  { name: "In a Studio", icon: Studio },
+  { name: "Walking Out", icon: Walk },
+];
+
 const activeFilter = ref('All');
 const search = ref('')
 const eventsList = ref([]);
@@ -424,7 +444,7 @@ const user = useUserStore();
 
 const { username, profile_image_url } = storeToRefs(user)
 const setActiveFilter = (filter) => {
-  activeFilter.value = filter;
+  activeFilter.value = filter.name;
 };
 
 // Add this computed below `activeFilter`
@@ -669,11 +689,33 @@ function goToPage(page) {
      border-color: #6f8c6f;
      color: #2e2e2e;
 }
- .filter-btn.active {
-     background-color: #7a9c7a;
-    /* soft green */
+.filter-btn .icones {
+  width: 16px;
+  height: 16px;
+  transition: 0.3s;
+}
+
+.filter-btn .label {
+  color: #7a9c7a;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+/* ACTIVE BUTTON */
+.filter-btn.active {
+  background-color: #7a9c7a;
      color: #fff;
      border-color: #7a9c7a;
+}
+
+/* ACTIVE ICON */
+.filter-btn.active .icones {
+  filter: brightness(0) invert(1);   /* turns icon white */
+}
+
+/* ACTIVE TEXT */
+.filter-btn.active .label {
+  color: white;
 }
  .hero-overlay {
      width: 820px;
@@ -683,9 +725,9 @@ function goToPage(page) {
      align-items: center;
      background-color: white;
      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-     margin-bottom: 35px;
+     margin-bottom: 30px;
      border-radius: 10px;
-     width: 975px;
+     width: 985px;
      height: 310px;
      flex-direction: row;
      gap: 50px 
@@ -717,6 +759,9 @@ function goToPage(page) {
      letter-spacing: 0%;
      text-align: left;
 }
+.virtual {
+    margin-top: -5px;
+}
  .events-cards .text-secondary {
      font-family: Inter;
      font-weight: 400;
@@ -727,7 +772,8 @@ function goToPage(page) {
      margin-bottom: 25px;
 }
  #detail {
-     margin-right: 20px;
+     margin-top: 5px;
+     margin-right: 40px;
      width: 99%;
 }
  .events-cards #espeaker {
@@ -1031,19 +1077,21 @@ function goToPage(page) {
      flex-wrap: wrap;
      margin-top: 20px;
      gap: 5px;
+     margin-left: -10px;
 }
  .dt-paging-button {
      border: 1px solid green;
      background: #ffffff;
      color: black;
      margin: 2px;
-     border-radius: 5px;
+     border-radius: 7px;
      cursor: pointer;
      font-size: 16px;
      transition: background 0.3s ease;
      width: 40px;
      height: 40px;
      padding: 0;
+     margin-left: 8px;
 }
  .dt-paging-button.disabled {
      background: #ffffff;

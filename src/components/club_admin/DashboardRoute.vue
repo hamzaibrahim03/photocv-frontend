@@ -740,7 +740,7 @@ function getPositionClass(index, total) {
   padding-top: 20px;
   padding-bottom: 20px;
   align-items: start;
-  width: 101%;
+  width: 100%;
   flex-wrap: wrap;
   gap: 40px;
 }

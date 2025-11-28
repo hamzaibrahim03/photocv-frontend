@@ -5,7 +5,7 @@
         <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: Color.background_color, height: '108px' }">
             <div class="container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand d-flex align-items-center" href="/">
-                    <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px" />
+                    <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px; margin-left: 10px" />
                 </a>
 
                     <button class="navbar-toggler me-2" type="button" @click="toggleNav">
@@ -41,6 +41,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/rytonnotice" :style="{ color: Color.text_color }">
+                                Notice
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/rytonclub" :style="{ color: Color.text_color }">
                                 Club
                             </a>
@@ -48,7 +53,7 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.html" class="icon notification-desktop">
+                        <a href="notification.vue" class="icon notification-desktop">
                             <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
                         </a>
                         <div class="divider"></div>
@@ -72,8 +77,8 @@
 
                                 
                             </a>
-                            <span v-if="username" class="notification-desktop">Welcome, {{ username }}</span>
-                            <span v-else class="notification-desktop">Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
+                            <span v-if="username" class="notification-desktop">{{ username }}</span>
+                            <span v-else class="notification-desktop">Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
 
                             <div class="dropdown-menu" v-show="isDropdownOpen">
                                 <a class="nav-link" href="#" @click.prevent="handleLogout">
@@ -180,22 +185,22 @@
                                 <div class="container" id="right">
 
                                     <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
-                                        <h5 class="head">Photo Events</h5>
-                                        <div class="event-list" v-if="Events.length">
-                                            <div class="event-item" v-for="c in Events.slice(0, 3)" :key="c.id" style="margin-bottom: 10px">
-                                                <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" alt="News" @error="c.featured_image_url = null"/>
+                                        <h5 class="head">Club Notices</h5>
+                                        <div class="event-list" v-if="Notices.length">
+                                            <div class="event-item" v-for="c in Notices.slice(0, 3)" :key="c.id" style="margin-bottom: 10px">
+                                                <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" alt="Notice" @error="c.featured_image_url = null"/>
                                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                                 </div>
                                                 <div class="event-details">
                                                     <div class="event-info" style="display: flex; flex-direction: column">
-                                                        <span id="ename">{{ c.name }}</span>
+                                                        <span id="ename">{{ c.title }}</span>
                                                     </div>
 
                                                 </div>
                                             </div>
                                         </div>
                                         <div v-else class="text-center text-muted py-4">
-                                            No events found.
+                                            No notices found.
                                         </div>
                                     </div>
 
@@ -359,7 +364,7 @@ const homeStore = useHomeStore();
 
 const { username, profile_image_url } = storeToRefs(user)
 const News = computed(() => rytonnewsStore.newsData?.data?.clubNews?.original?.data?.original?.data || []);
-const Events = computed(() => rytonnewsStore.newsData?.data?.upcomingEvents || []);
+const Notices = computed(() => rytonnewsStore.newsData?.data?.clubNotices?.original?.data || []);
 const sinnews = computed(() => rytonsinglenewsStore.sinnewsData?.data?.news?.original?.data || {});
 const clubSettings = computed(() => rytonnewsStore.newsData?.data?.clubSettings?.original?.data || {});
 const Color = computed(() => clubSettings.value.settings || {});

@@ -5,7 +5,7 @@
     </div>
 
     <div class="right-header">
-      <a href="notification.html" class="icon"
+      <a href="notification.vue" class="icon"
         ><i class="bi bi-bell mx-3"></i
       ></a>
       <div class="admin-dropdown">

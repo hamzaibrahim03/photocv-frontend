@@ -1,8 +1,8 @@
 import apiClient from '@/api/axios'
 
 export const getAllRytonSingleNews = (id) => {
-    console.log("ID", id)
-  return apiClient.post(`/club/public/news/`,  { news_id: id }); 
+    console.log("neID", id)
+  return apiClient.get(`/club/public/news/${id}`); 
  
 }
 

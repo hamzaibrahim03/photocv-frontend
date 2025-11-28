@@ -5,7 +5,7 @@
         <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: Color.background_color, height: '108px' }">
             <div class="container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand d-flex align-items-center" href="/">
-                    <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px" />
+                    <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px; margin-left: 10px" />
                 </a>
 
                     <button class="navbar-toggler me-2" type="button" @click="toggleNav">
@@ -41,6 +41,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/rytonnotice" :style="{ color: Color.text_color }">
+                                Notice
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/rytonclub" :style="{ color: Color.text_color }">
                                 Club
                             </a>
@@ -48,7 +53,7 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.html" class="icon notification-desktop">
+                        <a href="notification.vue" class="icon notification-desktop">
                             <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
                         </a>
                         <div class="divider"></div>
@@ -72,8 +77,8 @@
 
                                 
                             </a>
-                            <span v-if="username" class="notification-desktop">Welcome, {{ username }}</span>
-                            <span v-else class="notification-desktop">Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
+                            <span v-if="username" class="notification-desktop">{{ username }}</span>
+                            <span v-else class="notification-desktop">Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
 
                             <div class="dropdown-menu" v-show="isDropdownOpen">
                                 <a class="nav-link" href="#" @click.prevent="handleLogout">
@@ -156,16 +161,14 @@
                             <section>
                                 <div class="container" id="events-left">
                                     <div class="filter-buttons">
-                                        <button v-for="filter in filters" :key="filter" :class="['filter-btn', { active: activeFilter === filter }]" @click="setActiveFilter(filter)">
-                                            {{ filter }}
+                                        <button v-for="filter in filters" :key="filter.name" :class="['filter-btn', { active: activeFilter === filter.name }]" @click="setActiveFilter(filter)">
+                                            <img :src="filter.icon" class="icones" />
+                                            <span class="label">{{ filter.name }}</span>
                                         </button>
                                     </div>
                                     <div class="mt-4">
                                         <div v-if="paginatedComps.length">
-                                            <div v-for="e in paginatedComps" :key="e.id" class="events-cards p-3" :class="{
-    'upcoming-card': dayjs(e.start_date).isAfter(dayjs()),
-    'result-card': dayjs(e.result_announcement_date).isBefore(dayjs())
-  }">
+                                            <div v-for="e in paginatedComps" :key="e.id" class="events-cards p-3">
                                                 <img v-if="e.featured_image_url" :src="e.featured_image_url" :alt="e.name"/>
                                                 <div class="flex-grow-1 d-flex flex-column justify-content-between" id="detail">
                                                     <div class="d-flex w-100 justify-content-between align-items-center">
@@ -410,6 +413,12 @@ import apiClient from '@/api/axios'
 import Event from "@/assets/icons/navigation/events.svg"
 import Competition from "@/assets/icons/navigation/competition.svg"
 import { storeToRefs } from 'pinia'
+import Print from "@/assets/icons/Competitions/Print.svg";
+import pdi from "@/assets/icons/Competitions/pdi.svg";
+import Cour from "@/assets/icons/Competitions/Cour.svg";
+import Nature from "@/assets/icons/Competitions/Nature.svg";
+import Pot from "@/assets/icons/Competitions/Pot.svg";
+import Land from "@/assets/icons/Competitions/Land.svg";
 
 const router = useRouter();
 const isNavOpen = ref(false);
@@ -417,15 +426,48 @@ const isDropdownOpen = ref(false);
 const toggleNav = () => (isNavOpen.value = !isNavOpen.value);
 const closeNav = () => (isNavOpen.value = false);
 const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
-const filters = ['Upcoming Competitions', 'Results'];
-const activeFilter = ref('Upcoming Competitions');
-const searchQuery = ref('')
-const compsList = computed(() => rytoncompStore.compData?.data?.upcomingCompetitions || []);
-const latestResults = computed(() => rytoncompStore.compData?.data?.latestResults || [])
+const filters = [
+  { name: "All", icon: null },
+  { name: "Print", icon: Print },
+  { name: "PDI", icon: pdi },
+  { name: "Colour", icon: Cour },
+  { name: "Nature", icon: Nature },
+  { name: "Portrait", icon: Pot },
+  { name: "Landscape", icon: Land },
+];
+
+const activeFilter = ref('All');
+const search = ref('')
+const compsList = ref([]);
 const setActiveFilter = (filter) => {
-  activeFilter.value = filter;
-  currentPage.value = 1;
+  activeFilter.value = filter.name;
 };
+
+const filteredComps = computed(() => {
+  let list = compsList.value;
+
+  // Apply event type filter
+  if (activeFilter.value !== 'All') {
+    list = list.filter(comp => {
+      // match type name from API response
+      return comp.types?.some(t => 
+        t.name.toLowerCase().includes(activeFilter.value.toLowerCase())
+      );
+    });
+  }
+
+  // Apply search filter
+  if (search.value.trim() !== '') {
+    const term = search.value.toLowerCase();
+    list = list.filter(e => 
+      e.name?.toLowerCase().includes(term) ||
+      e.description?.toLowerCase().includes(term) ||
+      e.print_vs_digital?.toLowerCase().includes(term)
+    );
+  }
+
+  return list;
+});
 
 const rytoncompStore = useRytonCompStore();
 const rytoneventStore = useRytonEventStore();
@@ -483,7 +525,7 @@ const fetchSearchedComps = debounce(async (query) => {
     }
 }, 400)
 
-watch(searchQuery , (newSearch) => {
+watch(search , (newSearch) => {
     if (newSearch.length >= 3) {
         fetchSearchedComps(newSearch)
     } else {
@@ -522,6 +564,7 @@ const formatedDate = (dateString) => {
 };
 
 
+
 onMounted(async () => {
   document.addEventListener("click", (e) => {
     if (!e.target.closest(".admin-dropdown")) isDropdownOpen.value = false;
@@ -536,6 +579,8 @@ onMounted(async () => {
     await rytoncompStore.fetchRytonCompData(domain);
     await rytoneventStore.fetchRytonEventData(domain);
     await homeStore.fetchHomeData(domain);
+    compsList.value = rytoncompStore.compData?.data?.upcomingCompetitions || []
+    console.log(compsList.value)
   } catch (error) {
     console.error("Error fetching ryton competition data:", error);
   } finally {
@@ -543,48 +588,17 @@ onMounted(async () => {
   }
 });
 
-const filteredComps = computed(() => {
-  const now = dayjs();
-
-  // Upcoming competitions come from compsList
-  if (activeFilter.value === 'Upcoming Competitions') {
-    return compsList.value.filter((comp) => {
-      const startDate = dayjs(comp.start_date);
-      return startDate.isAfter(now);
-    });
-  }
-
-  // Results should come directly from latestResults.original.data
-  else if (activeFilter.value === 'Results') {
-    return latestResults.value?.original?.data || [];
-  }
-
-  // Default (All competitions)
-  return compsList.value;
-});
-
-
-const searchedComps = computed(() => {
-  if (!searchQuery.value.trim()) return filteredComps.value;
-
-  const query = searchQuery.value.toLowerCase();
-  return filteredComps.value.filter((comp) =>
-    (comp.name || '').toLowerCase().includes(query) ||
-    (comp.description || '').toLowerCase().includes(query) ||
-    (comp.judging_panel || '').toLowerCase().includes(query)
-  );
-});
-
 
 const paginatedComps = computed(() => {
-  const start = (currentPage.value - 1) * rowsPerPage.value;
-  return searchedComps.value.slice(start, start + rowsPerPage.value);
+    const start = (currentPage.value - 1) * rowsPerPage.value;
+  const filtered = filteredComps.value;
+  return filtered.slice(start, start + rowsPerPage.value);
 });
 
 
 
 const totalPages = computed(() =>
-  Math.max(Math.ceil(searchedComps.value.length / rowsPerPage.value), 1)
+  Math.max(Math.ceil(filteredComps.value.length / rowsPerPage.value), 1)
 );
 
 
@@ -655,7 +669,7 @@ function goToPage(page) {
 }
  .filter-buttons {
      display: flex;
-     gap: 40px;
+     gap: 20px;
      flex-wrap: wrap;
      padding-bottom: 50px;
 }
@@ -665,26 +679,48 @@ function goToPage(page) {
      border-radius: 8px;
      background-color: transparent;
      color: rgba(127, 164, 131, 1);
-     width: 370px;
+     width: 125px;
      height: 40px;
      cursor: pointer;
      transition: all 0.25s ease;
      font-family: Inter;
      font-weight: 400;
      font-style: Regular;
-     font-size: 16px;
-     line-height: 100%;
+     font-size: 14px;
+     line-height: 20px;
      letter-spacing: 0%;
 }
  .filter-btn:hover {
      border-color: #6f8c6f;
      color: #2e2e2e;
 }
- .filter-btn.active {
-     background-color: #7a9c7a;
-    /* soft green */
+.filter-btn .icones {
+  width: 16px;
+  height: 16px;
+  transition: 0.3s;
+}
+
+.filter-btn .label {
+  color: #7a9c7a;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+/* ACTIVE BUTTON */
+.filter-btn.active {
+  background-color: #7a9c7a;
      color: #fff;
      border-color: #7a9c7a;
+}
+
+/* ACTIVE ICON */
+.filter-btn.active .icones {
+  filter: brightness(0) invert(1);   /* turns icon white */
+}
+
+/* ACTIVE TEXT */
+.filter-btn.active .label {
+  color: white;
 }
  .hero-overlay {
      width: 820px;
@@ -1039,19 +1075,21 @@ function goToPage(page) {
      flex-wrap: wrap;
      margin-top: 20px;
      gap: 5px;
+     margin-left: -10px;
 }
  .dt-paging-button {
      border: 1px solid green;
      background: #ffffff;
      color: black;
      margin: 2px;
-     border-radius: 5px;
+     border-radius: 7px;
      cursor: pointer;
      font-size: 16px;
      transition: background 0.3s ease;
      width: 40px;
      height: 40px;
      padding: 0;
+     margin-left: 8px;
 }
  .dt-paging-button.disabled {
      background: #ffffff;

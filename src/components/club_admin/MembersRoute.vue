@@ -390,7 +390,7 @@ function goToPage(page) {
   justify-content: center;
   text-align: center;
   border-radius: 10px;
-  width: 24%;
+  width: 23.9%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border: 1px solid #99816b;
 }

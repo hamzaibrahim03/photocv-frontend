@@ -55,6 +55,8 @@ import RytonClubGallerySingle from "@/components/club_public/RytonClubGallerySin
 import RytonClubSlide from "@/components/club_public/RytonClubSlide.vue"
 import NewsSinglePublic from "@/components/club_public/NewsSinglePublic.vue"
 import NewsPublic from "@/components/club_public/NewsPublic.vue"
+import NoticeSinglePublic from "@/components/club_public/NoticeSinglePublic.vue"
+import NoticePublic from "@/components/club_public/NoticePublic.vue"
 import ClubPublic from "@/components/club_public/ClubPublic.vue"
 const routes = [
   {
@@ -353,6 +355,16 @@ const routes = [
     name: "NewsSinglePublic",
     path: "/rytonsinglenews",
     component: NewsSinglePublic,
+  },
+  {
+    name: "NoticePublic",
+    path: "/rytonnotice",
+    component: NoticePublic,
+  },
+  {
+    name: "NoticeSinglePublic",
+    path: "/rytonsinglenotice",
+    component: NoticeSinglePublic,
   },
   {
     name: "ClubPublic",

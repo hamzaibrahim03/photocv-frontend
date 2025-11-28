@@ -7,7 +7,15 @@ export const useRytonSingleMemGalStore = defineStore('singleMemberGallery', {
     galleryImages: [],
     galleryName: '',
     loading: false,
-    error: null
+    error: null,
+    member: null,
+  username: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  profileImage: '',
+  role: '',
+  socialLinks: []
   }),
 
   actions: {
@@ -21,6 +29,19 @@ export const useRytonSingleMemGalStore = defineStore('singleMemberGallery', {
                      || response.data?.data?.galleries
                      || response.data?.galleries
                      || null;
+
+                     const member = response.data?.data?.memberGalleries?.original?.data?.member;
+
+                     if (member) {
+                       this.member = member;
+                       this.username = member.username || '';
+                       this.firstName = member.first_name || '';
+                       this.lastName = member.last_name || '';
+                       this.email = member.email || '';
+                       this.profileImage = member.profile_image || '';
+                       this.role = member.role || '';
+                       this.socialLinks = member.social_links || [];
+                     }
 console.log(gallery)
         this.sinmemgalData = gallery[0];
         this.galleryName = gallery[0]?.gallery_name || 'Unnamed Gallery';

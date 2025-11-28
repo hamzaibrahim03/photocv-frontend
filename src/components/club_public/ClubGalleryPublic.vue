@@ -6,12 +6,12 @@
         <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: Color.background_color, height: '108px' }">
             <div class="container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand d-flex align-items-center" href="/">
-                    <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px" />
+                    <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px; margin-left: 10px" />
                 </a>
 
-                    <button class="navbar-toggler me-2" type="button" @click="toggleNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                <button class="navbar-toggler me-2" type="button" @click="toggleNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 
 
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
@@ -42,6 +42,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/rytonnotice" :style="{ color: Color.text_color }">
+                                Notice
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/rytonclub" :style="{ color: Color.text_color }">
                                 Club
                             </a>
@@ -49,7 +54,7 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.html" class="icon notification-desktop">
+                        <a href="notification.vue" class="icon notification-desktop">
                             <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
                         </a>
                         <div class="divider"></div>
@@ -73,8 +78,8 @@
 
                                 
                             </a>
-                            <span v-if="username" class="notification-desktop">Welcome, {{ username }}</span>
-                            <span v-else class="notification-desktop">Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
+                            <span v-if="username" class="notification-desktop">{{ username }}</span>
+                            <span v-else class="notification-desktop">Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
 
                             <div class="dropdown-menu" v-show="isDropdownOpen">
                                 <a class="nav-link" href="#" @click.prevent="handleLogout">
@@ -153,10 +158,38 @@
                             </div>
                         </div>
                     </section>
-
-                    
                 </div>
-            </section>    
+            </section>   
+
+
+            <section>
+                <div class="container">
+                    <div class="suggestions-header d-flex justify-content-between align-items-center">
+                        <h3 class="heading" :style="{fontWeight: '500'}">More from Member Galleries</h3>
+
+                        <button id="view" :style="{color: Color.background_color, backgroundColor: Color.accent_color}" style="border: none">View All</button>
+                    </div>
+
+                    <div class="suggestions-gallery">
+                        <div v-for="(item, index) in suggestions.slice(0, 4)" :key="index" class="suggestions-card">
+                            <img :src="item.image" :alt="item.title" />
+                            <div class="img-overlay" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
+                                <img v-if="item.profile_image" class="event-img" style="border-radius: 50%; height: 50px" :src="item.profile_image" alt="Uploader" @error="item.profile_image = null" />
+                                <div v-else class="fallback-box d-flex justify-content-center align-items-center" style="border-radius: 50%"><i class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i></div>
+
+                                <div class="d-flex flex-column">
+                                    <span class="names" :style="{ color: Color.background_color }">
+                                        {{ item.member_name }}
+                                    </span>
+                                    <span class="role" :style="{ color: Color.background_color }">
+                                        {{ item.role }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> 
 
 
 
@@ -285,6 +318,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useUserStore } from '@/stores/club_admin/UserStore';
 import { useRouter } from "vue-router";
 import { storeToRefs } from 'pinia'
+import randommembergallery from '@/api/club_public/randommembergallery';
 
 const router = useRouter();
 const isNavOpen = ref(false);
@@ -293,6 +327,7 @@ const toggleNav = () => (isNavOpen.value = !isNavOpen.value);
 const closeNav = () => (isNavOpen.value = false);
 const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
 const user = useUserStore();
+const randomMembers = ref([])
 
 
 const rytongalleryStore = useRytonGalleryStore();
@@ -346,12 +381,36 @@ onMounted(async () => {
 
   try {
     await rytongalleryStore.fetchRytonGalleryData(domain);
+
+     const response = await randommembergallery.getAllRandomMember()
+  randomMembers.value = response.data.data.randomGalleries || []  // ← full API array
   } catch (error) {
     console.error("Error fetching ryton gallery data:", error);
   } finally {
     isLoading.value = false;
   }
 });
+
+const suggestions = computed(() => {
+  return randomMembers.value.map(member => {
+    const firstGallery = member.galleries?.[0]
+    const firstPhoto = firstGallery?.photos?.[0]
+
+    return {
+      gallery_id: firstGallery?.id || "",
+      gallery_name: firstGallery?.gallery_name || "",
+      profile_image: member.profile_image_url,
+      total_photos: firstGallery?.photos?.length || 0,
+      image: firstPhoto?.image_url || "",
+      title: firstPhoto?.title || "",
+      comments_count: firstPhoto?.comments_count || 0,
+      likes_count: firstPhoto?.likes_count || 0,
+      uploaded_by: firstPhoto?.uploaded_by || "",
+      member_name: member.first_name + " " + member.last_name,
+      role: member.role,
+    }
+  })
+})
 </script>
 
 <style scoped>
@@ -481,6 +540,58 @@ margin: 0;
      font-size: 16px;
      line-height: 100%;
      letter-spacing: 0%;
+}
+
+.suggestions-gallery, .suggestion-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  gap: 20px
+}
+
+.suggestions-card, .suggestion-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.suggestions-card img, .suggestion-card img {
+  border-radius: 0;
+  width: 100%;
+  height: 295px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.suggestions-card .img-overlay, .suggestion-card .img-overlay {
+  background: #4c403699;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
+  padding: 5px;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: Inter;
+  display: flex;
+  height: 70px;
+  gap: 20px;
+}
+.img-overlay .names {
+    font-family: Inter;
+font-weight: 500;
+font-style: Medium;
+font-size: 18px;
+line-height: 24px;
+letter-spacing: 0px;
+}
+.img-overlay .role {
+    font-family: Inter;
+font-weight: 300;
+font-style: Light;
+font-size: 14px;
+line-height: 20px;
+letter-spacing: 0px;
 }
  .site-footer {
      padding-top: 25px;

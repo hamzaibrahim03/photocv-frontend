@@ -62,9 +62,11 @@
                     <section>
                         <div class="container">
                             <div class="mt-4">
-                                <button class="btn" id="edit" style="max-width: 158px; width: 158px; height: 40px;" @click="navigate">Export Events&nbsp;<i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i></button>
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn" id="edit" style="max-width: 158px; width: 158px; height: 40px;" @click="navigate">Export Events&nbsp;<i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i></button>
+                                </div>
                                 <div v-if="filteredEvents.length">
-                                    <div v-for="event in filteredEvents" :key="event.id" class="custom-card mb-3 p-3">
+                                    <div v-for="event in filteredEvents" :key="event.id" class="custom-card mb-3">
                                         <div class="d-flex gap-3" style="flex: 1;">
                                             <img v-if="event.images" :src="event.featured_image_url" alt="Event Image" />
                                             <div class="flex-grow-1 d-flex flex-column justify-content-between">
@@ -265,6 +267,12 @@ const formatDate = (date) => {
         day: 'numeric',
         year: 'numeric'
     })
+}
+
+function goToPage(page) {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page
+    }
 }
 </script>
 

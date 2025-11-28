@@ -6,7 +6,7 @@
         <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: Color.background_color, height: '108px' }">
             <div class="container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand d-flex align-items-center" href="/">
-                    <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px" />
+                    <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px; margin-left: 10px" />
                 </a>
 
                     <button class="navbar-toggler me-2" type="button" @click="toggleNav">
@@ -42,6 +42,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/rytonnotice" :style="{ color: Color.text_color }">
+                                Notice
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/rytonclub" :style="{ color: Color.text_color }">
                                 Club
                             </a>
@@ -49,7 +54,7 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.html" class="icon notification-desktop">
+                        <a href="notification.vue" class="icon notification-desktop">
                             <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
                         </a>
                         <div class="divider"></div>
@@ -73,8 +78,8 @@
 
                                 
                             </a>
-                            <span v-if="username" class="notification-desktop">Welcome, {{ username }}</span>
-                            <span v-else class="notification-desktop">Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
+                            <span v-if="username" class="notification-desktop">{{ username }}</span>
+                            <span v-else class="notification-desktop">Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
 
                             <div class="dropdown-menu" v-show="isDropdownOpen">
                                 <a class="nav-link" href="#" @click.prevent="handleLogout">
@@ -140,6 +145,37 @@
 
                         <div class="gallery-grid">
                             <template v-for="(group, gIndex) in groupedImages" :key="gIndex">
+                                
+                                <div class="container" :style="{backgroundColor: Color.secondary_color}">
+                                    <div class="suggestion-section">
+                                        <div v-if="gIndex === 1">
+                                            <div class="suggestions-header d-flex justify-content-between align-items-center">
+                                                <h3 class="heading" :style="{fontWeight: '500'}">You may also like</h3>
+                                                <button id="view" :style="{color: Color.background_color, backgroundColor: Color.accent_color}" style="border: none">View All</button>
+                                            </div>
+
+                                            <div class="suggestions-gallery">
+                                                <div v-for="(item, index) in suggestions.slice(0, 4)" :key="index" class="suggestions-card">
+                                                    <img :src="item.image" :alt="item.title" />
+                                                    <div class="img-overlay" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
+                                                        <img v-if="item.profile_image" class="event-img" style="border-radius: 50%; height: 50px; width: 50px" :src="item.profile_image" alt="Uploader" @error="item.profile_image = null" />
+                                                        <div v-else class="fallback-box d-flex justify-content-center align-items-center" style="border-radius: 50%"><i class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i></div>
+
+                                                        <div class="d-flex flex-column">
+                                                            <span class="names" :style="{ color: Color.background_color }">
+                                                                {{ item.member_name }}
+                                                            </span>
+                                                            <span class="role" :style="{ color: Color.background_color }">
+                                                                {{ item.role }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="gallery-row">
                                     <div class="gallery-big" v-if="group[0]">
                                         <img :src="group[0].image" :alt="group[0].title" @click="openSlide(gIndex)"/>
@@ -210,6 +246,53 @@
                     </section>
                 </div>
             </section>
+            <section class="w-full bg-white py-14">
+                <div class="container mx-auto max-w-[600px] text-center">
+                    <div class="flex justify-center mb-4">
+                        <img :src="member?.image || image" style="border-radius: 50%; width: 120px; height: 120px"  />
+                    </div>
+
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        {{ member?.first_name || fname }} {{ member?.last_name || lname }}
+                    </h2>
+
+                    <p class="text-gray-500 text-sm mb-4">
+                        {{ member?.role || role }}
+                    </p>
+
+                    <div v-if="member?.social_links?.length || links?.length" class="flex justify-center space-x-3" style="gap: 10px; display: flex; justify-content: center;">
+                        <button v-for="link in member?.social_links || links" :style="{ width: '34px', height: '34px', color: Color.background_color, backgroundColor: Color.primary_color, border: 'none', borderRadius: '50%', gap: '20px'}" :key="link.platform" @click="window.open(link.url, '_blank')">
+                            <i v-if="link.platform === 'facebook'" class="fab fa-facebook-f"></i>
+                            <i v-else-if="link.platform === 'instagram'" class="fab fa-instagram"></i>
+                            <span v-else-if="link.platform === 'flickr'" class="flickr-dots">
+                                <i class="fa fa-circle"></i><i class="fa fa-circle"></i>
+                            </span>
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <section>
+                <div class="container">
+                    <div class="suggestion-header d-flex justify-content-between align-items-center">
+                        <h3 class="heading" :style="{fontWeight: '500'}">More on Club Galleries</h3>
+
+                        <button id="view" :style="{color: Color.background_color, backgroundColor: Color.accent_color}" style="border: none">View All</button>
+                    </div>
+
+                    <div class="suggestion-gallery">
+                        <div v-for="(item, index) in suggestion.slice(0, 4)" :key="index" class="suggestion-card">
+                            <img :src="item.image" :alt="item.title" />
+                            <div class="img-overlay" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7), textAlign: 'center', justifyContent: 'center', display: 'flex', alignItems: 'center' }">
+                                <p class="photo-title">{{ item.title }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
              <footer class="site-footer">
                 <div class="footer-content">
                     <p class="memtext" id="fcopy">Copyright &copy; 2025 – {{Club.club_name}}</p>
@@ -236,10 +319,16 @@ import { storeToRefs } from 'pinia'
 import { useRytonGalleryStore } from '@/stores/club_public/RytonGallery';
 import Hea from "@/assets/icons/gallery/heart.svg"
 import Com from "@/assets/icons/gallery/comment.svg"
+import randommembergallery from '@/api/club_public/randommembergallery';
+import randomclubgallery from '@/api/club_public/randomclubgallery';
+import memberApi from "@/api/club_public/rytonsinglemembergallery"
 
 const router = useRouter()
 const route = useRoute()
+const member = ref(null)
 const store = useRytonSingleMemGalStore()
+const randomMembers = ref([])
+const randomClubs = ref([])
 const imageList = ref([])
 dayjs.extend(relativeTime);
 const isLoading = ref(true);
@@ -251,7 +340,6 @@ const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
 const homeStore = useHomeStore();
 const user = useUserStore();
 const rytongalleryStore = useRytonGalleryStore();
-
 
 const galleryId = route.params.id
 const { username, profile_image_url } = storeToRefs(user)
@@ -320,7 +408,19 @@ onMounted(async () => {
   try{
   await store.fetchRytonSingleMemGalData(galleryId)
   imageList.value = store.galleryImages.map(img => img.image_url)
+
   await homeStore.fetchHomeData(domain);
+
+  const res = await randommembergallery.getAllRandomMember()
+  randomMembers.value = res.data.data.randomGalleries || []  // ← full API array
+  console.log("Random Members:", randomMembers.value)
+
+  const response = await randomclubgallery.getAllRandomClub()
+  randomClubs.value = response.data.data.randomGalleries || []  // ← full API array
+  console.log("Random Clubs:", randomClubs.value)
+
+  const ress = await memberApi.getSingleMember()
+  member.value = ress.data.data.member     // <-- required object
   } catch (error) {
     console.error("Error fetching ryton member gallery data:", error);
   } finally {
@@ -328,13 +428,60 @@ onMounted(async () => {
   }
 })
 
+
+const suggestion = computed(() => {
+    return randomClubs.value.map(club => {
+        const firstPhoto = club.photos[0]   // first image
+
+        return {
+            gallery_id: club.gallery_id,
+            gallery_name: club.gallery_name,
+            total_photos: club.total_photos,
+            image: firstPhoto?.image || "",
+            title: firstPhoto?.title || "",
+            comments_count: firstPhoto?.comments_count || 0,
+            likes_count: firstPhoto?.likes_count || 0,
+           uploaded_by: firstPhoto?.uploaded_by || "",
+
+        }
+    })
+})
+
+const suggestions = computed(() => {
+  return randomMembers.value.map(member => {
+    const firstGallery = member.galleries?.[0]
+    const firstPhoto = firstGallery?.photos?.[0]
+
+    return {
+      gallery_id: firstGallery?.id || "",
+      gallery_name: firstGallery?.gallery_name || "",
+      profile_image: member.profile_image_url,
+      total_photos: firstGallery?.photos?.length || 0,
+      image: firstPhoto?.image_url || "",
+      title: firstPhoto?.title || "",
+      comments_count: firstPhoto?.comments_count || 0,
+      likes_count: firstPhoto?.likes_count || 0,
+      uploaded_by: firstPhoto?.uploaded_by || "",
+      member_name: member.first_name + " " + member.last_name
+    }
+  })
+})
+
+
 const galleryName = computed(() => store.galleryName)
 const galleryImages = computed(() => store.galleryImages)
+const links = computed(() => store.socialLinks)
+const image = computed(() => store.profileImage)
+const fname = computed(() => store.firstName)
+const lname = computed(() => store.lastName)
+const role = computed(() => store.role)
+console.log(image)
 
 const groupedImages = computed(() => {
+  const limitedImages = galleryImages.value // ✅ show only top 10 images
   const groups = []
-  for (let i = 0; i < galleryImages.value.length; i += 5) {
-    groups.push(galleryImages.value.slice(i, i + 5))
+  for (let i = 0; i < limitedImages.length; i += 5) {
+    groups.push(limitedImages.slice(i, i + 5))
   }
   return groups
 })
@@ -422,26 +569,28 @@ margin: 0;
 .search-input::placeholder {
   color: #c0c0c0;
 }
-.clubpics {
+.suggestions-gallery, .suggestion-gallery {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
+  gap: 20px
 }
 
-.clubpics-item {
+.suggestions-card, .suggestion-card {
   position: relative;
   overflow: hidden;
 }
 
-.clubpics-item img {
+.suggestions-card img, .suggestion-card img {
   border-radius: 0;
   width: 100%;
-  height: 412px;
+  height: 295px;
   object-fit: cover;
   object-position: top;
 }
 
-.clubpics-info {
+
+.suggestions-card .img-overlay, .suggestion-card .img-overlay {
   background: #4c403699;
   position: absolute;
   bottom: 0;
@@ -453,9 +602,39 @@ margin: 0;
   font-weight: 600;
   font-family: Inter;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 55px;
+  height: 70px;
+  gap: 20px;
+}
+.img-overlay .names {
+    font-family: Inter;
+font-weight: 500;
+font-style: Medium;
+font-size: 18px;
+line-height: 24px;
+letter-spacing: 0px;
+}
+.img-overlay .role {
+    font-family: Inter;
+font-weight: 300;
+font-style: Light;
+font-size: 14px;
+line-height: 20px;
+letter-spacing: 0px;
+}
+
+
+ #view {
+     max-width: 130px;
+     height: 40px;
+     opacity: 1;
+     padding: 10px 17px;
+     gap: 10px;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
  .icon-circles .flickr-dots i, .flickr-dots i{
      font-size: 8px;

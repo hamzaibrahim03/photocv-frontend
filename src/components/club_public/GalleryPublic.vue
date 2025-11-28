@@ -6,7 +6,7 @@
         <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: Color.background_color, height: '108px' }">
             <div class="container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand d-flex align-items-center" href="/">
-                    <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px" />
+                    <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px; margin-left: 10px" />
                 </a>
 
                     <button class="navbar-toggler me-2" type="button" @click="toggleNav">
@@ -42,6 +42,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/rytonnotice" :style="{ color: Color.text_color }">
+                                Notice
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/rytonclub" :style="{ color: Color.text_color }">
                                 Club
                             </a>
@@ -49,7 +54,7 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.html" class="icon notification-desktop">
+                        <a href="notification.vue" class="icon notification-desktop">
                             <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
                         </a>
                         <div class="divider"></div>
@@ -73,8 +78,8 @@
 
                                 
                             </a>
-                            <span v-if="username" class="notification-desktop">Welcome, {{ username }}</span>
-                            <span v-else class="notification-desktop">Welcome, Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
+                            <span v-if="username" class="notification-desktop">{{ username }}</span>
+                            <span v-else class="notification-desktop">Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
 
                             <div class="dropdown-menu" v-show="isDropdownOpen">
                                 <a class="nav-link" href="#" @click.prevent="handleLogout">
@@ -133,12 +138,12 @@
                     <section id="galcontainer">
                         <div class="container">
                             <div style="height: auto; border: none" :style="{backgroundColor: Color.background_color}">
-                                <div class="d-flex justify-content-between align-items-end mb-3" id="cl">
+                                <div class="d-flex justify-content-between align-items-end" id="cl">
                                     <div style="align-items: flex-end">
-                                        <h5 id="clubheading" :style="{color: Color.text_color, marginBottom: '15px'}">Club Galleries</h5>
-                                        <p id="clubsub" :style="{color: Color.text_color}">
+                                        <h5 id="clubheading" :style="{color: Color.text_color}">Club Galleries</h5>
+                                        <h5 id="clubsub" :style="{color: Color.text_color, marginBottom: '0px'}">
                                             A preview of galleries made up of amazing photographs from club members
-                                        </p>
+                                        </h5>
                                     </div>
 
                                     <router-link to="/rytonclubgallery" custom v-slot="{ navigate }">
@@ -164,12 +169,12 @@
                     <section id="galcontainer">
                         <div class="container">
                             <div style="height: auto; border: none" :style="{backgroundColor: Color.background_color}">
-                                <div class="d-flex justify-content-between align-items-end mb-3" id="cl">
+                                <div class="d-flex justify-content-between align-items-end" id="cl">
                                     <div style="align-items: flex-end">
-                                        <h5 id="clubheading" :style="{color: Color.text_color, marginBottom: '15px'}">Member Galleries</h5>
-                                        <p id="clubsub" :style="{color: Color.text_color}">
+                                        <h5 id="clubheading" :style="{color: Color.text_color, marginLeft: '-5px'}">Member Galleries</h5>
+                                        <h5 id="clubsub" :style="{color: Color.text_color, marginBottom: '0px', marginLeft: '-5px'}">
                                             A preview of galleries uploaded by our amazing photographers from the club
-                                        </p>
+                                        </h5>
                                     </div>
 
                                     <router-link to="/rytonmembergallery" custom v-slot="{ navigate }">
@@ -414,10 +419,16 @@ onMounted(async () => {
 
 <style scoped>
 #overall {
-     padding: 0 25px 50px 30px;
+     padding: 16px 53px 50px 77px;
 }
 #heads {
-    padding: 50px 70px 20px 70px;
+    padding: 60px 70px 20px 90px;
+}
+#galcontainer {
+    padding: 55px 0 13px;
+}
+#joincontainer {
+    margin-top: 130px;
 }
 .events-header {
   display: flex;
@@ -472,6 +483,26 @@ margin: 0;
 .search-input::placeholder {
   color: #c0c0c0;
 }
+#clubheading {
+    font-family: Inter;
+font-weight: 500;
+font-style: Medium;
+font-size: 32px;
+line-height: 100%;
+letter-spacing: 0%;
+margin-bottom: 28px
+}
+#clubsub {
+    font-family: Inter;
+font-weight: 400;
+font-style: Regular;
+font-size: 18px;
+line-height: 100%;
+letter-spacing: 0%;
+}
+#cl {
+    margin-bottom: 50px;
+}
 .clubpics {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -505,18 +536,19 @@ margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 55px;
+  text-align: center;
+  height: 60px;
 }
  #view {
-     max-width: 130px;
-     height: 40px;
+     max-width: 186px;
+     height: 60px;
      opacity: 1;
-     padding: 10px 17px;
+     padding: 8px 16px;
      gap: 10px;
      font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 16px;
+     font-weight: 600;
+     font-style: Semi-Bold;
+     font-size: 20px;
      line-height: 100%;
      letter-spacing: 0%;
 }

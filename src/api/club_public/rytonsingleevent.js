@@ -1,9 +1,9 @@
 import apiClient from '@/api/axios'
 
 export const getAllRytonSingleEvent = (id) => {
-    console.log("ID", id)
-  return apiClient.post(`/club/public/event/`,  { event_id: id }); 
- 
+    console.log("eID", id)
+    // ID must be part of the URL
+    return apiClient.get(`/club/public/event/${id}`);
 }
 
 export default {
