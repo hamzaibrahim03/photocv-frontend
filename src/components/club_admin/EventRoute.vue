@@ -152,16 +152,9 @@
 </template>
 
 <script setup>
-import {
-    ref,
-    computed,
-    onMounted,
-    watch
-} from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import apiClient from '@/api/axios'
-import {
-    useEventStore
-} from '@/stores/club_admin/EventStore'
+import { useEventStore } from '@/stores/club_admin/EventStore'
 import Video from "@/assets/icons/quick_event/video.svg"
 import Star from "@/assets/icons/quick_event/star.svg"
 import Set from "@/assets/icons/quick_event/set.svg"
@@ -278,242 +271,221 @@ function goToPage(page) {
 
 <style scoped>
 .container {
-  max-width: 1810px;
-  padding: 0 15px;
-  margin: 0 auto;
+     max-width: 1810px;
+     padding: 0 15px;
+     margin: 0 auto;
 }
-.content {
-    padding: 0 30px;
+ .content {
+     padding: 0 30px;
 }
-.dashboard-card {
-  gap: 15px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 20px 0px 40px;
+ .dashboard-card {
+     gap: 15px;
+     border-radius: 10px;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     width: 100%;
+     padding: 20px 0px 40px;
 }
-
-.profile-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  width: 975px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  height: 148px;
+ .profile-card {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     background: white;
+     padding: 30px;
+     border-radius: 10px;
+     width: 975px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     height: 148px;
 }
-
-.profile-left {
-  display: flex;
-  align-items: left;
+ .profile-left {
+     display: flex;
+     align-items: left;
 }
-
-.profile-left img {
-  width: 100%;
-  max-width: 108px;
-  height: 108px;
-  border-radius: 50%;
+ .profile-left img {
+     width: 100%;
+     max-width: 108px;
+     height: 108px;
+     border-radius: 50%;
 }
-
-.greeting {
-  color: #99816b;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 100%;
-  font-style: Regular;
-  font-family: Inter;
+ .greeting {
+     color: #99816b;
+     font-weight: 400;
+     font-size: 16px;
+     line-height: 100%;
+     font-style: Regular;
+     font-family: Inter;
 }
-
-.name {
-  font-weight: 500;
-  font-size: 30px;
-  line-height: 100%;
-  color: #4c4036;
-  font-style: Medium;
-  font-family: Inter;
+ .name {
+     font-weight: 500;
+     font-size: 30px;
+     line-height: 100%;
+     color: #4c4036;
+     font-style: Medium;
+     font-family: Inter;
 }
-
-.names {
-  font-family: Inter;
-  font-weight: 400;
-  font-size: 18.68px;
-  line-height: 20.76px;
-  letter-spacing: 0%;
+ .names {
+     font-family: Inter;
+     font-weight: 400;
+     font-size: 18.68px;
+     line-height: 20.76px;
+     letter-spacing: 0%;
 }
-
-.namess {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 100%;
-  color: #4c4036;
-  padding-left: 20px;
-  font-family: Inter;
-  text-align: justify;
+ .namess {
+     font-weight: 400;
+     font-size: 16px;
+     line-height: 100%;
+     color: #4c4036;
+     padding-left: 20px;
+     font-family: Inter;
+     text-align: justify;
 }
-
-.left-header-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+ .left-header-container {
+     display: flex;
+     align-items: center;
+     gap: 10px;
 }
-
-.role {
-  color: #cc445e;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 100%;
-  font-family: Inter;
-  font-style: Regular;
+ .role {
+     color: #cc445e;
+     font-weight: 400;
+     font-size: 16px;
+     line-height: 100%;
+     font-family: Inter;
+     font-style: Regular;
 }
-
-.profile-icons {
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
+ .profile-icons {
+     display: flex;
+     gap: 10px;
+     flex-direction: column;
 }
-
-.profile-icon {
-  display: flex;
-  flex-direction: column;
+ .profile-icon {
+     display: flex;
+     flex-direction: column;
 }
-
-.icons {
-  display: flex;
-  align-items: center;
-  color: white;
-  font-size: 14px;
-  gap: 5px;
+ .icons {
+     display: flex;
+     align-items: center;
+     color: white;
+     font-size: 14px;
+     gap: 5px;
 }
-
-.icon {
-  display: flex;
-  align-items: center;
-  color: #cc445e;
-  font-size: 14px;
-  gap: 5px;
+ .icon {
+     display: flex;
+     align-items: center;
+     color: #cc445e;
+     font-size: 14px;
+     gap: 5px;
 }
-
-.icon i {
-  margin-right: 5px;
+ .icon i {
+     margin-right: 5px;
 }
-
-.stat-card {
-  background: #cc445e;
-  color: white;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  width: 219px;
-  font-family: Inter;
-  font-size: 1.2rem;
-  height: 148px;
+ .stat-card {
+     background: #cc445e;
+     color: white;
+     padding: 20px;
+     border-radius: 8px;
+     text-align: center;
+     width: 219px;
+     font-family: Inter;
+     font-size: 1.2rem;
+     height: 148px;
 }
-
-.event-card {
-  background: #755840;
-  color: white;
-  padding: 20px;
-  height: 148px;
-  border-radius: 8px;
-  text-align: center;
-  font-family: Inter;
-  font-size: 1.2rem;
-  width: 219px;
+ .event-card {
+     background: #755840;
+     color: white;
+     padding: 20px;
+     height: 148px;
+     border-radius: 8px;
+     text-align: center;
+     font-family: Inter;
+     font-size: 1.2rem;
+     width: 219px;
 }
-
-.number {
-  font-weight: 500;
-  font-size: 48px;
-  font-family: Inter;
-  line-height: 100%;
-  color: white;
-  margin-top: 30px;
+ .number {
+     font-weight: 500;
+     font-size: 48px;
+     font-family: Inter;
+     line-height: 100%;
+     color: white;
+     margin-top: 30px;
 }
-
-.ca-details {
-  font-weight: 400;
-  font-size: 20px;
-  font-family: Inter;
-  line-height: 100%;
+ .ca-details {
+     font-weight: 400;
+     font-size: 20px;
+     font-family: Inter;
+     line-height: 100%;
 }
-
-.days {
-  margin-top: 35px;
-  font-weight: 400;
-  font-family: Inter;
-  font-size: 16px;
-  line-height: 100%;
+ .days {
+     margin-top: 35px;
+     font-weight: 400;
+     font-family: Inter;
+     font-size: 16px;
+     line-height: 100%;
 }
-.card-section {
-  display: flex;
-  gap: 35px;
-  width: 31.5%;
+ .card-section {
+     display: flex;
+     gap: 35px;
+     width: 31.5%;
 }
-.cardddd:first-child {
-  background: white;
-  width: 100%;
-  padding: 20px;
-  height: 390px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  margin-top: 20px;
+ .cardddd:first-child {
+     background: white;
+     width: 100%;
+     padding: 20px;
+     height: 390px;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     margin-top: 20px;
 }
-.cardddd {
-  background: white;
-  width: 100%;
-  padding: 20px;
-  height: 390px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+ .cardddd {
+     background: white;
+     width: 100%;
+     padding: 20px;
+     height: 390px;
+     border-radius: 10px;
+     margin-bottom: 20px;
 }
-
-.custom-card {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px;
-  padding: 30px;
-  border-radius: 10px;
-  width: 975px;
-  height: 310px;
-  margin-right: auto;
-  flex-direction: row;
-  margin-top: 30px;
+ .custom-card {
+     display: flex;
+     align-items: center;
+     background-color: white;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     margin-bottom: 15px;
+     padding: 30px;
+     border-radius: 10px;
+     width: 975px;
+     height: 310px;
+     margin-right: auto;
+     flex-direction: row;
+     margin-top: 30px;
 }
-.custom-card img {
-    max-width: 300px;
-  height: 250px;
-  width: 300px;
-  border-radius: 7px;
+ .custom-card img {
+     max-width: 300px;
+     height: 250px;
+     width: 300px;
+     border-radius: 7px;
 }
-#view {
-  width: 120px;
-  max-width: 120px;
-  height: 40px;
-  border-radius: 7px;
-  background-color: #99816b;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 100%;
-  font-family: Inter;
-  color: white;
+ #view {
+     width: 120px;
+     max-width: 120px;
+     height: 40px;
+     border-radius: 7px;
+     background-color: #99816b;
+     font-weight: 400;
+     font-size: 16px;
+     line-height: 100%;
+     font-family: Inter;
+     color: white;
 }
-
-#edit {
-  width: 120px;
-  max-width: 120px;
-  height: 40px;
-  border-radius: 7px;
-  background-color: #4c4036;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 100%;
-  color: white;
-  font-family: Inter;
+ #edit {
+     width: 120px;
+     max-width: 120px;
+     height: 40px;
+     border-radius: 7px;
+     background-color: #4c4036;
+     font-weight: 400;
+     font-size: 16px;
+     line-height: 100%;
+     color: white;
+     font-family: Inter;
 }
 </style>

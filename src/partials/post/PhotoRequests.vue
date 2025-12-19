@@ -45,19 +45,16 @@ const requests = ref([
   width: 10px;
 }
 
-/* Track */
 .photo-requests::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 10px;
 }
  
-/* Handle */
 .photo-requests::-webkit-scrollbar-thumb {
   background: #a0846c; 
   border-radius: 10px;
 }
 
-/* Handle on hover */
 .photo-requests::-webkit-scrollbar-thumb:hover {
   background: #8a6f58; 
 }

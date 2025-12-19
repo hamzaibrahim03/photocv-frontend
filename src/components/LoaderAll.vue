@@ -18,50 +18,46 @@ export default {
 </script>
 
 <style scoped>
-/* Background Overlay */
 .loader-overlay {
-  position: fixed;
-  inset: 0; 
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+     position: fixed;
+     inset: 0;
+     background: rgba(0, 0, 0, 0.6);
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     z-index: 9999;
 }
-
-/* Loader animation */
-.loader {
-  width: 60px;
-  aspect-ratio: 1;
-  display: grid;
-  border: 4px solid transparent;
-  border-radius: 50%;
-  border-right-color: #25b09b;
-  animation: l15 1s infinite linear;
+ .loader {
+     width: 60px;
+     aspect-ratio: 1;
+     display: grid;
+     border: 4px solid transparent;
+     border-radius: 50%;
+     border-right-color: #25b09b;
+     animation: l15 1s infinite linear;
 }
-.loader::before,
-.loader::after {    
-  content: "";
-  grid-area: 1/1;
-  margin: 2px;
-  border: inherit;
-  border-radius: 50%;
-  animation: l15 2s infinite;
+ .loader::before, .loader::after {
+     content: "";
+     grid-area: 1/1;
+     margin: 2px;
+     border: inherit;
+     border-radius: 50%;
+     animation: l15 2s infinite;
 }
-.loader::after {
-  margin: 8px;
-  animation-duration: 3s;
+ .loader::after {
+     margin: 8px;
+     animation-duration: 3s;
 }
-@keyframes l15{ 
-  100% { transform: rotate(1turn) }
+ @keyframes l15{
+     100% {
+         transform: rotate(1turn) 
+    }
 }
-
-/* Loader text */
-p {
-  margin-top: 15px;
-  font-size: 16px;
-  color: #fff;
-  letter-spacing: 0.5px;
+ p {
+     margin-top: 15px;
+     font-size: 16px;
+     color: #fff;
+     letter-spacing: 0.5px;
 }
 </style>

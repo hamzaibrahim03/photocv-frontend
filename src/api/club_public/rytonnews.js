@@ -10,5 +10,5 @@ export const getRytonNewById = (id) => {
 
 export default {
   getAllRytonNews,
-  getRytonNewById,
+  getRytonNewById
 }

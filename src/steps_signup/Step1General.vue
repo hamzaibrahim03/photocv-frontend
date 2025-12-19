@@ -4,6 +4,7 @@
     subtitle="We just need a few basic details of the club."
   />
 <div class="form">
+    <h5 class="head">Basic Details</h5>
     <!-- Club Name & Tagline -->
     <div class="row">
         <div class="col-md-6 mb-3">
@@ -15,36 +16,86 @@
             <input type="text" class="form-control" />
         </div>
     </div>
+    <h5 class="fw-semibold mb-3">Domain Type and Name Options</h5>
+
     <div class="row">
+
         <div class="col-md-6">
-            <label for="domain_type">Domain Type</label>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-control">
-                        <input type="radio" id="custom" name="domain_type" value="Custom Domain" />&nbsp;
-                        <span>Custom Domain</span>
+            <div class="form-check">
+                <div class="row">
+                    <div class="col-md-4">
+                        <input class="form-check-input" type="radio" name="domain_type" id="subdomain" value="subdomain">
+                        <label class="form-check-label fw-semibold" for="subdomain">
+                            Subdomain
+                        </label>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-control">
-                        <input type="radio" id="sub" name="domain_type" value="Subdomain" />&nbsp;
-                        <span>Sub Domain</span>
+                    <div class="col-md-8">
+                        <span class="small text-muted d-block ms-4 mt-1">
+                            Use our domain, type your name
+                        </span>
                     </div>
                 </div>
             </div>
+
+            <div class="input-group mt-3">
+                <input type="text" class="form-control" v-model="domainName" placeholder="yourclubname" />
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" >
+                    {{ selectedDomain }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li v-for="item in domainOptions" :key="item">
+                        <a class="dropdown-item" href="#" @click.prevent="selectDomain(item)">
+                            {{ item }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-6 mb-3">
-            <label for="domain_name"> Domain Name </label>
-            <input type="text" class="form-control" />
+
+        <div class="col-md-6">
+            <div class="form-check mb-2">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input class="form-check-input" type="radio" name="domain_type" id="customdomain" value="customdomain">
+                        <label class="form-check-label fw-semibold" for="customdomain">
+                            Custom Domain
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="small text-muted d-block ms-4 mt-1">Use your own domain</span>
+                    </div>
+                </div>
+            </div>
+            <input type="text" class="form-control mt-3" placeholder="example.com">
         </div>
+
     </div>
 
-    <!-- Button -->
+
     <div class="button-group" style="justify-content:left">
         <button class="btn btn-sm" id="edit">Next</button>
     </div>
 </div>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+
+const domainName = ref("");
+const selectedDomain = ref(".cameraclub.website");
+
+const domainOptions = [
+  ".cameraclub.website",
+  ".ca.cameraclub.website",
+  ".uk.cameraclub.website",
+  ".aus.cameraclub.website",
+];
+
+const selectDomain = (item) => {
+  selectedDomain.value = item;
+};
+</script>
+
 
 <style scoped>
 .form {

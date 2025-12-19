@@ -15,6 +15,8 @@ import NoticeSingle from "@/components/club_admin/NoticeSingle.vue";
 import MemberSingle from "@/components/club_admin/MemberSingle.vue";
 import NoticeRoute from "@/components/club_admin/NoticeRoute.vue";
 import NewsRoute from "@/components/club_admin/NewsRoute.vue";
+import NewsEdit from "@/components/club_admin/NewsEdit.vue";
+import NewsSingle from "@/components/club_admin/NewsSingle.vue";
 import PagesRoute from "@/components/club_admin/PagesRoute.vue";
 import MembersRoute from "@/components/club_admin/MembersRoute.vue";
 import MemberAdd from "@/components/club_admin/MemberAdd.vue";
@@ -58,6 +60,8 @@ import NewsPublic from "@/components/club_public/NewsPublic.vue"
 import NoticeSinglePublic from "@/components/club_public/NoticeSinglePublic.vue"
 import NoticePublic from "@/components/club_public/NoticePublic.vue"
 import ClubPublic from "@/components/club_public/ClubPublic.vue"
+import RytonCompetitionResults from "@/components/club_public/RytonCompetitionResults.vue"
+import RytonSingleResults from "@/components/club_public/RytonSingleResults.vue"
 const routes = [
   {
     name: "Login",
@@ -85,20 +89,20 @@ const routes = [
     component: EventRoute,
   },
   {
-    path: '/eventsingle/:id',
     name: 'eventsingle',
+    path: '/eventsingle/:id',
     component: EventSingle
   },
   {
-    path: '/events_add',
-    name: "events_add",
-    component: EventsAdd,
-  },  
-  {
-    path: '/events_add/edit/:id',
     name: "events_edit",
+    path: '/events_add/edit/:id',
     component: EventsAdd,
   },
+  {
+    name: "events_add",
+    path: '/events_add',
+    component: EventsAdd,
+  },  
   {
     name: "Competitions",
     path: "/competitions",
@@ -208,6 +212,21 @@ const routes = [
     name: "NewsRoute",
     path: "/news",
     component: NewsRoute,
+  },
+  {
+    name: "newssingle",
+    path: "/newssingle/:id",
+    component: NewsSingle,
+  },
+  {
+    name: "news_edit",
+    path: "/news_edit/edit/:id",
+    component: NewsEdit,
+  },
+  {
+    name: "NewsAdd",
+    path: "/news_edit",
+    component: NewsEdit,
   },
   {
     name: "PagesRoute",
@@ -370,6 +389,16 @@ const routes = [
     name: "ClubPublic",
     path: "/rytonclub",
     component: ClubPublic,
+  },
+  {
+    name: "RytonCompetitionResults",
+    path: "/compresult",
+    component: RytonCompetitionResults,
+  },
+  {
+    name: "RytonSingleResults",
+    path: "/compsinresult/:id",
+    component: RytonSingleResults,
   },
 ];
 

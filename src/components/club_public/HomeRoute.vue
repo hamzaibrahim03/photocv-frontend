@@ -928,265 +928,216 @@ function getPositionClass(index, total) {
 
 <style scoped>
 .Latest {
-    background: white;
-    width: 35%;
-    height: 370px;
-    border-radius: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
+     background: white;
+     width: 35%;
+     height: 370px;
+     border-radius: 10px;
+     margin-left: 20px;
+     margin-right: 20px;
 }
-
-.comments-card {
-    width: 99%;
-    height: 330px;
-    overflow-y: auto;
-    margin-left: 0%;
-    border-radius: 10px;
-    padding: 20px 20px;
+ .comments-card {
+     width: 99%;
+     height: 330px;
+     overflow-y: auto;
+     margin-left: 0%;
+     border-radius: 10px;
+     padding: 20px 20px;
 }
-
-.comments-cards {
-    margin-left: 1%;
-    width: 99%;
-    height: 330px;
+ .comments-cards {
+     margin-left: 1%;
+     width: 99%;
+     height: 330px;
 }
-
-.site-footer {
-    padding-top: 25px;
-    padding-bottom: 10px;
-    text-align: center;
-    font-size: 14px;
-    color: #555;
-    border-top: 1px solid #ddd;
-    margin-top: 40px;
+ .site-footer {
+     padding-top: 25px;
+     padding-bottom: 10px;
+     text-align: center;
+     font-size: 14px;
+     color: #555;
+     border-top: 1px solid #ddd;
+     margin-top: 40px;
 }
-
-.site-footer a {
-    color: #007bff;
-    text-decoration: none;
+ .site-footer a {
+     color: #007bff;
+     text-decoration: none;
 }
-
-.site-footer a:hover {
-    text-decoration: underline;
+ .site-footer a:hover {
+     text-decoration: underline;
 }
-
-.ultrahead {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 72px;
-    line-height: 20px;
-    letter-spacing: 0%;
+ .ultrahead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 72px;
+     line-height: 20px;
+     letter-spacing: 0%;
 }
-
-.heading {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 36px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .heading {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.head {
-    font-family: Inter;
-    font-weight: 500;
-    font-style: Medium;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .head {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 24px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.clubhead {
-    font-family: Inter;
-    font-weight: 600;
-    font-style: Semi Bold;
-    font-size: 20px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .clubhead {
+     font-family: Inter;
+     font-weight: 600;
+     font-style: Semi Bold;
+     font-size: 20px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.subhead {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 18px;
-    line-height: 36px;
-    letter-spacing: 0%;
+ .subhead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 18px;
+     line-height: 36px;
+     letter-spacing: 0%;
 }
-
-.memtext {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 16px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .memtext {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.prehead {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0%;
+ .prehead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 20px;
+     letter-spacing: 0%;
 }
-
-.galtext {
-    font-family: Inter;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .galtext {
+     font-family: Inter;
+     font-weight: 400;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.event-img,
-.fallback-box {
-    width: 100%;
-    max-width: 50px;
-    height: 50px;
-    border-radius: 7px;
-    object-fit: cover;
-    background-color: #D6DFD2;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+ .event-img, .fallback-box {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 7px;
+     object-fit: cover;
+     background-color: #D6DFD2;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-
-.event-item {
-    gap: 20px;
+ .event-item {
+     gap: 20px;
 }
-
-.fallback-box {
-    font-size: 14px;
-    color: #D6DFD2;
-;
+ .fallback-box {
+     font-size: 14px;
+     color: #D6DFD2;
+     ;
 }
-
-.icon-circles .flickr-dots i, .flickr-dots i{
-    font-size: 8px;
-    padding-bottom: 10px;
-    margin: 1px;
+ .icon-circles .flickr-dots i, .flickr-dots i{
+     font-size: 8px;
+     padding-bottom: 10px;
+     margin: 1px;
 }
-
-.clubpics-item.top-left img {
-    border-top-left-radius: 10px !important;
+ .clubpics-item.top-left img {
+     border-top-left-radius: 10px !important;
 }
-
-.clubpics-item.top-right img {
-    border-top-right-radius: 10px !important;
+ .clubpics-item.top-right img {
+     border-top-right-radius: 10px !important;
 }
-
-.clubpics-item.bottom-left img {
-    border-bottom-left-radius: 10px !important;
+ .clubpics-item.bottom-left img {
+     border-bottom-left-radius: 10px !important;
 }
-
-.clubpics-item.bottom-right img {
-    border-bottom-right-radius: 10px !important;
+ .clubpics-item.bottom-right img {
+     border-bottom-right-radius: 10px !important;
 }
-
-.clubpics-info.bottom-left {
-    border-bottom-left-radius: 10px;
+ .clubpics-info.bottom-left {
+     border-bottom-left-radius: 10px;
 }
-
-.clubpics-info.bottom-right {
-    border-bottom-right-radius: 10px;
+ .clubpics-info.bottom-right {
+     border-bottom-right-radius: 10px;
 }
-.pics-items.top-left img {
-    border-top-left-radius: 10px;
+ .pics-items.top-left img {
+     border-top-left-radius: 10px;
 }
-
-.pics-items.top-right img {
-    border-top-right-radius: 10px;
+ .pics-items.top-right img {
+     border-top-right-radius: 10px;
 }
-
-.pics-items.bottom-left img {
-    border-bottom-left-radius: 10px;
+ .pics-items.bottom-left img {
+     border-bottom-left-radius: 10px;
 }
-
-.pics-items.bottom-right img {
-    border-bottom-right-radius: 10px;
+ .pics-items.bottom-right img {
+     border-bottom-right-radius: 10px;
 }
-.pics-infos.bottom-left {
-    border-bottom-left-radius: 10px;
+ .pics-infos.bottom-left {
+     border-bottom-left-radius: 10px;
 }
-
-.pics-infos.bottom-right {
-    border-bottom-right-radius: 10px;
+ .pics-infos.bottom-right {
+     border-bottom-right-radius: 10px;
 }
-.resultpics-items.top-left img {
-    border-top-left-radius: 10px;
+ .resultpics-items.top-left img {
+     border-top-left-radius: 10px;
 }
-
-.resultpics-items.top-right img {
-    border-top-right-radius: 10px;
+ .resultpics-items.top-right img {
+     border-top-right-radius: 10px;
 }
-
-.resultpics-items.bottom-left img {
-    border-bottom-left-radius: 10px;
+ .resultpics-items.bottom-left img {
+     border-bottom-left-radius: 10px;
 }
-
-.resultpics-items.bottom-right img {
-    border-bottom-right-radius: 10px;
+ .resultpics-items.bottom-right img {
+     border-bottom-right-radius: 10px;
 }
-.resultpics-infos.bottom-left {
-    border-bottom-left-radius: 10px;
+ .resultpics-infos.bottom-left {
+     border-bottom-left-radius: 10px;
 }
-
-.resultpics-infos.bottom-right {
-    border-bottom-right-radius: 10px;
+ .resultpics-infos.bottom-right {
+     border-bottom-right-radius: 10px;
 }
-
-.clubpics-item.special-radius img,
-.clubpics-info.special-radius{
-  border-bottom-right-radius: 10px;
+ .clubpics-item.special-radius img, .clubpics-info.special-radius{
+     border-bottom-right-radius: 10px;
 }
-
-.pics-items.special-radius img,
-.pics-infos.special-radius{
-  border-bottom-right-radius: 10px;
+ .pics-items.special-radius img, .pics-infos.special-radius{
+     border-bottom-right-radius: 10px;
 }
-
-.resultpics-items.special-radius img,
-.resultpics-infos.special-radius{
-  border-bottom-right-radius: 10px;
+ .resultpics-items.special-radius img, .resultpics-infos.special-radius{
+     border-bottom-right-radius: 10px;
 }
-
-
-@media only screen and (max-width: 767px) {
-.comments-cards{
-    width: 100%;
-    margin: 0 auto;
+ @media only screen and (max-width: 767px) {
+     .comments-cards{
+         width: 100%;
+         margin: 0 auto;
+    }
 }
+ @media only screen and (max-width: 991px) {
+     .right-header .profile-mobile, .right-header .divider, .notification-desktop, .down {
+         display: none !important;
+    }
+     .notification-mobile {
+         display: inline-flex !important;
+         margin-right: 10px;
+    }
+     #login {
+         padding: 0px 15px 20px 45px;
+         display: flex;
+         font-size: 18px;
+         font-family: Inter;
+         font-weight: 400;
+    }
+     .navbar .right-header {
+         margin-left: 0;
+    }
 }
-@media only screen and (max-width: 991px) {
-  .right-header .profile-mobile,
-  .right-header .divider,
-  .notification-desktop,
-  .down {
-    display: none !important;
-  }
-
-  .notification-mobile {
-    display: inline-flex !important;
-    margin-right: 10px;
-  }
-
-  #login {
-      padding: 0px 15px 20px 45px;
-      display: flex;
-      font-size: 18px;
-      font-family: Inter;
-      font-weight: 400;
-  }
-
-  .navbar .right-header {
-      margin-left: 0;
-  }
+ .notification-mobile {
+     display: none;
 }
-
-/* Default: hide mobile notification */
-.notification-mobile {
-  display: none;
-}
-
 </style>

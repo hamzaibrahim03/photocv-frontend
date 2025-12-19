@@ -95,151 +95,129 @@ const subtitle = computed(() => subtitles[currentStep.value])
 
 <style scoped>
 .form-control {
-    height: 50px;
-    font-size: 16.61px;
-    font-weight: 400;
-    padding: 12px;
-    border-radius: 5px;
-    color: #4C4036;
-    border: 1.04px solid #99816B;
+     height: 50px;
+     font-size: 16.61px;
+     font-weight: 400;
+     padding: 12px;
+     border-radius: 5px;
+     color: #4C4036;
+     border: 1.04px solid #99816B;
 }
-
-.signup-container,
-.content-wrapper {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
+ .signup-container, .content-wrapper {
+     margin: 0;
+     padding: 0;
+     width: 100vw;
+     height: 100vh;
+     display: flex;
 }
-
-.content-wrapper {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
+ .content-wrapper {
+     display: flex;
+     flex-direction: row;
+     width: 100%;
 }
-
-.form-section {
-  flex: 0.7; /* Wider form */
-  padding: 60px 50px 40px 50px;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+ .form-section {
+     flex: 0.7;
+     padding: 60px 50px 40px 50px;
+     background: #fff;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
 }
-
-.image-section {
-  flex: 0.3;
-  background-color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+ .image-section {
+     flex: 0.3;
+     background-color: #000;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     overflow: hidden;
 }
-
-.image-section img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+ .image-section img {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
 }
-
-.logo-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
+ .logo-wrapper {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-bottom: 20px;
 }
-
-.logo {
-    max-width: 200px;
-    height: auto;
+ .logo {
+     max-width: 200px;
+     height: auto;
 }
-
-.title {
-    font-size: 48px;
-    font-weight: 600;
-    color: #4c4036;
-    text-align: center;
+ .title {
+     font-size: 48px;
+     font-weight: 600;
+     color: #4c4036;
+     text-align: center;
 }
-
-.subtitle {
-    font-size: 20px;
-    color: #4c4036;
-    text-align: center;
-    margin-bottom: 30px;
+ .subtitle {
+     font-size: 20px;
+     color: #4c4036;
+     text-align: center;
+     margin-bottom: 30px;
 }
-
-.tab-control {
-    width: 100%;
-    margin: 30px 0;
-    display: flex;
-    margin-bottom: 30px;
-    position: relative;
-    padding: 0 10px;
+ .tab-control {
+     width: 100%;
+     margin: 30px 0;
+     display: flex;
+     margin-bottom: 30px;
+     position: relative;
+     padding: 0 10px;
 }
-
-.step-wrapper {
-    display: flex;
-    align-items: center;
-    position: relative;
-    flex: 1;
+ .step-wrapper {
+     display: flex;
+     align-items: center;
+     position: relative;
+     flex: 1;
 }
-
-.step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 2;
+ .step {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     z-index: 2;
 }
-
-.circle {
-    background-color: #eae0d6;
-    color: #555;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    margin-bottom: 8px;
-    transition: background-color 0.3s, color 0.3s;
+ .circle {
+     background-color: #eae0d6;
+     color: #555;
+     width: 32px;
+     height: 32px;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-weight: bold;
+     margin-bottom: 8px;
+     transition: background-color 0.3s, color 0.3s;
 }
-
-.label {
-    font-size: 11px;
-    text-align: center;
-    color: #999;
-    transition: color 0.3s;
+ .label {
+     font-size: 11px;
+     text-align: center;
+     color: #999;
+     transition: color 0.3s;
 }
-
-.step.active .circle,
-.step.completed .circle {
-    background-color: #cc445e;
-    color: #fff;
+ .step.active .circle, .step.completed .circle {
+     background-color: #cc445e;
+     color: #fff;
 }
-
-.step.active .label,
-.step.completed .label {
-    color: #cc445e;
-    font-weight: 500;
+ .step.active .label, .step.completed .label {
+     color: #cc445e;
+     font-weight: 500;
 }
-
-/* Line between steps */
-.line {
-    height: 3px;
-    background-color: #eae0d6;
-    flex: 1;
-    margin: 0 5px;
-    margin-top: -20px;
-    z-index: 1;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+ .line {
+     height: 3px;
+     background-color: #eae0d6;
+     flex: 1;
+     margin: 0 5px;
+     margin-top: -20px;
+     z-index: 1;
+     border-radius: 4px;
+     transition: background-color 0.3s;
 }
-
-.line.filled {
-    background-color: #cc445e;
+ .line.filled {
+     background-color: #cc445e;
 }
 </style>

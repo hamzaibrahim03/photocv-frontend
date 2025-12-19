@@ -5,5 +5,5 @@ export const getAllRytonGalleries = () => {
 }
 
 export default {
-    getAllRytonGalleries,
+    getAllRytonGalleries
 }

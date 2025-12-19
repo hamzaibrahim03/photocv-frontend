@@ -18,7 +18,7 @@
     </section>
 
     <div class="col-md-8">
-        <div class="p-3" id="news">
+        <div id="news">
             <section>
                 <div class="container">
                     <div class="news-list">
@@ -120,132 +120,118 @@ import HeaderRoute from "@/components/HeaderRoute.vue"
 
 <style scoped>
 .container {
-  max-width: 1810px;
-  padding: 0 15px;
-  margin: 0 auto;
+     max-width: 1810px;
+     padding: 0 15px;
+     margin: 0 auto;
 }
-.content {
-    padding: 0 30px;
+ .content {
+     padding: 0 30px;
 }
-.dashboard-card {
-  gap: 15px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 0px;
-  width: 100%;
+ .dashboard-card {
+     gap: 15px;
+     border-radius: 10px;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     padding: 20px 0px;
+     width: 100%;
 }
-
-.profile-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: white;
-  padding: 15px 25px;
-  border-radius: 12px;
-  width: 975px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  height: 148px;
+ .profile-card {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     background: white;
+     padding: 15px 25px;
+     border-radius: 12px;
+     width: 975px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     height: 148px;
 }
-
-.profile-left {
-  display: flex;
-  align-items: left;
+ .profile-left {
+     display: flex;
+     align-items: left;
 }
-
-.profile-left img {
-  width: 100%;
-  max-width: 108px;
-  height: 108px;
-  border-radius: 50%;
+ .profile-left img {
+     width: 100%;
+     max-width: 108px;
+     height: 108px;
+     border-radius: 50%;
 }
-
-.greeting {
-  color: #99816b;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 100%;
-  font-family: Inter;
+ .greeting {
+     color: #99816b;
+     font-weight: 400;
+     font-size: 18px;
+     line-height: 100%;
+     font-family: Inter;
 }
-
-.name {
-  font-weight: 500;
-  font-size: 30px;
-  line-height: 100%;
-  color: #4c4036;
-  font-family: Inter;
+ .name {
+     font-weight: 500;
+     font-size: 30px;
+     line-height: 100%;
+     color: #4c4036;
+     font-family: Inter;
 }
-
-.names {
-  font-family: Inter;
-  font-weight: 400;
-  font-size: 18.68px;
-  line-height: 20.76px;
-  letter-spacing: 0%;
+ .names {
+     font-family: Inter;
+     font-weight: 400;
+     font-size: 18.68px;
+     line-height: 20.76px;
+     letter-spacing: 0%;
 }
-
-.namess {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 100%;
-  color: #4c4036;
-  padding-left: 20px;
-  font-family: Inter;
-  text-align: justify;
+ .namess {
+     font-weight: 400;
+     font-size: 16px;
+     line-height: 100%;
+     color: #4c4036;
+     padding-left: 20px;
+     font-family: Inter;
+     text-align: justify;
 }
-
-.left-header-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+ .left-header-container {
+     display: flex;
+     align-items: center;
+     gap: 10px;
 }
-
-.role {
-  color: #cc445e;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 100%;
-  font-family: Inter;
+ .role {
+     color: #cc445e;
+     font-weight: 400;
+     font-size: 18px;
+     line-height: 100%;
+     font-family: Inter;
 }
-
-.profile-icons {
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
+ .profile-icons {
+     display: flex;
+     gap: 10px;
+     flex-direction: column;
 }
-
-.profile-icon {
-  display: flex;
-  flex-direction: column;
+ .profile-icon {
+     display: flex;
+     flex-direction: column;
 }
-
-.icons {
-  display: flex;
-  align-items: center;
-  color: white;
-  font-size: 14px;
-  gap: 5px;
+ .icons {
+     display: flex;
+     align-items: center;
+     color: white;
+     font-size: 14px;
+     gap: 5px;
 }
-
-.icon {
-  display: flex;
-  align-items: center;
-  color: #cc445e;
-  font-size: 14px;
-  gap: 5px;
+ .icon {
+     display: flex;
+     align-items: center;
+     color: #cc445e;
+     font-size: 14px;
+     gap: 5px;
 }
-
-.icon i {
-  margin-right: 5px;
+ .icon i {
+     margin-right: 5px;
 }
-.form-control {
-    height: 50px;
-    font-size: 16.61px;
-    font-weight: 400;
-    padding: 12px;
-    border-radius: 5px;
-    color: #4C4036;
-    border: 1.04px solid #99816B;
+ .form-control {
+     height: 50px;
+     font-size: 16.61px;
+     font-weight: 400;
+     padding: 12px;
+     border-radius: 5px;
+     color: #4C4036;
+     border: 1.04px solid #99816B;
 }
 </style>

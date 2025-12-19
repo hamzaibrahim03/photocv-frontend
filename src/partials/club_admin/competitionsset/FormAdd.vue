@@ -1,6 +1,6 @@
 <template>
 <div class="col-md-8">
-    <div class="p-3" id="news">
+    <div id="news">
         <div class="news-list">
             <div class="form-containers">
                 <form @submit.prevent="submitForm">

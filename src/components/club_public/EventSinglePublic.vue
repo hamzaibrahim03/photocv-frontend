@@ -113,10 +113,7 @@
                                                 <div class="d-flex w-100 justify-content-between align-items-center">
                                                     <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
-                                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+                                                        <img :src="Events[0].types?.icon_url" :alt="Events[0].types?.name" class="virtual" style="width: 25px; height: 25px" />
                                                     </div>
                                                 </div>
                                             </div>                  
@@ -166,7 +163,11 @@
                                         <img :src=" sinevent.featured_image_url" :alt=" sinevent.name" style="max-width: 850px; height: 350px; border-radius: 8px"/>
                                         <div class="d-flex justify-content-between">
                                             <h5 class="head" :style="{ color: Color.text_color }">{{  sinevent.name }}</h5>
-                                            <h5 class="head" :style="{ color: Color.text_color }">{{ sinevent.types[0].name }}</h5>
+                                            <div v-for="(t, i) in sinevent.types" :key="i" class="d-flex align-items-center gap-2 mb-1">
+                                                <img :src="t.icon_url" style="width:20px; height:20px" />
+                                                <h5 class="head m-0" :style="{ color: Color.text_color }">{{ t.name }}</h5>
+                                            </div>
+
                                         </div>
                                         <p id="edate" :style="{ color: Color.accent_color }">
                                             {{ formatDate( sinevent.event_date) }}
@@ -349,26 +350,26 @@
                                     </div>
 
                                     <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
-                                        <h5 class="head">More Events</h5>
-                                        <div class="event-list" v-if="Events.length">
-                                            <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px; gap: 20px">
+                                        <h5 class="head">Competitions</h5>
+                                        <div class="event-list" v-if="Competitions.length">
+                                            <div class="event-item" v-for="c in Competitions.slice(0, 6)" :key="c.id" style="margin-bottom: 10px; gap: 20px">
                                                 <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" :alt="c.name" @error="c.featured_image_url = null"/>
                                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                                 </div>
                                                 <div class="event-details">
                                                     <div class="event-info" style="display: flex; flex-direction: column">
                                                         <span id="ename">{{ c.name }}</span>
-                                                        <span id="espeaker" :style="{color: Color.accent_color}">Speaker: {{ c.speaker }}</span>
+                                                        <span id="espeaker" :style="{color: Color.accent_color}">Judge: {{ c.judging_panel }}</span>
                                                     </div>
 
                                                     <div class="event-time" id="edate">
-                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.event_date) }}</small><br />
+                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.start_date) }}</small><br />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div v-else class="text-center text-muted py-4">
-                                            No events found.
+                                            No competitions found.
                                         </div>
                                     </div>
 
@@ -532,10 +533,6 @@ import { useRytonSingleEventStore } from '@/stores/club_public/RytonSingleEvent'
 import { useRytonEventStore } from '@/stores/club_public/RytonEvent';
 import Loader from "@/components/LoaderAll.vue";
 import CalendarEvent from "@/components/club_public/Calendars/CalendarRytonEvent.vue";
-import Pro from "@/assets/icons/event_list/pro.svg";
-import Cal from "@/assets/icons/event_list/cal.svg";
-import Cam from "@/assets/icons/event_list/cam.svg";
-import Mess from "@/assets/icons/event_list/mess.svg";
 import dayjs from 'dayjs';
 import { useUserStore } from '@/stores/club_admin/UserStore';
 import { useHomeStore } from '@/stores/club_public/ClubData';
@@ -562,6 +559,7 @@ const isLoading = ref(true);
 
 const { username, profile_image_url } = storeToRefs(user)
 const Events = computed(() => rytoneventStore.eventData?.data?.events?.original?.data?.original?.data || []);
+const Competitions = computed(() => rytoneventStore.eventData?.data?.competitions || []);
 const sinevent = computed(() => rytonsingleeventStore.sineventData?.data?.event?.original?.data || {});
 const clubSettings = computed(() => rytonsingleeventStore.sineventData?.data?.clubSettings?.original?.data || {});
 const Color = computed(() => clubSettings.value.settings || {});

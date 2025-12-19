@@ -152,5 +152,4 @@ const goToPage = (page) => {
 </script>
 
 <style scoped>
-/* Your custom styles if needed */
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="comments-card mt-5">
+  <div class="cardddd mt-5">
     <h5 class="mb-3">Competitions Global Settings</h5>
 
     <div class="row">

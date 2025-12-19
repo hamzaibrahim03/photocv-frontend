@@ -113,16 +113,11 @@
                                                 <div class="d-flex w-100 justify-content-between align-items-center">
                                                     <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
-                                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+                                                        <img :src="Events[0].types?.icon_url" :alt="Events[0].types?.name" class="virtual" style="width: 25px; height: 25px" />
                                                     </div>
                                                 </div>
                                             </div>                  
-                                            <p class="text-secondary" :style="{color: Color.text_color}">
-                                                {{ Events[0].description || 'No description provided.' }}
-                                            </p>
+                                            <p class="text-secondary" :style="{color: Color.text_color}" v-html="Events[0].description || 'No description provided.'"> </p>
                                         </div>
                                         <div class="button-group mt-auto d-flex event-button">
                                             <router-link :to="{ name: 'EventSinglePublic', params: { id: Events[0].id } }" custom v-slot="{ navigate }">
@@ -159,7 +154,7 @@
                                 <div class="container" id="events-left">
                                     <div class="filter-buttons">
                                         <button v-for="filter in filters" :key="filter.name" :class="['filter-btn', { active: activeFilter === filter.name }]" @click="setActiveFilter(filter)">
-                                            <img :src="filter.icon" class="icones" />
+                                            <img v-if="filter.icon" :src="filter.icon" class="icones" />
                                             <span class="label">{{ filter.name }}</span>
                                         </button>
                                     </div>
@@ -171,7 +166,7 @@
                                                     <div class="d-flex w-100 justify-content-between align-items-center">
                                                         <h5 id="ename" :style="{color: Color.text_color}">{{ e.name || 'Untitled Event' }}</h5>
                                                         <div class="icon-container d-flex gap-2">
-                                                            <img :src="Video" alt="icon" class="virtual" :style="{color: Color.accent_color}" style="width: 25px; height: 25px" />
+                                                            <img :src="e.types?.[0]?.icon_url" :alt="e.types?.[0]?.name" class="virtual" style="width: 25px; height: 25px" />
                                                         </div>
                                                     </div>
                                                     <p class="galtext" id="edate" :style="{color: Color.accent_color}">
@@ -222,26 +217,26 @@
                                     </div>
 
                                     <div class="more-card d-flex flex-column" :style="{ padding: '30px', height: 'auto'}" id="eve">
-                                        <h5 class="head">More Events</h5>
-                                        <div class="event-list" v-if="Events.length">
-                                            <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px; gap: 20px">
+                                        <h5 class="head">Competitions</h5>
+                                        <div class="event-list" v-if="Competitions.length">
+                                            <div class="event-item" v-for="c in Competitions.slice(0, 6)" :key="c.id" style="margin-bottom: 10px; gap: 20px">
                                                 <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" :alt="c.name" @error="c.featured_image_url = null"/>
                                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                                 </div>
                                                 <div class="event-details">
                                                     <div class="event-info" style="display: flex; flex-direction: column">
                                                         <span id="ename">{{ c.name }}</span>
-                                                        <span id="espeaker" :style="{color: Color.accent_color}">Speaker: {{ c.speaker }}</span>
+                                                        <span id="espeaker" :style="{color: Color.accent_color}">Judge: {{ c.judging_panel }}</span>
                                                     </div>
 
                                                     <div class="event-time" id="edate">
-                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.event_date) }}</small><br />
+                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.start_date) }}</small><br />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div v-else class="text-center text-muted py-4">
-                                            No events found.
+                                            No competitions found.
                                         </div>
                                     </div>
 
@@ -403,21 +398,13 @@ import { useUserStore } from '@/stores/club_admin/UserStore';
 import { useRytonEventStore } from '@/stores/club_public/RytonEvent';
 import Loader from "@/components/LoaderAll.vue";
 import CalendarEvent from "@/components/club_public/Calendars/CalendarRytonEvent.vue";
-import Video from "@/assets/icons/event_list/vid.svg";
-import Pro from "@/assets/icons/event_list/pro.svg"
-import Cal from "@/assets/icons/event_list/cal.svg"
-import Cam from "@/assets/icons/event_list/cam.svg"
-import Mess from "@/assets/icons/event_list/mess.svg"
-import Person from "@/assets/icons/event_list/person.svg";
-import Studio from "@/assets/icons/event_list/studio.svg";
-import Virtual from "@/assets/icons/event_list/virtual.svg";
-import Walk from "@/assets/icons/event_list/walk.svg";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useRouter } from "vue-router";
 import apiClient from '@/api/axios'
 import Event from "@/assets/icons/navigation/events.svg"
 import Competition from "@/assets/icons/navigation/competition.svg"
+import { useRytonFilterStore } from "@/stores/club_public/RytonFilters";
 import { storeToRefs } from 'pinia'
 
 const router = useRouter();
@@ -429,13 +416,11 @@ const toggleNav = () => (isNavOpen.value = !isNavOpen.value);
 const closeNav = () => (isNavOpen.value = false);
 const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
 
-const filters = [
-  { name: "All", icon: null },
-  { name: "In-Person", icon: Person },
-  { name: "Virtual", icon: Virtual },
-  { name: "In a Studio", icon: Studio },
-  { name: "Walking Out", icon: Walk },
-];
+const filterStore = useRytonFilterStore();
+
+const filters = ref([
+  { name: "All", icon: null } 
+]);
 
 const activeFilter = ref('All');
 const search = ref('')
@@ -447,21 +432,17 @@ const setActiveFilter = (filter) => {
   activeFilter.value = filter.name;
 };
 
-// Add this computed below `activeFilter`
 const filteredEvents = computed(() => {
   let list = eventsList.value;
 
-  // Apply event type filter
   if (activeFilter.value !== 'All') {
     list = list.filter(event => {
-      // match type name from API response
       return event.types?.some(t => 
         t.name.toLowerCase().includes(activeFilter.value.toLowerCase())
       );
     });
   }
 
-  // Apply search filter
   if (search.value.trim() !== '') {
     const term = search.value.toLowerCase();
     list = list.filter(e => 
@@ -487,6 +468,7 @@ const isLoading = ref(true);
 
 const memData = computed(() => rytoneventStore.eventData?.data?.clubSettings?.original?.data || {});
 const Events = computed(() => rytoneventStore.eventData?.data?.events?.original?.data?.original?.data || []);
+const Competitions = computed(() => rytoneventStore.eventData?.data?.competitions || []);
 const sessions = computed(() => rytoneventStore.eventData?.data?.clubSettings?.original?.data?.seasons || {});
 const Club = computed(() => memData.value.club || {});
 const Color = computed(() => memData.value.settings || {});
@@ -566,6 +548,20 @@ const formatedDate = (dateString) => {
 
 
 onMounted(async () => {
+    await filterStore.fetchRytonFilterData();
+
+  const apiData = filterStore.filterData;
+
+  const competitionTypes = apiData?.event_type || [];
+
+  competitionTypes.forEach(t => {
+    filters.value.push({
+      name: t.name,
+      icon: t.icon_url 
+    });
+  });
+
+  console.log("Final Filters =>", filters.value);
   document.addEventListener("click", (e) => {
     if (!e.target.closest(".admin-dropdown")) isDropdownOpen.value = false;
   });
@@ -674,48 +670,46 @@ function goToPage(page) {
      border-radius: 8px;
      background-color: transparent;
      color: rgba(127, 164, 131, 1);
-     width: 165px;
+     width: 163.8px;
      height: 40px;
      cursor: pointer;
      transition: all 0.25s ease;
      font-family: Inter;
-     font-weight: 400;
      font-style: Regular;
-     font-size: 16px;
-     line-height: 100%;
      letter-spacing: 0%;
+     display: flex;
+     text-align: center;
+     justify-content: center;
+     align-items: center;
 }
  .filter-btn:hover {
      border-color: #6f8c6f;
      color: #2e2e2e;
 }
-.filter-btn .icones {
-  width: 16px;
-  height: 16px;
-  transition: 0.3s;
+ .filter-btn .icones {
+     width: 16px;
+     height: 16px;
+     transition: 0.3s;
 }
-
-.filter-btn .label {
-  color: #7a9c7a;
-  font-weight: 500;
-  transition: 0.3s;
+ .filter-btn .label {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 20px;
+     letter-spacing: 0%;
+     margin-left: 5px 
 }
-
-/* ACTIVE BUTTON */
-.filter-btn.active {
-  background-color: #7a9c7a;
+ .filter-btn.active {
+     background-color: #7a9c7a;
      color: #fff;
      border-color: #7a9c7a;
 }
-
-/* ACTIVE ICON */
-.filter-btn.active .icones {
-  filter: brightness(0) invert(1);   /* turns icon white */
+ .filter-btn.active .icones {
+     filter: brightness(0) invert(1);
 }
-
-/* ACTIVE TEXT */
-.filter-btn.active .label {
-  color: white;
+ .filter-btn.active .label {
+     color: white;
 }
  .hero-overlay {
      width: 820px;
@@ -759,8 +753,8 @@ function goToPage(page) {
      letter-spacing: 0%;
      text-align: left;
 }
-.virtual {
-    margin-top: -5px;
+ .virtual {
+     margin-top: -5px;
 }
  .events-cards .text-secondary {
      font-family: Inter;
@@ -772,7 +766,7 @@ function goToPage(page) {
      margin-bottom: 25px;
 }
  #detail {
-     margin-top: 5px;
+     margin-top: 15px;
      margin-right: 40px;
      width: 99%;
 }
@@ -803,8 +797,8 @@ function goToPage(page) {
      letter-spacing: 0%;
      margin-top: 15px;
 }
-#joincontainer {
-    margin-top: 160px;
+ #joincontainer {
+     margin-top: 160px;
 }
  .site-footer {
      padding-top: 25px;
@@ -981,7 +975,6 @@ function goToPage(page) {
      line-height: 20px;
      letter-spacing: 0%;
 }
-/* Default: hide mobile notification */
  .notification-mobile {
      display: none;
 }

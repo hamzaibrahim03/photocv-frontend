@@ -79,55 +79,49 @@ onMounted(() => {
 
 <style scoped>
 body {
-    font-family: sans-serif;
-    background-color: #f5f0eb;
-    display: flex;
-    justify-content: center;
-    padding: 50px;
+     font-family: sans-serif;
+     background-color: #f5f0eb;
+     display: flex;
+     justify-content: center;
+     padding: 50px;
 }
-
-.tab-control {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
-  gap: 15px;
+ .tab-control {
+     display: flex;
+     justify-content: space-between;
+     margin-bottom: 30px;
+     gap: 15px;
 }
-
-.step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  flex: 1;
-  transition: all 0.3s ease;
+ .step {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     cursor: pointer;
+     flex: 1;
+     transition: all 0.3s ease;
 }
-
-.step .circle {
-  background-color: #ccc;
-  color: white;
-  width: 40px;
-  height: 40px;
-  font-weight: bold;
-  font-size: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+ .step .circle {
+     background-color: #ccc;
+     color: white;
+     width: 40px;
+     height: 40px;
+     font-weight: bold;
+     font-size: 18px;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
 }
-
-.step .label {
-  margin-top: 8px;
-  font-size: 14px;
-  text-align: center;
-  color: #333;
+ .step .label {
+     margin-top: 8px;
+     font-size: 14px;
+     text-align: center;
+     color: #333;
 }
-
-.step.active .circle {
-  background-color: #CC445E;
+ .step.active .circle {
+     background-color: #CC445E;
 }
-
-.step.active .label {
-  font-weight: bold;
-  color: #CC445E;
-}
+ .step.active .label {
+     font-weight: bold;
+     color: #CC445E;
+ }
 </style>

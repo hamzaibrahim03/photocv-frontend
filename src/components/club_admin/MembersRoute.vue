@@ -48,10 +48,15 @@
                     <div v-for="(row, rowIndex) in chunkedCards" :key="rowIndex" class="row-wrapper">
                         <div class="photographers">
                             <div v-for="(member, index) in row" :key="index" class="photographer-card">
-                                <div class="edit-icon" @click="editMember(member)">
-                                    <img :src="Edit" alt="icon" style="width:24px; height: 24px" />
+                                <div class="three-dots-wrapper" @click.stop="toggleMenu(index)">
+                                    <div class="three-dots"></div>
+                                    <div v-if="openMenuIndex === index" class="dropdown-menu-custom">
+                                        <button @click="editItem(member)">Edit</button>
+                                        <button @click="shareItem(member)">Share</button>
+                                        <button @click="deleteItem(member)">Delete</button>
+                                    </div>
                                 </div>
-                                <img v-if="member.profile_image_url" class="img-fluid event-img" :src="member.profile_image_url" alt="News" @error="member.profile_image_url = null" />
+                                <img v-if="member.profile_image_url" class="img-fluid event-img" :src="member.profile_image_url" alt="News" @error="member.profile_image_url = null" style="display: flex; text-align: center; justify-content: center; align-items: center;"/>
                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                 </div>
                                 <div class="social-media-icons">
@@ -119,20 +124,14 @@
 </template>
 
 <script setup>
-import {
-    ref,
-    computed,
-    onMounted
-} from 'vue'
-import {
-    useMemberStore
-} from '@/stores/club_admin/MemberStore';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { useMemberStore } from '@/stores/club_admin/MemberStore';
+
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
 import Ima from "@/assets/icons/member/image.svg"
 import Com from "@/assets/icons/member/comment.svg"
 import Lik from "@/assets/icons/member/like.svg"
-import Edit from "@/assets/icons/member/edit.svg"
 import Loader from "@/components/LoaderAll.vue";
 
 const memberStore = useMemberStore()
@@ -143,15 +142,36 @@ const itemsPerPage = 24
 
 const MemberCount = computed(() => memberStore.memberCount)
 const EventCount = computed(() => memberStore.eventCount)
+
 const isLoading = ref(true) 
+
+const openMenuIndex = ref(null);
+
+const toggleMenu = (index) => {
+  openMenuIndex.value = openMenuIndex.value === index ? null : index;
+};
+
+
+
+const closeMenu = () => {
+  openMenuIndex.value = null;
+};
+
+
+// close menu when clicking outside
+const handleClickOutside = () => {
+  closeMenu();
+};
 
 onMounted(async () => {
   console.log("Total Interactions (Comments + Likes):", EventCount);
-
+  document.addEventListener("click", handleClickOutside)
   await memberStore.fetchMembers(); 
-
   isLoading.value = false;
 });
+onBeforeUnmount(() =>
+  document.removeEventListener("click", handleClickOutside)
+);
 
 
 
@@ -171,6 +191,21 @@ const chunkedCards = computed(() => {
     }
     return chunks
 })
+
+const editItem = (member) => {
+  alert("Edit", + member.username);
+  closeMenu();
+};
+
+const shareItem = (member) => {
+  alert("Share", + member.username);
+  closeMenu();
+};
+
+const deleteItem = (member) => {
+  alert("Delete", + member.username);
+  closeMenu();
+};
 
 const totalPages = computed(() => {
     return Math.ceil(memberData.value.length / itemsPerPage)
@@ -194,347 +229,340 @@ function goToPage(page) {
 
 <style scoped>
 .container {
-  max-width: 1810px;
-  padding: 0 15px;
-  margin: 0 auto;
+     max-width: 1810px;
+     padding: 0 15px;
+     margin: 0 auto;
 }
-.content {
-    padding: 0 30px;
+ .content {
+     padding: 0 30px;
 }
-.dashboard-card {
-  gap: 15px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 0px;
-  width: 100%;
+ .dashboard-card {
+     gap: 15px;
+     border-radius: 10px;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     padding: 20px 0px;
+     width: 100%;
 }
-
-.profile-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: white;
-  padding: 15px 25px;
-  border-radius: 12px;
-  width: 975px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  height: 148px;
+ .profile-card {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     background: white;
+     padding: 15px 25px;
+     border-radius: 12px;
+     width: 975px;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     height: 148px;
 }
-
-.profile-left {
-  display: flex;
-  align-items: left;
+ .profile-left {
+     display: flex;
+     align-items: left;
 }
-
-.profile-left img {
-  width: 100%;
-  max-width: 108px;
-  height: 108px;
-  border-radius: 50%;
+ .profile-left img {
+     width: 100%;
+     max-width: 108px;
+     height: 108px;
+     border-radius: 50%;
 }
-
-.greeting {
-  color: #99816b;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 100%;
-  font-family: Inter;
+ .greeting {
+     color: #99816b;
+     font-weight: 400;
+     font-size: 18px;
+     line-height: 100%;
+     font-family: Inter;
 }
-
-.name {
-  font-weight: 500;
-  font-size: 30px;
-  line-height: 100%;
-  color: #4c4036;
-  font-family: Inter;
+ .name {
+     font-weight: 500;
+     font-size: 30px;
+     line-height: 100%;
+     color: #4c4036;
+     font-family: Inter;
 }
-
-.names {
-  font-family: Inter;
-  font-weight: 400;
-  font-size: 18.68px;
-  line-height: 20.76px;
-  letter-spacing: 0%;
+ .names {
+     font-family: Inter;
+     font-weight: 400;
+     font-size: 18.68px;
+     line-height: 20.76px;
+     letter-spacing: 0%;
 }
-
-.namess {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 100%;
-  color: #4c4036;
-  padding-left: 20px;
-  font-family: Inter;
-  text-align: justify;
+ .namess {
+     font-weight: 400;
+     font-size: 16px;
+     line-height: 100%;
+     color: #4c4036;
+     padding-left: 20px;
+     font-family: Inter;
+     text-align: justify;
 }
-
-.left-header-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+ .left-header-container {
+     display: flex;
+     align-items: center;
+     gap: 10px;
 }
-
-.role {
-  color: #cc445e;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 100%;
-  font-family: Inter;
+ .role {
+     color: #cc445e;
+     font-weight: 400;
+     font-size: 18px;
+     line-height: 100%;
+     font-family: Inter;
 }
-
-.profile-icons {
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
+ .profile-icons {
+     display: flex;
+     gap: 10px;
+     flex-direction: column;
 }
-
-.profile-icon {
-  display: flex;
-  flex-direction: column;
+ .profile-icon {
+     display: flex;
+     flex-direction: column;
 }
-
-.icons {
-  display: flex;
-  align-items: center;
-  color: white;
-  font-size: 14px;
-  gap: 5px;
+ .icons {
+     display: flex;
+     align-items: center;
+     color: white;
+     font-size: 14px;
+     gap: 5px;
 }
-
-.icon {
-  display: flex;
-  align-items: center;
-  color: #cc445e;
-  font-size: 14px;
-  gap: 5px;
+ .icon {
+     display: flex;
+     align-items: center;
+     color: #cc445e;
+     font-size: 14px;
+     gap: 5px;
 }
-
-.icon i {
-  margin-right: 5px;
+ .icon i {
+     margin-right: 5px;
 }
-
-.stat-card {
-  background: #cc445e;
-  color: white;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  width: 219px;
-  font-family: Inter;
-  font-size: 1.2rem;
-  height: 148px;
+ .stat-card {
+     background: #cc445e;
+     color: white;
+     padding: 20px;
+     border-radius: 8px;
+     text-align: center;
+     width: 219px;
+     font-family: Inter;
+     font-size: 1.2rem;
+     height: 148px;
 }
-
-.event-card {
-  background: #755840;
-  color: white;
-  padding: 20px;
-  height: 148px;
-  border-radius: 8px;
-  text-align: center;
-  font-family: Inter;
-  font-size: 1.2rem;
-  width: 219px;
+ .event-card {
+     background: #755840;
+     color: white;
+     padding: 20px;
+     height: 148px;
+     border-radius: 8px;
+     text-align: center;
+     font-family: Inter;
+     font-size: 1.2rem;
+     width: 219px;
 }
-
-.number {
-  font-weight: 500;
-  font-size: 48px;
-  font-family: Inter;
-  line-height: 100%;
-  color: white;
-  margin-top: 30px;
+ .number {
+     font-weight: 500;
+     font-size: 48px;
+     font-family: Inter;
+     line-height: 100%;
+     color: white;
+     margin-top: 30px;
 }
-
-.ca-details {
-  font-weight: 400;
-  font-size: 20px;
-  font-family: Inter;
-  line-height: 100%;
+ .ca-details {
+     font-weight: 400;
+     font-size: 20px;
+     font-family: Inter;
+     line-height: 100%;
 }
-
-.days {
-  margin-top: 35px;
-  font-weight: 400;
-  font-family: Inter;
-  font-size: 16px;
-  line-height: 100%;
+ .days {
+     margin-top: 35px;
+     font-weight: 400;
+     font-family: Inter;
+     font-size: 16px;
+     line-height: 100%;
 }
-.card-section {
-  display: flex;
-  gap: 35px;
-  width: 31.5%;
+ .card-section {
+     display: flex;
+     gap: 35px;
+     width: 31.5%;
 }
-
-.social-icons {
-  background-color: #cc445e;
-  height: 50px;
-  font-size: 14px;
+ .social-icons {
+     background-color: #cc445e;
+     height: 50px;
+     font-size: 14px;
 }
-
-.social-icons .icon {
-  color: white;
+ .social-icons .icon {
+     color: white;
 }
-
-.photographers {
-  margin-top: 10px;
-  display: flex;
-  width: 100%;
-  gap: 20px;
-  flex-wrap: wrap;
+ .photographers {
+     margin-top: 10px;
+     display: flex;
+     width: 100%;
+     gap: 20px;
+     flex-wrap: wrap;
 }
-
-.photographer-card {
-  background: white;
-  justify-content: center;
-  text-align: center;
-  border-radius: 10px;
-  width: 23.9%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border: 1px solid #99816b;
+ .photographer-card {
+     background: white;
+     justify-content: center;
+     text-align: center;
+     border-radius: 10px;
+     width: 23.9%;
+     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+     border: 1px solid #99816b;
+     position: relative;
 }
-
-.photographer-card img.profile-pic {
-  width: 192px;
-  height: 192px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  margin-top: 15px;
+ .photographer-card img.profile-pic {
+     width: 192px;
+     height: 192px;
+     border-radius: 50%;
+     margin-bottom: 10px;
+     margin-top: 15px;
 }
-
-.photographer-card .social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
+ .three-dots-wrapper {
+     position: absolute;
+     top: 10px;
+     right: 10px;
+     cursor: pointer;
+     width: 24px;
+     height: 24px;
 }
-
-.photographer-card .social-icons a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 40px;
-  color: #5a4735;
-  font-size: 18px;
-  font-family: Inter;
-  border-radius: 50%;
-  text-decoration: none;
-  background-color: #ddd;
+ .three-dots {
+     width: 4px;
+     height: 4px;
+     background: #555;
+     border-radius: 50%;
+     box-shadow: 0 6px 0 #555, 0 -6px 0 #555;
+     margin: auto;
 }
-
-.social-media-icons {
-  margin-top: -25px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
+ .dropdown-menu-custom {
+     position: absolute;
+     top: 25px;
+     right: 0;
+     background: white;
+     border: 1px solid #eee;
+     border-radius: 8px;
+     padding: 8px 0;
+     min-width: 130px;
+     z-index: 999;
+     box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
-
-.social-media-icons a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #ddd;
-  color: #333;
-  font-size: 16px;
-  font-family: Inter;
-  transition: 0.3s;
+ .dropdown-menu-custom button {
+     width: 100%;
+     padding: 8px 12px;
+     background: none;
+     border: none;
+     text-align: left;
+     font-size: 14px;
+     cursor: pointer;
 }
-
-.social-media-icons a:hover {
-  background-color: #dc3545;
-  color: #fff;
+ .dropdown-menu-custom button:hover {
+     background: #f3f3f3;
 }
-
-.photographer-card .gallery-preview {
-  display: flex;
+ .photographer-card .social-icons {
+     display: flex;
+     justify-content: center;
+     gap: 10px;
+     width: 100%;
 }
-
-.photographer-card .gallery-preview .pic-item img {
-  width: 170px;
-  height: 100px;
-  object-fit: cover;
+ .photographer-card .social-icons a {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     width: 100%;
+     height: 40px;
+     color: #5a4735;
+     font-size: 18px;
+     font-family: Inter;
+     border-radius: 50%;
+     text-decoration: none;
+     background-color: #ddd;
 }
-
-
-
-::-webkit-scrollbar {
-  width: 10px;
+ .social-media-icons {
+     margin-top: -25px;
+     margin-bottom: 10px;
+     display: flex;
+     justify-content: center;
+     gap: 10px;
 }
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
+ .social-media-icons a {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     width: 100%;
+     max-width: 40px;
+     height: 40px;
+     border-radius: 50%;
+     background-color: #ddd;
+     color: #333;
+     font-size: 16px;
+     font-family: Inter;
+     transition: 0.3s;
 }
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #a0846c;
-  border-radius: 10px;
+ .social-media-icons a:hover {
+     background-color: #dc3545;
+     color: #fff;
 }
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #8a6f58;
+ .photographer-card .gallery-preview {
+     display: flex;
 }
-
-.edit-icon {
-  position: relative;
-  top: 8px;
-  right: 8px;
-  border-radius: 50%;
-  padding: 6px;
-  cursor: pointer;
-  z-index: 10;
-  text-align: right;
+ .photographer-card .gallery-preview .pic-item img {
+     width: 175px;
+     height: 100px;
+     object-fit: cover;
 }
-
-.edit-icon i {
-  color: #cc445e;
-  font-size: 16px;
+ ::-webkit-scrollbar {
+     width: 10px;
 }
-
-.social-icons {
-    background-color: #d64561;
-    display: flex;
-    justify-content: center;
-    padding: 10px 25px;
+ ::-webkit-scrollbar-track {
+     background: #f1f1f1;
+     border-radius: 10px;
 }
-
-.icon {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: #ffffff;
-    font-size: 15px;
+ ::-webkit-scrollbar-thumb {
+     background: #a0846c;
+     border-radius: 10px;
 }
-
-.icon i {
-    font-size: 22px;
+ ::-webkit-scrollbar-thumb:hover {
+     background: #8a6f58;
 }
-
-.event-img,
-.fallback-box {
-    width: 192px;
-  height: 192px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  margin-top: 15px;
-  margin-left: 22%;
-    object-fit: cover;
-    background-color: #f0f0f0;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+ .edit-icon {
+     position: relative;
+     top: 8px;
+     right: 8px;
+     border-radius: 50%;
+     padding: 6px;
+     cursor: pointer;
+     z-index: 10;
+     text-align: right;
 }
-
-.fallback-box {
-    font-size: 14px;
-    color: #888;
+ .edit-icon i {
+     color: #cc445e;
+     font-size: 16px;
+}
+ .social-icons {
+     background-color: #d64561;
+     display: flex;
+     justify-content: center;
+     padding: 10px 25px;
+}
+ .icon {
+     display: flex;
+     align-items: center;
+     gap: 6px;
+     color: #ffffff;
+     font-size: 15px;
+}
+ .icon i {
+     font-size: 22px;
+}
+ .event-img, .fallback-box {
+     width: 192px;
+     height: 192px;
+     border-radius: 50%;
+     margin-bottom: 10px;
+     margin-top: 15px;
+     margin-left: 22%;
+     object-fit: cover;
+     background-color: #f0f0f0;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+ .fallback-box {
+     font-size: 14px;
+     color: #888;
 }
 </style>

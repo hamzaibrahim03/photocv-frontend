@@ -5,5 +5,5 @@ export const getAllRytonClub = () => {
 }
 
 export default {
-    getAllRytonClub,
+    getAllRytonClub
 }

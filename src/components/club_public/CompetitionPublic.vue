@@ -161,11 +161,17 @@
                             <section>
                                 <div class="container" id="events-left">
                                     <div class="filter-buttons">
-                                        <button v-for="filter in filters" :key="filter.name" :class="['filter-btn', { active: activeFilter === filter.name }]" @click="setActiveFilter(filter)">
-                                            <img :src="filter.icon" class="icones" />
-                                            <span class="label">{{ filter.name }}</span>
-                                        </button>
-                                    </div>
+  <button 
+    v-for="f in filters" 
+    :key="f.name" 
+    :class="['filter-btn', { active: activeFilter === f.name }]"
+    @click="setActiveFilter(f)"
+  >
+    <img v-if="f.icon" :src="f.icon" class="icones" />
+    <span class="label">{{ f.name }}</span>
+  </button>
+</div>
+
                                     <div class="mt-4">
                                         <div v-if="paginatedComps.length">
                                             <div v-for="e in paginatedComps" :key="e.id" class="events-cards p-3">
@@ -173,12 +179,14 @@
                                                 <div class="flex-grow-1 d-flex flex-column justify-content-between" id="detail">
                                                     <div class="d-flex w-100 justify-content-between align-items-center">
                                                         <h5 id="ename" :style="{color: Color.text_color}">{{ e.name || 'Untitled Competition' }}</h5>
+                                                        <div class="icon-container d-flex gap-2">
+                                                            <img :src="Type.icon_url" :alt="Type.name" class="virtual" style="width: 25px; height: 25px" />
+                                                        </div>
                                                     </div>
                                                     <p class="galtext" id="edate" :style="{color: Color.accent_color}">
                                                         {{ formatDate(e.start_date) || 'Date Not Available' }}
                                                     </p>
-                                                    <p class="text-secondary"  :style="{color: Color.text_color}">
-                                                        {{ e.description || 'No description provided.' }}
+                                                    <p class="text-secondary"  :style="{color: Color.text_color}" v-html="e.description || 'No description provided.'">
                                                     </p>
                                                     <p id="espeaker" :style="{color: Color.accent_color}">
                                                         {{"Judge: " + e.judging_panel}}
@@ -191,7 +199,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div v-else class="text-center text-muted">No Competitions found.</div>
 
                                         <div class="dt-paging">
@@ -223,26 +230,26 @@
                                     </div>
 
                                     <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
-                                        <h5 class="head">More Competitions</h5>
-                                        <div class="event-list" v-if="Comps.length">
-                                            <div class="event-item" v-for="c in Comps.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
+                                        <h5 class="head">Events</h5>
+                                        <div class="event-list" v-if="Events.length">
+                                            <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
                                                 <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" :alt="c.name" @error="c.featured_image_url = null"/>
                                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                                 </div>
                                                 <div class="event-details">
                                                     <div class="event-info" style="display: flex; flex-direction: column">
                                                         <span id="ename">{{ c.name }}</span>
-                                                        <span id="espeaker" :style="{color: Color.accent_color}">Judge: {{ c.judging_panel }}</span>
+                                                        <span id="espeaker" :style="{color: Color.accent_color}">Speaker: {{ c.speaker }}</span>
                                                     </div>
 
                                                     <div class="event-time" id="edate">
-                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.start_date) }}</small><br />
+                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.event_date) }}</small><br />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div v-else class="text-center text-muted py-4">
-                                            No competitions found.
+                                            No events found.
                                         </div>
                                     </div>
 
@@ -413,12 +420,7 @@ import apiClient from '@/api/axios'
 import Event from "@/assets/icons/navigation/events.svg"
 import Competition from "@/assets/icons/navigation/competition.svg"
 import { storeToRefs } from 'pinia'
-import Print from "@/assets/icons/Competitions/Print.svg";
-import pdi from "@/assets/icons/Competitions/pdi.svg";
-import Cour from "@/assets/icons/Competitions/Cour.svg";
-import Nature from "@/assets/icons/Competitions/Nature.svg";
-import Pot from "@/assets/icons/Competitions/Pot.svg";
-import Land from "@/assets/icons/Competitions/Land.svg";
+import { useRytonFilterStore } from "@/stores/club_public/RytonFilters";
 
 const router = useRouter();
 const isNavOpen = ref(false);
@@ -426,15 +428,11 @@ const isDropdownOpen = ref(false);
 const toggleNav = () => (isNavOpen.value = !isNavOpen.value);
 const closeNav = () => (isNavOpen.value = false);
 const toggleDropdown = () => (isDropdownOpen.value = !isDropdownOpen.value);
-const filters = [
-  { name: "All", icon: null },
-  { name: "Print", icon: Print },
-  { name: "PDI", icon: pdi },
-  { name: "Colour", icon: Cour },
-  { name: "Nature", icon: Nature },
-  { name: "Portrait", icon: Pot },
-  { name: "Landscape", icon: Land },
-];
+const filterStore = useRytonFilterStore();
+
+const filters = ref([
+  { name: "All", icon: null } 
+]);
 
 const activeFilter = ref('All');
 const search = ref('')
@@ -446,17 +444,15 @@ const setActiveFilter = (filter) => {
 const filteredComps = computed(() => {
   let list = compsList.value;
 
-  // Apply event type filter
   if (activeFilter.value !== 'All') {
-    list = list.filter(comp => {
-      // match type name from API response
-      return comp.types?.some(t => 
-        t.name.toLowerCase().includes(activeFilter.value.toLowerCase())
-      );
-    });
-  }
+  list = list.filter(comp => {
+    return comp.competition_type?.name
+      ?.toLowerCase()
+      .includes(activeFilter.value.toLowerCase());
+  });
+}
 
-  // Apply search filter
+
   if (search.value.trim() !== '') {
     const term = search.value.toLowerCase();
     list = list.filter(e => 
@@ -486,7 +482,8 @@ const { username, profile_image_url } = storeToRefs(user)
 const domain = window.location.hostname.split('.')[0];
 const memData = computed(() => rytoncompStore.compData?.data?.clubSettings?.original?.data || {});
 const evData = computed(() => rytoncompStore.compData?.data?.clubSettings?.original?.data?.upcoming_event_days_count || {});
-const Comps = computed(() => rytoncompStore.compData?.data?.upcomingCompetitions || []);
+const Type = computed(() => rytoncompStore.compData?.data?.competitions?.original?.data?.competitions?.original?.data?.[0]?.competition_type || {});
+const Events = computed(() => rytoncompStore.compData?.data?.events || []);
 const sessions = computed(() => rytoncompStore.compData?.data?.clubSettings?.original?.data?.seasons || {});
 const Club = computed(() => memData.value.club || {});
 const Color = computed(() => memData.value.settings || {});
@@ -515,8 +512,9 @@ const fetchSearchedComps = debounce(async (query) => {
                     search_term: query
                 }
             })
-            const result = response?.data?.data?.upcomingCompetitions || [];
+            const result = response?.data?.data?.competitions?.original?.data?.competitions?.original?.data || [];
             compsList.value = result;
+            console.log(compsList.value)
             currentPage.value = 1;
         } catch (error) {
             console.error('Error fetching searched competitions:', error)
@@ -566,6 +564,20 @@ const formatedDate = (dateString) => {
 
 
 onMounted(async () => {
+    await filterStore.fetchRytonFilterData();
+
+  const apiData = filterStore.filterData;
+
+  const competitionTypes = apiData?.competition_type || [];
+
+  competitionTypes.forEach(t => {
+    filters.value.push({
+      name: t.name,
+      icon: t.icon_url 
+    });
+  });
+
+  console.log("Final Filters =>", filters.value);
   document.addEventListener("click", (e) => {
     if (!e.target.closest(".admin-dropdown")) isDropdownOpen.value = false;
   });
@@ -579,7 +591,7 @@ onMounted(async () => {
     await rytoncompStore.fetchRytonCompData(domain);
     await rytoneventStore.fetchRytonEventData(domain);
     await homeStore.fetchHomeData(domain);
-    compsList.value = rytoncompStore.compData?.data?.upcomingCompetitions || []
+    compsList.value = rytoncompStore.compData?.data?.competitions?.original?.data?.competitions?.original?.data || []
     console.log(compsList.value)
   } catch (error) {
     console.error("Error fetching ryton competition data:", error);
@@ -679,48 +691,46 @@ function goToPage(page) {
      border-radius: 8px;
      background-color: transparent;
      color: rgba(127, 164, 131, 1);
-     width: 125px;
+     width: 122.71px;
      height: 40px;
      cursor: pointer;
      transition: all 0.25s ease;
+     font-family: Inter;
+     font-style: Regular;
+     letter-spacing: 0%;
+     display: flex;
+     text-align: center;
+     justify-content: center;
+     align-items: center;
+}
+ .filter-btn:hover {
+     border-color: #6f8c6f;
+     color: #2e2e2e;
+}
+ .filter-btn .icones {
+     width: 16px;
+     height: 16px;
+     transition: 0.3s;
+}
+ .filter-btn .label {
      font-family: Inter;
      font-weight: 400;
      font-style: Regular;
      font-size: 14px;
      line-height: 20px;
      letter-spacing: 0%;
+     margin-left: 5px 
 }
- .filter-btn:hover {
-     border-color: #6f8c6f;
-     color: #2e2e2e;
-}
-.filter-btn .icones {
-  width: 16px;
-  height: 16px;
-  transition: 0.3s;
-}
-
-.filter-btn .label {
-  color: #7a9c7a;
-  font-weight: 500;
-  transition: 0.3s;
-}
-
-/* ACTIVE BUTTON */
-.filter-btn.active {
-  background-color: #7a9c7a;
+ .filter-btn.active {
+     background-color: #7a9c7a;
      color: #fff;
      border-color: #7a9c7a;
 }
-
-/* ACTIVE ICON */
-.filter-btn.active .icones {
-  filter: brightness(0) invert(1);   /* turns icon white */
+ .filter-btn.active .icones {
+     filter: brightness(0) invert(1);
 }
-
-/* ACTIVE TEXT */
-.filter-btn.active .label {
-  color: white;
+ .filter-btn.active .label {
+     color: white;
 }
  .hero-overlay {
      width: 820px;
@@ -804,8 +814,8 @@ function goToPage(page) {
      letter-spacing: 0%;
      margin-top: 15px;
 }
-#joincontainer {
-    margin-top: 160px;
+ #joincontainer {
+     margin-top: 160px;
 }
  .site-footer {
      padding-top: 25px;
@@ -979,7 +989,6 @@ function goToPage(page) {
      line-height: 20px;
      letter-spacing: 0%;
 }
-/* Default: hide mobile notification */
  .notification-mobile {
      display: none;
 }
@@ -1498,8 +1507,8 @@ function goToPage(page) {
          flex-wrap: wrap;
          padding-bottom: 50px;
     }
-    .events-title {
-        font-size: 30px;
+     .events-title {
+         font-size: 30px;
     }
      .filter-btn {
          padding: 5px;
@@ -1613,8 +1622,8 @@ function goToPage(page) {
      #heads {
          padding: 50px 25px 50px 50px;
     }
-    .events-header {
-        gap: 20px;
+     .events-header {
+         gap: 20px;
     }
      .events-title {
          font-size: 20px;
@@ -1871,5 +1880,4 @@ function goToPage(page) {
          font-size: 13px;
     }
 }
-
 </style>

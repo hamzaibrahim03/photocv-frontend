@@ -5,5 +5,5 @@ export const getAllRytonEvents = () => {
 }
 
 export default {
-  getAllRytonEvents,
+  getAllRytonEvents
 }

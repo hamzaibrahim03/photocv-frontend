@@ -69,5 +69,4 @@ const cameras = ref([{
 </script>
 
 <style scoped>
-/* Your custom styles if needed */
 </style>

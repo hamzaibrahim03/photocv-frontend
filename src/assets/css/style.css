@@ -4,7 +4,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   margin: 0;
   height: 100%;
@@ -12,7 +11,6 @@ body {
   font-family: Arial, sans-serif;
   background-color: #ebe6e1;
 }
-
 .sidebar {
   grid-row: 1 / span 2;
   height: 100vh;
@@ -28,7 +26,6 @@ body {
   padding: 20px;
   color: black;
 }
-
 .sidebar a {
   padding: 4px 4px 4px 16px;
   text-decoration: none;
@@ -41,26 +38,21 @@ body {
   font-family: Inter;
   margin: 10px;
 }
-
 .sidebar a i {
   margin-right: 10px;
 }
-
 .sidebar a.active {
   color: magenta;
 }
-
 .dropdown-pxcontainer {
   display: none;
   background-color: #262626;
   padding-left: 8px;
 }
-
 .fa-caret-down {
   float: right;
   padding-right: 8px;
 }
-
 .header {
   position: sticky;
   top: 0;
@@ -76,18 +68,16 @@ body {
   height: 80px;
   z-index: 999;
 }
-
 .header .left-header {
   margin-left: 30px;
   font-family: Inter;
-font-weight: 300;
-font-style: Light;
-font-size: 36px;
-line-height: 100%;
-letter-spacing: 0%;
+  font-weight: 300;
+  font-style: Light;
+  font-size: 36px;
+  line-height: 100%;
+  letter-spacing: 0%;
   color: #4c4036;
 }
-
 .add_head {
   background: #4c4036;
   font-size: 18px;
@@ -101,7 +91,6 @@ letter-spacing: 0%;
   align-items: center;
   justify-content: center;
 }
-
 .header .right-header {
   font-size: 1rem;
   font-family: Inter;
@@ -109,7 +98,6 @@ letter-spacing: 0%;
   justify-content: flex-end;
   position: relative;
 }
-
 .content {
   margin-left: 340px;
   width: calc(100% - 340px);
@@ -117,7 +105,6 @@ letter-spacing: 0%;
   height: 100%;
   transition: all 0.3s;
 }
-
 .divider {
   width: 100%;
   height: 1px;
@@ -126,7 +113,6 @@ letter-spacing: 0%;
   margin-bottom: 50px;
   border-bottom: 1px solid #ddd;
 }
-
 .divider2 {
   width: 100%;
   height: 1px;
@@ -135,7 +121,6 @@ letter-spacing: 0%;
   margin-bottom: 15px;
   border-bottom: 1px solid rgba(217, 217, 217, 1);
 }
-
 .divider3 {
   width: 100%;
   height: 1px;
@@ -143,7 +128,6 @@ letter-spacing: 0%;
   margin-top: 15px;
   margin-bottom: 15px;
 }
-
 .divider4 {
   width: 1100px;
   height: 1px;
@@ -152,7 +136,6 @@ letter-spacing: 0%;
   margin-bottom: 70px;
   border-bottom: 1px solid rgba(217, 217, 217, 1);
 }
-
 .divider5 {
   width: 1100px;
   height: 1px;
@@ -161,21 +144,18 @@ letter-spacing: 0%;
   margin-bottom: 50px;
   border-bottom: 1px solid rgba(217, 217, 217, 1);
 }
-
 .divider1 {
   width: 100%;
   background-color: #ddd;
   margin-top: 500px;
   margin-bottom: 50px;
 }
-
 .admin-dropdown {
   position: relative;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-
 .admin-dropdown img {
   width: 100%;
   max-width: 45px;
@@ -183,7 +163,6 @@ letter-spacing: 0%;
   border-radius: 50%;
   margin-right: 15px;
 }
-
 .dropdown-menu {
   display: none;
   position: absolute;
@@ -194,24 +173,20 @@ letter-spacing: 0%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   min-width: 150px;
 }
-
 .dropdown-menu a {
   display: block;
   padding: 10px;
   text-decoration: none;
   color: black;
 }
-
 .admin-dropdown:hover .dropdown-menu {
   display: block;
 }
-
 a.icon {
   color: black;
   text-decoration: none;
   font-weight: bold;
 }
-
 .dashboard-card {
   gap: 15px;
   border-radius: 10px;
@@ -221,7 +196,6 @@ a.icon {
   width: 100%;
   padding: 20px 0px;
 }
-
 h5 {
   font-weight: 500;
   font-size: 24px;
@@ -229,7 +203,6 @@ h5 {
   line-height: 100%;
   color: #4c4036;
 }
-
 h4 {
   font-weight: 500;
   font-family: Inter;
@@ -237,7 +210,6 @@ h4 {
   line-height: 100%;
   color: #4c4036;
 }
-
 .profile-card {
   display: flex;
   align-items: center;
@@ -249,19 +221,16 @@ h4 {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   height: 148px;
 }
-
 .profile-left {
   display: flex;
   align-items: left;
 }
-
 .profile-left img {
   width: 100%;
   max-width: 108px;
   height: 108px;
   border-radius: 50%;
 }
-
 .greeting {
   color: #99816b;
   font-weight: 400;
@@ -269,7 +238,6 @@ h4 {
   line-height: 100%;
   font-family: Inter;
 }
-
 .name {
   font-weight: 500;
   font-size: 30px;
@@ -277,7 +245,6 @@ h4 {
   color: #4c4036;
   font-family: Inter;
 }
-
 .names {
   font-family: Inter;
   font-weight: 400;
@@ -285,7 +252,6 @@ h4 {
   line-height: 20.76px;
   letter-spacing: 0%;
 }
-
 .namess {
   font-weight: 400;
   font-size: 16px;
@@ -295,13 +261,11 @@ h4 {
   font-family: Inter;
   text-align: justify;
 }
-
 .left-header-container {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
 .role {
   color: #cc445e;
   font-weight: 400;
@@ -309,18 +273,15 @@ h4 {
   line-height: 100%;
   font-family: Inter;
 }
-
 .profile-icons {
   display: flex;
   gap: 10px;
   flex-direction: column;
 }
-
 .profile-icon {
   display: flex;
   flex-direction: column;
 }
-
 .icons {
   display: flex;
   align-items: center;
@@ -328,7 +289,6 @@ h4 {
   font-size: 14px;
   gap: 5px;
 }
-
 .icon {
   display: flex;
   align-items: center;
@@ -336,11 +296,9 @@ h4 {
   font-size: 14px;
   gap: 5px;
 }
-
 .icon i {
   margin-right: 5px;
 }
-
 .stat-card {
   background: #cc445e;
   color: white;
@@ -352,7 +310,6 @@ h4 {
   font-size: 1.2rem;
   height: 148px;
 }
-
 .event-card {
   background: #755840;
   color: white;
@@ -364,7 +321,6 @@ h4 {
   font-size: 1.2rem;
   width: 219px;
 }
-
 .number {
   font-weight: 500;
   font-size: 48px;
@@ -373,14 +329,12 @@ h4 {
   color: white;
   margin-top: 30px;
 }
-
 .ca-details {
   font-weight: 400;
   font-size: 20px;
   font-family: Inter;
   line-height: 100%;
 }
-
 .days {
   margin-top: 35px;
   font-weight: 400;
@@ -388,7 +342,6 @@ h4 {
   font-size: 16px;
   line-height: 100%;
 }
-
 .upcoming-section {
   display: flex;
   border-radius: 10px;
@@ -397,7 +350,6 @@ h4 {
   flex-wrap: wrap;
   gap: 40px;
 }
-
 .upcard {
   width: 50%;
   height: 390px;
@@ -406,7 +358,6 @@ h4 {
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-
 .upcards {
   background: white;
   border-radius: 10px;
@@ -416,19 +367,15 @@ h4 {
   height: 390px;
   margin-left: 20px;
 }
-
-
 .event-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
 .event-item {
   display: flex;
   align-items: center;
 }
-
 .event-item img {
   width: 100%;
   max-width: 50px;
@@ -436,13 +383,11 @@ h4 {
   border-radius: 5px;
   object-fit: cover;
 }
-
 .event-items {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
 .event-items img {
   width: 100%;
   max-width: 60px;
@@ -450,8 +395,6 @@ h4 {
   border-radius: 5px;
   object-fit: cover;
 }
-
-
 .event-title {
   font-weight: 400;
   font-size: 15px;
@@ -459,7 +402,6 @@ h4 {
   font-family: Inter;
   color: #4c4036;
 }
-
 .event-date {
   color: #cc445e;
   text-align: right;
@@ -470,7 +412,6 @@ h4 {
   line-height: 100%;
   font-family: Inter;
 }
-
 .event-time-details {
   color: #cc445e;
   text-align: right;
@@ -479,13 +420,11 @@ h4 {
   font-size: 12px;
   font-family: Inter;
 }
-
 .button-group {
   display: flex;
   gap: 10px;
   margin-top: 30px;
 }
-
 #view {
   width: 100%;
   max-width: 100px;
@@ -498,7 +437,6 @@ h4 {
   font-family: Inter;
   color: white;
 }
-
 #edit {
   width: 100%;
   max-width: 120px;
@@ -511,7 +449,6 @@ h4 {
   color: white;
   font-family: Inter;
 }
-
 #new {
   width: 100%;
   max-width: 120px;
@@ -524,14 +461,12 @@ h4 {
   color: white;
   font-family: Inter;
 }
-
 .section {
   display: flex;
   gap: 5px;
   margin-top: 20px;
   width: 100%;
 }
-
 .Latest {
   background: white;
   width: 32%;
@@ -541,7 +476,6 @@ h4 {
   margin-left: 20px;
   margin-right: 35px;
 }
-
 .member {
   background: white;
   padding: 15px;
@@ -549,24 +483,20 @@ h4 {
   flex: 1;
   width: 70%;
 }
-
 .galleries img {
   width: 100%;
   max-width: 195px;
   height: 100px;
 }
-
 .column {
   float: left;
   width: 20%;
   padding: 1px;
 }
-
 .column img {
   opacity: 0.8;
   cursor: pointer;
 }
-
 .cardd {
   width: 50%;
   font-size: 20px;
@@ -577,7 +507,6 @@ h4 {
   height: 370px;
   margin-bottom: 10px;
 }
-
 .carddd {
   background: white;
   width: 32%;
@@ -586,8 +515,6 @@ h4 {
   margin-bottom: 18px;
   margin-top: 10px;
 }
-
-
 .carddddd {
   background: white;
   margin-left: 20px;
@@ -600,32 +527,26 @@ h4 {
   margin-right: 20px;
   margin-top: 10px;
 }
-
 .pic {
   display: flex;
   width: 99.5%;
 }
-
 .pic-item {
   position: relative;
   overflow: hidden;
 }
-
 .pic-item img {
   width: 136px;
   height: 147px;
 }
-
 .pic-items {
   position: relative;
   overflow: hidden;
 }
-
 .pic-items img {
   width: 103px;
   height: 147px;
 }
-
 .pic-info {
   background: #4c403699;
   position: absolute;
@@ -640,24 +561,20 @@ h4 {
   align-items: center;
   justify-content: center;
 }
-
 .picss {
   display: flex;
   width: 99.5%;
   flex-wrap: wrap;
 }
-
 .pics-item {
   position: relative;
   overflow: hidden;
   flex: 1;
 }
-
 .pics-item img {
   width: 355px;
   height: 255px;
 }
-
 .pics-info {
   background: #4c403699;
   position: absolute;
@@ -672,14 +589,11 @@ h4 {
   align-items: center;
   justify-content: center;
 }
-
 .pics-items {
   position: relative;
   overflow: hidden;
   align-self: start;
 }
-
-
 .pics-infoss {
   background: #4c403699;
   position: absolute;
@@ -694,19 +608,15 @@ h4 {
   align-items: center;
   justify-content: center;
 }
-
-
 /* members */
 .social-icons {
   background-color: #cc445e;
   height: 50px;
   font-size: 14px;
 }
-
 .social-icons .icon {
   color: white;
 }
-
 .photographers {
   margin-top: 10px;
   display: flex;
@@ -714,7 +624,6 @@ h4 {
   gap: 20px;
   flex-wrap: wrap;
 }
-
 .photographer-card {
   background: white;
   justify-content: center;
@@ -724,7 +633,6 @@ h4 {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border: 1px solid #99816b;
 }
-
 .photographer-card img.profile-pic {
   width: 192px;
   height: 192px;
@@ -732,14 +640,12 @@ h4 {
   margin-bottom: 10px;
   margin-top: 15px;
 }
-
 .photographer-card .social-icons {
   display: flex;
   justify-content: center;
   gap: 10px;
   width: 100%;
 }
-
 .photographer-card .social-icons a {
   display: flex;
   align-items: center;
@@ -753,7 +659,6 @@ h4 {
   text-decoration: none;
   background-color: #ddd;
 }
-
 .social-media-icons {
   margin-top: -25px;
   margin-bottom: 10px;
@@ -761,7 +666,6 @@ h4 {
   justify-content: center;
   gap: 10px;
 }
-
 .social-media-icons a {
   display: flex;
   align-items: center;
@@ -776,49 +680,39 @@ h4 {
   font-family: Inter;
   transition: 0.3s;
 }
-
 .social-media-icons a:hover {
   background-color: #dc3545;
   color: #fff;
 }
-
 .photographer-card .gallery-preview {
   display: flex;
 }
-
 .photographer-card .gallery-preview .pic-item img {
   width: 170px;
   height: 100px;
   object-fit: cover;
 }
-
-
-
 ::-webkit-scrollbar {
   width: 20px;
 }
-
 /* Track */
 /* Track */
 ::-webkit-scrollbar-track {
   background: #ECEDE6;
   border-radius: 10px;
-; 
+  ;
 }
- 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #ffffff; 
+  background: #ffffff;
   border-radius: 10px;
   width: 14px;
   outline: #ECEDE6;
 }
-
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #FFFFFF; 
+  background: #FFFFFF;
 }
-
 /* gallery */
 .cardd {
   background: white;
@@ -830,23 +724,19 @@ h4 {
   width: 97.4%;
   height: 830px;
 }
-
 .galleriy {
   display: flex;
   overflow-x: auto;
 }
-
 .galleriy-item {
   position: relative;
   overflow: hidden;
 }
-
 .galleriy-item img {
   width: 493px;
   height: 370px;
   border-radius: 10px;
 }
-
 .galleriy-info {
   position: absolute;
   bottom: 0;
@@ -862,7 +752,6 @@ h4 {
   align-items: center;
   justify-content: space-between;
 }
-
 .galleriy-infos {
   position: absolute;
   bottom: 0;
@@ -878,13 +767,11 @@ h4 {
   align-items: center;
   justify-content: space-between;
 }
-
 .gal-item {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
 .gal-item img {
   width: 100%;
   max-width: 35px;
@@ -893,7 +780,6 @@ h4 {
   object-fit: cover;
   margin-left: 10px;
 }
-
 .gals-item span {
   margin-left: 25px;
   font-weight: 500;
@@ -901,7 +787,6 @@ h4 {
   font-family: Inter;
   line-height: 100%;
 }
-
 .gal-details {
   display: flex;
   justify-content: space-between;
@@ -910,7 +795,6 @@ h4 {
   font-family: Inter;
   width: 100%;
 }
-
 /* member galleries */
 .dt-paging {
   display: flex;
@@ -920,7 +804,6 @@ h4 {
   margin-top: 20px;
   gap: 5px;
 }
-
 .dt-paging-button {
   border: none;
   background: #cc445e;
@@ -934,7 +817,6 @@ h4 {
   height: 40px;
   padding: 0;
 }
-
 .dt-paging-button.disabled {
   background: #ffffff;
   color: black;
@@ -942,21 +824,15 @@ h4 {
   cursor: not-allowed;
   opacity: 0.6;
 }
-
 .dt-paging-button.current {
   background: #cc445e;
   font-weight: bold;
   border: 2px solid white;
 }
-
-
 /* competitions */
-
-
 .right {
   width: 100%;
 }
-
 .custom-card img {
   max-width: 200px;
   height: 200px;
@@ -964,34 +840,28 @@ h4 {
   border-radius: 7px;
   margin-right: 10px;
 }
-
 .icon-container {
   display: flex;
   gap: 10px;
   align-items: center;
 }
-
 .icon-container i {
   color: #000000;
 }
-
 .quick-filter {
   text-align: right;
 }
-
 .quick-filter-icons i {
   margin: 0 5px;
   font-size: 18px;
   cursor: pointer;
 }
-
 .right-section {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-
 .calendar-container {
   border-radius: 10px;
   width: 90%;
@@ -999,36 +869,26 @@ h4 {
   margin-left: 5%;
   justify-content: center;
 }
-
-
-
-
 .commentss-card img {
   width: 100%;
   max-width: 40px;
   height: 40px;
   border-radius: 7px;
 }
-
 .comments-card img {
   width: 60px;
   max-width: 60px;
   height: 60px;
   border-radius: 7px;
 }
-
-
-.icon-container i:hover,
-.quick-filter-icons i:hover {
+.icon-container i:hover, .quick-filter-icons i:hover {
   color: #cc445e;
   transition: color 0.3s ease;
 }
-
 .commentss-card {
   scrollbar-width: thin;
   scrollbar-color: #99816b #eee;
 }
-
 /* club */
 .form-container {
   padding: 20px;
@@ -1037,16 +897,13 @@ h4 {
   width: 96.2%;
   margin-left: 20px;
 }
-
 /* notice single */
 .form-containers {
   padding: 20px;
   border-radius: 10px;
-  width: 104%;
-  margin-left: 1%;
+  width: 100%;
   background: white;
 }
-
 .form-containers img {
   width: 100%;
   height: auto;
@@ -1054,7 +911,6 @@ h4 {
   border-radius: 20px;
   margin-right: 20px;
 }
-
 .tag-dropdown {
   display: flex;
   flex-wrap: wrap;
@@ -1069,7 +925,6 @@ h4 {
   width: 100%;
   overflow-y: auto;
 }
-
 .tag-dropdown input {
   border: none;
   outline: none;
@@ -1079,7 +934,6 @@ h4 {
   flex-grow: 1;
   min-width: 120px;
 }
-
 .tag {
   background-color: #f1f1f1;
   padding: 5px 10px;
@@ -1088,7 +942,6 @@ h4 {
   align-items: center;
   margin: 2px;
 }
-
 .tag button {
   background: none;
   border: none;
@@ -1097,45 +950,36 @@ h4 {
   font-size: 14px;
   font-family: Inter;
 }
-
 .tag button:hover {
   color: #cc445e;
 }
-
 .dropdown-menu {
   width: 100%;
   max-height: 200px;
   overflow-y: auto;
 }
-
 .dropdown-menu::-webkit-scrollbar {
   width: 6px;
 }
-
 .dropdown-menu::-webkit-scrollbar-thumb {
   background-color: #99816b;
   border-radius: 10px;
 }
-
 .hidden {
   display: none;
 }
-
 .sea {
   border: none;
 }
-
 .tag-dropdown:focus-within {
   outline: 2px solid #99816b;
 }
-
 /* events edit */
 .img-preview {
   position: relative;
   display: inline-block;
   margin-right: 10px;
 }
-
 .img-preview img {
   width: 100%;
   max-width: 50px;
@@ -1143,7 +987,6 @@ h4 {
   border-radius: 8px;
   object-fit: cover;
 }
-
 .remove-btn {
   position: absolute;
   top: 5px;
@@ -1161,11 +1004,9 @@ h4 {
   color: #cc445e;
   border: 1px solid #cc445e;
 }
-
 .remove-btn:hover {
   background-color: #ffdddd;
 }
-
 .doc-preview {
   position: relative;
   display: flex;
@@ -1175,7 +1016,6 @@ h4 {
   border-radius: 8px;
   margin-right: 10px;
 }
-
 .doc-preview p {
   margin: 0;
   font-size: 14px;
@@ -1188,17 +1028,12 @@ h4 {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-.img-preview img,
-.doc-preview {
+.img-preview img, .doc-preview {
   transition: transform 0.2s ease;
 }
-
-.img-preview img:hover,
-.doc-preview:hover {
+.img-preview img:hover, .doc-preview:hover {
   transform: scale(1.03);
 }
-
 .comments-cards {
   background: #fff;
   border-radius: 10px;
@@ -1208,13 +1043,11 @@ h4 {
   width: 93%;
   margin-left: 5%;
 }
-
 .like-item {
   position: relative;
   display: inline-block;
   margin-bottom: 10px;
 }
-
 .profile-img {
   width: 100%;
   max-width: 80px;
@@ -1223,7 +1056,6 @@ h4 {
   border-radius: 10px;
   display: block;
 }
-
 .heart-icon {
   position: absolute;
   bottom: -8px;
@@ -1238,20 +1070,16 @@ h4 {
   width: 30px;
   height: 30px;
 }
-
-
 .galleries {
   display: flex;
   flex-wrap: wrap;
   overflow-x: auto;
 }
-
 .galleries-item {
   position: relative;
   display: inline-block;
   overflow: hidden;
 }
-
 .galleries-item img {
   width: 100%;
   max-width: 293px;
@@ -1261,12 +1089,10 @@ h4 {
   border-radius: 5px;
   transition: transform 0.3s ease;
 }
-
 .galleries-item:hover {
   transform: scale(0.95);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
-
 .galleries-info {
   position: absolute;
   bottom: 0;
@@ -1281,7 +1107,6 @@ h4 {
   align-items: center;
   justify-content: space-between;
 }
-
 .galleries-infos {
   position: absolute;
   bottom: 0;
@@ -1296,8 +1121,6 @@ h4 {
   align-items: center;
   justify-content: space-between;
 }
-
-
 /* member single view */
 .photographeres {
   padding: 10px;
@@ -1309,7 +1132,6 @@ h4 {
   gap: 30px;
   flex-wrap: wrap;
 }
-
 .photographer-cards {
   background: white;
   justify-content: center;
@@ -1319,7 +1141,6 @@ h4 {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border: 1px solid #99816b;
 }
-
 .photographer-cards img.profile-pic {
   width: 100%;
   max-width: 192px;
@@ -1328,14 +1149,12 @@ h4 {
   margin-bottom: 10px;
   margin-top: 15px;
 }
-
 .photographer-cards .social-icons {
   display: flex;
   justify-content: center;
   margin-bottom: 50px;
   gap: 10px;
 }
-
 .photographer-cards .social-icons a {
   display: flex;
   align-items: center;
@@ -1350,13 +1169,11 @@ h4 {
   text-decoration: none;
   background-color: #ddd;
 }
-
 .photographer-cards:hover {
   transform: scale(1.02);
   transition: transform 0.3s ease;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
-
 .social-media-icones {
   margin-top: -25px;
   margin-bottom: 10px;
@@ -1364,7 +1181,6 @@ h4 {
   justify-content: center;
   gap: 10px;
 }
-
 .social-media-icones a {
   display: flex;
   align-items: center;
@@ -1378,25 +1194,21 @@ h4 {
   font-size: 16px;
   transition: 0.3s;
 }
-
 .social-media-icons a:hover {
   background-color: #dc3545;
   color: #fff;
 }
-
 /* club gallery single */
 .gallery {
   display: flex;
   flex-wrap: wrap;
   overflow-x: auto;
 }
-
 .gallery-item {
   position: relative;
   display: inline-block;
   overflow: hidden;
 }
-
 .gallery-item img {
   width: 100%;
   max-width: 293px;
@@ -1406,11 +1218,9 @@ h4 {
   border-radius: 5px;
   transition: transform 0.3s ease;
 }
-
 .gallery-item:hover {
   transform: scale(0.9);
 }
-
 /* for image 100% Lightbox */
 .lightbox {
   display: none;
@@ -1426,18 +1236,15 @@ h4 {
   align-items: center;
   flex-direction: column;
 }
-
 .lightbox-main {
   max-width: 100%;
   max-height: 100%;
 }
-
 .lightbox-content {
   max-width: 100%;
   max-height: 100%;
   border-radius: 8px;
 }
-
 .nav {
   position: absolute;
   top: 50%;
@@ -1449,15 +1256,12 @@ h4 {
   transform: translateY(-50%);
   padding: 10px;
 }
-
 .prev {
   left: 20px;
 }
-
 .next {
   right: 20px;
 }
-
 .close {
   position: absolute;
   top: 20px;
@@ -1466,7 +1270,6 @@ h4 {
   color: white;
   cursor: pointer;
 }
-
 .lightbox-thumbnails {
   display: flex;
   overflow-x: auto;
@@ -1475,7 +1278,6 @@ h4 {
   max-width: 90%;
   margin: 0 auto;
 }
-
 .lightbox-thumbnails img {
   width: 100%;
   max-width: 80px;
@@ -1485,13 +1287,10 @@ h4 {
   border: 2px solid transparent;
   border-radius: 5px;
 }
-
 .lightbox-thumbnails img.active {
   border-color: white;
 }
-
-.prev,
-.nexts {
+.prev, .nexts {
   position: absolute;
   top: 50%;
   font-size: 30px;
@@ -1499,33 +1298,26 @@ h4 {
   cursor: pointer;
   padding: 10px;
 }
-
 .prev {
   left: 10px;
 }
-
 .nexts {
   right: 10px;
 }
-
-
 /* for club and kamran gallery */
 .galleriye {
   display: flex;
   overflow-x: auto;
 }
-
 .galleriye-item {
   position: relative;
   overflow: hidden;
 }
-
 .galleriye-item img {
   width: 493px;
   height: 370px;
   border-radius: 5px;
 }
-
 .galleriye-info {
   position: absolute;
   bottom: 0;
@@ -1540,7 +1332,6 @@ h4 {
   align-items: center;
   justify-content: space-between;
 }
-
 .galleriye-infos {
   position: absolute;
   font-family: Inter;
@@ -1555,7 +1346,6 @@ h4 {
   align-items: center;
   justify-content: space-between;
 }
-
 .text-secondary {
   font-family: Inter;
   font-weight: 400;
@@ -1564,7 +1354,6 @@ h4 {
   letter-spacing: 0%;
   color: #4c4036;
 }
-
 .text-secondar {
   text-align: justify;
   font-family: Inter;
@@ -1574,7 +1363,6 @@ h4 {
   letter-spacing: 0%;
   color: #4c4036;
 }
-
 .date {
   color: #cc445e;
   font-weight: 400;
@@ -1582,7 +1370,6 @@ h4 {
   font-family: Inter;
   line-height: 100%;
 }
-
 .card-content {
   padding-left: 20px;
 }

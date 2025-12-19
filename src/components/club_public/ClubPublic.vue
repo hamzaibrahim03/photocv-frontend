@@ -501,110 +501,102 @@ onMounted(async () => {
      line-height: 100%;
      letter-spacing: 0%;
 }
-#cluboff {
-    margin-bottom: 70px;
+ #cluboff {
+     margin-bottom: 70px;
 }
-.list {
-    font-family: Inter;
-font-weight: 400;
-font-style: Regular;
-font-size: 20px;
-line-height: 36px;
-letter-spacing: 0%;
+ .list {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 20px;
+     line-height: 36px;
+     letter-spacing: 0%;
 }
-.main{
-    font-family: Inter;
-font-weight: 500;
-font-style: Medium;
-font-size: 28px;
-line-height: 100%;
-letter-spacing: 0%;
+ .main{
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 28px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-.email {
-    font-family: Inter;
-font-weight: 400;
-font-style: Regular;
-font-size: 16px;
-line-height: 20px;
-letter-spacing: 0%
+ .email {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 20px;
+     letter-spacing: 0% 
 }
-#overall {
+ #overall {
      padding: 80px 70px 50px 100px;
 }
-#heads {
-    padding: 60px 70px 20px 90px;
+ #heads {
+     padding: 60px 70px 20px 90px;
 }
-.divider4 {
-  width: 1100px;
-  height: 1px;
-  background-color: rgba(217, 217, 217, 1);
-  margin-top: 75px;
-  margin-bottom: 70px;
-  border-bottom: 1px solid rgba(217, 217, 217, 1);
+ .divider4 {
+     width: 1100px;
+     height: 1px;
+     background-color: rgba(217, 217, 217, 1);
+     margin-top: 75px;
+     margin-bottom: 70px;
+     border-bottom: 1px solid rgba(217, 217, 217, 1);
 }
-.head {
-    font-family: Inter;
-font-weight: 500;
-font-style: Medium;
-font-size: 24px;
-line-height: 100%;
-letter-spacing: 0%;
-width: 100%;
-max-width: 1150px;
-
+ .head {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 24px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     width: 100%;
+     max-width: 1150px;
 }
-.events-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+ .events-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 1.5rem;
+     flex-wrap: wrap;
 }
-
-.events-title {
-  font-family: Inter;
-font-weight: 500;
-font-style: Medium;
-font-size: 36px;
-line-height: 100%;
-letter-spacing: 0%;
-margin: 0;
+ .events-title {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     margin: 0;
 }
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 6px 10px;
-  width: 470px;
-  height: 60px;
-  transition: border-color 0.2s ease;
+ .search-bar {
+     display: flex;
+     align-items: center;
+     background-color: #fff;
+     border: 1px solid #e5e7eb;
+     border-radius: 8px;
+     padding: 6px 10px;
+     width: 470px;
+     height: 60px;
+     transition: border-color 0.2s ease;
 }
-
-.search-bar:hover,
-.search-bar:focus-within {
-  border-color: #d1d5db;
+ .search-bar:hover, .search-bar:focus-within {
+     border-color: #d1d5db;
 }
-
-.search-bar i {
-  color: #c0c0c0;
-  font-size: 14px;
-  margin-right: 8px;
+ .search-bar i {
+     color: #c0c0c0;
+     font-size: 14px;
+     margin-right: 8px;
 }
-
-.search-input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  color: #333;
-  flex: 1;
-  background: transparent;
+ .search-input {
+     border: none;
+     outline: none;
+     font-size: 14px;
+     color: #333;
+     flex: 1;
+     background: transparent;
 }
-
-.search-input::placeholder {
-  color: #c0c0c0;
+ .search-input::placeholder {
+     color: #c0c0c0;
 }
  .site-footer {
      padding-top: 25px;
@@ -627,15 +619,15 @@ margin: 0;
      padding-bottom: 10px;
      margin: 1px;
 }
-#footer-heading {
-  text-align: center;
-  margin-bottom: 30px;
-  font-weight: 500;
-  font-family: Inter;
-    font-style: Regular;
-    font-size: 36px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ #footer-heading {
+     text-align: center;
+     margin-bottom: 30px;
+     font-weight: 500;
+     font-family: Inter;
+     font-style: Regular;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
  @media only screen and (max-width: 991px) {
      .right-header .profile-mobile, .right-header .divider, .notification-desktop, .down {
@@ -655,5 +647,5 @@ margin: 0;
      .navbar .right-header {
          margin-left: 0;
     }
- }
+}
 </style>

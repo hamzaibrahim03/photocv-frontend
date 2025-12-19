@@ -277,7 +277,7 @@ h2 {
 }
 
 .day.has-event .day-number {
-  border: 2px solid var(--border-color); /* Always outline */
+  border: 2px solid var(--border-color); 
 }
 
 .day.has-competition .day-number {

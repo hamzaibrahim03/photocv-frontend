@@ -112,10 +112,7 @@
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(News[0].created_at) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
-                                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+                                                        <img :src="News[0].club_news_type?.icon_url" :alt="News[0].club_news_type?.name" class="virtual" style="width: 25px; height: 25px" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,17 +160,16 @@
                                 <div class="container">
                                     <div class="card">
                                         <img :src="sinnews.featured_image_url" alt="Meeting" style="max-width: 850px; height: 350px; border-radius: 8px"/>
-                                        <h5 class="head" :style="{color: Color.text_color}">{{sinnews.title}}</h5>
+                                        <div class="d-flex justify-content-between">
+                                            <h5 class="head" :style="{ color: Color.text_color }">{{  sinnews.title }}</h5>
+                                            <div class="d-flex align-items-center gap-2 mb-1">
+                                                <img :src="sinnews.club_news_type.icon_url" style="width:20px; height:20px" />
+                                                <h5 class="head m-0" :style="{ color: Color.text_color }">{{ sinnews.club_news_type.name }}</h5>
+                                            </div>
+
+                                        </div>
                                         <p id="edate" :style="{color: Color.accent_color}">{{formatDate(sinnews.publish_date)}}</p>
-                                        <p class="text-secondary" :style="{color: Color.text_color, width: '1100px'}">
-                                            The much-anticipated St Oswald’s Calendar 2025 has now been released, celebrating the beauty and creativity of 
-                                            our community through stunning photography. We are delighted to share that Ryton Camera Club member, Fiona 
-                                            Haughton, has had two of her remarkable images selected to be featured in this year’s edition.<br>
-                                            Fiona’s photographs stood out among the many submissions, reflecting both her talent behind the lens and her eye 
-                                            for capturing moments that resonate with people. Having her work showcased in the calendar not only highlights her 
-                                            individual achievement but also brings pride to the Ryton Camera Club as a whole.<br>
-                                            The calendar serves as more than just a collection of images—it represents the passion and artistry of local 
-                                            photographers whose work will now be enjoyed throughout the year by households across the community.
+                                        <p class="text-secondary" :style="{color: Color.text_color, width: '1100px'}" v-html="sinnews.description">
                                         </p>                
                                         
                                     </div>
@@ -195,12 +191,59 @@
                                                     <div class="event-info" style="display: flex; flex-direction: column">
                                                         <span id="ename">{{ c.title }}</span>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
                                         <div v-else class="text-center text-muted py-4">
                                             No notices found.
+                                        </div>
+                                    </div>
+
+                                    <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
+                                        <h5 class="head">Events</h5>
+                                        <div class="event-list" v-if="Event.length">
+                                            <div class="event-item" v-for="c in Event.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
+                                                <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" alt="Notice" @error="c.featured_image_url = null"/>
+                                                <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                </div>
+                                                <div class="event-details">
+                                                    <div class="event-info" style="display: flex; flex-direction: column">
+                                                        <span id="ename">{{ c.name }}</span>
+                                                        <span id="espeaker" :style="{color: Color.accent_color}">Speaker: {{ c.speaker }}</span>
+                                                    </div>
+
+                                                    <div class="event-time" id="edate">
+                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.event_date) }}</small><br />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-else class="text-center text-muted py-4">
+                                            No events found.
+                                        </div>
+                                    </div>
+
+                                    <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
+                                        <h5 class="head">Competitions</h5>
+                                        <div class="event-list" v-if="Competitions.length">
+                                            <div class="event-item" v-for="c in Competitions.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
+                                                <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" alt="Notice" @error="c.featured_image_url = null"/>
+                                                <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                </div>
+                                                <div class="event-details">
+                                                    <div class="event-info" style="display: flex; flex-direction: column">
+                                                        <span id="ename">{{ c.name }}</span>
+                                                        <span id="espeaker" :style="{color: Color.accent_color}">Judge: {{ c.judging_panel }}</span>
+                                                    </div>
+
+                                                    <div class="event-time" id="edate">
+                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.start_date) }}</small><br />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-else class="text-center text-muted py-4">
+                                            No competitions found.
                                         </div>
                                     </div>
 
@@ -334,10 +377,6 @@ import { useRoute, useRouter } from 'vue-router';
 import { useRytonSingleNewsStore } from '@/stores/club_public/RytonSingleNews';
 import { useRytonNewsStore } from '@/stores/club_public/RytonNews';
 import Loader from "@/components/LoaderAll.vue";
-import Pro from "@/assets/icons/event_list/pro.svg";
-import Cal from "@/assets/icons/event_list/cal.svg";
-import Cam from "@/assets/icons/event_list/cam.svg";
-import Mess from "@/assets/icons/event_list/mess.svg";
 import dayjs from 'dayjs';
 import { useUserStore } from '@/stores/club_admin/UserStore';
 import { useHomeStore } from '@/stores/club_public/ClubData';
@@ -365,6 +404,8 @@ const homeStore = useHomeStore();
 const { username, profile_image_url } = storeToRefs(user)
 const News = computed(() => rytonnewsStore.newsData?.data?.clubNews?.original?.data?.original?.data || []);
 const Notices = computed(() => rytonnewsStore.newsData?.data?.clubNotices?.original?.data || []);
+const Competitions = computed(() => rytonnewsStore.newsData?.data?.competitions || {})
+const Event = computed(() => rytonnewsStore.newsData?.data?.events || {})
 const sinnews = computed(() => rytonsinglenewsStore.sinnewsData?.data?.news?.original?.data || {});
 const clubSettings = computed(() => rytonnewsStore.newsData?.data?.clubSettings?.original?.data || {});
 const Color = computed(() => clubSettings.value.settings || {});
@@ -420,121 +461,118 @@ onMounted(async () => {
 #overall {
      padding: 0 0px 20px 45px;
 }
-#heads {
-    padding: 70px 68px 38px 80px;
+ #heads {
+     padding: 70px 68px 38px 80px;
 }
-#right {
-    margin-left: 10px
+ #right {
+     margin-left: 10px 
 }
-#eventdetails {
-    margin-left: -20px
+ #eventdetails {
+     margin-left: -20px 
 }
-#edate {
-    margin-top: 5px;
-    margin-bottom: 47px
+ #edate {
+     margin-top: 5px;
+     margin-bottom: 47px 
 }
-.events-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+ .events-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 1.5rem;
+     flex-wrap: wrap;
 }
-.events-title {
-  font-family: Inter;
-font-weight: 500;
-font-style: Medium;
-font-size: 36px;
-line-height: 100%;
-letter-spacing: 0%;
-margin: 0;
+ .events-title {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     margin: 0;
 }
-.search-bar {
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 6px 10px;
-  width: 470px;
-  height: 60px;
-  transition: border-color 0.2s ease;
+ .search-bar {
+     display: flex;
+     align-items: center;
+     background-color: #fff;
+     border: 1px solid #e5e7eb;
+     border-radius: 8px;
+     padding: 6px 10px;
+     width: 470px;
+     height: 60px;
+     transition: border-color 0.2s ease;
 }
-.search-bar:hover,
-.search-bar:focus-within {
-  border-color: #d1d5db;
+ .search-bar:hover, .search-bar:focus-within {
+     border-color: #d1d5db;
 }
-.search-bar i {
-  color: #c0c0c0;
-  font-size: 14px;
-  margin-right: 8px;
+ .search-bar i {
+     color: #c0c0c0;
+     font-size: 14px;
+     margin-right: 8px;
 }
-.search-input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  color: #333;
-  flex: 1;
-  background: transparent;
+ .search-input {
+     border: none;
+     outline: none;
+     font-size: 14px;
+     color: #333;
+     flex: 1;
+     background: transparent;
 }
-.search-input::placeholder {
-  color: #c0c0c0;
+ .search-input::placeholder {
+     color: #c0c0c0;
 }
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #6b7280;
+ .breadcrumb {
+     display: flex;
+     align-items: center;
+     gap: 8px;
+     font-size: 14px;
+     color: #6b7280;
 }
-.breadcrumb-item {
-  text-decoration: none;
-  color: #6b7280;
+ .breadcrumb-item {
+     text-decoration: none;
+     color: #6b7280;
 }
-.breadcrumb-item.active {
-  color: #111827;
-  font-weight: 600;
+ .breadcrumb-item.active {
+     color: #111827;
+     font-weight: 600;
 }
-.breadcrumb-separator {
-  color: #9ca3af;
+ .breadcrumb-separator {
+     color: #9ca3af;
 }
-.card .head {
-    font-family: Inter;
-font-weight: 500;
-font-style: Medium;
-font-size: 28px;
-line-height: 100%;
-letter-spacing: 0%;
-margin-top: 50px;
-margin-bottom: 70px;
+ .card .head {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 28px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     margin-top: 50px;
+     margin-bottom: 70px;
 }
-.card .text-secondary {
-    font-family: Inter;
-font-weight: 400;
-font-style: Regular;
-font-size: 20px;
-line-height: 24px;
-letter-spacing: 0%;
-margin-left: -10px;
-width: 1100px;
+ .card .text-secondary {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 20px;
+     line-height: 24px;
+     letter-spacing: 0%;
+     margin-left: -10px;
+     width: 1100px;
 }
-
-.title {
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 22px;
-  margin: 0;
+ .title {
+     font-family: "Inter", sans-serif;
+     font-weight: 600;
+     font-size: 22px;
+     margin: 0;
 }
-
-.name {
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  opacity: 0.9;
-  margin-top: 2px;
+ .name {
+     font-family: "Inter", sans-serif;
+     font-weight: 400;
+     font-size: 16px;
+     opacity: 0.9;
+     margin-top: 2px;
 }
-#joincontainer {
-  margin-top: 300px;
+ #joincontainer {
+     margin-top: 300px;
 }
  .site-footer {
      padding-top: 25px;
@@ -552,7 +590,7 @@ width: 1100px;
  .site-footer a:hover {
      text-decoration: underline;
 }
-.event-img, .fallback-box {
+ .event-img, .fallback-box {
      width: 100%;
      max-width: 50px;
      height: 50px;
@@ -573,15 +611,15 @@ width: 1100px;
      padding-bottom: 10px;
      margin: 1px;
 }
-#footer-heading {
-  text-align: center;
-  margin-bottom: 30px;
-  font-weight: 500;
-  font-family: Inter;
-    font-style: Regular;
-    font-size: 36px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ #footer-heading {
+     text-align: center;
+     margin-bottom: 30px;
+     font-weight: 500;
+     font-family: Inter;
+     font-style: Regular;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
  #events-left {
      flex: 3;
@@ -739,12 +777,12 @@ width: 1100px;
      border: none;
      color: white 
 }
-.divider5{
-    width: 1100px;
-    height: 1px;
-  background-color: rgba(217, 217, 217, 1);
-  margin-top: 30px;
-  border-bottom: 1px solid rgba(217, 217, 217, 1);
+ .divider5{
+     width: 1100px;
+     height: 1px;
+     background-color: rgba(217, 217, 217, 1);
+     margin-top: 30px;
+     border-bottom: 1px solid rgba(217, 217, 217, 1);
 }
  @media only screen and (max-width: 1399px) {
      #overall {
@@ -765,10 +803,10 @@ width: 1100px;
          transition: border-color 0.2s ease;
          gap: 20px 
     }
-.divider4, .divider5 {
-    width: 100%
-}
- .more-card {
+     .divider4, .divider5 {
+         width: 100% 
+    }
+     .more-card {
          width: 110% !important;
     }
      #right {
@@ -811,7 +849,7 @@ width: 1100px;
          transition: border-color 0.2s ease;
          gap: 20px 
     }
-.more-card {
+     .more-card {
          width: 120% !important;
     }
      .event-details {
@@ -871,15 +909,15 @@ width: 1100px;
          display: flex;
          flex-direction: column;
     }
-    .card .row {
-        display: flex;
-        flex-direction: row;
+     .card .row {
+         display: flex;
+         flex-direction: row;
     }
      #heads {
          padding: 50px 25px 50px 50px;
     }
-    .events-title {
-        font-size: 32px;
+     .events-title {
+         font-size: 32px;
     }
      .search-bar {
          display: flex;
@@ -893,16 +931,16 @@ width: 1100px;
          transition: border-color 0.2s ease;
          gap: 20px 
     }
-    .card img {
-        width: 670px;
+     .card img {
+         width: 670px;
     }
-    .card .text-secondary {
-        width: 680px;
+     .card .text-secondary {
+         width: 680px;
     }
-    .divider4, .divider5 {
-        width: 150%
+     .divider4, .divider5 {
+         width: 150% 
     }
-.more-card {
+     .more-card {
          width: 700px !important;
     }
      #events-left {
@@ -977,11 +1015,11 @@ width: 1100px;
      .event-info {
          width: 100%;
     }
-    .card img, .card .text-secondary {
-        width: 500px;
+     .card img, .card .text-secondary {
+         width: 500px;
     }
-    .divider4, .divider5 {
-        width: 100%;
+     .divider4, .divider5 {
+         width: 100%;
     }
      #edate {
          font-family: Inter;
@@ -1042,11 +1080,11 @@ width: 1100px;
      .event-info {
          width: 100%;
     }
-    .card img, .card .text-secondary {
-        width: 300px;
+     .card img, .card .text-secondary {
+         width: 300px;
     }
-    .divider4, .divider5 {
-        width: 100%;
+     .divider4, .divider5 {
+         width: 100%;
     }
      #edate {
          font-family: Inter;

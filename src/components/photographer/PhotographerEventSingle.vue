@@ -24,7 +24,7 @@
     </div>
     <div class="row">
         <div class="col-md-8">
-            <div class="p-3" id="news">
+            <div id="news">
                 <div class="news-list">
                     <div class="custom-card">
                         <div class="row">

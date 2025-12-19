@@ -68,7 +68,6 @@ var gcObject = {
 
     const calendar = $('<table class="calendar"></table>');
     calendar.removeClass("slide-in-left slide-in-right slide-out-left slide-out-right");
-    /// ANIMATION
     if (this.eventAnimate == "none") {
       calendar.hide().addClass("slide-in-left").show();
     } else if (this.eventAnimate == "prev") {
