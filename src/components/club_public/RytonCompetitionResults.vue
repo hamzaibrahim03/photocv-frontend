@@ -262,7 +262,12 @@
                                         <div class="event-details">
                                             <div class="event-info" style="display: flex; flex-direction: column">
                                                 <span id="ename" :style="{color: Color.text_color}">{{ comp.name }}</span>
-                                                <span id="espeaker" :style="{color: Color.primary_color}">Judge: {{ comp.judging_panel }}</span>
+                                                <span id="espeaker" :style="{ color: Color.accent_color }">
+                                                    Judge:
+                                                    <span v-for="(judge, i) in comp.judges" :key="judge.id">
+                                                        {{ judge.first_name }} {{ judge.last_name }}<span v-if="i < c.judges.length - 1">, </span>
+                                                    </span>
+                                                </span>
                                             </div>
                                             <div class="galtext" id="edate">
                                                 <small class="galtext" :style="{color: Color.text_color}">{{ formatDate(comp.start_date) }}</small><br />
@@ -320,21 +325,21 @@
                                 <h5 class="head mb-4" :style="{ color: Color.text_color, paddingBottom: '10px' }">Contact</h5>
 
                                 <div class="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" :style="{paddingBottom: '10px'}">
-                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.address }}</p>
+                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ Club.address }}</p>
                                     <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </div>
                                 </div>
 
                                 <div class="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" :style="{paddingBottom: '10px'}">
-                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.phone }}</p>
+                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ Club.phone }}</p>
                                     <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
                                         <i class="fas fa-phone"></i>
                                     </div>
                                 </div>
 
                                 <div class="contact-item d-flex justify-content-md-end justify-content-center align-items-center" id="cla">
-                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.email }}</p>
+                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ Club.email }}</p>
                                     <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
                                         <i class="fas fa-envelope"></i>
                                     </div>
@@ -456,9 +461,6 @@ const options = computed(() => {
     };
   }) || [];
 });
-
-
-const User = computed(() => homeStore.homeData.data?.user || {});
 
 const selectedSeasonLabel = computed(() => {
   const season = options.value.find(s => s.id === search.value);

@@ -5,6 +5,8 @@ export const useRytonSingleCompResultStore = defineStore('sincompres', {
   state: () => ({
     sincompresData: {},
     loading: false,
+    entries: [],          // ✅ REQUIRED
+    profileImage: null,   // ✅ REQUIRED
     error: null
   }),
 
@@ -14,6 +16,8 @@ export const useRytonSingleCompResultStore = defineStore('sincompres', {
       try {
         const response = await api.getAllRytonSingleCompResult(competitionresult_id); 
         this.sincompresData = response.data.data;
+        this.entries = response.data.data.entries || []
+        this.profileImage = response.data.data.featured_image_url || null
         console.log("Single competition data =>", this.sincompresData);
         this.error = null;
       } catch (err) {

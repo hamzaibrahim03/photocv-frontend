@@ -113,13 +113,11 @@
                                                 <div class="d-flex w-100 justify-content-between align-items-center">
                                                     <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
-                                                        <img :src="Events[0].types?.icon_url" :alt="Events[0].types?.name" class="virtual" style="width: 25px; height: 25px" />
+                                                        <img :src="Events[0].types?.[0]?.icon_url" :alt="Events[0].types?.name" class="virtual" style="width: 25px; height: 25px" />
                                                     </div>
                                                 </div>
                                             </div>                  
-                                            <p class="text-secondary" :style="{color: Color.text_color}">
-                                                {{ Events[0].description || 'No description provided.' }}
-                                            </p>
+                                            <p class="text-secondary" :style="{color: Color.text_color}" v-html="Events[0].description || 'No description provided.'"></p>
                                         </div>
                                         <div class="button-group mt-auto d-flex event-button">
                                             <router-link :to="{ name: 'EventSinglePublic', params: { id: Events[0].id } }" custom v-slot="{ navigate }">
@@ -163,9 +161,9 @@
                                         <img :src=" sinevent.featured_image_url" :alt=" sinevent.name" style="max-width: 850px; height: 350px; border-radius: 8px"/>
                                         <div class="d-flex justify-content-between">
                                             <h5 class="head" :style="{ color: Color.text_color }">{{  sinevent.name }}</h5>
-                                            <div v-for="(t, i) in sinevent.types" :key="i" class="d-flex align-items-center gap-2 mb-1">
+                                            <div v-for="(t, i) in sinevent.types" :key="i" class="d-flex align-items-center justify-content-center gap-2 mb-1">
                                                 <img :src="t.icon_url" style="width:20px; height:20px" />
-                                                <h5 class="head m-0" :style="{ color: Color.text_color }">{{ t.name }}</h5>
+                                                <h5 class="head m-0" :style="{ color: Color.text_color, fontWeight: '400', fontStyle: 'Regular', fontSize: '18px', lineHeight: '100%', letterSpacing: '0%' }">{{ t.name }}</h5>
                                             </div>
 
                                         </div>
@@ -359,7 +357,12 @@
                                                 <div class="event-details">
                                                     <div class="event-info" style="display: flex; flex-direction: column">
                                                         <span id="ename">{{ c.name }}</span>
-                                                        <span id="espeaker" :style="{color: Color.accent_color}">Judge: {{ c.judging_panel }}</span>
+                                                        <span id="espeaker" :style="{ color: Color.accent_color }">
+                                                            Judge:
+                                                            <span v-for="(judge, i) in c.judges" :key="judge.id">
+                                                                {{ judge.first_name }} {{ judge.last_name }}<span v-if="i < c.judges.length - 1">, </span>
+                                                            </span>
+                                                        </span>
                                                     </div>
 
                                                     <div class="event-time" id="edate">
@@ -376,7 +379,7 @@
                                     <div class="season-card" :style="{padding: '35px'}">
                                         <h5 class="head">Seasons</h5>
                                         <div class="session-container" v-if="sessions.length">
-                                            <div v-for="session in sessions" :key="session.id" class="session-card" :class="session.status.toLowerCase()">
+                                            <div v-for="session in sessions.slice(0, 2)" :key="session.id" class="session-card" :class="session.status.toLowerCase()">
                                                 <div class="session-header">
                                                     <h3 class="clubhead">{{ formatedDate(session.start_date) }} - {{ formatedDate(session.end_date) }}</h3>
                                                     <span class="status" :class="session.status.toLowerCase()">

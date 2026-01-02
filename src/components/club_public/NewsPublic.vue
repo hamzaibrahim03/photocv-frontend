@@ -108,7 +108,7 @@
                                     <div>
                                         <div>
                                             <div class="events-card">
-                                                <h5 class="mb-2">{{ News[0].title || 'Untitled Event' }}</h5>
+                                                <h5 class="mb-2">{{ News[0].title || 'Untitled News' }}</h5>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(News[0].created_at) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
@@ -160,7 +160,7 @@
                                     <div class="mt-4">
                                         <div v-if="paginatedNews.length">
                                             <div v-for="e in paginatedNews" :key="e.id" class="events-cards p-3">
-                                                <img v-if="e.featured_image_url" :src="e.featured_image_url" alt="Event Image"/>
+                                                <img v-if="e.featured_image" :src="e.featured_image_url" alt="Event Image"/>
                                                 <div class="flex-grow-1 d-flex flex-column justify-content-between" id="detail">
                                                     <div class="d-flex w-100 justify-content-between align-items-center">
                                                         <h5 id="ename" :style="{color: Color.text_color}">{{ e.title || 'Untitled News' }}</h5>
@@ -260,7 +260,12 @@
                                                 <div class="event-details">
                                                     <div class="event-info" style="display: flex; flex-direction: column">
                                                         <span id="ename">{{ c.name }}</span>
-                                                        <span id="espeaker" :style="{color: Color.accent_color}">Judge: {{ c.judging_panel }}</span>
+                                                        <span id="espeaker" :style="{ color: Color.accent_color }">
+                                                            Judge:
+                                                            <span v-for="(judge, i) in c.judges" :key="judge.id">
+                                                                {{ judge.first_name }} {{ judge.last_name }}<span v-if="i < c.judges.length - 1">, </span>
+                                                            </span>
+                                                        </span>
                                                     </div>
 
                                                     <div class="event-time" id="edate">
@@ -535,10 +540,11 @@ const formatDate = (dateString) => {
 
 
 onMounted(async () => {
-    await filterStore.fetchRytonFilterData();
+  await filterStore.fetchRytonFilterData();
+
   const apiData = filterStore.filterData;
-const types = result.data;
-console.log(types)
+  console.log("Filter Data =>", apiData);
+
   const competitionTypes = apiData?.news_type || [];
 
   competitionTypes.forEach(t => {
@@ -548,7 +554,6 @@ console.log(types)
     });
   });
 
-  console.log("Final Filters =>", filters.value);
   document.addEventListener("click", (e) => {
     if (!e.target.closest(".admin-dropdown")) isDropdownOpen.value = false;
   });
@@ -561,13 +566,15 @@ console.log(types)
   try {
     await rytonnewsStore.fetchRytonNewsData(domain);
     await homeStore.fetchHomeData(domain);
-    newsList.value = rytonnewsStore.newsData?.data?.clubNews?.original?.data?.original?.data || [];
+    newsList.value =
+      rytonnewsStore.newsData?.data?.clubNews?.original?.data?.original?.data || [];
   } catch (error) {
     console.error("Error fetching ryton news data:", error);
   } finally {
     isLoading.value = false;
   }
 });
+
 
 const paginatedNews = computed(() => {
   const start = (currentPage.value - 1) * rowsPerPage.value;

@@ -113,7 +113,7 @@
                                                 <div class="d-flex w-100 justify-content-between align-items-center">
                                                     <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
-                                                        <img :src="Events[0].types?.icon_url" :alt="Events[0].types?.name" class="virtual" style="width: 25px; height: 25px" />
+                                                        <img :src="Events[0].types?.[0]?.icon_url" :alt="Events[0].types?.[0]?.name" class="virtual" style="width: 25px; height: 25px" />
                                                     </div>
                                                 </div>
                                             </div>                  
@@ -226,7 +226,12 @@
                                                 <div class="event-details">
                                                     <div class="event-info" style="display: flex; flex-direction: column">
                                                         <span id="ename">{{ c.name }}</span>
-                                                        <span id="espeaker" :style="{color: Color.accent_color}">Judge: {{ c.judging_panel }}</span>
+                                                        <span id="espeaker" :style="{ color: Color.accent_color }">
+                                                            Judge:
+                                                            <span v-for="(judge, i) in c.judges" :key="judge.id">
+                                                                {{ judge.first_name }} {{ judge.last_name }}<span v-if="i < c.judges.length - 1">, </span>
+                                                            </span>
+                                                        </span>
                                                     </div>
 
                                                     <div class="event-time" id="edate">
@@ -243,7 +248,7 @@
                                     <div class="season-card" :style="{padding: '30px'}">
                                         <h5 class="head">Seasons</h5>
                                         <div class="session-container" v-if="sessions.length">
-                                            <div v-for="session in sessions" :key="session.id" class="session-card" :class="session.status">
+                                            <div v-for="session in sessions.slice(0, 2)" :key="session.id" class="session-card" :class="session.status">
                                                 <div class="session-header">
                                                     <h3 class="clubhead">{{ formatedDate(session.start_date) }}-{{ formatedDate(session.end_date) }}</h3>
                                                     <span class="status" :class="session.status.toLowerCase()">
@@ -522,11 +527,7 @@ const formatDate = (dateString) => {
   const day = date.getDate();
   const month = date.toLocaleString("en-GB", { month: "long" });
   const year = date.getFullYear();
-  const suffix =
-    day % 10 === 1 && day !== 11 ? "st" :
-    day % 10 === 2 && day !== 12 ? "nd" :
-    day % 10 === 3 && day !== 13 ? "rd" : "th";
-  return `${day}${suffix} ${month} ${year}`;
+  return `${day} ${month} ${year}`;
 };
 
 const formatsDate = (dateString) => {

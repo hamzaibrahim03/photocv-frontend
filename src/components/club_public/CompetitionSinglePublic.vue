@@ -166,7 +166,7 @@
                             <section>
                                 <div class="container" id="events-left">
                                     <div class="card">
-                                        <img :src="sincomp.featured_image" alt="Meeting" style="max-width: 850px; height: 350px; border-radius: 8px"/>
+                                        <img :src="sincomp.featured_image_url" alt="Meeting" style="max-width: 850px; height: 350px; border-radius: 8px"/>
                                         <div class="d-flex justify-content-between">
                                             <h5 class="head" :style="{color: Color.text_color, marginBottom: '0px'}">{{sincomp.name}}</h5>
                                             <div class="d-flex align-items-center gap-2 mb-1">
@@ -320,33 +320,33 @@
                                     </div>
 
                                     <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
-                                        <h5 class="head">More Competitions</h5>
-                                        <div class="event-list" v-if="Comps.length">
-                                            <div class="event-item" v-for="c in Comps.slice(0, 6)" :key="c.id">
+                                        <h5 class="head">Events</h5>
+                                        <div class="event-list" v-if="Events.length">
+                                            <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id">
                                                 <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" :alt="c.name" @error="c.featured_image_url = null"/>
                                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                                 </div>
                                                 <div class="event-details">
                                                     <div class="event-info" style="display: flex; flex-direction: column">
                                                         <span id="ename">{{ c.name }}</span>
-                                                        <span id="espeaker" :style="{color: Color.accent_color}">Judge: {{ c.judging_panel }}</span>
+                                                        <span id="espeaker" :style="{color: Color.accent_color}">Speaker: {{ c.speaker }}</span>
                                                     </div>
 
                                                     <div class="event-time" id="edate">
-                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.start_date) }}</small><br />
+                                                        <small class="event-date galtext" :style="{color: Color.accent_color}">{{ formatDate(c.event_date) }}</small><br />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div v-else class="text-center text-muted py-4">
-                                            No competitions found.
+                                            No events found.
                                         </div>
                                     </div>
 
                                     <div class="season-card" :style="{padding: '35px'}">
                                         <h5 class="head">Seasons</h5>
                                         <div class="session-container" v-if="sessions.length">
-                                            <div v-for="session in sessions" :key="session.id" class="session-card" :class="session.status.toLowerCase()">
+                                            <div v-for="session in sessions.slice(0, 2)" :key="session.id" class="session-card" :class="session.status.toLowerCase()">
                                                 <div class="session-header">
                                                     <h3 class="clubhead">{{ formatedDate(session.start_date) }} - {{ formatedDate(session.end_date) }}</h3>
                                                     <span class="status" :class="session.status.toLowerCase()">
@@ -541,6 +541,7 @@ const { username, profile_image_url } = storeToRefs(user)
 const memData = computed(() => rytoncompStore.compData?.data?.clubSettings?.original?.data || {});
 const evData = computed(() => rytoncompStore.compData?.data?.clubSettings?.original?.data?.upcoming_event_days_count || {});
 const Comps = computed(() => rytoncompStore.compData?.data?.upcomingCompetitions || []);
+const Events = computed(() => rytoncompStore.compData?.data?.events || []);
 const sincomp = computed(() => rytonsinglecompStore.sincompData?.data?.competition?.original?.data || {});
 const clubSettings = computed(() => rytonsinglecompStore.sincompData?.data?.clubSettings?.original?.data || {});
 const Color = computed(() => clubSettings.value.settings || {});

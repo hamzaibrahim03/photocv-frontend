@@ -108,7 +108,7 @@
                                     <div>
                                         <div>
                                             <div class="events-card">
-                                                <h5 class="mb-2">{{ News[0].title || 'Untitled Event' }}</h5>
+                                                <h5 class="mb-2">{{ News[0].title || 'Untitled News' }}</h5>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(News[0].created_at) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
@@ -116,9 +116,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p class="text-secondary">
-                                                {{ News[0].description || 'No description provided.' }}
-                                            </p>
+                                            <p class="text-secondary" v-html="News[0].description || 'No description provided.'"></p>
                                         </div>
                                         <div class="button-group mt-3 d-flex">
                                             <router-link :to="{ name: 'NewsSinglePublic', params: { id: News[0].id } }" custom v-slot="{ navigate }">
@@ -233,7 +231,12 @@
                                                 <div class="event-details">
                                                     <div class="event-info" style="display: flex; flex-direction: column">
                                                         <span id="ename">{{ c.name }}</span>
-                                                        <span id="espeaker" :style="{color: Color.accent_color}">Judge: {{ c.judging_panel }}</span>
+                                                        <span id="espeaker" :style="{ color: Color.accent_color }">
+                                                            Judge:
+                                                            <span v-for="(judge, i) in c.judges" :key="judge.id">
+                                                                {{ judge.first_name }} {{ judge.last_name }}<span v-if="i < c.judges.length - 1">, </span>
+                                                            </span>
+                                                        </span>
                                                     </div>
 
                                                     <div class="event-time" id="edate">

@@ -131,9 +131,13 @@
                                 <div class="event-card" :style="{width: '50%', backgroundColor: Color.primary_color}">
                                     <small class="ca-details">Next Event</small>
                                     <div class="row">
-                                        <h3 class="number">
+                                        <h3 v-if="evData?.remaining_days !== undefined && evData?.remaining_days !== null" class="number">
                                             {{ String(evData.remaining_days).padStart(2, '0') }}
                                             &nbsp;<span class="days">days to go</span>
+                                        </h3>
+
+                                        <h3 v-else class="days" :style="{ color: Color.background_color }">
+                                            No upcoming events
                                         </h3>
                                     </div>
                                 </div>
@@ -144,16 +148,16 @@
                 <div class="carousel-item">
                     <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[2]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
                         <div class="hero-overlay">
-                            <div v-if="Events.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
+                            <div v-if="SinEvents.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
                                 <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img v-if="Events[0].images" :src="Events[0].featured_image_url" alt="Event Image" />
+                                    <img v-if="SinEvents[0].images" :src="SinEvents[0].featured_thumb_url" alt="Event Image" />
 
                                     <div>
                                         <div>
                                             <div class="events-card">
-                                                <h5 class="mb-2" :style="{color: Color.text_color}">{{ Events[0].name || 'Untitled Event' }}</h5>
+                                                <h5 class="mb-2" :style="{color: Color.text_color}">{{ SinEvents[0].name || 'Untitled Event' }}</h5>
                                                 <div class="d-flex w-100 justify-content-between align-items-center">
-                                                    <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
+                                                    <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(SinEvents[0].event_date) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
                                                         <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
                                                         <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
@@ -163,11 +167,11 @@
                                                 </div>
                                             </div>                  
                                             <p class="text-secondary" :style="{color: Color.text_color}">
-                                                {{ Events[0].description || 'No description provided.' }}
+                                                {{ SinEvents[0].description || 'No description provided.' }}
                                             </p>
                                         </div>
                                         <div class="button-group mt-3 d-flex event-button">
-                                            <router-link :to="{ name: 'EventSinglePublic', params: { id: Events[0].id } }" custom v-slot="{ navigate }">
+                                            <router-link :to="{ name: 'EventSinglePublic', params: { id: SinEvents[0].id } }" custom v-slot="{ navigate }">
                                                 <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View</button>
                                             </router-link>
                                         </div>
@@ -182,12 +186,12 @@
                         <div class="hero-overlay">
                             <div class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
                                 <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img :src="Notice.featured_image_url" alt="Notice Image" />
+                                    <img :src="Notice.featured_image_thumb" alt="Notice Image" />
 
                                     <div>
                                         <div>
                                             <div class="events-card">
-                                                <h5 class="mb-2">{{ Notice.title || 'Untitled Event' }}</h5>
+                                                <h5 class="mb-2">{{ Notice.title || 'Untitled Notice' }}</h5>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Notice.created_at) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
@@ -218,11 +222,11 @@
                         <div class="hero-overlay">
                             <div v-if="News.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%;">
                                 <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img :src="News[0].featured_image_url" alt="News Image" />
+                                    <img :src="News[0].featured_image_thumb" alt="News Image" />
                                     <div>
                                         <div>
                                             <div class="events-card">
-                                                <h5 class="mb-2">{{ News[0].title || 'Untitled Event' }}</h5>
+                                                <h5 class="mb-2">{{ News[0].title || 'Untitled News' }}</h5>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(News[0].created_at) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
@@ -318,7 +322,7 @@
                         <div class="clubpics">
                             <div v-for="(item, index) in chunkCards.flat()" :key="item.id || index" class="clubpics-item" :class="getPositionClass(index, chunkCards.flat().length)">
                                 <div v-if="item.photos && item.photos.length">
-                                    <img :src="item.photos[0].image" :alt="item.photos[0].title" style="object-fit: cover; object-position: top;"/>
+                                    <img :src="item.photos[0].thumb_url" :alt="item.photos[0].title" style="object-fit: cover; object-position: top;"/>
                                     <div class="clubpics-info" :class="getPositionClass(index, chunkCards.flat().length)" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
                                         <span :style="{ color: Color.background_color }">
                                             {{ item.gallery_name}}
@@ -341,7 +345,7 @@
                                 <h5 class="head" :style="{color: Color.text_color}">Upcoming Events</h5>
                                 <div class="event-list" v-if="Events.length">
                                     <div class="event-item" v-for="event in Events.slice(0, 3)" :key="event.id || index" style="margin-bottom: 10px">
-                                        <img v-if="event.featured_image_url" class="img-fluid event-img" :src="event.featured_image_url" alt="Event" @error="event.featured_image_url = null" :style="{backgroundColor: Color.primary_color}" />
+                                        <img v-if="event.featured_thumb_url" class="img-fluid event-img" :src="event.featured_thumb_url" alt="Event" @error="event.featured_thumb_url = null" :style="{backgroundColor: Color.primary_color}" />
                                         <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                         </div>
 
@@ -357,6 +361,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div v-else class="d-flex flex-column justify-content-center align-items-center" style="min-height: 250px;" :style="{ color:Color.primary_color }">
+                                    <i class="fa-regular fa-calendar-xmark fs-1 mb-2"></i>
+                                    <span>No events found</span>
+                                    <span style="text-align: center; width: 420px">There are currently no events scheduled. Check back soon for updates!</span>
+                                </div>
+
 
                                 <div class="button-group mt-auto">
                                     <router-link :to="{ name: 'EventPublic' }" custom v-slot="{ navigate }">
@@ -375,13 +385,19 @@
                                 <h5 class="head" :style="{color: Color.text_color}">Upcoming Competitions</h5>
                                 <div class="event-list" v-if="Comps.length">
                                     <div class="event-item" v-for="comp in Comps.slice(0, 3)" :key="comp.id || index" style="margin-bottom: 10px">
-                                        <img v-if="comp.featured_image_url" class="img-fluid event-img" :src="comp.featured_image_url" alt="Comp" @error="comp.featured_image_url = null" :style="{backgroundColor: Color.primary_color}"/>
+                                        <img v-if="comp.featured_thumb_url" class="img-fluid event-img" :src="comp.featured_thumb_url" alt="Comp" @error="comp.featured_thumb_url = null" :style="{backgroundColor: Color.primary_color}"/>
                                         <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                         </div>
                                         <div class="event-details">
                                             <div class="event-info" style="display: flex; flex-direction: column">
                                                 <span id="ename" :style="{color: Color.text_color}">{{ comp.name }}</span>
-                                                <span id="espeaker" :style="{color: Color.primary_color}">Judge: {{ comp.judging_panel }}</span>
+                                                <span id="espeaker" :style="{ color: Color.primary_color }">
+                                                    Judge:
+                                                    <span v-for="(judge, i) in comp.judges" :key="judge.id">
+                                                        {{ judge.first_name }} {{ judge.last_name }}<span v-if="i < comp.judges.length - 1">, </span>
+                                                    </span>
+                                                </span>
+
                                             </div>
                                             <div class="galtext" id="edate">
                                                 <small class="galtext" :style="{color: Color.text_color}">{{ formatDate(comp.start_date) }}</small><br />
@@ -389,6 +405,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div v-else class="d-flex flex-column justify-content-center align-items-center" style="min-height: 250px;" :style="{ color:Color.primary_color }">
+                                     <i class="fa-solid fa-trophy fs-1 mb-2"></i>
+                                    <span>No competitions found</span>
+                                    <span style="text-align: center; width: 400px">There are currently no competitions scheduled. Check back soon for updates!</span>
+                                </div>
+
 
                                 <div class="button-group mt-auto">
                                     <router-link :to="{ name: 'CompetitionPublic' }" custom v-slot="{ navigate }">
@@ -507,7 +529,7 @@
                                     <div class="interaction-grid">
                                         <div class="interaction-item" v-for="interaction in Interaction.slice(0, 10)" :key="interaction.id">
                                             <div class="like-card text-center position-relative">
-                                                <img :src="interaction.image_url" class="img-fluid" id="likeimg" alt="User" />
+                                                <img :src="interaction.images.thumb_url" class="img-fluid" id="likeimg" alt="User" />
                                                 <span class="heart-icon" :style="{ backgroundColor: Color.accent_color, color: Color.background_color }">
                                                     <img :src="Heart" alt="icon" style="width: 14px; height: 13px" />
                                                 </span>
@@ -540,7 +562,7 @@
                             <h5 class="head" :style="{color: Color.text_color}">Latest News</h5>
                             <div class="event-list" v-if="News.length" style="padding-top: 20px">
                                 <div class="event-item" v-for="clubnew in News.slice(0, 3)" :key="clubnew.id || index" style="margin-bottom: 10px;">
-                                    <img v-if="clubnew.featured_image_url" class="img-fluid event-img" :src="clubnew.featured_image_url" alt="News" @error="clubnew.featured_image_url = null" />
+                                    <img v-if="clubnew.featured_image_thumb" class="img-fluid event-img" :src="clubnew.featured_image_thumb" alt="News" @error="clubnew.featured_image_thumb = null" />
                                     <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                     </div>
                                     <div class="event-details">
@@ -550,6 +572,11 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div v-else class="d-flex flex-column justify-content-center align-items-center" style="min-height: 250px;" :style="{ color: Color.primary_color}">
+                                <i class="fa-regular fa-newspaper fs-1 mb-2"></i>
+                                <span>No news found</span>
+                                <span style="text-align: center; width: 420px">There are currently no news scheduled. Check back soon for updates!</span>
                             </div>
                             <div class="button-group mt-auto">
                                 <router-link :to="{ name: 'NewsPublic' }" custom v-slot="{ navigate }">
@@ -614,21 +641,21 @@
                                 <h5 class="head mb-4" :style="{ color: Color.text_color, paddingBottom: '10px' }">Contact</h5>
 
                                 <div class="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" :style="{paddingBottom: '10px'}">
-                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.address }}</p>
+                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ Club.address }}</p>
                                     <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </div>
                                 </div>
 
                                 <div class="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" :style="{paddingBottom: '10px'}">
-                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.phone }}</p>
+                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ Club.phone }}</p>
                                     <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
                                         <i class="fas fa-phone"></i>
                                     </div>
                                 </div>
 
                                 <div class="contact-item d-flex justify-content-md-end justify-content-center align-items-center" id="cla">
-                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.email }}</p>
+                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ Club.email }}</p>
                                     <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
                                         <i class="fas fa-envelope"></i>
                                     </div>
@@ -743,6 +770,7 @@ const {
 const memData = computed(() => homeStore.homeData?.data?.clubSettings?.original?.data || {});
 const evData = computed(() => homeStore.homeData?.data?.clubSettings?.original?.data?.upcoming_event_days_count || {});
 const Events = computed(() => homeStore.homeData?.data?.upcomingEvents || []);
+const SinEvents = computed(() => homeStore.homeData?.data?.singleEvent || []);
 const News = computed(() => homeStore.homeData?.data?.clubNews || {});
 const Notice = computed(() => homeStore.homeData?.data?.latest_notice?.original?.data || {});
 const cardes = computed(() => homeData.value?.data?.clubGalleries?.original?.data || []);
@@ -759,7 +787,7 @@ const cards = computed(() => {
             id: member.id,
             username: member.username,
             gallery_name: firstGallery?.gallery_name || "No Gallery",
-            image_url: firstGallery?.photos?. [0]?.image_url || null
+            image_url: firstGallery?.photos?. [0]?.thumb_url || null
         };
     }).filter(card => card.image_url);
 });
@@ -780,7 +808,7 @@ const flatComments = computed(() => {
       interaction.comments.forEach((comment) => {
         all.push({
           ...comment,
-          image_url: interaction.image_url,
+          image_url: interaction.images.thumb_url,
           uploaded_by: interaction.uploaded_by,
         });
       });
@@ -811,7 +839,6 @@ const picture = computed(() => {
         );
     });
 });
-const User = computed(() => homeStore.homeData.data?.user || {});
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);

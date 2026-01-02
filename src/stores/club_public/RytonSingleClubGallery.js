@@ -21,7 +21,11 @@ export const useRytonSingleClubGalStore = defineStore('singleClubGallery', {
     
         this.sinclubgalData = galleryData;
         this.galleryName = galleryData?.gallery_name || 'Unnamed Gallery';
-        this.galleryImages = galleryData?.photos || [];
+        this.galleryImages = (galleryData?.photos || []).map(photo => ({
+          ...photo,
+          id: photo.id ?? photo.photo_id
+        }))
+        
     console.log(galleryData)
         console.log("🖼️ Final Photos:", this.sinclubgalData);
       } catch (err) {

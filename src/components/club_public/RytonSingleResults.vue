@@ -155,30 +155,22 @@
             </section>
 
             <section class="competition-section">
-    <h2 class="heading">
-      {{ competitionTitle }} - {{ competitionSeason }}
-    </h2>
-
-    <div class="gallery-grid">
-      <div
-        v-for="item in entries"
-        :key="item.id"
-        class="gallery-card"
-      >
-        <img :src="item.image" class="gallery-img" />
-
-        <!-- Overlay -->
-        <div class="overlay">
-          <div class="text">
-            <p class="title">{{ item.title }}</p>
-            <span class="author">by {{ item.author }}</span>
-          </div>
-
-          <img v-if="getMedalIcon(item.position)" :src="getMedalIcon(item.position).src" :alt="getMedalIcon(item.position).name" id="badge" />
-        </div>
-      </div>
-    </div>
-  </section>
+                <h2 class="heading">
+                    {{ competitionTitle }} - {{ competitionSeason }}
+                </h2>
+                <div class="gallery-grid">
+                    <div v-for="item in entries" :key="item.id" class="gallery-card" @click="openSlide(item)">
+                        <img :src="item.image" class="gallery-img" />
+                        <div class="overlay">
+                            <div class="text">
+                                <p class="title">{{ item.title }}</p>
+                                <span class="author">by {{ item.author }}</span>
+                            </div>
+                            <img v-if="getMedalIcon(item.position)" :src="getMedalIcon(item.position).src" :alt="getMedalIcon(item.position).name" id="badge" />
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <section>
                 <div class="container">
@@ -235,21 +227,21 @@
                                 <h5 class="head mb-4" :style="{ color: Color.text_color, paddingBottom: '10px' }">Contact</h5>
 
                                 <div class="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" :style="{paddingBottom: '10px'}">
-                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.address }}</p>
+                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ Club.address }}</p>
                                     <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </div>
                                 </div>
 
                                 <div class="contact-item mb-3 d-flex justify-content-md-end justify-content-center align-items-center" id="cla" :style="{paddingBottom: '10px'}">
-                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.phone }}</p>
+                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ Club.phone }}</p>
                                     <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
                                         <i class="fas fa-phone"></i>
                                     </div>
                                 </div>
 
                                 <div class="contact-item d-flex justify-content-md-end justify-content-center align-items-center" id="cla">
-                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ User.email }}</p>
+                                    <p class="footer-text mb-0" :style="{ color: Color.text_color }">{{ Club.email }}</p>
                                     <div class="icon-circles ms-3" :style="{ color: Color.background_color, backgroundColor: Color.accent_color }">
                                         <i class="fas fa-envelope"></i>
                                     </div>
@@ -304,7 +296,6 @@
                 </div>
             </section>
 
-<pre>{{ resultStore.sincompresData?.competitionResult?.original?.data?.entries }}</pre>
             <footer class="site-footer">
                 <div class="footer-content">
                     <p class="memtext" id="fcopy">Copyright &copy; 2025 – {{Club.club_name}}</p>
@@ -375,10 +366,6 @@ const Color = computed(() =>
   resultStore.sincompresData?.clubSettings?.original?.data?.settings || {}
 );
 
-const User = computed(() =>
-  homeStore.homeData?.data?.user || {}
-);
-
 const randomClubs = computed(() => {
   return resultStore.sincompresData?.clubGalleries || [];
 });
@@ -399,6 +386,28 @@ const suggestion = computed(() => {
     };
   });
 });
+
+const openSlide = (clickedImage) => {
+  if (!clickedImage) return
+
+  const allImages = entries.value   // ✅ FIX
+
+  const startIndex = allImages.findIndex(
+    img => img.id === clickedImage.id
+  )
+
+  localStorage.setItem("selectedImages", JSON.stringify(allImages))
+  localStorage.setItem(
+    "startIndex",
+    startIndex >= 0 ? startIndex : 0
+  )
+
+  router.push({
+    path: "/rytonresultslide",
+    query: { gallery: route.params.id }
+  })
+}
+
 
 
 

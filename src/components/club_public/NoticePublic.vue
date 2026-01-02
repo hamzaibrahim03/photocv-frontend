@@ -262,7 +262,12 @@
                                                 <div class="event-details">
                                                     <div class="event-info" style="display: flex; flex-direction: column">
                                                         <span id="ename">{{ c.name }}</span>
-                                                        <span id="espeaker" :style="{color: Color.accent_color}">Judge: {{ c.judging_panel }}</span>
+                                                        <span id="espeaker" :style="{ color: Color.accent_color }">
+                                                            Judge:
+                                                            <span v-for="(judge, i) in c.judges" :key="judge.id">
+                                                                {{ judge.first_name }} {{ judge.last_name }}<span v-if="i < c.judges.length - 1">, </span>
+                                                            </span>
+                                                        </span>
                                                     </div>
 
                                                     <div class="event-time" id="edate">

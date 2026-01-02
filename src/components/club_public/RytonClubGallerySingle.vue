@@ -165,7 +165,7 @@
 
                                 <div class="gallery-row">
                                     <div class="gallery-big" v-if="group[0]">
-                                        <img :src="group[0].image" :alt="group[0].title" @click="openSlide(gIndex)"/>
+                                        <img :src="group[0].image" :alt="group[0].title" @click="openSlide(group[0])"/>
                                         <div class="overlay d-flex justify-content-between align-items-center" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.65) }">
                                             <div class="d-flex align-items-center gap-3">
                                                 <img v-if="group[0].uploaded_by_profile_image" class="event-img" style="border-radius: 50%" :src="group[0].uploaded_by_profile_image" alt="Uploader" @error="group[0].uploaded_by_profile_image = null" />
@@ -193,7 +193,7 @@
 
                                     <div class="gallery-column" v-if="group[1] || group[2]">
                                         <div v-for="(img, i) in [group[1], group[2]].filter(Boolean)" :key="i" class="gallery-small" >
-                                            <img :src="img.image" :alt="img.title" @click="openSlide(index)"/>
+                                            <img :src="img.image" :alt="img.title" @click="openSlide(img)"/>
                                             <div class="overlay d-flex justify-content-between align-items-center" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.65) }">
                                                 <div class="d-flex align-items-center gap-3">
                                                     <img v-if="img.uploaded_by_profile_image" class="event-img" style="border-radius: 50%" :src="img.uploaded_by_profile_image" alt="Uploader" @error="img.uploaded_by_profile_image = null" />
@@ -223,7 +223,7 @@
 
                                 <div class="gallery-row-bottom" v-if="group[3] && group[4]">
                                     <div v-for="(img, i) in [group[3], group[4]]" :key="'bottom-' + i" class="gallery-half" >
-                                        <img :src="img.image" :alt="img.title" @click="openSlide(index)"/>
+                                        <img :src="img.image" :alt="img.title" @click="openSlide(img)"/>
                                         <div class="overlay d-flex justify-content-between align-items-center" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.65) }">
                                             <div class="d-flex align-items-center gap-3">
                                                 <img v-if="img.uploaded_by_profile_image" class="event-img" style="border-radius: 50%" :src="img.uploaded_by_profile_image" alt="Uploader" @error="img.uploaded_by_profile_image = null" />
@@ -350,12 +350,27 @@ const groupedImages = computed(() => {
 })
 
 
-const openSlide = (index) => {
-  const allImages = galleryImages.value;
-  localStorage.setItem("selectedImages", JSON.stringify(allImages));
-  localStorage.setItem("startIndex", index);
-  router.push("/rytonclubslide");
-};
+const openSlide = (clickedImage) => {
+  if (!clickedImage) return
+
+  const allImages = galleryImages.value
+
+  const startIndex = allImages.findIndex(
+    img => img.id === clickedImage.id
+  )
+
+  localStorage.setItem("selectedImages", JSON.stringify(allImages))
+  localStorage.setItem(
+    "startIndex",
+    startIndex >= 0 ? startIndex : 0
+  )
+
+  router.push({
+    path: "/rytonclubslide",
+    query: { gallery: route.params.id }
+  })
+}
+
 
 const hexToRgba = (hex, alpha) => {
   let r = 0, g = 0, b = 0;

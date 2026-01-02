@@ -1,155 +1,343 @@
 <template>
-  <div class="slideshow-wrapper">
-    <!-- HEADER -->
-    <header class="top-bar">
-      <button @click="$router.back()">← Back</button>
-      <span>{{ galleryName }}</span>
-    </header>
-
-    <!-- MAIN -->
-    <div class="content">
-      <!-- IMAGE -->
-      <div class="image-area">
-        <button class="nav left" @click="prev">‹</button>
-
-        <img :src="current.entry_image" />
-
-        <button class="nav right" @click="next">›</button>
-
-        <div class="caption">
-          <h3>{{ current.entry_image_title }}</h3>
-          <p>by {{ current.member_name }}</p>
-        </div>
-      </div>
-
-      <!-- SIDEBAR -->
-      <aside class="info-panel">
-        <h4>EXIF Details</h4>
-        <ul>
-          <li>Camera: {{ current.exif.camera_model || "—" }}</li>
-          <li>Lens: {{ current.exif.lens || "—" }}</li>
-          <li>ISO: {{ current.exif.iso || "—" }}</li>
-          <li>Aperture: {{ current.exif.aperture || "—" }}</li>
-          <li>Shutter: {{ current.exif.shutter_speed || "—" }}</li>
-        </ul>
-      </aside>
-    </div>
-
-    <!-- THUMBNAILS -->
-    <div class="thumbs">
-      <img
-        v-for="(img, i) in images"
-        :key="img.entry_id"
-        :src="img.entry_image"
-        :class="{ active: i === index }"
-        @click="index = i"
-      />
-    </div>
+  <div :style="{ backgroundColor: Color.background_color, fontFamily: Color.fonts }">
+    <Loader :show="isLoading" />
+    <div v-if="!isLoading">
+		<div class="viewer">
+			<section>
+				<!-- TOP BAR -->
+				<div class="top-bar">
+					<button class="back-btn" @click="$router.back()">❮ &nbsp; Back</button>
+				</div>
+				<!-- IMAGE AREA -->
+				<div class="image-section">
+					<button class="nav-arrow left" @click="prev">‹</button>
+					<div class="image-wrapper">
+						<img v-if="current" :src="current.image" class="main-image"/>
+						<!-- fullscreen icon -->
+						<button class="expand-btn" @click="openFullscreen">⤢</button>
+					</div>
+					<button class="nav-arrow right" @click="next">›</button>
+					<!-- comments drawer button -->
+					<button class="open-comments" @click="showComments = true">
+						❮
+					</button>
+				</div>
+				<!-- INFO SECTION -->
+				<div class="d-flex image-info" v-if="current">
+					<img v-if="profileImage" :src="profileImage" class="profile-img"/>
+					<div class="text">
+						<h3 class="title">
+							{{ current.title }}
+						</h3>
+						<span class="meta">
+							by {{ fullName }}
+						</span>
+					</div>
+				</div>
+				<!-- THUMBNAILS -->
+				<div class="thumbs-wrapper">
+					<div class="thumbnails" ref="thumbContainer">
+						<div v-for="(img, i) in images" :key="img.id" class="thumb" :class="{ active: i === currentIndex }" @click="goTo(i)" :ref="el => thumbRefs[i] = el">
+							<img :src="img.image" />
+						</div>
+					</div>
+				</div>
+				<!-- COMMENTS DRAWER -->
+				<CommentsDrawer v-if="showComments && current" :photo-id="current.id" @close="showComments = false"/>
+			</section>
+			<footer class="site-footer">
+				<div class="footer-content">
+					<p class="memtext" id="fcopy">Copyright &copy; 2025 – {{Club.club_name}}</p>
+					<p class="memtext">Powered by <a href="https://cameraclub.website" target="_blank" :style="{color: Color.text_color, fontWeight: 'bold'}">cameraclub.website</a></p>
+				</div>
+			</footer>
+		</div>
+	</div>
   </div>
 </template>
+
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import { useRoute } from "vue-router";
-import { useRytonSingleCompResultStore } from "@/stores/club_public/RytonSingleResult";
+import { ref, computed, onMounted, watch, nextTick } from "vue"
+import { useRoute } from "vue-router"
+import { storeToRefs } from "pinia"
+import { useRytonSingleMemGalStore } from "@/stores/club_public/RytonSingleMemberGallery"
+import CommentsDrawer from "@/components/club_public/CommentsDrawMember.vue"
+import { useRytonGalleryStore } from '@/stores/club_public/RytonGallery';
+import Loader from "@/components/LoaderAll.vue";
 
-const route = useRoute();
-const store = useRytonSingleCompResultStore();
+const thumbContainer = ref(null)
+const thumbRefs = ref([])
+const rytongalleryStore = useRytonGalleryStore();
+const route = useRoute()
+const showComments = ref(false)
+const currentIndex = ref(0)
+const memData = computed(() => rytongalleryStore.galleryData?.data?.clubSettings?.original?.data || {});
+const Club = computed(() => memData.value.club || {});
+const Color = computed(() => memData.value.settings || {});
 
-const images = ref([]);
-const index = ref(0);
+/* STORE */
+const galleryStore = useRytonSingleMemGalStore()
+const {
+  galleryImages,
+  profileImage,
+  firstName,
+  lastName
+} = storeToRefs(galleryStore)
 
-const current = computed(() => store.sincompresData?.competitionResult?.original?.data?.entries[index.value] || {});
+/* COMPUTED */
+const images = computed(() => galleryImages.value || [])
 
+const current = computed(() => {
+  return images.value[currentIndex.value] || null
+})
+
+const fullName = computed(() => {
+  return `${firstName.value} ${lastName.value}`.trim()
+})
+
+/* NAVIGATION */
 const next = () => {
-  if (index.value < images.value.length - 1) index.value++;
-};
+  if (currentIndex.value < images.value.length - 1) {
+    currentIndex.value++
+  }
+}
 
 const prev = () => {
-  if (index.value > 0) index.value--;
-};
+  if (currentIndex.value > 0) {
+    currentIndex.value--
+  }
+}
 
+const goTo = (index) => {
+  currentIndex.value = index
+}
+
+/* FULLSCREEN */
+const openFullscreen = () => {
+  const el = document.querySelector(".main-image")
+  if (el?.requestFullscreen) el.requestFullscreen()
+}
+
+/* FETCH DATA */
 onMounted(async () => {
-  const compId = route.params.galleryId;
-  const photoId = Number(route.params.photoId);
+  const galleryId = route.params.id
+  await galleryStore.fetchRytonSingleMemGalData(galleryId)
+})
 
-  await store.fetchRytonSingleCompResData(compId);
+/* Auto scroll active thumbnail */
+watch(currentIndex, async () => {
+  await nextTick()
+  const activeThumb = thumbRefs.value[currentIndex.value]
+  const container = thumbContainer.value
 
-  images.value = store.sincompresData.data.entries.filter(
-    e => e.is_published === 1
-  );
+  if (activeThumb && container) {
+    const offset =
+      activeThumb.offsetLeft -
+      container.clientWidth / 2 +
+      activeThumb.clientWidth / 2
 
-  index.value = images.value.findIndex(e => e.entry_id === photoId);
-});
+    container.scrollTo({
+      left: offset,
+      behavior: "smooth",
+    })
+  }
+})
 </script>
+
+
 <style scoped>
-.slideshow-wrapper {
-  position: fixed;
-  inset: 0;
+.viewer {
   background: #000;
   color: #fff;
   display: flex;
   flex-direction: column;
 }
 
+/* TOP BAR */
 .top-bar {
-  padding: 16px;
-  display: flex;
-  gap: 20px;
+  padding: 18px 30px;
 }
 
-.content {
-  flex: 1;
-  display: flex;
+.back-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
 }
 
-.image-area {
+/* IMAGE AREA */
+.image-section {
   flex: 1;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.image-wrapper {
   position: relative;
 }
 
-.image-area img {
-  max-height: 80vh;
-  max-width: 80%;
-  object-fit: contain;
+.main-image {
+  max-width: 70vw;
+  max-height: 60vh;
+  border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.7);
 }
 
-.nav {
+/* FULLSCREEN ICON */
+.expand-btn {
   position: absolute;
-  font-size: 40px;
-  background: none;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
   border: none;
-  color: white;
+  background: rgba(0,0,0,.7);
+  color: #fff;
+  font-size: 18px;
   cursor: pointer;
 }
 
-.left { left: 20px; }
-.right { right: 20px; }
-
-.info-panel {
-  width: 300px;
-  background: #111;
-  padding: 20px;
+/* NAV ARROWS */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 42px;
+  color: #fff;
+  background: rgba(0,0,0,.6);
+  border: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
-.thumbs {
-  display: flex;
-  gap: 10px;
-  padding: 10px;
-  overflow-x: auto;
-}
+.nav-arrow.left { left: 30px; }
+.nav-arrow.right { right: 30px; }
 
-.thumbs img {
+/* COMMENTS BUTTON */
+.open-comments {
+  position: fixed;
+  top: 10%;
+  right: 1%;
+  width: 60px;
   height: 60px;
+  background: rgba(0,0,0,.85);
+  color: #fff;
+  border: none;
+  font-size: 26px;
+  border-radius: 12px 0 0 12px;
+  cursor: pointer;
+}
+
+/* INFO */
+.image-info {
+  padding: 18px 30px;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+
+.info-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.profile-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.text {
+	padding: 0 10px;
+}
+
+.text .title {
+  margin: 0;
+  padding: 0;
+  font-family: Inter;
+font-weight: 600;
+font-style: Semi Bold;
+font-size: 40px;
+line-height: 100%;
+letter-spacing: 0%;
+color:rgba(255, 255, 255, 1);
+}
+
+.meta {
+  font-family: Inter;
+font-weight: 400;
+font-style: Regular;
+font-size: 20px;
+line-height: 100%;
+letter-spacing: 0%;
+color:rgba(255, 255, 255, 1);
+}
+
+/* THUMBNAILS */
+.thumbs-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.thumbnails {
+  display: flex;
+  gap: 16px;
+  padding: 14px 20px 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  max-width: 1610px;
+}
+
+/* hide scrollbar (optional) */
+.thumbnails::-webkit-scrollbar {
+  display: none;
+}
+
+.thumb {
+  flex: 0 0 auto;
+  width: 300px;
+  height: 220px;
+  overflow: hidden;
   opacity: 0.5;
   cursor: pointer;
+  transition: 0.3s;
+  border-radius: 10px;
 }
 
-.thumbs img.active {
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb.active {
   opacity: 1;
-  border: 2px solid white;
+  outline: 2px solid #fff;
 }
 
+
+ .site-footer {
+     padding-top: 25px;
+     padding-bottom: 10px;
+     text-align: center;
+     font-size: 14px;
+     color: #555;
+     border-top: 1px solid #ddd;
+     margin-top: 40px;
+}
+ .site-footer a {
+     color: #007bff;
+     text-decoration: none;
+}
+ .site-footer a:hover {
+     text-decoration: underline;
+}
 </style>

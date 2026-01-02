@@ -178,7 +178,7 @@
 
                                 <div class="gallery-row">
                                     <div class="gallery-big" v-if="group[0]">
-                                        <img :src="group[0].image" :alt="group[0].title" @click="openSlide(gIndex)"/>
+                                        <img :src="group[0].image" :alt="group[0].title" @click="openSlide(group[0])"/>
                                         <div class="overlay justify-content-between" style="flex-direction: row; display: flex" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
                                             <div :style="{ color: Color.background_color }" style="flex-direction: column; display: flex">
                                                 <h4 class="title" :style="{color: Color.background_color }" >{{ group[0].title }}</h4>
@@ -199,7 +199,7 @@
 
                                     <div class="gallery-column" v-if="group[1] || group[2]">
                                         <div v-for="(img, i) in [group[1], group[2]].filter(Boolean)" :key="i" class="gallery-small" >
-                                            <img :src="img.image" :alt="img.title" @click="openSlide(index)"/>
+                                            <img :src="img.image" :alt="img.title" @click="openSlide(img)"/>
                                             <div class="overlay justify-content-between" style="flex-direction: row; display: flex" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
                                                 <div :style="{ color: Color.background_color }" style="flex-direction: column; display: flex">
                                                     <h4 class="title" :style="{color: Color.background_color }" >{{ img.title }}</h4>
@@ -222,7 +222,7 @@
 
                                 <div class="gallery-row-bottom" v-if="group[3] && group[4]">
                                     <div v-for="(img, i) in [group[3], group[4]]" :key="'bottom-' + i" class="gallery-half" >
-                                        <img :src="img.image" :alt="img.title" @click="openSlide(index)"/>
+                                        <img :src="img.image" :alt="img.title" @click="openSlide(img)"/>
                                         <div class="overlay justify-content-between" style="flex-direction: row; display: flex" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
                                             <div :style="{ color: Color.background_color }" style="flex-direction: column; display: flex">
                                                 <h4 class="title" :style="{color: Color.background_color }" >{{ img.title }}</h4>
@@ -355,13 +355,25 @@ const handleLogout = async () => {
   await user.logout();
 };
 
+const openSlide = (clickedImage) => {
+  if (!clickedImage) return
 
-const openSlide = (index) => {
-  const allImages = galleryImages.value;
-  localStorage.setItem("selectedImages", JSON.stringify(allImages));
-  localStorage.setItem("startIndex", index);
-  router.push("/rytonmemberslide");
-};
+  const allImages = galleryImages.value
+
+  const startIndex = allImages.findIndex(
+    img => img.id === clickedImage.id
+  )
+
+  localStorage.setItem("selectedImages", JSON.stringify(allImages))
+  localStorage.setItem("startIndex", startIndex)
+
+   router.push({
+    path: "/rytonmemberslide",
+    query: { gallery: route.params.id }
+  })
+}
+
+
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);

@@ -62,6 +62,7 @@ import NoticePublic from "@/components/club_public/NoticePublic.vue"
 import ClubPublic from "@/components/club_public/ClubPublic.vue"
 import RytonCompetitionResults from "@/components/club_public/RytonCompetitionResults.vue"
 import RytonSingleResults from "@/components/club_public/RytonSingleResults.vue"
+import RytonResultSlide from "@/components/club_public/RytonResultSlide.vue"
 const routes = [
   {
     name: "Login",
@@ -399,6 +400,11 @@ const routes = [
     name: "RytonSingleResults",
     path: "/compsinresult/:id",
     component: RytonSingleResults,
+  },
+  {
+    name: "RytonResultslide",
+    path: "/rytonresultslide",
+    component: RytonResultSlide,
   },
 ];
 

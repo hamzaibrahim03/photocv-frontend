@@ -256,7 +256,7 @@
                                     <div class="season-card" :style="{paddingTop: '20px'}">
                                         <h5 class="head">Seasons</h5>
                                         <div class="session-container" v-if="sessions.length">
-                                            <div v-for="session in sessions" :key="session.id" class="session-card" :class="session.status">
+                                            <div v-for="session in sessions.slice(0, 2)" :key="session.id" class="session-card" :class="session.status">
                                                 <div class="session-header">
                                                     <h3 class="clubhead">{{ formatedDate(session.start_date) }} - {{ formatedDate(session.end_date) }}</h3>
                                                     <span class="status" :class="session.status.toLowerCase()">
