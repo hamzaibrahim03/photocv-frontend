@@ -265,7 +265,7 @@
                                                 <span id="espeaker" :style="{ color: Color.accent_color }">
                                                     Judge:
                                                     <span v-for="(judge, i) in comp.judges" :key="judge.id">
-                                                        {{ judge.first_name }} {{ judge.last_name }}<span v-if="i < c.judges.length - 1">, </span>
+                                                        {{ judge.first_name }} {{ judge.last_name }}<span v-if="i < comp.judges.length - 1">, </span>
                                                     </span>
                                                 </span>
                                             </div>

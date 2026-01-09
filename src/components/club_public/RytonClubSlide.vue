@@ -44,13 +44,12 @@
 				</div>
 
 				<!-- COMMENTS DRAWER -->
-				<CommentsDrawer v-if="showComments && current" :photo-id="current.id" @close="showComments = false"/>
+        <CommentsDrawer v-if="showComments && current" :photo="current"  @close="showComments = false"/>
 			</section>
-            <pre>{{ galleryStore?.galleryImages }}</pre>
 			<footer class="site-footer">
 				<div class="footer-content">
 					<p class="memtext" id="fcopy">Copyright &copy; 2025 – {{Club.club_name}}</p>
-					<p class="memtext">Powered by <a href="https://cameraclub.website" target="_blank" :style="{color: Color.text_color, fontWeight: 'bold'}">cameraclub.website</a></p>
+					<p class="memtext">Powered by <a href="https://cameraclub.website" target="_blank" :style="{color: Color.text_color, fontWeight: 'bold'}">{{ Club.domain_name}}</a></p>
 				</div>
 			</footer>
 		</div>
@@ -70,6 +69,7 @@ import Loader from "@/components/LoaderAll.vue";
 const thumbContainer = ref(null)
 const thumbRefs = ref([])
 const rytongalleryStore = useRytonGalleryStore();
+const galleryStore = useRytonSingleClubGalStore()
 const route = useRoute()
 const showComments = ref(false)
 const currentIndex = ref(0)
@@ -77,7 +77,6 @@ const memData = computed(() => rytongalleryStore.galleryData?.data?.clubSettings
 const Club = computed(() => memData.value.club || {});
 const Color = computed(() => memData.value.settings || {});
 
-const galleryStore = useRytonSingleClubGalStore()
 const {
   galleryImages,
   profileImage
@@ -300,7 +299,7 @@ color:rgba(255, 255, 255, 1);
 }
 .thumbnails {
   display: flex;
-  gap: 16px;
+  gap: 30px;
   padding: 14px 20px 20px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -316,13 +315,12 @@ color:rgba(255, 255, 255, 1);
 
 .thumb {
   flex: 0 0 auto;
-  width: 300px;
+  width: 296px;
   height: 220px;
   overflow: hidden;
   opacity: 0.5;
   cursor: pointer;
   transition: 0.3s;
-  border-radius: 10px;
 }
 
 .thumb img {

@@ -52,10 +52,12 @@
 
                 <div v-if="commentsOpen" class="comments" ref="commentsRef">
                     <div class="comment" v-for="c in comments" :key="c.id">
-                        <strong>{{ c.user?.name || "User" }}</strong>
-                        <p>{{ c.body }}</p>
-                        <small>{{ time(c.created_at) }}</small>
+                        <strong>{{ c.posted_by || "User" }}</strong>
+                        <p>{{ c.comment }}</p>
+                        <small>{{ time(c.posted_at) }}</small>
                     </div>
+
+                    
 
                     <p v-if="!loading && !comments.length" class="empty">
                         No comments yet
@@ -75,44 +77,62 @@
 
 
 <script setup>
-import { ref, watch, nextTick, computed } from "vue"
-import { useRytonSingleClubGalStore } from "@/stores/club_public/RytonSingleClubGallery"
+import { ref, watch, computed, nextTick } from "vue"
 import commentsApi from "@/api/club_public/allcomments"
 
-const props = defineProps({ photo: Object })
-const galleryStore = useRytonSingleClubGalStore()
+const props = defineProps({
+  photo: {
+    type: Object,
+    required: true
+  }
+})
 
-const comments = ref([])
 const newComment = ref("")
-const loading = ref(false)
 const commentsRef = ref(null)
 
 const exifOpen = ref(true)
 const commentsOpen = ref(true)
 
-const exif = computed(() => galleryStore?.galleryImages?.[0]?.exif || {});
-// const meta = computed(() => galleryStore?.galleryImages?.[0]?.metadata || {});
-const fetchComments = async () => {
-  if (!props.photo?.photo_id) return
-  loading.value = true
-  const res = await commentsApi.getCommentsByPhoto(props.photo.photo_id)
-  comments.value = res.data?.data || []
-  await nextTick()
-  commentsRef.value.scrollTop = commentsRef.value.scrollHeight
-  loading.value = false
-}
+/* EXIF */
+const exif = computed(() => props.photo?.exif || {})
 
+/* ✅ LOCAL COMMENTS STATE */
+const comments = ref([])
+
+/* ✅ Sync props → local state */
+watch(
+  () => props.photo,
+  (val) => {
+    comments.value = val?.comments ? [...val.comments] : []
+  },
+  { immediate: true }
+)
+
+/* POST COMMENT */
 const postComment = async () => {
   if (!newComment.value.trim()) return
-  await commentsApi.postComment(props.photo.photo_id, newComment.value)
+
+  await commentsApi.postComment(
+    props.photo.photo_id,
+    newComment.value
+  )
+
+  comments.value.push({
+    id: Date.now(),
+    comment: newComment.value,
+    posted_by: "You",
+    posted_at: new Date().toISOString()
+  })
+
   newComment.value = ""
-  fetchComments()
+  await nextTick()
+  commentsRef.value.scrollTop = commentsRef.value.scrollHeight
 }
 
 const time = t => new Date(t).toLocaleDateString()
-
-watch(() => props.photo?.photo_id, fetchComments, { immediate: true })
 </script>
+
+
 
 
 <style scoped>

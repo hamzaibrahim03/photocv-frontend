@@ -2,17 +2,16 @@
 <div :style="{ backgroundColor: Color.background_color, fontFamily: Color.fonts }">
     <Loader :show="isLoading" />
     <div v-if="!isLoading">
-        
+
         <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: Color.background_color, height: '108px' }">
             <div class="container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand d-flex align-items-center" href="/">
                     <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px; margin-left: 10px" />
                 </a>
 
-                    <button class="navbar-toggler me-2" type="button" @click="toggleNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                
+                <button class="navbar-toggler me-2" type="button" @click="toggleNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
@@ -59,24 +58,16 @@
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
-                            <a href="#" class="icon profile-mobile" >
+                            <a href="#" class="icon profile-mobile">
                                 <div style="cursor: pointer">
                                     <template v-if="profile_image_url">
-                                        <img
-                                        :src="profile_image_url"
-                                        alt="User profile"
-                                        style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;"
-                                        />
+                                        <img :src="profile_image_url" alt="User profile" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;" />
                                     </template>
                                     <template v-else>
-                                        <i
-                                        class="fa-regular fa-user-circle"
-                                        :style="{ color: Color.accent_color, fontSize: '44px' }"
-                                        ></i>
+                                        <i class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i>
                                     </template>
                                 </div>
 
-                                
                             </a>
                             <span v-if="username" class="notification-desktop">{{ username }}</span>
                             <span v-else class="notification-desktop">Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
@@ -89,7 +80,6 @@
                         </div>
                     </div>
                 </div>
-
 
             </div>
         </nav>
@@ -104,7 +94,7 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ backgroundImage: `url(${Color.cover_images[0]?.url})` }">
+                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ backgroundImage: `url(${Color.cover_images[0]?.image_medium_url})` }">
                         <div class="hero-overlay">
                             <div>
                                 <h1 :style="{ color: Color.background_color, fontWeight: '400'}">{{Club.club_name}}</h1>
@@ -121,7 +111,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[1]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[1]?.image_medium_url}) no-repeat center center / cover`, color: '#E7EFF233' }">
                         <div class="hero-overlay">
                             <div class="card-section" style="width: 100%;">
                                 <div class="stat-card" :style="{width: '50%', backgroundColor: Color.accent_color, color: Color.background_color}">
@@ -146,7 +136,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[2]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[2]?.image_medium_url}) no-repeat center center / cover`, color: '#E7EFF233' }">
                         <div class="hero-overlay">
                             <div v-if="SinEvents.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
                                 <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
@@ -159,13 +149,10 @@
                                                 <div class="d-flex w-100 justify-content-between align-items-center">
                                                     <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(SinEvents[0].event_date) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
-                                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+                                                        <img :src="SinEvents[0].types?.[0]?.icon_url" :alt="SinEvents[0].types?.[0]?.name" class="virtual" style="width: 25px; height: 25px" />
                                                     </div>
                                                 </div>
-                                            </div>                  
+                                            </div>
                                             <p class="text-secondary" :style="{color: Color.text_color}">
                                                 {{ SinEvents[0].description || 'No description provided.' }}
                                             </p>
@@ -182,7 +169,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[3]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[3]?.image_medium_url}) no-repeat center center / cover`, color: '#E7EFF233' }">
                         <div class="hero-overlay">
                             <div class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
                                 <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
@@ -195,10 +182,7 @@
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Notice.created_at) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
-                                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+                                                        <img :src="Notice.notice_type?.icon_url" :alt="Notice.notice_type?.name" class="virtual" style="width: 25px; height: 25px" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -207,7 +191,7 @@
                                             </p>
                                         </div>
                                         <div class="button-group mt-3 d-flex">
-                                            <router-link :to="{ name: 'NoticeSinglePublic', params: { id: News[0].id } }" custom v-slot="{ navigate }">
+                                            <router-link :to="{ name: 'NoticeSinglePublic', params: { id: Notice.id } }" custom v-slot="{ navigate }">
                                                 <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View</button>
                                             </router-link>
                                         </div>
@@ -218,7 +202,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[4]?.url}) no-repeat center center / cover`}">
+                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[4]?.image_medium_url}) no-repeat center center / cover`}">
                         <div class="hero-overlay">
                             <div v-if="News.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%;">
                                 <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
@@ -230,10 +214,7 @@
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(News[0].created_at) || 'Date Not Available' }}</p>
                                                     <div class="icon-container d-flex gap-2">
-                                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+                                                        <img :src="News[0].club_news_type?.icon_url" :alt="News[0].club_news_type?.name" class="virtual" style="width: 25px; height: 25px" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -261,7 +242,7 @@
                     <div :style="{backgroundColor: Color.background_color, paddingBottom: '15px', height: 'auto', border: 'none'}">
                         <div class="hero-grid" :style="{ backgroundColor: Color.background_color, alignItems: 'center'}">
                             <div class="hero-image">
-                                <img :src="Color.header_img_url" alt="hero" style="border-radius: 20px" />
+                                <img :src="Color.header_img_medium_url" alt="hero" style="border-radius: 20px" />
                             </div>
 
                             <div class="hero-content">
@@ -322,7 +303,7 @@
                         <div class="clubpics">
                             <div v-for="(item, index) in chunkCards.flat()" :key="item.id || index" class="clubpics-item" :class="getPositionClass(index, chunkCards.flat().length)">
                                 <div v-if="item.photos && item.photos.length">
-                                    <img :src="item.photos[0].thumb_url" :alt="item.photos[0].title" style="object-fit: cover; object-position: top;"/>
+                                    <img :src="item.photos[0].thumb_url" :alt="item.photos[0].title" style="object-fit: cover; object-position: top;" />
                                     <div class="clubpics-info" :class="getPositionClass(index, chunkCards.flat().length)" :style="{ backgroundColor: hexToRgba(Color.primary_color, 0.7) }">
                                         <span :style="{ color: Color.background_color }">
                                             {{ item.gallery_name}}
@@ -344,7 +325,7 @@
                             <div class="cardddd d-flex flex-column" :style="{backgroundColor: Color.secondary_color, padding: '35px'}">
                                 <h5 class="head" :style="{color: Color.text_color}">Upcoming Events</h5>
                                 <div class="event-list" v-if="Events.length">
-                                    <div class="event-item" v-for="event in Events.slice(0, 3)" :key="event.id || index" style="margin-bottom: 10px">
+                                    <div class="event-item" v-for="event in Events.slice(0, 3)" :key="event.id || index" style="margin-bottom: 10px" @click="goToEvents(event.id)">
                                         <img v-if="event.featured_thumb_url" class="img-fluid event-img" :src="event.featured_thumb_url" alt="Event" @error="event.featured_thumb_url = null" :style="{backgroundColor: Color.primary_color}" />
                                         <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                         </div>
@@ -362,11 +343,17 @@
                                     </div>
                                 </div>
                                 <div v-else class="d-flex flex-column justify-content-center align-items-center" style="min-height: 250px;" :style="{ color:Color.primary_color }">
-                                    <i class="fa-regular fa-calendar-xmark fs-1 mb-2"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                        <path d="M8.4 8.3999C7.69687 8.70665 7.09678 9.20911 6.67125 9.8474C6.24572 10.4857 6.01272 11.2329 6 11.9999V39.9999C6 41.0608 6.42143 42.0782 7.17157 42.8283C7.92172 43.5785 8.93913 43.9999 10 43.9999H38C38.7694 43.9983 39.5221 43.7748 40.1677 43.3562C40.8133 42.9376 41.3245 42.3417 41.64 41.6399" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M42 31V12C42 10.9391 41.5786 9.92172 40.8284 9.17157C40.0783 8.42143 39.0609 8 38 8H19" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M32 4V12" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M6 20H20" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M42 20H31" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M4 4L44 44" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
                                     <span>No events found</span>
                                     <span style="text-align: center; width: 420px">There are currently no events scheduled. Check back soon for updates!</span>
                                 </div>
-
 
                                 <div class="button-group mt-auto">
                                     <router-link :to="{ name: 'EventPublic' }" custom v-slot="{ navigate }">
@@ -384,8 +371,8 @@
                             <div class="cardddd d-flex flex-column" :style="{backgroundColor: Color.secondary_color, padding: '35px'}">
                                 <h5 class="head" :style="{color: Color.text_color}">Upcoming Competitions</h5>
                                 <div class="event-list" v-if="Comps.length">
-                                    <div class="event-item" v-for="comp in Comps.slice(0, 3)" :key="comp.id || index" style="margin-bottom: 10px">
-                                        <img v-if="comp.featured_thumb_url" class="img-fluid event-img" :src="comp.featured_thumb_url" alt="Comp" @error="comp.featured_thumb_url = null" :style="{backgroundColor: Color.primary_color}"/>
+                                    <div class="event-item" v-for="comp in Comps.slice(0, 3)" :key="comp.id || index" style="margin-bottom: 10px" @click="goToComps(comp.id)">
+                                        <img v-if="comp.featured_thumb_url" class="img-fluid event-img" :src="comp.featured_thumb_url" alt="Comp" @error="comp.featured_thumb_url = null" :style="{backgroundColor: Color.primary_color}" />
                                         <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                         </div>
                                         <div class="event-details">
@@ -406,11 +393,17 @@
                                     </div>
                                 </div>
                                 <div v-else class="d-flex flex-column justify-content-center align-items-center" style="min-height: 250px;" :style="{ color:Color.primary_color }">
-                                     <i class="fa-solid fa-trophy fs-1 mb-2"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                        <path d="M8.4 8.3999C7.69687 8.70665 7.09678 9.20911 6.67125 9.8474C6.24572 10.4857 6.01272 11.2329 6 11.9999V39.9999C6 41.0608 6.42143 42.0782 7.17157 42.8283C7.92172 43.5785 8.93913 43.9999 10 43.9999H38C38.7694 43.9983 39.5221 43.7748 40.1677 43.3562C40.8133 42.9376 41.3245 42.3417 41.64 41.6399" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M42 31V12C42 10.9391 41.5786 9.92172 40.8284 9.17157C40.0783 8.42143 39.0609 8 38 8H19" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M32 4V12" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M6 20H20" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M42 20H31" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M4 4L44 44" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
                                     <span>No competitions found</span>
                                     <span style="text-align: center; width: 400px">There are currently no competitions scheduled. Check back soon for updates!</span>
                                 </div>
-
 
                                 <div class="button-group mt-auto">
                                     <router-link :to="{ name: 'CompetitionPublic' }" custom v-slot="{ navigate }">
@@ -440,7 +433,7 @@
                                 </button>
                             </router-link>
                         </div>
-                        
+
                         <div class="upcoming-section" style="display:flex">
                             <div class="card" style="height: auto; border: none; margin-top: -1px; padding-bottom: 0" :style="{backgroundColor: Color.background_color, margin: '0px'}">
                                 <div class="pics">
@@ -488,7 +481,7 @@
                                     <h5 class="mb-0" :style="{ color: Color.text_color, paddingLeft: '-25px'}">Recent Comments</h5>
                                 </div>
 
-                                <div class="card-body overflow-auto" style="max-height: 360px; margin-left: -21px; padding:5px" >
+                                <div class="card-body overflow-auto" style="max-height: 360px; margin-left: -21px; padding:5px">
                                     <div class="event-item d-flex" v-for="comment in flatComments" :key="comment.id" style="padding: 0px 35px; gap: 30px; margin-bottom: 20px">
                                         <img :src="comment.image_url" alt="Interaction Image" class="img-fluid" id="comimg" />
 
@@ -561,7 +554,7 @@
                         <div class="ncardddd d-flex flex-column" style="background-color: #EBE6E1;" :style="{backgroundColor: Color.secondary_color}">
                             <h5 class="head" :style="{color: Color.text_color}">Latest News</h5>
                             <div class="event-list" v-if="News.length" style="padding-top: 20px">
-                                <div class="event-item" v-for="clubnew in News.slice(0, 3)" :key="clubnew.id || index" style="margin-bottom: 10px;">
+                                <div class="event-item" v-for="clubnew in News.slice(0, 3)" :key="clubnew.id || index" style="margin-bottom: 10px;" @click="goToNews(clubnew.id)">
                                     <img v-if="clubnew.featured_image_thumb" class="img-fluid event-img" :src="clubnew.featured_image_thumb" alt="News" @error="clubnew.featured_image_thumb = null" />
                                     <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                     </div>
@@ -574,7 +567,14 @@
                                 </div>
                             </div>
                             <div v-else class="d-flex flex-column justify-content-center align-items-center" style="min-height: 250px;" :style="{ color: Color.primary_color}">
-                                <i class="fa-regular fa-newspaper fs-1 mb-2"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                    <path d="M8.4 8.3999C7.69687 8.70665 7.09678 9.20911 6.67125 9.8474C6.24572 10.4857 6.01272 11.2329 6 11.9999V39.9999C6 41.0608 6.42143 42.0782 7.17157 42.8283C7.92172 43.5785 8.93913 43.9999 10 43.9999H38C38.7694 43.9983 39.5221 43.7748 40.1677 43.3562C40.8133 42.9376 41.3245 42.3417 41.64 41.6399" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M42 31V12C42 10.9391 41.5786 9.92172 40.8284 9.17157C40.0783 8.42143 39.0609 8 38 8H19" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M32 4V12" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M6 20H20" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M42 20H31" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M4 4L44 44" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
                                 <span>No news found</span>
                                 <span style="text-align: center; width: 420px">There are currently no news scheduled. Check back soon for updates!</span>
                             </div>
@@ -588,7 +588,7 @@
                         </div>
 
                         <div class="card" :style="{ backgroundColor: Color.background_color, width: '60%', height: 'auto', border: 'none', borderRadius: '10px', marginTop: '13px' }">
-                            <div class="resultpics">
+                            <div class="resultpics" v-if="chunkedcards.flat().length">
                                 <div v-for="(item, index) in chunkedcards.flat()" :key="item.id || index" class="resultpics-items" :class="getPositionClass(index, chunkedcards.flat().length)">
                                     <div v-if="item.image && item.image.length">
                                         <img v-if="item.image" :src="item.image" :alt="item.gallery_name" style="object-fit: cover; object-position: top;" />
@@ -599,6 +599,18 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div v-else class="d-flex flex-column justify-content-center align-items-center" style="min-height: 250px;" :style="{ color: Color.primary_color}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                    <path d="M8.4 8.3999C7.69687 8.70665 7.09678 9.20911 6.67125 9.8474C6.24572 10.4857 6.01272 11.2329 6 11.9999V39.9999C6 41.0608 6.42143 42.0782 7.17157 42.8283C7.92172 43.5785 8.93913 43.9999 10 43.9999H38C38.7694 43.9983 39.5221 43.7748 40.1677 43.3562C40.8133 42.9376 41.3245 42.3417 41.64 41.6399" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M42 31V12C42 10.9391 41.5786 9.92172 40.8284 9.17157C40.0783 8.42143 39.0609 8 38 8H19" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M32 4V12" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M6 20H20" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M42 20H31" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M4 4L44 44" stroke="#8EA390" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <span>No Latest Updates</span>
+                                <span style="text-align: center; width: 420px">There are currently no results to display. Check back soon for updates!</span>
                             </div>
                         </div>
                     </div>
@@ -663,7 +675,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-4 mb-4 mb-md-0 text-center" style="padding-top: -10px">
-                            <img :src="Color.footer_img_url" alt="sample" class="footer-img" />
+                            <img :src="Color.footer_img_medium_url" alt="sample" class="footer-img" />
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="social-col">
@@ -722,41 +734,52 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, onUnmounted } from 'vue';
-import { useHomeStore } from '@/stores/club_public/ClubData';
-import { storeToRefs } from 'pinia';
+import {
+    ref,
+    onMounted,
+    computed,
+    onUnmounted
+} from 'vue';
+import {
+    useHomeStore
+} from '@/stores/club_public/ClubData';
+import {
+    storeToRefs
+} from 'pinia';
 import Loader from "@/components/LoaderAll.vue";
 import Calendar from "@/components/club_public/Calendars/CalendarRyton.vue";
-import Pro from "@/assets/icons/event_list/pro.svg"
-import Cal from "@/assets/icons/event_list/cal.svg"
-import Cam from "@/assets/icons/event_list/cam.svg"
-import Mess from "@/assets/icons/event_list/mess.svg"
 import Heart from "@/assets/icons/Heart.svg"
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useUserStore } from '@/stores/club_admin/UserStore';
-import { useRouter } from "vue-router";
+import {
+    useUserStore
+} from '@/stores/club_admin/UserStore';
+import {
+    useRouter
+} from "vue-router";
 
-const columns = ref(5); 
-
+const columns = ref(5);
 
 const router = useRouter();
 const isNavOpen = ref(false);
 const isDropdownOpen = ref(false);
 const toggleNav = () => {
-  isNavOpen.value = !isNavOpen.value;
+    isNavOpen.value = !isNavOpen.value;
 };
 const closeNav = () => {
-  isNavOpen.value = false;
+    isNavOpen.value = false;
 };
 const toggleDropdown = () => {
-  isDropdownOpen.value = !isDropdownOpen.value;
+    isDropdownOpen.value = !isDropdownOpen.value;
 };
 const user = useUserStore();
-const { username, profile_image_url } = storeToRefs(user)
+const {
+    username,
+    profile_image_url
+} = storeToRefs(user)
 
 const handleLogout = async () => {
-  await user.logout();
+    await user.logout();
 };
 
 dayjs.extend(relativeTime);
@@ -793,67 +816,67 @@ const cards = computed(() => {
 });
 
 const Interaction = computed(() =>
-  Array.isArray(homeStore.homeData.data?.latestInteractions)
-    ? homeStore.homeData.data.latestInteractions
-    : []
+    Array.isArray(homeStore.homeData.data?.latestInteractions) ?
+    homeStore.homeData.data.latestInteractions : []
 );
 
 const flatComments = computed(() => {
-  if (!Array.isArray(Interaction.value)) return [];
+    if (!Array.isArray(Interaction.value)) return [];
 
-  let all = [];
+    let all = [];
 
-  Interaction.value.forEach((interaction) => {
-    if (Array.isArray(interaction.comments)) {
-      interaction.comments.forEach((comment) => {
-        all.push({
-          ...comment,
-          image_url: interaction.images.thumb_url,
-          uploaded_by: interaction.uploaded_by,
-        });
-      });
-    }
-  });
+    Interaction.value.forEach((interaction) => {
+        if (Array.isArray(interaction.comments)) {
+            interaction.comments.forEach((comment) => {
+                all.push({
+                    ...comment,
+                    image_url: interaction.images.thumb_url,
+                    uploaded_by: interaction.uploaded_by,
+                });
+            });
+        }
+    });
 
-  return all.sort(
-    (a, b) => new Date(b.created_at) - new Date(a.created_at)
-  );
+    return all.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
 });
-
-
 
 const picture = computed(() => {
     const competitions = homeStore.homeData?.data?.latestResults?.original?.data || [];
 
     return competitions.flatMap(comp => {
-        const members = comp?.competition_members || [];
+            const members = comp?.competition_members || [];
 
-        return members.flatMap(member =>
-            (member.entries || [])
-            .filter(entry => entry.position === 1 && entry.is_published === 1)
-            .map(entry => ({
-                id: entry.id,
-                image: entry.entry_image_url,
-                gallery_name: entry.entry_image_title || "No Name"
-            }))
-        );
-    });
+            return members.flatMap(member =>
+                (member.entries || [])
+                .filter(entry => entry.position === 1 && entry.is_published === true)
+                .map(entry => ({
+                    id: entry.id,
+                    image: entry.entry_image_thumb,
+                    gallery_name: entry.entry_image_title || "No Name"
+                }))
+            );
+        })
+        .slice(0, 10)
 });
 
 const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  if (isNaN(date)) return "";
+    const date = new Date(dateString);
+    if (isNaN(date)) return "";
 
-  const day = date.getDate();
-  const month = date.toLocaleString("en-GB", { month: "long" });
-  const year = date.getFullYear();
+    const day = date.getDate();
+    const month = date.toLocaleString("en-GB", {
+        month: "long"
+    });
+    const year = date.getFullYear();
 
-  const suffix =
-    day % 10 === 1 && day !== 11 ? "st" :
-    day % 10 === 2 && day !== 12 ? "nd" :
-    day % 10 === 3 && day !== 13 ? "rd" : "th";
+    const suffix =
+        day % 10 === 1 && day !== 11 ? "st" :
+        day % 10 === 2 && day !== 12 ? "nd" :
+        day % 10 === 3 && day !== 13 ? "rd" : "th";
 
-  return `${day}${suffix} ${month} ${year}`;
+    return `${day}${suffix} ${month} ${year}`;
 };
 
 const chunkCards = computed(() => {
@@ -866,15 +889,15 @@ const chunkCards = computed(() => {
 });
 
 function updateColumns() {
-  if (window.innerWidth < 575) {
-    columns.value = 1;
-  } else if (window.innerWidth < 991) {
-    columns.value =2;
-  } else if (window.innerWidth < 1199) {
-    columns.value = 3;
-  } else {
-    columns.value = 5; 
-  }
+    if (window.innerWidth < 575) {
+        columns.value = 1;
+    } else if (window.innerWidth < 991) {
+        columns.value = 2;
+    } else if (window.innerWidth < 1199) {
+        columns.value = 3;
+    } else {
+        columns.value = 5;
+    }
 }
 
 const chunkedCards = computed(() => {
@@ -893,22 +916,22 @@ const timeAgo = (date) => {
 };
 
 const hexToRgba = (hex, alpha) => {
-  let r = 0, g = 0, b = 0;
+    let r = 0,
+        g = 0,
+        b = 0;
 
-  if (hex.length === 4) {
-    r = parseInt(hex[1] + hex[1], 16);
-    g = parseInt(hex[2] + hex[2], 16);
-    b = parseInt(hex[3] + hex[3], 16);
-  }
-  else if (hex.length === 7) {
-    r = parseInt(hex[1] + hex[2], 16);
-    g = parseInt(hex[3] + hex[4], 16);
-    b = parseInt(hex[5] + hex[6], 16);
-  }
+    if (hex.length === 4) {
+        r = parseInt(hex[1] + hex[1], 16);
+        g = parseInt(hex[2] + hex[2], 16);
+        b = parseInt(hex[3] + hex[3], 16);
+    } else if (hex.length === 7) {
+        r = parseInt(hex[1] + hex[2], 16);
+        g = parseInt(hex[3] + hex[4], 16);
+        b = parseInt(hex[5] + hex[6], 16);
+    }
 
-  return `rgba(${r},${g},${b},${alpha})`;
+    return `rgba(${r},${g},${b},${alpha})`;
 }
-
 
 const chunkedcards = computed(() => {
     const chunkdSize = 5;
@@ -918,20 +941,42 @@ const chunkedcards = computed(() => {
     }
     return chunkds;
 });
+
+const goToNews = (id) => {
+  router.push({
+    name: "NewsSinglePublic",
+    params: { id }
+  });
+};
+
+const goToEvents = (id) => {
+  router.push({
+    name: "EventSinglePublic",
+    params: { id }
+  });
+};
+
+const goToComps = (id) => {
+  router.push({
+    name: "CompetitionSinglePublic",
+    params: { id }
+  });
+};
+
 const userRole = "club_admin"
 onMounted(async () => {
     document.addEventListener("click", (e) => {
-    if (!e.target.closest(".admin-dropdown")) {
-      isDropdownOpen.value = false;
+        if (!e.target.closest(".admin-dropdown")) {
+            isDropdownOpen.value = false;
+        }
+    });
+    if (userRole === "club_admin") {
+        await import("@/assets/css/clubstyle.css");
+    } else {
+        await import("@/assets/css/style.css");
     }
-  });
-  if (userRole === "club_admin") {
-    await import("@/assets/css/clubstyle.css");
-  } else {
-    await import("@/assets/css/style.css");
-  }
-  updateColumns();
-  window.addEventListener("resize", updateColumns);
+    updateColumns();
+    window.addEventListener("resize", updateColumns);
     const carouselEl = document.querySelector('#carouselExampleIndicators')
     if (carouselEl && window.bootstrap) {
         new window.bootstrap.Carousel(carouselEl)
@@ -944,256 +989,307 @@ onMounted(async () => {
     } catch (error) {
         console.error("Error fetching home data:", error);
     } finally {
-        isLoading.value = false; 
+        isLoading.value = false;
     }
 
 });
 
 onUnmounted(() => {
-  window.removeEventListener("resize", updateColumns);
+    window.removeEventListener("resize", updateColumns);
 });
 
 function getPositionClass(index, total) {
-  const row = Math.floor(index / columns.value);
-  const col = index % columns.value;
-  const lastIndex = total - 1;
+    const row = Math.floor(index / columns.value);
+    const col = index % columns.value;
+    const lastIndex = total - 1;
 
-  let classes = [];
+    let classes = [];
 
-  if (index === 0) classes.push("top-left");
+    if (index === 0) classes.push("top-left");
 
-  if (row === 0 && col === columns.value - 1) {
-    classes.push("top-right");
+    if (row === 0 && col === columns.value - 1) {
+        classes.push("top-right");
 
-    if (total >= 6 && total <= 9) {
-      classes.push("special-radius");
+        if (total >= 6 && total <= 9) {
+            classes.push("special-radius");
+        }
     }
-  }
 
-  if (row === Math.floor(lastIndex / columns.value) && col === 0) {
-    classes.push("bottom-left");
-  }
+    if (row === Math.floor(lastIndex / columns.value) && col === 0) {
+        classes.push("bottom-left");
+    }
 
-  if (index === lastIndex) classes.push("bottom-right");
+    if (index === lastIndex) classes.push("bottom-right");
 
-  return classes.join(" ");
+    return classes.join(" ");
 }
-
-
 </script>
 
 <style scoped>
 .Latest {
-     background: white;
-     width: 35%;
-     height: 370px;
-     border-radius: 10px;
-     margin-left: 20px;
-     margin-right: 20px;
+    background: white;
+    width: 35%;
+    height: 370px;
+    border-radius: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
- .comments-card {
-     width: 99%;
-     height: 330px;
-     overflow-y: auto;
-     margin-left: 0%;
-     border-radius: 10px;
-     padding: 20px 20px;
+
+.comments-card {
+    width: 99%;
+    height: 330px;
+    overflow-y: auto;
+    margin-left: 0%;
+    border-radius: 10px;
+    padding: 20px 20px;
 }
- .comments-cards {
-     margin-left: 1%;
-     width: 99%;
-     height: 330px;
+
+.comments-cards {
+    margin-left: 1%;
+    width: 99%;
+    height: 330px;
 }
- .site-footer {
-     padding-top: 25px;
-     padding-bottom: 10px;
-     text-align: center;
-     font-size: 14px;
-     color: #555;
-     border-top: 1px solid #ddd;
-     margin-top: 40px;
+
+.site-footer {
+    padding-top: 25px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    border-top: 1px solid #ddd;
+    margin-top: 40px;
 }
- .site-footer a {
-     color: #007bff;
-     text-decoration: none;
+
+.site-footer a {
+    color: #007bff;
+    text-decoration: none;
 }
- .site-footer a:hover {
-     text-decoration: underline;
+
+.site-footer a:hover {
+    text-decoration: underline;
 }
- .ultrahead {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 72px;
-     line-height: 20px;
-     letter-spacing: 0%;
+
+.ultrahead {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 72px;
+    line-height: 20px;
+    letter-spacing: 0%;
 }
- .heading {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 36px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.heading {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- .head {
-     font-family: Inter;
-     font-weight: 500;
-     font-style: Medium;
-     font-size: 24px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.head {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- .clubhead {
-     font-family: Inter;
-     font-weight: 600;
-     font-style: Semi Bold;
-     font-size: 20px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.clubhead {
+    font-family: Inter;
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- .subhead {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 18px;
-     line-height: 36px;
-     letter-spacing: 0%;
+
+.subhead {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 18px;
+    line-height: 36px;
+    letter-spacing: 0%;
 }
- .memtext {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 16px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.memtext {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- .prehead {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 14px;
-     line-height: 20px;
-     letter-spacing: 0%;
+
+.prehead {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0%;
 }
- .galtext {
-     font-family: Inter;
-     font-weight: 400;
-     font-size: 12px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.galtext {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- .event-img, .fallback-box {
-     width: 100%;
-     max-width: 50px;
-     height: 50px;
-     border-radius: 7px;
-     object-fit: cover;
-     background-color: #D6DFD2;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+.event-img,
+.fallback-box {
+    width: 100%;
+    max-width: 50px;
+    height: 50px;
+    border-radius: 7px;
+    object-fit: cover;
+    background-color: #D6DFD2;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
- .event-item {
-     gap: 20px;
+
+.event-item {
+    gap: 20px;
 }
- .fallback-box {
-     font-size: 14px;
-     color: #D6DFD2;
-     ;
+
+.fallback-box {
+    font-size: 14px;
+    color: #D6DFD2;
+    ;
 }
- .icon-circles .flickr-dots i, .flickr-dots i{
-     font-size: 8px;
-     padding-bottom: 10px;
-     margin: 1px;
+
+.icon-circles .flickr-dots i,
+.flickr-dots i {
+    font-size: 8px;
+    padding-bottom: 10px;
+    margin: 1px;
 }
- .clubpics-item.top-left img {
-     border-top-left-radius: 10px !important;
+
+.clubpics-item.top-left img {
+    border-top-left-radius: 10px !important;
 }
- .clubpics-item.top-right img {
-     border-top-right-radius: 10px !important;
+
+.clubpics-item.top-right img {
+    border-top-right-radius: 10px !important;
 }
- .clubpics-item.bottom-left img {
-     border-bottom-left-radius: 10px !important;
+
+.clubpics-item.bottom-left img {
+    border-bottom-left-radius: 10px !important;
 }
- .clubpics-item.bottom-right img {
-     border-bottom-right-radius: 10px !important;
+
+.clubpics-item.bottom-right img {
+    border-bottom-right-radius: 10px !important;
 }
- .clubpics-info.bottom-left {
-     border-bottom-left-radius: 10px;
+
+.clubpics-info.bottom-left {
+    border-bottom-left-radius: 10px;
 }
- .clubpics-info.bottom-right {
-     border-bottom-right-radius: 10px;
+
+.clubpics-info.bottom-right {
+    border-bottom-right-radius: 10px;
 }
- .pics-items.top-left img {
-     border-top-left-radius: 10px;
+
+.pics-items.top-left img {
+    border-top-left-radius: 10px;
 }
- .pics-items.top-right img {
-     border-top-right-radius: 10px;
+
+.pics-items.top-right img {
+    border-top-right-radius: 10px;
 }
- .pics-items.bottom-left img {
-     border-bottom-left-radius: 10px;
+
+.pics-items.bottom-left img {
+    border-bottom-left-radius: 10px;
 }
- .pics-items.bottom-right img {
-     border-bottom-right-radius: 10px;
+
+.pics-items.bottom-right img {
+    border-bottom-right-radius: 10px;
 }
- .pics-infos.bottom-left {
-     border-bottom-left-radius: 10px;
+
+.pics-infos.bottom-left {
+    border-bottom-left-radius: 10px;
 }
- .pics-infos.bottom-right {
-     border-bottom-right-radius: 10px;
+
+.pics-infos.bottom-right {
+    border-bottom-right-radius: 10px;
 }
- .resultpics-items.top-left img {
-     border-top-left-radius: 10px;
+
+.resultpics-items.top-left img {
+    border-top-left-radius: 10px;
 }
- .resultpics-items.top-right img {
-     border-top-right-radius: 10px;
+
+.resultpics-items.top-right img {
+    border-top-right-radius: 10px;
 }
- .resultpics-items.bottom-left img {
-     border-bottom-left-radius: 10px;
+
+.resultpics-items.bottom-left img {
+    border-bottom-left-radius: 10px;
 }
- .resultpics-items.bottom-right img {
-     border-bottom-right-radius: 10px;
+
+.resultpics-items.bottom-right img {
+    border-bottom-right-radius: 10px;
 }
- .resultpics-infos.bottom-left {
-     border-bottom-left-radius: 10px;
+
+.resultpics-infos.bottom-left {
+    border-bottom-left-radius: 10px;
 }
- .resultpics-infos.bottom-right {
-     border-bottom-right-radius: 10px;
+
+.resultpics-infos.bottom-right {
+    border-bottom-right-radius: 10px;
 }
- .clubpics-item.special-radius img, .clubpics-info.special-radius{
-     border-bottom-right-radius: 10px;
+
+.clubpics-item.special-radius img,
+.clubpics-info.special-radius {
+    border-bottom-right-radius: 10px;
 }
- .pics-items.special-radius img, .pics-infos.special-radius{
-     border-bottom-right-radius: 10px;
+
+.pics-items.special-radius img,
+.pics-infos.special-radius {
+    border-bottom-right-radius: 10px;
 }
- .resultpics-items.special-radius img, .resultpics-infos.special-radius{
-     border-bottom-right-radius: 10px;
+
+.resultpics-items.special-radius img,
+.resultpics-infos.special-radius {
+    border-bottom-right-radius: 10px;
 }
- @media only screen and (max-width: 767px) {
-     .comments-cards{
-         width: 100%;
-         margin: 0 auto;
+
+@media only screen and (max-width: 767px) {
+    .comments-cards {
+        width: 100%;
+        margin: 0 auto;
     }
 }
- @media only screen and (max-width: 991px) {
-     .right-header .profile-mobile, .right-header .divider, .notification-desktop, .down {
-         display: none !important;
+
+@media only screen and (max-width: 991px) {
+
+    .right-header .profile-mobile,
+    .right-header .divider,
+    .notification-desktop,
+    .down {
+        display: none !important;
     }
-     .notification-mobile {
-         display: inline-flex !important;
-         margin-right: 10px;
+
+    .notification-mobile {
+        display: inline-flex !important;
+        margin-right: 10px;
     }
-     #login {
-         padding: 0px 15px 20px 45px;
-         display: flex;
-         font-size: 18px;
-         font-family: Inter;
-         font-weight: 400;
+
+    #login {
+        padding: 0px 15px 20px 45px;
+        display: flex;
+        font-size: 18px;
+        font-family: Inter;
+        font-weight: 400;
     }
-     .navbar .right-header {
-         margin-left: 0;
+
+    .navbar .right-header {
+        margin-left: 0;
     }
 }
- .notification-mobile {
-     display: none;
+
+.notification-mobile {
+    display: none;
 }
 </style>

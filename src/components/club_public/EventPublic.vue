@@ -104,7 +104,7 @@
                         <div class="hero-overlay">
                             <div v-if="Events.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
                                 <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img v-if="Events[0].images" :src="Events[0].featured_image_url" :alt="Events[0].name" />
+                                    <img v-if="Events[0].images" :src="Events[0].featured_thumb_url" :alt="Events[0].name" />
 
                                     <div>
                                         <div>
@@ -161,7 +161,7 @@
                                     <div class="mt-4">
                                         <div v-if="paginatedEvents.length">
                                             <div v-for="e in paginatedEvents" :key="e.id" class="events-cards p-3">
-                                                <img v-if="e.featured_image_url" :src="e.featured_image_url" :alt="e.name"/>
+                                                <img v-if="e.featured_thumb_url" :src="e.featured_thumb_url" :alt="e.name"/>
                                                 <div class="flex-grow-1 d-flex flex-column justify-content-between" id="detail">
                                                     <div class="d-flex w-100 justify-content-between align-items-center">
                                                         <h5 id="ename" :style="{color: Color.text_color}">{{ e.name || 'Untitled Event' }}</h5>

@@ -162,7 +162,7 @@
                                     <div class="mt-4">
                                         <div v-if="paginatedNotice.length">
                                             <div v-for="e in paginatedNotice" :key="e.id" class="events-cards p-3">
-                                                <img v-if="e.featured_image_url" :src="e.featured_image_url" alt="Event Image"/>
+                                                <img v-if="e.featured_thumb_url" :src="e.featured_thumb_url" alt="Notice Image"/>
                                                 <div class="flex-grow-1 d-flex flex-column justify-content-between" id="detail">
                                                     <div class="d-flex w-100 justify-content-between align-items-center">
                                                         <h5 id="ename" :style="{color: Color.text_color}">{{ e.title || 'Untitled News' }}</h5>

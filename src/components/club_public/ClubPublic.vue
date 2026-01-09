@@ -134,7 +134,7 @@
 
             <section>
                 <div class="container" id="overall">
-                    <span class="head" v-html="about.description"></span>
+                    <p v-html="about.description"></p>
 
                     <div class="divider4"></div>
                     <section>
@@ -309,6 +309,10 @@
                             </div>
                         </div>
                     </section>
+                    <div class="divider4"></div>
+
+                    <h5 class="head">Selection Committee</h5>
+                    <p>It had previously been agreed that henceforth the External Competition committee should comprise the three competition secretaries plus any competition NCPF judges that are members of the club.</p>
 
                 </div>
             </section>

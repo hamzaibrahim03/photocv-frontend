@@ -158,15 +158,21 @@
                                 <div class="container">
                                     <div class="card">
                                         <img :src="sinnotice.featured_image_url" alt="Meeting" style="max-width: 850px; height: 350px; border-radius: 8px"/>
-                                        <div class="d-flex justify-content-between">
+                                        <div class="d-flex justify-content-between" style="width: 850px">
                                             <h5 class="head" :style="{ color: Color.text_color }">{{  sinnotice.title }}</h5>
                                             <div class="d-flex align-items-center gap-2 mb-1">
                                                 <img :src="sinnotice.notice_type.icon_url" style="width:20px; height:20px" />
-                                                <h5 class="head m-0" :style="{ color: Color.text_color }">{{ sinnotice.notice_type.name }}</h5>
+                                                <h5 class="head m-0" :style="{ color: Color.text_color, fontWeight: '400', fontStyle: 'Regular', fontSize: '18px', lineHeight: '100%', letterSpacing: '0%' }">{{ sinnotice.notice_type.name }}</h5>
                                             </div>
 
                                         </div>
                                         <p id="edate" :style="{color: Color.accent_color}">{{formatDate(sinnotice.created_at)}}</p>
+                                        <p class="text-secondary" :style="{color: Color.text_color, width: '1100px'}" v-html="sinnotice.description">
+                                        </p> 
+
+                                        <p class="text-secondary" :style="{color: Color.text_color, width: '1100px'}" v-html="sinnotice.description">
+                                        </p> 
+
                                         <p class="text-secondary" :style="{color: Color.text_color, width: '1100px'}" v-html="sinnotice.description">
                                         </p>                
                                         

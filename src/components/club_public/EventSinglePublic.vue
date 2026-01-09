@@ -104,7 +104,7 @@
                         <div class="hero-overlay">
                             <div v-if="Events.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
                                 <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img v-if="Events[0].images" :src="Events[0].featured_image_url" :alt="Events[0].name" />
+                                    <img v-if="Events[0].images" :src="Events[0].featured_thumb_url" :alt="Events[0].name" />
 
                                     <div>
                                         <div>
@@ -159,7 +159,7 @@
                                 <div class="container" id="events-left">
                                     <div class="card">
                                         <img :src=" sinevent.featured_image_url" :alt=" sinevent.name" style="max-width: 850px; height: 350px; border-radius: 8px"/>
-                                        <div class="d-flex justify-content-between">
+                                        <div class="d-flex justify-content-between" style="width: 850px">
                                             <h5 class="head" :style="{ color: Color.text_color }">{{  sinevent.name }}</h5>
                                             <div v-for="(t, i) in sinevent.types" :key="i" class="d-flex align-items-center justify-content-center gap-2 mb-1">
                                                 <img :src="t.icon_url" style="width:20px; height:20px" />

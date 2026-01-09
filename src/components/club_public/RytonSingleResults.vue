@@ -2,17 +2,16 @@
 <div :style="{ backgroundColor: Color.background_color, fontFamily: Color.fonts }">
     <Loader :show="isLoading" />
     <div v-if="!isLoading">
-        
+
         <nav class="navbar navbar-expand-lg custom-navbar shadow-sm" :style="{ position: 'sticky', top: '0', zIndex: '1001', backgroundColor: Color.background_color, height: '108px' }">
             <div class="container d-flex justify-content-between align-items-center">
                 <a class="navbar-brand d-flex align-items-center" href="/">
                     <img :src="Color.logo_url" class="img-fluid" id="logo" alt="Ryton" style="max-height: 60px; margin-left: 10px" />
                 </a>
 
-                    <button class="navbar-toggler me-2" type="button" @click="toggleNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                
+                <button class="navbar-toggler me-2" type="button" @click="toggleNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
@@ -59,24 +58,16 @@
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
-                            <a href="#" class="icon profile-mobile" >
+                            <a href="#" class="icon profile-mobile">
                                 <div style="cursor: pointer">
                                     <template v-if="profile_image_url">
-                                        <img
-                                        :src="profile_image_url"
-                                        alt="User profile"
-                                        style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;"
-                                        />
+                                        <img :src="profile_image_url" alt="User profile" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;" />
                                     </template>
                                     <template v-else>
-                                        <i
-                                        class="fa-regular fa-user-circle"
-                                        :style="{ color: Color.accent_color, fontSize: '44px' }"
-                                        ></i>
+                                        <i class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i>
                                     </template>
                                 </div>
 
-                                
                             </a>
                             <span v-if="username" class="notification-desktop">{{ username }}</span>
                             <span v-else class="notification-desktop">Guest</span><i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i>
@@ -89,7 +80,6 @@
                         </div>
                     </div>
                 </div>
-
 
             </div>
         </nav>
@@ -148,7 +138,7 @@
                         <h2 class="events-title" :style="{ color: Color.text_color }">Results</h2>
                         <div class="search-bar">
                             <i class="fas fa-search"></i>
-                             <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search" aria-controls="example1" />
+                            <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                         </div>
                     </div>
                 </div>
@@ -307,29 +297,57 @@
 </div>
 </template>
 
-<script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { useRytonSingleCompResultStore } from '@/stores/club_public/RytonSingleResult';
-import { storeToRefs } from 'pinia';
+<script setup >
+import {
+    ref,
+    onMounted,
+    onUnmounted,
+    computed
+} from 'vue';
+import {
+    useRytonSingleCompResultStore
+} from '@/stores/club_public/RytonSingleResult';
+import {
+    storeToRefs
+} from 'pinia';
 import Loader from "@/components/LoaderAll.vue";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useUserStore } from '@/stores/club_admin/UserStore';
-import { useHomeStore } from '@/stores/club_public/ClubData';
-import { useRoute, useRouter } from 'vue-router';
+import {
+    useUserStore
+} from '@/stores/club_admin/UserStore';
+import {
+    useHomeStore
+} from '@/stores/club_public/ClubData';
+import {
+    useRoute,
+    useRouter
+} from 'vue-router';
 
 dayjs.extend(relativeTime);
 
-const columns = ref(5); 
-const route = useRoute();   
+const columns = ref(5);
+const route = useRoute();
 const router = useRouter();
 
 const isNavOpen = ref(false);
 const isDropdownOpen = ref(false);
+const toggleNav = () => {
+    isNavOpen.value = !isNavOpen.value;
+};
+const closeNav = () => {
+    isNavOpen.value = false;
+};
+const toggleDropdown = () => {
+    isDropdownOpen.value = !isDropdownOpen.value;
+};
 const isLoading = ref(true);
 
 const user = useUserStore();
-const { username, profile_image_url } = storeToRefs(user);
+const {
+    username,
+    profile_image_url
+} = storeToRefs(user);
 
 const entries = ref([]);
 
@@ -337,411 +355,489 @@ const resultStore = useRytonSingleCompResultStore();
 const homeStore = useHomeStore();
 
 const memData = computed(() =>
-  resultStore.sincompresData?.clubSettings?.original?.data || {}
+    resultStore.sincompresData?.clubSettings?.original?.data || {}
 );
 
 const competitionTitle = computed(() =>
-  resultStore.sincompresData?.competitionResult?.original?.data?.name || {}
+    resultStore.sincompresData?.competitionResult?.original?.data?.name || {}
 );
 
 const competitionSeason = computed(() => {
-  const startDate = resultStore.sincompresData?.competitionResult?.original?.data?.start_date;
-  if (!startDate) return "";
+    const startDate = resultStore.sincompresData?.competitionResult?.original?.data?.start_date;
+    if (!startDate) return "";
 
-  const startYear = dayjs(startDate).year();
-  const endYear = startYear + 1;
+    const startYear = dayjs(startDate).year();
+    const endYear = startYear + 1;
 
-  return `Season ${startYear}-${endYear}`;
+    return `Season ${startYear}-${endYear}`;
 });
 
 const evData = computed(() =>
-  resultStore.sincompresData?.clubSettings?.original?.data?.upcoming_event_days_count || {}
+    resultStore.sincompresData?.clubSettings?.original?.data?.upcoming_event_days_count || {}
 );
 
 const Club = computed(() =>
-  resultStore.sincompresData?.clubSettings?.original?.data?.club || {}
+    resultStore.sincompresData?.clubSettings?.original?.data?.club || {}
 );
 
 const Color = computed(() =>
-  resultStore.sincompresData?.clubSettings?.original?.data?.settings || {}
+    resultStore.sincompresData?.clubSettings?.original?.data?.settings || {}
 );
 
 const randomClubs = computed(() => {
-  return resultStore.sincompresData?.clubGalleries || [];
+    return resultStore.sincompresData?.clubGalleries || [];
 });
 
 const suggestion = computed(() => {
-  return randomClubs.value.map(club => {
-    const firstPhoto = club.photos?.[0];
+    return randomClubs.value.map(club => {
+        const firstPhoto = club.photos?. [0];
 
-    return {
-      gallery_id: club.gallery_id,
-      gallery_name: club.gallery_name,
-      total_photos: club.total_photos,
-      image: firstPhoto?.image || "",
-      title: firstPhoto?.title || "",
-      comments_count: firstPhoto?.comments_count || 0,
-      likes_count: firstPhoto?.likes_count || 0,
-      uploaded_by: firstPhoto?.uploaded_by || ""
-    };
-  });
+        return {
+            gallery_id: club.gallery_id,
+            gallery_name: club.gallery_name,
+            total_photos: club.total_photos,
+            image: firstPhoto?.image || "",
+            title: firstPhoto?.title || "",
+            comments_count: firstPhoto?.comments_count || 0,
+            likes_count: firstPhoto?.likes_count || 0,
+            uploaded_by: firstPhoto?.uploaded_by || ""
+        };
+    });
 });
 
 const openSlide = (clickedImage) => {
-  if (!clickedImage) return
+    if (!clickedImage) return
 
-  const allImages = entries.value   // ✅ FIX
+    const allImages = entries.value // ✅ FIX
 
-  const startIndex = allImages.findIndex(
-    img => img.id === clickedImage.id
-  )
+    const startIndex = allImages.findIndex(
+        img => img.id === clickedImage.id
+    )
 
-  localStorage.setItem("selectedImages", JSON.stringify(allImages))
-  localStorage.setItem(
-    "startIndex",
-    startIndex >= 0 ? startIndex : 0
-  )
+    localStorage.setItem("selectedImages", JSON.stringify(allImages))
+    localStorage.setItem(
+        "startIndex",
+        startIndex >= 0 ? startIndex : 0
+    )
 
-  router.push({
-    path: "/rytonresultslide",
-    query: { gallery: route.params.id }
-  })
+    router.push({
+        path: "/rytonresultslide",
+        query: {
+            gallery: route.params.id
+        }
+    })
 }
 
-
-
-
 const hexToRgba = (hex, alpha) => {
-  let r = 0, g = 0, b = 0;
+    let r = 0,
+        g = 0,
+        b = 0;
 
-  if (hex.length === 4) {
-    r = parseInt(hex[1] + hex[1], 16);
-    g = parseInt(hex[2] + hex[2], 16);
-    b = parseInt(hex[3] + hex[3], 16);
-  }
-  else if (hex.length === 7) {
-    r = parseInt(hex[1] + hex[2], 16);
-    g = parseInt(hex[3] + hex[4], 16);
-    b = parseInt(hex[5] + hex[6], 16);
-  }
+    if (hex.length === 4) {
+        r = parseInt(hex[1] + hex[1], 16);
+        g = parseInt(hex[2] + hex[2], 16);
+        b = parseInt(hex[3] + hex[3], 16);
+    } else if (hex.length === 7) {
+        r = parseInt(hex[1] + hex[2], 16);
+        g = parseInt(hex[3] + hex[4], 16);
+        b = parseInt(hex[5] + hex[6], 16);
+    }
 
-  return `rgba(${r},${g},${b},${alpha})`;
+    return `rgba(${r},${g},${b},${alpha})`;
 }
 
 function getPositionClass(index, total) {
-  const row = Math.floor(index / columns.value);
-  const col = index % columns.value;
-  const lastIndex = total - 1;
+    const row = Math.floor(index / columns.value);
+    const col = index % columns.value;
+    const lastIndex = total - 1;
 
-  let classes = [];
+    let classes = [];
 
-  if (index === 0) classes.push("top-left");
+    if (index === 0) classes.push("top-left");
 
-  if (row === 0 && col === columns.value - 1) {
-    classes.push("top-right");
+    if (row === 0 && col === columns.value - 1) {
+        classes.push("top-right");
 
-    if (total >= 6 && total <= 9) {
-      classes.push("special-radius");
+        if (total >= 6 && total <= 9) {
+            classes.push("special-radius");
+        }
     }
-  }
 
-  if (row === Math.floor(lastIndex / columns.value) && col === 0) {
-    classes.push("bottom-left");
-  }
+    if (row === Math.floor(lastIndex / columns.value) && col === 0) {
+        classes.push("bottom-left");
+    }
 
-  if (index === lastIndex) classes.push("bottom-right");
+    if (index === lastIndex) classes.push("bottom-right");
 
-  return classes.join(" ");
+    return classes.join(" ");
 }
 
 function updateColumns() {
-  if (window.innerWidth < 575) {
-    columns.value = 1;
-  } else if (window.innerWidth < 991) {
-    columns.value =2;
-  } else if (window.innerWidth < 1199) {
-    columns.value = 3;
-  } else {
-    columns.value = 5; 
-  }
+    if (window.innerWidth < 575) {
+        columns.value = 1;
+    } else if (window.innerWidth < 991) {
+        columns.value = 2;
+    } else if (window.innerWidth < 1199) {
+        columns.value = 3;
+    } else {
+        columns.value = 5;
+    }
 }
 
 const getMedalIcon = (position) => {
-  switch (position) {
-    case 1:
-      return { src: new URL('@/assets/icons/positions/1.svg', import.meta.url).href, name: 'First Medal' };
-    case 2:
-      return { src: new URL('@/assets/icons/positions/2.svg', import.meta.url).href, name: 'Second Medal' };
-    case 3:
-      return { src: new URL('@/assets/icons/positions/3.svg', import.meta.url).href, name: 'Third Medal' };
-    case 4:
-      return { src: new URL('@/assets/icons/positions/4.svg', import.meta.url).href, name: 'Forth Medal' };
-    case 5:
-      return { src: new URL('@/assets/icons/positions/5.svg', import.meta.url).href, name: 'Fifth Medal' };
-    case 6:
-      return { src: new URL('@/assets/icons/positions/6.svg', import.meta.url).href, name: 'Sixth Medal' };
-    case 7:
-      return { src: new URL('@/assets/icons/positions/7.svg', import.meta.url).href, name: 'Seventh Medal' };
-    case 8:
-      return { src: new URL('@/assets/icons/positions/8.svg', import.meta.url).href, name: 'Eighth Medal' };
-    case 9:
-      return { src: new URL('@/assets/icons/positions/9.svg', import.meta.url).href, name: 'Ninth Medal' };
-    case 10:
-      return { src: new URL('@/assets/icons/positions/c.svg', import.meta.url).href, name: 'Commended' };
-    case 11:
-      return { src: new URL('@/assets/icons/positions/h.svg', import.meta.url).href, name: 'Highly' };
-    case 12:
-      return { src: new URL('@/assets/icons/positions/i.svg', import.meta.url).href, name: 'Intermediate' };
-    default:
-      return { src: new URL('@/assets/icons/positions/i.svg', import.meta.url).href, name: 'Intermediate' };
-  }
+    switch (position) {
+        case 1:
+            return {
+                src: new URL('@/assets/icons/positions/1.svg',
+                    import.meta.url).href, name: 'First Medal'
+            };
+        case 2:
+            return {
+                src: new URL('@/assets/icons/positions/2.svg',
+                    import.meta.url).href, name: 'Second Medal'
+            };
+        case 3:
+            return {
+                src: new URL('@/assets/icons/positions/3.svg',
+                    import.meta.url).href, name: 'Third Medal'
+            };
+        case 4:
+            return {
+                src: new URL('@/assets/icons/positions/4.svg',
+                    import.meta.url).href, name: 'Forth Medal'
+            };
+        case 5:
+            return {
+                src: new URL('@/assets/icons/positions/5.svg',
+                    import.meta.url).href, name: 'Fifth Medal'
+            };
+        case 6:
+            return {
+                src: new URL('@/assets/icons/positions/6.svg',
+                    import.meta.url).href, name: 'Sixth Medal'
+            };
+        case 7:
+            return {
+                src: new URL('@/assets/icons/positions/7.svg',
+                    import.meta.url).href, name: 'Seventh Medal'
+            };
+        case 8:
+            return {
+                src: new URL('@/assets/icons/positions/8.svg',
+                    import.meta.url).href, name: 'Eighth Medal'
+            };
+        case 9:
+            return {
+                src: new URL('@/assets/icons/positions/9.svg',
+                    import.meta.url).href, name: 'Ninth Medal'
+            };
+        case 10:
+            return {
+                src: new URL('@/assets/icons/positions/c.svg',
+                    import.meta.url).href, name: 'Commended'
+            };
+        case 11:
+            return {
+                src: new URL('@/assets/icons/positions/h.svg',
+                    import.meta.url).href, name: 'Highly'
+            };
+        case 12:
+            return {
+                src: new URL('@/assets/icons/positions/i.svg',
+                    import.meta.url).href, name: 'Intermediate'
+            };
+        default:
+            return {
+                src: new URL('@/assets/icons/positions/i.svg',
+                    import.meta.url).href, name: 'Intermediate'
+            };
+    }
 };
 
-
 onMounted(async () => {
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest(".admin-dropdown")) {
-      isDropdownOpen.value = false;
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".admin-dropdown")) {
+            isDropdownOpen.value = false;
+        }
+    });
+    updateColumns();
+    window.addEventListener("resize", updateColumns);
+
+    const carouselEl = document.querySelector('#carouselExampleIndicators');
+    if (carouselEl && window.bootstrap) {
+        new window.bootstrap.Carousel(carouselEl);
     }
-  });
-  updateColumns();
-  window.addEventListener("resize", updateColumns);
 
-  const carouselEl = document.querySelector('#carouselExampleIndicators');
-  if (carouselEl && window.bootstrap) {
-    new window.bootstrap.Carousel(carouselEl);
-  }
+    try {
+        const domain = window.location.hostname.split('.')[0];
+        const id = route.params.id;
 
-  try {
-    const domain = window.location.hostname.split('.')[0];
-    const id = route.params.id;
-
-    await homeStore.fetchHomeData(domain);
-    await resultStore.fetchRytonSingleCompResData(id);
+        await homeStore.fetchHomeData(domain);
+        await resultStore.fetchRytonSingleCompResData(id);
 
         const apiEntries =
-  resultStore.sincompresData?.competitionResult?.original?.data?.entries || [];
+            resultStore.sincompresData?.competitionResult?.original?.data?.entries || [];
 
-entries.value = apiEntries.map(item => ({
-  id: item.id,
-  image: item.entry_image,
-  title: item.entry_image_title,
-  author: item.member_name || "Unknown",
-  position: item.position
-}));
+        const uniqueByPosition = new Map();
 
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  } finally {
-    isLoading.value = false;
-  }
+        apiEntries.forEach(item => {
+            if (!uniqueByPosition.has(item.position)) {
+                uniqueByPosition.set(item.position, {
+                    id: item.id,
+                    image: item.entry_image,
+                    title: item.entry_image_title,
+                    author: item.member_name || "Unknown",
+                    position: item.position
+                });
+            }
+        });
+
+        entries.value = Array.from(uniqueByPosition.values());
+
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    } finally {
+        isLoading.value = false;
+    }
 });
 
 onUnmounted(() => {
-  window.removeEventListener("resize", updateColumns);
+    window.removeEventListener("resize", updateColumns);
 });
 </script>
 
 <style scoped>
 #overall {
-     padding: 0 25px 60px 75px;
+    padding: 0 25px 60px 75px;
 }
- #events-left {
-     flex: 3;
+
+#events-left {
+    flex: 3;
 }
- #heads {
-     padding: 60px 10px 48px 90px;
+
+#heads {
+    padding: 60px 10px 48px 90px;
 }
- #season-heads {
-     padding: 33px 10px 78px 93px;
+
+#season-heads {
+    padding: 33px 10px 78px 93px;
 }
- .events-header, .season-header {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     margin-bottom: 1.5rem;
-     flex-wrap: wrap;
+
+.events-header,
+.season-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
 }
- .events-title {
-     font-family: Inter;
-     font-weight: 500;
-     font-style: Medium;
-     font-size: 36px;
-     line-height: 100%;
-     letter-spacing: 0%;
-     margin: 0;
+
+.events-title {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin: 0;
 }
- .season-title {
-     font-family: Inter;
-     font-weight: 500;
-     font-style: Medium;
-     font-size: 28px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.season-title {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 28px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- .search-bar {
-     display: flex;
-     align-items: center;
-     background-color: #fff;
-     border: 1px solid #e5e7eb;
-     border-radius: 8px;
-     padding: 6px 30px;
-     width: 470px;
-     height: 60px;
-     transition: border-color 0.2s ease;
-     gap: 20px 
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 6px 30px;
+    width: 470px;
+    height: 60px;
+    transition: border-color 0.2s ease;
+    gap: 20px
 }
- .search-bars {
-     display: flex;
-     align-items: center;
-     background-color: #fff;
-     border: 1px solid #e5e7eb;
-     border-radius: 8px;
-     padding: 6px 30px;
-     width: 636px;
-     height: 60px;
-     transition: border-color 0.2s ease;
-     gap: 20px 
+
+.search-bars {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 6px 30px;
+    width: 636px;
+    height: 60px;
+    transition: border-color 0.2s ease;
+    gap: 20px
 }
- .search-bar:hover, .search-bar:focus-within {
-     border-color: #d1d5db;
+
+.search-bar:hover,
+.search-bar:focus-within {
+    border-color: #d1d5db;
 }
- .search-bar i {
-     color: #c0c0c0;
-     font-size: 20px;
-     margin-right: 8px;
+
+.search-bar i {
+    color: #c0c0c0;
+    font-size: 20px;
+    margin-right: 8px;
 }
- .search-input {
-     border: none;
-     outline: none;
-     font-size: 20px;
-     color: #333;
-     flex: 1;
-     background: transparent;
+
+.search-input {
+    border: none;
+    outline: none;
+    font-size: 20px;
+    color: #333;
+    flex: 1;
+    background: transparent;
 }
- .search-input::placeholder {
-     color: #c0c0c0;
+
+.search-input::placeholder {
+    color: #c0c0c0;
 }
- .suggestion-gallery {
-     display: grid;
-     grid-template-columns: repeat(5, 1fr);
-     width: 100%;
+
+.suggestion-gallery {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 100%;
 }
- .suggestion-card {
-     position: relative;
-     overflow: hidden;
+
+.suggestion-card {
+    position: relative;
+    overflow: hidden;
 }
- .suggestion-card img {
-     border-radius: 0;
-     width: 100%;
-     height: 295px;
-     object-fit: cover;
-     object-position: top;
+
+.suggestion-card img {
+    border-radius: 0;
+    width: 100%;
+    height: 295px;
+    object-fit: cover;
+    object-position: top;
 }
- .suggestion-card .img-overlay {
-     background: #4c403699;
-     position: absolute;
-     bottom: 0;
-     left: 0;
-     right: 0;
-     color: white;
-     padding: 5px;
-     font-size: 20px;
-     font-weight: 600;
-     font-family: Inter;
-     display: flex;
-     height: 55px;
+
+.suggestion-card .img-overlay {
+    background: #4c403699;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: Inter;
+    display: flex;
+    height: 55px;
 }
+
 .top-left img {
-     border-top-left-radius: 10px;
+    border-top-left-radius: 10px;
 }
- .top-right img {
-     border-top-right-radius: 10px;
+
+.top-right img {
+    border-top-right-radius: 10px;
 }
- .bottom-left img {
-     border-bottom-left-radius: 10px;
+
+.bottom-left img {
+    border-bottom-left-radius: 10px;
 }
- .bottom-right img {
-     border-bottom-right-radius: 10px;
+
+.bottom-right img {
+    border-bottom-right-radius: 10px;
 }
- .bottom-left {
-     border-bottom-left-radius: 10px;
+
+.bottom-left {
+    border-bottom-left-radius: 10px;
 }
- .bottom-right {
-     border-bottom-right-radius: 10px;
+
+.bottom-right {
+    border-bottom-right-radius: 10px;
 }
-.special-radius img,.special-radius{
-     border-bottom-right-radius: 10px;
+
+.special-radius img,
+.special-radius {
+    border-bottom-right-radius: 10px;
 }
-.icon-circles .flickr-dots i, .flickr-dots i{
-     font-size: 8px;
-     padding-bottom: 8px;
-     margin: 1px;
+
+.icon-circles .flickr-dots i,
+.flickr-dots i {
+    font-size: 8px;
+    padding-bottom: 8px;
+    margin: 1px;
 }
+
 .site-footer {
-     padding: 15px 0;
-     text-align: center;
-     font-size: 14px;
-     color: #99816b;
-     bottom: 0;
-     left: 0;
-     width: 100%;
-     position: relative;
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     line-height: 100%;
-     letter-spacing: 0%;
-} 
+    padding: 15px 0;
+    text-align: center;
+    font-size: 14px;
+    color: #99816b;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    position: relative;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    line-height: 100%;
+    letter-spacing: 0%;
+}
+
 .competition-section {
-  padding: 30px;
+    padding: 30px;
 }
 
 .heading {
-  font-size: 20px;
-  margin-bottom: 20px;
+    font-size: 20px;
+    margin-bottom: 20px;
 }
 
 .gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 }
 
 /* Card */
 .gallery-card {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Image */
 .gallery-img {
-  max-width: 100%;
-  height: 411px;
-  object-fit: cover;
-  display: block;
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 /* Overlay */
 .overlay {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background: rgba(108, 136, 94, 0.95);
-  padding: 8px 10px;
-  height: 120px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(108, 136, 94, 0.95);
+    padding: 8px 10px;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
 .author {
-  font-size: 11px;
-  color: #e6e6e6;
+    font-size: 11px;
+    color: #e6e6e6;
 }
+
 .overlay .title {
     font-size: 12px;
 }
-.badge {
-  font-size: 14px;
-}
 
+.badge {
+    font-size: 14px;
+}
 </style>

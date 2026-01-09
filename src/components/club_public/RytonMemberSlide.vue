@@ -43,7 +43,7 @@
 					</div>
 				</div>
 				<!-- COMMENTS DRAWER -->
-				<CommentsDrawer v-if="showComments && current" :photo-id="current.id" @close="showComments = false"/>
+        <CommentsDrawer v-if="showComments && current" :photo="current"  @close="showComments = false"/>
 			</section>
 			<footer class="site-footer">
 				<div class="footer-content">
@@ -287,7 +287,7 @@ color:rgba(255, 255, 255, 1);
 }
 .thumbnails {
   display: flex;
-  gap: 16px;
+  gap: 30px;
   padding: 14px 20px 20px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -303,13 +303,12 @@ color:rgba(255, 255, 255, 1);
 
 .thumb {
   flex: 0 0 auto;
-  width: 300px;
+  width: 296px;
   height: 220px;
   overflow: hidden;
   opacity: 0.5;
   cursor: pointer;
   transition: 0.3s;
-  border-radius: 10px;
 }
 
 .thumb img {

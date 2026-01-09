@@ -287,7 +287,7 @@
             <footer class="site-footer">
                 <div class="footer-content">
                     <p class="memtext" id="fcopy">Copyright &copy; 2025 – {{Club.club_name}}</p>
-                    <p class="memtext">Powered by <a href="https://cameraclub.website" target="_blank" :style="{color: Color.text_color, fontWeight: 'bold'}">cameraclub.website</a></p>
+                    <p class="memtext">Powered by <a href="https://cameraclub.website" target="_blank" :style="{color: Color.text_color, fontWeight: 'bold'}">{{ Club.domain_name}}</a></p>
                 </div>
             </footer>
         </div>
