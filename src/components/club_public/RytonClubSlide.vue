@@ -4,25 +4,20 @@
     <div v-if="!isLoading">
 		<div class="viewer"  :class="{ 'drawer-open': showComments }">
 			<section>
-				<!-- TOP BAR -->
 				<div class="top-bar">
 					<button class="back-btn" @click="$router.back()">❮ &nbsp; Back</button>
 				</div>
-				<!-- IMAGE AREA -->
 				<div class="image-section">
 					<button class="nav-arrow left" @click="prev">‹</button>
 					<div class="image-wrapper">
-						<img v-if="current" :src="current.image" class="main-image"/>
-						<!-- fullscreen icon -->
+						<img v-if="current" :src="current.image" class="main-image" @click="openLightbox"/>
 						<button class="expand-btn" @click="openFullscreen">⤢</button>
 					</div>
 					<button class="nav-arrow right" @click="next">›</button>
-					<!-- comments drawer button -->
 					<button class="open-comments" @click="showComments = true">
 						❮
 					</button>
 				</div>
-				<!-- INFO SECTION -->
 				<div class="d-flex image-info" v-if="current">
 					<img v-if="profileImage" :src="profileImage" class="profile-img"/>
 					<div class="text">
@@ -34,7 +29,6 @@
 						</span>
 					</div>
 				</div>
-				<!-- THUMBNAILS -->
 				<div class="thumbs-wrapper">
                     <div class="thumbnails" ref="thumbContainer">
                         <div v-for="(img, i) in images" :key="img.id" class="thumb" :class="{ active: i === currentIndex }" @click="goTo(i)" :ref="el => thumbRefs[i] = el">
@@ -43,8 +37,9 @@
                     </div>
 				</div>
 
-				<!-- COMMENTS DRAWER -->
-        <CommentsDrawer v-if="showComments && current" :photo="current"  @close="showComments = false"/>
+        <CommentsDrawer v-if="showComments && current" :key="current.id" :photo="current"  @close="showComments = false"/>
+        <VueEasyLightbox :visible="lightboxVisible" :imgs="lightboxImages" :index="currentIndex" @hide="closeLightbox"/>
+
 			</section>
 			<footer class="site-footer">
 				<div class="footer-content">
@@ -59,6 +54,7 @@
 
 <script setup>
 import { ref, computed, onMounted, watch, nextTick } from "vue"
+import VueEasyLightbox from 'vue-easy-lightbox'
 import { useRoute } from "vue-router"
 import { storeToRefs } from "pinia"
 import { useRytonSingleClubGalStore } from "@/stores/club_public/RytonSingleClubGallery"
@@ -82,7 +78,6 @@ const {
   profileImage
 } = storeToRefs(galleryStore)
 
-/* COMPUTED */
 const images = computed(() => galleryImages.value || [])
 
 const current = computed(() => {
@@ -97,7 +92,6 @@ const fullName = computed(() => {
 })
 
 
-/* NAVIGATION */
 const next = () => {
   if (currentIndex.value < images.value.length - 1) {
     currentIndex.value++
@@ -114,7 +108,21 @@ const goTo = (index) => {
   currentIndex.value = index
 }
 
-/* FULLSCREEN */
+const lightboxVisible = ref(false)
+
+const lightboxImages = computed(() =>
+  images.value.map(img => img.image)
+)
+
+const openLightbox = () => {
+  lightboxVisible.value = true
+}
+
+const closeLightbox = () => {
+  lightboxVisible.value = false
+}
+
+
 const openFullscreen = () => {
   const el = document.querySelector(".main-image")
   if (el?.requestFullscreen) el.requestFullscreen()
@@ -135,7 +143,6 @@ onMounted(async () => {
 })
 
 
-/* Auto scroll active thumbnail */
 watch(currentIndex, async () => {
   await nextTick()
   const activeThumb = thumbRefs.value[currentIndex.value]
@@ -165,7 +172,6 @@ watch(currentIndex, async () => {
   flex-direction: column;
 }
 
-/* TOP BAR */
 .top-bar {
   padding: 18px 30px;
 }
@@ -178,7 +184,6 @@ watch(currentIndex, async () => {
   cursor: pointer;
 }
 
-/* IMAGE AREA */
 .image-section {
   flex: 1;
   position: relative;
@@ -198,7 +203,6 @@ watch(currentIndex, async () => {
   box-shadow: 0 30px 80px rgba(0,0,0,.7);
 }
 
-/* FULLSCREEN ICON */
 .expand-btn {
   position: absolute;
   top: 14px;
@@ -213,7 +217,6 @@ watch(currentIndex, async () => {
   cursor: pointer;
 }
 
-/* NAV ARROWS */
 .nav-arrow {
   position: absolute;
   top: 50%;
@@ -231,7 +234,6 @@ watch(currentIndex, async () => {
 .nav-arrow.left { left: 30px; }
 .nav-arrow.right { right: 30px; }
 
-/* COMMENTS BUTTON */
 .open-comments {
   position: fixed;
   top: 10%;
@@ -246,7 +248,6 @@ watch(currentIndex, async () => {
   cursor: pointer;
 }
 
-/* INFO */
 .image-info {
   padding: 18px 30px;
   border-top: 1px solid rgba(255,255,255,.1);
@@ -291,7 +292,23 @@ letter-spacing: 0%;
 color:rgba(255, 255, 255, 1);
 }
 
-/* THUMBNAILS */
+.viewer {
+  transition: transform 0.3s ease;
+}
+
+.viewer.drawer-open .image-section {
+  transform: translateX(-200px);
+}
+
+.viewer.drawer-open .nav-arrow.left {
+  left: 210px;
+}
+
+.viewer.drawer-open .nav-arrow.right {
+  right: 510px;
+}
+
+
 .thumbs-wrapper {
   display: flex;
   justify-content: center;
@@ -308,7 +325,6 @@ color:rgba(255, 255, 255, 1);
   max-width: 1610px;
 }
 
-/* hide scrollbar (optional) */
 .thumbnails::-webkit-scrollbar {
   display: none;
 }

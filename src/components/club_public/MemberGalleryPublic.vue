@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -54,8 +54,8 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.vue" class="icon notification-desktop">
-                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
+                        <a class="icon notification-desktop">
+                            <NotificationBell />
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
@@ -309,6 +309,7 @@ import { useRouter } from "vue-router";
 import { useHomeStore } from '@/stores/club_public/ClubData';
 import { storeToRefs } from 'pinia'
 import randomclubgallery from '@/api/club_public/randomclubgallery';
+import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
 
 const router = useRouter();
 const isNavOpen = ref(false);

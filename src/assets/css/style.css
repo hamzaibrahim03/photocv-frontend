@@ -129,7 +129,7 @@ body {
   margin-bottom: 15px;
 }
 .divider4 {
-  width: 1100px;
+  width: 1093px;
   height: 1px;
   background-color: rgba(217, 217, 217, 1);
   margin-top: 35px;
@@ -137,7 +137,8 @@ body {
   border-bottom: 1px solid rgba(217, 217, 217, 1);
 }
 .divider5 {
-  width: 1100px;
+  width: 1093px;
+  margin-left: -5px;
   height: 1px;
   background-color: rgba(217, 217, 217, 1);
   margin-top: 150px;
@@ -217,7 +218,7 @@ h4 {
   background: white;
   padding: 15px 25px;
   border-radius: 12px;
-  width: 975px;
+  width: 67%;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   height: 148px;
 }
@@ -427,12 +428,12 @@ h4 {
 }
 #view {
   width: 100%;
-  max-width: 100px;
-  height: 40px;
+  max-width: 187px;
+  height: 60px;
   border-radius: 7px;
   background-color: #99816b;
-  font-weight: 400;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 20px;
   line-height: 100%;
   font-family: Inter;
   color: white;
@@ -1346,6 +1347,15 @@ h4 {
   align-items: center;
   justify-content: space-between;
 }
+.text-secondaryy {
+  font-family: Inter;
+  font-weight: 200;
+  font-style: Extra Light;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  color: #4c4036;
+}
 .text-secondary {
   font-family: Inter;
   font-weight: 400;
@@ -1364,11 +1374,13 @@ h4 {
   color: #4c4036;
 }
 .date {
-  color: #cc445e;
-  font-weight: 400;
-  font-size: 12px;
   font-family: Inter;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 14px;
   line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
 }
 .card-content {
   padding-left: 20px;

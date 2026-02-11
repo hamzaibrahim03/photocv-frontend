@@ -10,7 +10,7 @@
                         <div class="profile-info">
                             <small class="greeting">Planned and Regular Club Competition</small>
                             <h2 class="name">Settings / Default Values</h2>
-                            <small class="role">Any values selected here would become default for new competition  entry</small>
+                            <small class="role">Any values selected here would become default for new competition entry</small>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                     </div>
                     <div id="news">
                         <RecentSubmissions />
-                        <MoreCompetitions style="height: auto"/>
+                        <MoreCompetitions style="height: auto" />
                     </div>
                 </div>
             </section>
@@ -102,7 +102,7 @@ onMounted(() => {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }
@@ -420,7 +420,7 @@ onMounted(() => {
      font-size: 14px;
      color: #888;
 }
- .icon-circles .flickr-dots i, .flickr-dots i{
+ .icon-circles .flickr-dots i, .flickr-dots i {
      font-size: 8px;
      padding-bottom: 8px;
      margin: 1px;

@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -54,8 +54,8 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.vue" class="icon notification-desktop">
-                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
+                        <a class="icon notification-desktop">
+                            <NotificationBell />
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
@@ -311,6 +311,7 @@ import { storeToRefs } from 'pinia'
 import { useRytonGalleryStore } from '@/stores/club_public/RytonGallery';
 import randomclubgallery from '@/api/club_public/randomclubgallery';
 import randommembergallery from '@/api/club_public/randommembergallery';
+import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -465,10 +466,10 @@ const galleryImages = computed(() => store.galleryImages)
 
 <style scoped>
 #overall {
-     padding: 0 25px 50px 30px;
+     padding: 0 55px 50px 95px;
 }
  #heads {
-     padding: 50px 70px 20px 70px;
+     padding: 70px 65px 20px 95px;
 }
  .events-header {
      display: flex;
@@ -662,7 +663,7 @@ const galleryImages = computed(() => store.galleryImages)
      text-decoration: underline;
 }
  .gallery-wrapper {
-     padding: 40px 10%;
+     padding: 50px 0%;
      background: #fff;
 }
  .gallery-title {
@@ -679,12 +680,12 @@ const galleryImages = computed(() => store.galleryImages)
  .gallery-row {
      display: grid;
      grid-template-columns: 2fr 1fr;
-     gap: 20px;
+     gap: 30px;
 }
  .gallery-column {
      display: flex;
      flex-direction: column;
-     gap: 20px;
+     gap: 30px;
 }
  .gallery-big img {
      width: 1093px;

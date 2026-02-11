@@ -5,6 +5,6 @@ export default {
     return apiClient.get('/comments')
   },
   postComment(commentData) {
-    return apiClient.post('/comments', commentData) 
+    return apiClient.post('/comments', commentData)
   }
 }

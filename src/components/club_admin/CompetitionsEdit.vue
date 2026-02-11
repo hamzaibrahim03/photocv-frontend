@@ -144,7 +144,7 @@
                                     <input type="number" v-model="max_entries_digital" class="form-control" />
                                 </div>
                                 <div class="col-md-6">
-                                    <label> Max Number of PRINT  Per Participant </label>
+                                    <label> Max Number of PRINT Per Participant </label>
                                     <input type="number" v-model="max_entries_print" class="form-control" />
                                 </div>
                             </div>
@@ -286,8 +286,8 @@
                     </div>
                     <div id="news">
                         <RecentSubmissions />
-                        <MoreCompetitions style="height: auto"/>
-                        <GlobalSettings style="height: auto"/>
+                        <MoreCompetitions style="height: auto" />
+                        <GlobalSettings style="height: auto" />
                     </div>
                 </div>
             </section>
@@ -335,7 +335,6 @@ const high_commendation_number = ref("");
 const commendation_number = ref("");
 const prizes = ref("");
 
-
 const {
     fetchCompetitions,
     memberCount,
@@ -347,106 +346,106 @@ const MemberCount = memberCount
 const EventDay = eventDay
 
 const submitForm = async () => {
-  const payload = {
-    name: name.value,
-    competition_type_id: competition_type_id.value,
-    judging_type_id: judging_type_id.value,
-    status: status.value,
-    description: description.value,
-    start_date: start_date.value,
-    submission_deadline: submission_deadline.value,
-    max_entries_digital: max_entries_digital.value,
-    max_entries_print: max_entries_print.value,
-    max_file_size: max_file_size.value,
-    allowed_image_formats: allowed_image_formats.value,
-    theme_id: theme_id.value,
-    category_id: category_id.value,
-    print_vs_digital: print_vs_digital.value,
-    color_vs_mono: color_vs_mono.value,
-    judging_panel: judging_panel.value,
-    voting_method_id: voting_method_id.value,
-    result_announcement_date: result_announcement_date.value,
-    top_places: top_places.value,
-    high_commendation_number: high_commendation_number.value,
-    commendation_number: commendation_number.value,
-    prizes: prizes.value,
-  };
+    const payload = {
+        name: name.value,
+        competition_type_id: competition_type_id.value,
+        judging_type_id: judging_type_id.value,
+        status: status.value,
+        description: description.value,
+        start_date: start_date.value,
+        submission_deadline: submission_deadline.value,
+        max_entries_digital: max_entries_digital.value,
+        max_entries_print: max_entries_print.value,
+        max_file_size: max_file_size.value,
+        allowed_image_formats: allowed_image_formats.value,
+        theme_id: theme_id.value,
+        category_id: category_id.value,
+        print_vs_digital: print_vs_digital.value,
+        color_vs_mono: color_vs_mono.value,
+        judging_panel: judging_panel.value,
+        voting_method_id: voting_method_id.value,
+        result_announcement_date: result_announcement_date.value,
+        top_places: top_places.value,
+        high_commendation_number: high_commendation_number.value,
+        commendation_number: commendation_number.value,
+        prizes: prizes.value,
+    };
 
-  const competitionId = route.params.id;
+    const competitionId = route.params.id;
 
-  try {
-    if (competitionId) {
-      await apiClient.put(`/competitions/${competitionId}`, payload);
-    } else {
-      await apiClient.post(`/competitions`, payload);
+    try {
+        if (competitionId) {
+            await apiClient.put(`/competitions/${competitionId}`, payload);
+        } else {
+            await apiClient.post(`/competitions`, payload);
+        }
+
+        alert("Competition saved successfully!");
+        router.push("/competitions");
+    } catch (error) {
+        console.error("Error submitting competition:", error);
     }
-
-    alert("Competition saved successfully!");
-    router.push("/competitions");
-  } catch (error) {
-    console.error("Error submitting competition:", error);
-  }
 };
 
 const fetchFormData = async (id) => {
-  try {
-    const response = await apiClient.get(`/competitions/${id}`);
-    const data = response?.data?.data || {};
+    try {
+        const response = await apiClient.get(`/competitions/${id}`);
+        const data = response?.data?.data || {};
 
-    name.value = data.name || "";
-    competition_type_id.value = data.competition_type_id || "";
-    description.value = data.description || "";
-    judging_type_id.value = data.judging_type_id || "";
-    status.value = data.status || "";
+        name.value = data.name || "";
+        competition_type_id.value = data.competition_type_id || "";
+        description.value = data.description || "";
+        judging_type_id.value = data.judging_type_id || "";
+        status.value = data.status || "";
 
-    const rawStart = data.start_date;
-    const rawDeadline = data.submission_deadline;
-    const rawResult = data.result_announcement_date;
+        const rawStart = data.start_date;
+        const rawDeadline = data.submission_deadline;
+        const rawResult = data.result_announcement_date;
 
-    start_date.value = rawStart ? rawStart.substring(0, 10) : "";
-    submission_deadline.value = rawDeadline ? rawDeadline.substring(0, 10) : "";
-    result_announcement_date.value = rawResult ? rawResult.substring(0, 10) : "";
+        start_date.value = rawStart ? rawStart.substring(0, 10) : "";
+        submission_deadline.value = rawDeadline ? rawDeadline.substring(0, 10) : "";
+        result_announcement_date.value = rawResult ? rawResult.substring(0, 10) : "";
 
-    max_entries_digital.value = data.max_entries_digital || "";
-    max_entries_print.value = data.max_entries_print || "";
-    max_file_size.value = data.max_file_size || "";
-    allowed_image_formats.value = data.allowed_image_formats || "";
-    theme_id.value = data.theme_id || "";
-    category_id.value = data.category_id || "";
-    print_vs_digital.value = data.print_vs_digital || "";
-    color_vs_mono.value = data.color_vs_mono || "";
-    judging_panel.value = data.judging_panel || "";
-    voting_method_id.value = data.voting_method_id || "";
-    top_places.value = data.top_places || "";
-    high_commendation_number.value = data.high_commendation_number || "";
-    commendation_number.value = data.commendation_number || "";
-    prizes.value = data.prizes || "";
+        max_entries_digital.value = data.max_entries_digital || "";
+        max_entries_print.value = data.max_entries_print || "";
+        max_file_size.value = data.max_file_size || "";
+        allowed_image_formats.value = data.allowed_image_formats || "";
+        theme_id.value = data.theme_id || "";
+        category_id.value = data.category_id || "";
+        print_vs_digital.value = data.print_vs_digital || "";
+        color_vs_mono.value = data.color_vs_mono || "";
+        judging_panel.value = data.judging_panel || "";
+        voting_method_id.value = data.voting_method_id || "";
+        top_places.value = data.top_places || "";
+        high_commendation_number.value = data.high_commendation_number || "";
+        commendation_number.value = data.commendation_number || "";
+        prizes.value = data.prizes || "";
 
-    console.log("Populated fields:", data);
-  } catch (error) {
-    console.error("Error fetching competition by ID:", error);
-  }
+        console.log("Populated fields:", data);
+    } catch (error) {
+        console.error("Error fetching competition by ID:", error);
+    }
 };
 
 onMounted(() => {
     fetchCompetitions();
-  const competitionId = route.params.id;
-  if (competitionId) {
-    fetchFormData(competitionId);
-  }
+    const competitionId = route.params.id;
+    if (competitionId) {
+        fetchFormData(competitionId);
+    }
 
-  setTimeout(() => {
-    $(".icheck-status").on("ifChecked", (event) => {
-      status.value = event.target.value;
-    });
-  }, 0);
+    setTimeout(() => {
+        $(".icheck-status").on("ifChecked", (event) => {
+            status.value = event.target.value;
+        });
+    }, 0);
 });
 
 watch(status, (newVal) => {
-  setTimeout(() => {
-    $(".icheck-status").iCheck("uncheck");
-    $(`.icheck-status[value="${newVal}"]`).iCheck("check");
-  }, 0);
+    setTimeout(() => {
+        $(".icheck-status").iCheck("uncheck");
+        $(`.icheck-status[value="${newVal}"]`).iCheck("check");
+    }, 0);
 });
 </script>
 
@@ -484,7 +483,7 @@ watch(status, (newVal) => {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }
@@ -802,7 +801,7 @@ watch(status, (newVal) => {
      font-size: 14px;
      color: #888;
 }
- .icon-circles .flickr-dots i, .flickr-dots i{
+ .icon-circles .flickr-dots i, .flickr-dots i {
      font-size: 8px;
      padding-bottom: 8px;
      margin: 1px;

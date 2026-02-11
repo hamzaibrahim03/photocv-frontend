@@ -1,49 +1,44 @@
 <template>
-  <div id="app">
+<div id="app">
     <Navigation v-if="isAuthPage" />
     <router-view />
-  </div>
+</div>
 
-  <div class="container">
+<div class="container">
     <div class="login-container">
-      <div class="logo-box">
-        <img src="@/assets/images/photo.png" alt="Camera Club Logo" />
-      </div>
-
-      <h3>Login</h3>
-
-      <form @submit.prevent="login">
-        <div class="inputBox mb-3">
-          <input type="text" v-model="username" class="form-control" required />
-        </div>
-        <div class="inputBox mb-3">
-          <input
-            type="password"
-            v-model="password"
-            class="form-control"
-            required
-          />
+        <div class="logo-box">
+            <img src="@/assets/images/photo.png" alt="Camera Club Logo" />
         </div>
 
-        <div class="remember-forgot">
-          <div class="remember-left">
-            <input type="checkbox" id="remember" />
-            <label for="remember">Remember me</label>
-          </div>
-          <a href="change_password.html">Forgot Password</a>
-        </div>
+        <h3>Login</h3>
 
-        <button type="submit" class="btn btn-dark w-100">Login</button>
-      </form>
+        <form @submit.prevent="login">
+            <div class="inputBox mb-3">
+                <input type="text" v-model="username" class="form-control" required />
+            </div>
+            <div class="inputBox mb-3">
+                <input type="password" v-model="password" class="form-control" required />
+            </div>
 
-      <p v-if="error" class="error">{{ error }}</p>
-      <p v-if="token" class="success">Login successful! Token: {{ token }}</p>
+            <div class="remember-forgot">
+                <div class="remember-left">
+                    <input type="checkbox" id="remember" />
+                    <label for="remember">Remember me</label>
+                </div>
+                <a href="change_password.html">Forgot Password</a>
+            </div>
 
-      <footer class="site-footer">Copyright &copy; 2024 photo.cv</footer>
+            <button type="submit" class="btn btn-dark w-100">Login</button>
+        </form>
+
+        <p v-if="error" class="error">{{ error }}</p>
+        <p v-if="token" class="success">Login successful! Token: {{ token }}</p>
+
+        <footer class="site-footer">Copyright &copy; 2024 photo.cv</footer>
     </div>
 
     <div class="image-container"></div>
-  </div>
+</div>
 </template>
 
 <script>
@@ -53,61 +48,64 @@ import { useRouter } from "vue-router";
 import apiClient from "@/api/axios";
 
 export default {
-  name: "LoginRoute",
-  setup() {
-    const username = ref("");
-    const password = ref("");
-    const error = ref("");
-    const router = useRouter();
-    const userStore = useUserStore();
+    name: "LoginRoute",
+    setup() {
+        const username = ref("");
+        const password = ref("");
+        const error = ref("");
+        const router = useRouter();
+        const userStore = useUserStore();
 
-    const login = async () => {
-      if (!username.value || !password.value) {
-        error.value = "Please enter both username and password.";
-        return;
-      }
+        const login = async () => {
+            if (!username.value || !password.value) {
+                error.value = "Please enter both username and password.";
+                return;
+            }
 
-      error.value = "";
+            error.value = "";
 
-      try {
-        const response = await apiClient.post("/login", {
-          email: username.value,
-          password: password.value,
-        });
+            try {
+                const response = await apiClient.post("/login", {
+                    email: username.value,
+                    password: password.value,
+                });
 
-        const { user, token } = response.data.data;
+                const {
+                    user,
+                    token
+                } = response.data.data;
 
-        userStore.role2 = user.roles[0].name;
+                userStore.role2 = user.roles[0].name;
 
-        userStore.login({
-          username: user.username || "",
-          first_name: user.first_name || "",
-          profile_image_url: user.profile_image_url || "",
-          tag_line: user.tag_line || "",
-          token: token,
-          role: user.roles[0].name,
-        });
+                userStore.login({
+                    username: user.username || "",
+                    first_name: user.first_name || "",
+                    profile_image_url: user.profile_image_url || "",
+                    tag_line: user.tag_line || "",
+                    token: token,
+                    role: user.roles[0].name,
+                });
 
-        if (user.roles[0].name === "club_admin") {
-          router.push("/dashboard");
-        } else if (user.roles[0].name === "member") {
-          router.push("/about");
-        } else if (user.roles[0].name === "Internal Comp Secretary"){
-          router.push("/ryton");
-        }
-      } catch (err) {
-        error.value = err.response?.data?.message || "Login failed.";
-        console.error(err);
-      }
-    };
+                if (user.roles[0].name === "club_admin") {
+                    router.push("/dashboard");
+                } else if (user.roles[0].name === "member") {
+                    router.push("/about");
+                } else if (user.roles[0].name === "Internal Comp Secretary") {
+                    router.push("/ryton");
+                }
+            } catch (err) {
+                error.value = err.response?.data?.message || "Login failed.";
+                console.error(err);
+            }
+        };
 
-    return {
-      username,
-      password,
-      error,
-      login,
-    };
-  },
+        return {
+            username,
+            password,
+            error,
+            login,
+        };
+    },
 };
 </script>
 
@@ -116,7 +114,7 @@ body {
      display: flex;
      justify-content: center;
      align-items: center;
-     height: 100vh;
+     height: 90vh;
 }
  .container {
      display: flex;
@@ -127,6 +125,7 @@ body {
      overflow: hidden;
      text-align: center;
      justify-content: center;
+     align-items: center;
      padding: 0;
 }
  .login-container {
@@ -188,7 +187,7 @@ body {
      pointer-events: none;
      transition: none;
 }
- .inputBox input:focus ~ span, .inputBox input:valid ~ span {
+ .inputBox input:focus~span, .inputBox input:valid~span {
      transform: translateY(-20px);
      background: #fff;
      padding: 0 5px;
@@ -280,10 +279,10 @@ body {
          margin-bottom: 60px;
          height: 80px;
     }
-     h3{
+     h3 {
          font-size: 32px;
     }
-     .inputBox input{
+     .inputBox input {
          width: 450px;
          height: 50px;
          font-size: 14px;
@@ -300,10 +299,10 @@ body {
          width: 300px;
          margin-bottom: 60px;
     }
-     h3{
+     h3 {
          font-size: 32px;
     }
-     .inputBox input{
+     .inputBox input {
          width: 450px;
          height: 50px;
          font-size: 14px;
@@ -320,10 +319,10 @@ body {
          width: 300px;
          margin-bottom: 60px;
     }
-     h3{
+     h3 {
          font-size: 32px;
     }
-     .inputBox input{
+     .inputBox input {
          width: 450px;
          height: 50px;
          font-size: 14px;
@@ -340,10 +339,10 @@ body {
          width: 300px;
          margin-bottom: 60px;
     }
-     h3{
+     h3 {
          font-size: 32px;
     }
-     .inputBox input{
+     .inputBox input {
          width: 450px;
          height: 50px;
          font-size: 14px;
@@ -360,10 +359,10 @@ body {
          width: 300px;
          margin-bottom: 60px;
     }
-     h3{
+     h3 {
          font-size: 32px;
     }
-     .inputBox input{
+     .inputBox input {
          width: 450px;
          height: 50px;
          font-size: 14px;

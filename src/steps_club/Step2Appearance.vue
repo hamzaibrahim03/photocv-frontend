@@ -44,22 +44,22 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="logo"> Upload Image </label>
-                <input type="file" class="form-control" @change="onHeaderImageChange"/>
+                <input type="file" class="form-control" @change="onHeaderImageChange" />
             </div>
             <div class="col-md-6 mb-3">
                 <label for="banner"> Upload Image </label>
-                <input type="file" class="form-control" @change="onFooterImageChange"/>
+                <input type="file" class="form-control" @change="onFooterImageChange" />
             </div>
         </div>
         <div class="divider3"></div>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="logo"> Logo </label>
-                <input type="file" class="form-control" @change="onLogoChange"/>
+                <input type="file" class="form-control" @change="onLogoChange" />
             </div>
             <div class="col-md-6 mb-3">
                 <label for="banner"> Club Banner and Cover Image </label>
-                <input type="file" class="form-control" @change="onCoverImageChange"/>
+                <input type="file" class="form-control" @change="onCoverImageChange" />
             </div>
         </div>
         <div class="button-group" style="justify-content:left">
@@ -81,48 +81,46 @@ const headerimageFile = ref(null);
 const footerimageFile = ref(null);
 
 function onLogoChange(event) {
-  const file = event.target.files[0];
-  if (file) {
-    logoFile.value = file;
-    clubStore.step2.logo = file;
-  }
+    const file = event.target.files[0];
+    if (file) {
+        logoFile.value = file;
+        clubStore.step2.logo = file;
+    }
 }
 
 function onCoverImageChange(event) {
-  const file = event.target.files[0];
-  if (file) {
-    coverimageFile.value = file;
-    clubStore.step2.cover_image = file; 
-  }
+    const file = event.target.files[0];
+    if (file) {
+        coverimageFile.value = file;
+        clubStore.step2.cover_image = file;
+    }
 }
 
 function onHeaderImageChange(event) {
-  const file = event.target.files[0];
-  if (file) {
-    headerimageFile.value = file;
-    clubStore.step2.header_img = file;
-  }
+    const file = event.target.files[0];
+    if (file) {
+        headerimageFile.value = file;
+        clubStore.step2.header_img = file;
+    }
 }
 
 function onFooterImageChange(event) {
-  const file = event.target.files[0];
-  if (file) {
-    footerimageFile.value = file;
-    clubStore.step2.footer_img = file; 
-  }
+    const file = event.target.files[0];
+    if (file) {
+        footerimageFile.value = file;
+        clubStore.step2.footer_img = file;
+    }
 }
-
-
 </script>
 
 <style scoped>
 .form-control {
-    height: 50px;
-    font-size: 16.61px;
-    font-weight: 400;
-    padding: 12px;
-    border-radius: 5px;
-    color: #4C4036;
-    border: 1.04px solid #99816B;
+     height: 50px;
+     font-size: 16.61px;
+     font-weight: 400;
+     padding: 12px;
+     border-radius: 5px;
+     color: #4C4036;
+     border: 1.04px solid #99816B;
 }
 </style>

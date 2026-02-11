@@ -21,6 +21,6 @@ export const useRytonNewsStore = defineStore('news', {
       } finally {
         this.loading = false;
       }
-    }    
+    }
   }
 });

@@ -110,7 +110,7 @@
                 <div class="col-md-4">
                     <section>
                         <div class="container" id="right">
-                            <RecentComments/>
+                            <RecentComments />
                             <MorePages />
                         </div>
                     </section>
@@ -141,14 +141,7 @@ import Hand from "@/assets/icons/quick_notice/hand.svg"
 import Note from "@/assets/icons/quick_notice/note.svg"
 import Loader from "@/components/LoaderAll.vue";
 
-const {
-    pages,
-    fetchPages,
-    memberCount,
-    eventDay,
-    currentMonthCount
-} = usePagesStore()
-
+const { pages, fetchPages, memberCount, eventDay, currentMonthCount } = usePagesStore()
 const MemberCount = memberCount
 const CurrentMonthCount = currentMonthCount
 const EventDay = eventDay
@@ -198,14 +191,14 @@ watch(search, (newSearch) => {
 })
 
 const loadPages = async () => {
-  isLoading.value = true
-  try {
-    await fetchPages()   
-  } catch (error) {
-    console.error("Error fetching pages:", error)
-  } finally {
-    isLoading.value = false 
-  }
+    isLoading.value = true
+    try {
+        await fetchPages()
+    } catch (error) {
+        console.error("Error fetching pages:", error)
+    } finally {
+        isLoading.value = false
+    }
 }
 
 onMounted(() => {
@@ -276,7 +269,7 @@ const formatDate = (date) => {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }

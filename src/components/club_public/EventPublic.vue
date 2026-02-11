@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -53,8 +53,8 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.vue" class="icon notification-desktop">
-                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
+                        <a class="icon notification-desktop">
+                            <NotificationBell />
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
@@ -100,32 +100,25 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[2]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                    <div v-if="Events.length" class="hero-section" :style="{ backgroundImage: `url(${Events[0].featured_medium_url})` }">
                         <div class="hero-overlay">
-                            <div v-if="Events.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
-                                <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img v-if="Events[0].images" :src="Events[0].featured_thumb_url" :alt="Events[0].name" />
+                            <div class="events-card">
+                                <p class="date" style="text-align: left; margin-top: 103px; margin-bottom: 44px">
+                                    Upcoming Event | {{ formatDate(Events[0].event_date) }}
+                                </p>
 
-                                    <div>
-                                        <div>
-                                            <div class="events-card">
-                                                <h5 class="mb-2" :style="{color: Color.text_color}">{{ Events[0].name || 'Untitled Event' }}</h5>
-                                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                                    <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
-                                                    <div class="icon-container d-flex gap-2">
-                                                        <img :src="Events[0].types?.[0]?.icon_url" :alt="Events[0].types?.[0]?.name" class="virtual" style="width: 25px; height: 25px" />
-                                                    </div>
-                                                </div>
-                                            </div>                  
-                                            <p class="text-secondary" :style="{color: Color.text_color}" v-html="Events[0].description || 'No description provided.'"> </p>
-                                        </div>
-                                        <div class="button-group mt-auto d-flex event-button">
-                                            <router-link :to="{ name: 'EventSinglePublic', params: { id: Events[0].id } }" custom v-slot="{ navigate }">
-                                                <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
-                                            </router-link>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h5 class="" :style="{ color: Color.background_color, marginBottom: '26px' }">
+                                    {{ Events[0].name }}
+                                </h5>
+                            </div>
+
+                            <p class="text-secondaryy" :style="{ color: Color.background_color, marginBottom: '30px' }" v-html="Events[0].description">
+                            </p>
+
+                            <div class="button-group mt-3 d-flex" style="margin-bottom: 55px">
+                                <router-link :to="{ name: 'EventSinglePublic', params: { id: Events[0].id } }" custom v-slot="{ navigate }">
+                                    <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View Details</button>
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -212,7 +205,7 @@
                             <section>
                                 <div class="container" id="right">
 
-                                    <div class="calendar-card" id="calendar" :style="{border: '1px solid' + Color.primary_color, padding: '0px', height: 'auto'}">
+                                    <div class="cardddd calendar-card" id="calendar" :style="{padding: '0px', height: 'auto'}">
                                         <CalendarEvent />
                                     </div>
 
@@ -411,6 +404,7 @@ import Event from "@/assets/icons/navigation/events.svg"
 import Competition from "@/assets/icons/navigation/competition.svg"
 import { useRytonFilterStore } from "@/stores/club_public/RytonFilters";
 import { storeToRefs } from 'pinia'
+import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
 
 const router = useRouter();
 
@@ -603,6 +597,11 @@ function goToPage(page) {
 
 <style src="@/assets/css/clubstyle.css"></style>
 <style scoped>
+.container {
+  max-width: 1810px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
  #overall {
      padding: 0 25px 60px 75px;
 }
@@ -719,8 +718,8 @@ function goToPage(page) {
      display: flex;
      align-items: center;
      background-color: white;
-     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-     margin-bottom: 30px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+     margin-bottom: 35px;
      border-radius: 10px;
      width: 985px;
      height: 310px;
@@ -907,8 +906,8 @@ function goToPage(page) {
      padding: 20px;
      height: auto;
      border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
      margin-top: -5px;
 }
  .season-card {
@@ -917,8 +916,9 @@ function goToPage(page) {
      width: 470px;
      padding: 20px;
      border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+     
 }
  .more-card {
      height: 580px;
@@ -926,8 +926,9 @@ function goToPage(page) {
      width: 470px;
      padding: 20px;
      border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+
 }
  .button-group button {
      margin-right: 8px;
@@ -1069,9 +1070,9 @@ function goToPage(page) {
      justify-content: flex-start;
      align-items: center;
      flex-wrap: wrap;
-     margin-top: 20px;
+     margin-top: 15px;
      gap: 5px;
-     margin-left: -10px;
+     margin-left: -5px;
 }
  .dt-paging-button {
      border: 1px solid green;
@@ -1100,12 +1101,20 @@ function goToPage(page) {
      border: none;
      color: white 
 }
+.events-card h5 {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 48px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
  @media only screen and (max-width: 1399px) {
      #overall {
-         padding: 0 25px 60px 35px;
+         padding: 0 25px 60px 0px;
     }
      #heads {
-         padding: 50px 25px 50px 50px;
+         padding: 50px 15px 50px 15px;
     }
      .search-bar {
          display: flex;
@@ -1126,7 +1135,7 @@ function goToPage(page) {
          padding-bottom: 50px;
     }
      .filter-btn {
-         padding: 10px 16px;
+         padding: 8px 12px;
          border: 1px solid rgba(127, 164, 131, 1);
          border-radius: 8px;
          background-color: transparent;
@@ -1138,26 +1147,31 @@ function goToPage(page) {
          font-family: Inter;
          font-weight: 400;
          font-style: Regular;
-         font-size: 16px;
          line-height: 100%;
          letter-spacing: 0%;
+    }
+    .filter-btn .label {
+        font-size: 13px
     }
      .events-cards {
          display: flex;
          align-items: center;
          background-color: white;
-         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
          margin-bottom: 35px;
          border-radius: 10px;
-         width: 710px;
+         width: 750px;
          height: 310px;
          flex-direction: row;
-         gap: 50px 
+         gap: 40px;
+    }
+    .events-cards .p-3 {
+        padding: 0px !important
     }
      .events-cards img {
          max-width: 200px;
          width: 450px;
-         height: 250px;
+         height: 200px;
          border-radius: 8px;
          opacity: 1;
          margin-left: 20px;
@@ -1169,11 +1183,14 @@ function goToPage(page) {
      .events-cards #espeaker {
          width: 150px;
     }
+    #detail {
+        margin-right: 20px;
+    }
      .calendar-card, .season-card, .more-card {
          width: 110% !important;
     }
      #right {
-         margin-left: -10px;
+         margin-left: -5px;
     }
      #edate {
          width: 120px;
@@ -1190,7 +1207,7 @@ function goToPage(page) {
          display: block;
     }
      #ename {
-         font-size: 13px 
+         font-size: 12px 
     }
      .session-card {
          width: 100%;
@@ -1245,7 +1262,7 @@ function goToPage(page) {
          display: flex;
          align-items: center;
          background-color: white;
-         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
          margin-bottom: 35px;
          border-radius: 10px;
          width: 550px;
@@ -1318,6 +1335,15 @@ function goToPage(page) {
      .info {
          font-size: 13px;
     }
+    #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
 }
  @media only screen and (max-width: 991px) {
      .right-header .profile-mobile, .right-header .divider, .notification-desktop, .down {
@@ -1386,7 +1412,7 @@ function goToPage(page) {
          display: flex;
          align-items: center;
          background-color: white;
-         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
          margin-bottom: 35px;
          border-radius: 10px;
          width: 700px;
@@ -1515,7 +1541,7 @@ function goToPage(page) {
          display: flex;
          align-items: center;
          background-color: white;
-         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
          margin-bottom: 35px;
          border-radius: 10px;
          width: 500px;
@@ -1648,7 +1674,7 @@ function goToPage(page) {
          display: flex;
          align-items: center;
          background-color: white;
-         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
          margin-bottom: 35px;
          border-radius: 10px;
          width: 300px;
@@ -1781,7 +1807,7 @@ function goToPage(page) {
          display: flex;
          align-items: center;
          background-color: white;
-         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
          margin-bottom: 35px;
          border-radius: 10px;
          width: 300px;

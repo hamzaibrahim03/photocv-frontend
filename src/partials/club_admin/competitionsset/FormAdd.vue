@@ -68,7 +68,7 @@
                             <input type="number" v-model="max_entries_digital" class="form-control" />
                         </div>
                         <div class="col-md-6">
-                            <label> Max Number of PRINT  Per Participant </label>
+                            <label> Max Number of PRINT Per Participant </label>
                             <input type="number" v-model="max_entries_print" class="form-control" />
                         </div>
                     </div>
@@ -308,8 +308,8 @@ export default {
                 this.description = data.description || ''
                 this.judging_type_id = data.judging_type_id || ''
                 this.status = data.status || ''
-                this.start_date = rawDates ? rawDates.substring(0,10) : ''
-                this.submission_deadline = rawDats ? rawDats.substring(0,10): ''
+                this.start_date = rawDates ? rawDates.substring(0, 10) : ''
+                this.submission_deadline = rawDats ? rawDats.substring(0, 10) : ''
                 this.max_entries_digital = data.max_entries_digital || ''
                 this.max_entries_print = data.max_entries_print || ''
                 this.max_file_size = data.max_file_size || ''
@@ -347,7 +347,7 @@ export default {
         status(newVal) {
             this.$nextTick(() => {
                 $('.icheck-status').iCheck('uncheck')
-                $(`.icheck-status[value="${newVal}"]`).iCheck('check') 
+                $(`.icheck-status[value="${newVal}"]`).iCheck('check')
             })
         }
     }
@@ -356,12 +356,12 @@ export default {
 
 <style scoped>
 .form-control {
-    height: 50px;
-    font-size: 16.61px;
-    font-weight: 400;
-    padding: 12px;
-    border-radius: 5px;
-    color: #4C4036;
-    border: 1.04px solid #99816B;
+     height: 50px;
+     font-size: 16.61px;
+     font-weight: 400;
+     padding: 12px;
+     border-radius: 5px;
+     color: #4C4036;
+     border: 1.04px solid #99816B;
 }
 </style>

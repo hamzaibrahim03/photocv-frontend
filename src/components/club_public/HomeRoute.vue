@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" :class="{ active: $route.path === '/ryton' }" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" :class="{ active: $route.path === '/ryton' }" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -53,8 +53,8 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.vue" class="icon notification-desktop">
-                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
+                        <a class="icon notification-desktop">
+                            <NotificationBell />
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
@@ -134,99 +134,76 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[2]?.image_medium_url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                    <div v-if="SinEvents.length" class="hero-section" :style="{ backgroundImage: `url(${SinEvents[0].featured_medium_url})` }">
                         <div class="hero-overlay">
-                            <div v-if="SinEvents.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
-                                <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img v-if="SinEvents[0].images" :src="SinEvents[0].featured_thumb_url" alt="Event Image" />
+                            <div class="events-card">
+                                <p class="date" style="text-align: left; margin-top: 140px; margin-bottom: 30px">
+                                    Upcoming Event | {{ formatDate(SinEvents[0].event_date) }}
+                                </p>
 
-                                    <div>
-                                        <div>
-                                            <div class="events-card">
-                                                <h5 class="mb-2" :style="{color: Color.text_color}">{{ SinEvents[0].name || 'Untitled Event' }}</h5>
-                                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                                    <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(SinEvents[0].event_date) || 'Date Not Available' }}</p>
-                                                    <div class="icon-container d-flex gap-2">
-                                                        <img :src="SinEvents[0].types?.[0]?.icon_url" :alt="SinEvents[0].types?.[0]?.name" class="virtual" style="width: 25px; height: 25px" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="text-secondary" :style="{color: Color.text_color}">
-                                                {{ SinEvents[0].description || 'No description provided.' }}
-                                            </p>
-                                        </div>
-                                        <div class="button-group mt-3 d-flex event-button">
-                                            <router-link :to="{ name: 'EventSinglePublic', params: { id: SinEvents[0].id } }" custom v-slot="{ navigate }">
-                                                <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View</button>
-                                            </router-link>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h5 class="" :style="{ color: Color.background_color, marginBottom: '20px' }">
+                                    {{ SinEvents[0].name }}
+                                </h5>
+                            </div>
+
+                            <p class="text-secondaryy" :style="{ color: Color.background_color, marginBottom: '30px' }">
+                                {{ SinEvents[0].description }}
+                            </p>
+
+                            <div class="button-group mt-3 d-flex" style="margin-bottom: 55px">
+                                <router-link :to="{ name: 'EventSinglePublic', params: { id: SinEvents[0].id } }" custom v-slot="{ navigate }">
+                                    <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View Details</button>
+                                </router-link>
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 <div class="carousel-item">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[3]?.image_medium_url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                    <div class="hero-section" :style="{ background: `url(${Notice.featured_image_medium}) no-repeat center center / cover`, color: '#E7EFF233' }">
                         <div class="hero-overlay">
-                            <div class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
-                                <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img :src="Notice.featured_image_thumb" alt="Notice Image" />
+                            <div class="events-card">
+                                <p class="date" style="text-align: left; margin-top: 140px; margin-bottom: 30px">
+                                    Upcoming Notice | {{ formatDate(Notice.created_at) }}
+                                </p>
 
-                                    <div>
-                                        <div>
-                                            <div class="events-card">
-                                                <h5 class="mb-2">{{ Notice.title || 'Untitled Notice' }}</h5>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Notice.created_at) || 'Date Not Available' }}</p>
-                                                    <div class="icon-container d-flex gap-2">
-                                                        <img :src="Notice.notice_type?.icon_url" :alt="Notice.notice_type?.name" class="virtual" style="width: 25px; height: 25px" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="text-secondary">
-                                                {{ Notice.description || 'No description provided.' }}
-                                            </p>
-                                        </div>
-                                        <div class="button-group mt-3 d-flex">
-                                            <router-link :to="{ name: 'NoticeSinglePublic', params: { id: Notice.id } }" custom v-slot="{ navigate }">
-                                                <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View</button>
-                                            </router-link>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h5 class="" :style="{ color: Color.background_color, marginBottom: '20px' }">
+                                    {{ Notice.title }}
+                                </h5>
+                            </div>
+
+                            <p class="text-secondaryy" :style="{ color: Color.background_color, marginBottom: '30px' }">
+                                {{ Notice.description }}
+                            </p>
+                            <div class="button-group mt-3 d-flex">
+                                <router-link :to="{ name: 'NoticeSinglePublic', params: { id: Notice.id } }" custom v-slot="{ navigate }">
+                                    <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View</button>
+                                </router-link>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="carousel-item">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[4]?.image_medium_url}) no-repeat center center / cover`}">
+                    <div v-if="News.length" class="hero-section" :style="{ background: `url(${News[0].featured_image_medium}) no-repeat center center / cover`}">
                         <div class="hero-overlay">
-                            <div v-if="News.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%;">
-                                <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img :src="News[0].featured_image_thumb" alt="News Image" />
-                                    <div>
-                                        <div>
-                                            <div class="events-card">
-                                                <h5 class="mb-2">{{ News[0].title || 'Untitled News' }}</h5>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(News[0].created_at) || 'Date Not Available' }}</p>
-                                                    <div class="icon-container d-flex gap-2">
-                                                        <img :src="News[0].club_news_type?.icon_url" :alt="News[0].club_news_type?.name" class="virtual" style="width: 25px; height: 25px" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="text-secondary">
-                                                {{ News[0].description || 'No description provided.' }}
-                                            </p>
-                                        </div>
-                                        <div class="button-group mt-3 d-flex">
-                                            <router-link :to="{ name: 'NewsSinglePublic', params: { id: News[0].id } }" custom v-slot="{ navigate }">
-                                                <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View</button>
-                                            </router-link>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="events-card">
+                                <p class="date" style="text-align: left; margin-top: 140px; margin-bottom: 30px">
+                                    Upcoming News | {{ formatDate(News[0].created_at) }}
+                                </p>
+
+                                <h5 class="" :style="{ color: Color.background_color, marginBottom: '20px', width: '825px' }">
+                                    {{ News[0].title }}
+                                </h5>
+                            </div>
+
+                            <p class="text-secondaryy" :style="{ color: Color.background_color, marginBottom: '30px' }">
+                                {{ News[0].description }}
+                            </p>
+                            <div class="button-group mt-3 d-flex">
+                                <router-link :to="{ name: 'NewsSinglePublic', params: { id: News[0].id } }" custom v-slot="{ navigate }">
+                                    <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View</button>
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -480,10 +457,8 @@
 
                                 <div class="card-body overflow-auto" style="max-height: 360px; margin-left: -21px; padding:5px">
                                     <div class="event-item d-flex" v-for="comment in flatComments" :key="comment.id" style="padding: 0px 35px; gap: 30px; margin-bottom: 20px">
-                                        <!-- Image -->
                                         <img :src="comment.image_url" alt="Interaction Image" class="img-fluid" id="comimg" />
 
-                                        <!-- Comment -->
                                         <div class="event-details d-flex justify-content-between align-items-start">
                                             <div class="event-info">
                                                 <div class="d-flex align-items-center">
@@ -753,6 +728,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import {
     useRouter
 } from "vue-router";
+import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
 
 const columns = ref(5);
 
@@ -1217,6 +1193,15 @@ function getPositionClass(index, total) {
 .resultpics-items.special-radius img,
 .resultpics-infos.special-radius {
     border-bottom-right-radius: 10px;
+}
+
+.events-card h5 {
+    font-family: Inter;
+font-weight: 400;
+font-style: Regular;
+font-size: 48px;
+line-height: 20px;
+letter-spacing: 0%;
 }
 
 @media only screen and (max-width: 767px) {

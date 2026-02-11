@@ -221,14 +221,12 @@ export default {
 
 <style scoped>
 .row-wrapper {
-    display: flex;
+     display: flex;
 }
-
 .even-info {
-    background-color: #99816b;
+     background-color: #99816b;
 }
-
 .odd-info {
-    background-color: #4c4036;
+     background-color: #4c4036;
 }
 </style>

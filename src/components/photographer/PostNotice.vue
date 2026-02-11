@@ -48,11 +48,7 @@ import MoreNotices from "@/partials/club_admin/notices/MoreNotices.vue";
 import ProfileWithoutSearch from "@/partials/club_admin/competitionsadd/ProfileWithoutSearch.vue";
 import NoticeForm from "@/partials/post/NoticeForm.vue";
 
-const {
-    completedDaysAgo,
-    fetchNotices,
-    memberCount,
-} = useNoticeStore()
+const { completedDaysAgo, fetchNotices, memberCount, } = useNoticeStore()
 
 const MemberCount = memberCount
 const EventDay = completedDaysAgo
@@ -63,6 +59,6 @@ onMounted(() => {
 
 <style scoped>
 .calen {
-    margin-top: 15px;
+     margin-top: 15px;
 }
 </style>

@@ -12,7 +12,7 @@ export const useRandomClub = defineStore('club', {
     async fetchRandomClubGallery(domain) {
       this.loading = true;
       try {
-        const response = await api.getAllRandomClub(domain); 
+        const response = await api.getAllRandomClub(domain);
         this.clubrandom = response.data;
         console.log("Random Club data =>", this.clubrandom);
         this.error = null;
@@ -21,6 +21,6 @@ export const useRandomClub = defineStore('club', {
       } finally {
         this.loading = false;
       }
-    }    
+    }
   }
 });

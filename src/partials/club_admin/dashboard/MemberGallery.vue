@@ -107,16 +107,14 @@ export default {
 
 <style scoped>
 .row-wrapper {
-    display: flex;
+     display: flex;
 }
-
 .bottom-left-radius img,
 .bottom-left-radius .pic-info {
-    border-bottom-left-radius: 10px;
+     border-bottom-left-radius: 10px;
 }
-
 .bottom-right-radius img,
 .bottom-right-radius .pic-info {
-    border-bottom-right-radius: 10px;
+     border-bottom-right-radius: 10px;
 }
 </style>

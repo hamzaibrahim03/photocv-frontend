@@ -234,41 +234,38 @@ export default {
 
 <style scoped>
 .tag-input {
-    width: 100%;
-    height: 50px;
-    padding: 10px;
-    border: 1px solid #695cfe;
-    background-color: #242526;
-    border-radius: 10px;
-    font-size: 1.5rem;
-    outline: none;
-    color: white;
+     width: 100%;
+     height: 50px;
+     padding: 10px;
+     border: 1px solid #695cfe;
+     background-color: #242526;
+     border-radius: 10px;
+     font-size: 1.5rem;
+     outline: none;
+     color: white;
 }
-
-.tag {
-    display: inline-block;
-    background-color: #695cfe;
-    width: auto;
-    font-size: 0.5rem;
-    text-transform: capitalize;
-    padding-left: 10px;
-    line-height: 1rem;
-    margin: 5px;
-    border-radius: 5px;
-    color: white;
+ .tag {
+     display: inline-block;
+     background-color: #695cfe;
+     width: auto;
+     font-size: 0.5rem;
+     text-transform: capitalize;
+     padding-left: 10px;
+     line-height: 1rem;
+     margin: 5px;
+     border-radius: 5px;
+     color: white;
 }
-
-input::placeholder {
-    color: #aaa;
+ input::placeholder {
+     color: #aaa;
 }
-
-.form-control {
-    height: 50px;
-    font-size: 16.61px;
-    font-weight: 400;
-    padding: 12px;
-    border-radius: 5px;
-    color: #4C4036;
-    border: 1.04px solid #99816B;
+ .form-control {
+     height: 50px;
+     font-size: 16.61px;
+     font-weight: 400;
+     padding: 12px;
+     border-radius: 5px;
+     color: #4C4036;
+     border: 1.04px solid #99816B;
 }
 </style>

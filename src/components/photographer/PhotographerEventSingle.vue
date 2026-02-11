@@ -160,14 +160,42 @@
                 <CalendarDashboard />
             </div>
             <div id="news">
-                <RecentComments style="width: 90%" />
+                <div class="cardddd d-flex flex-column" :style="{padding: '35px'}">
+                    <h5 class="head">Recent Comments</h5>
+
+                    <div class="row" style="margin-bottom: 10px" v-for="c in eventcomments.slice(0, 4)" :key="c.id">
+                        <div v-for="comment in c.comments" :key="comment.id" class="row">
+                            <div class="col-md-2">
+                                <img :src="comment.user?.profile_image_url" alt="Com" style="width: 50px; height: 50px" />
+                            </div>
+                            <div class="col-md-5">
+                                <p class="text-secondary">{{ comment.comment }}</p>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="event-time" style="text-align: right">
+                                    <small class="event-date">{{ formatDate(comment.created_at) }}</small><br />
+                                    <small class="event-time-details">{{ formatTime(comment.created_at) }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group mt-auto">
+                        <router-link to="/notices" custom v-slot="{ navigate }">
+                            <button class="btn btn-sm" id="view" @click="navigate">View All</button>
+                        </router-link>
+                        <router-link to="/notice_single" custom v-slot="{ navigate }">
+                            <button class="btn btn-sm" id="new" @click="navigate">Add New</button>
+                        </router-link>
+                    </div>
+                </div>
+
                 <MoreEvents style="width: 90%" />
             </div>
         </div>
     </div>
 </section>
 </template>
-
 
 <script setup>
 import { onMounted, computed } from 'vue'
@@ -176,32 +204,35 @@ import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
 import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
 import QuickFilters from "@/partials/club_admin/events/QuickFilters.vue"
-import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
-import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
 import dayjs from 'dayjs'
+import { useEventComments } from "@/stores/club_admin/EventComments";
+import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
 
 const {
-  events,
-  fetchEvents,
-  memberCount,
-  eventDay
+    events,
+    fetchEvents,
+    memberCount,
+    eventDay
 } = useEventStore()
- const EventDay = eventDay;
- const MemberCount = memberCount
- const event = computed(() => events.value[8] || {}) 
+const {
+    eventcomments,
+    fetchEventComments
+} = useEventComments();
+const EventDay = eventDay;
+const MemberCount = memberCount
+const event = computed(() => events.value[8] || {})
 
 const formattedStartDate = computed(() =>
-  event.value?.event_date
-    ? dayjs(event.value.event_date).format('MMMM D, YYYY h:mm A')
-    : ''
+    event.value?.event_date ?
+    dayjs(event.value.event_date).format('MMMM D, YYYY h:mm A') :
+    ''
 )
 
 onMounted(() => {
-  fetchEvents()
+    fetchEvents();
+    fetchEventComments();
 })
-
 </script>
-
 
 <style scoped>
 .calen {

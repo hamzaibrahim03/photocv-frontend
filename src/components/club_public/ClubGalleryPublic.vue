@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -54,8 +54,8 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.vue" class="icon notification-desktop">
-                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
+                        <a class="icon notification-desktop">
+                            <NotificationBell />
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
@@ -165,7 +165,7 @@
             <section>
                 <div class="container">
                     <div class="suggestions-header d-flex justify-content-between align-items-center">
-                        <h3 class="heading" :style="{fontWeight: '500'}">More from Member Galleries</h3>
+                        <h3>More from Member Galleries</h3>
 
                         <button id="view" :style="{color: Color.background_color, backgroundColor: Color.accent_color}" style="border: none">View All</button>
                     </div>
@@ -319,6 +319,7 @@ import { useUserStore } from '@/stores/club_admin/UserStore';
 import { useRouter } from "vue-router";
 import { storeToRefs } from 'pinia'
 import randommembergallery from '@/api/club_public/randommembergallery';
+import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
 
 const router = useRouter();
 const isNavOpen = ref(false);
@@ -395,6 +396,7 @@ const suggestions = computed(() => {
   return randomMembers.value.map(member => {
     const firstGallery = member.galleries?.[0]
     const firstPhoto = firstGallery?.photos?.[0]
+    const firstRole = member.roles?.[0]
 
     return {
       gallery_id: firstGallery?.id || "",
@@ -407,7 +409,9 @@ const suggestions = computed(() => {
       likes_count: firstPhoto?.likes_count || 0,
       uploaded_by: firstPhoto?.uploaded_by || "",
       member_name: member.first_name + " " + member.last_name,
-      role: member.role,
+      role: firstRole?.name
+    ? firstRole.name.charAt(0).toUpperCase() + firstRole.name.slice(1)
+    : "",
     }
   })
 })
@@ -418,7 +422,7 @@ const suggestions = computed(() => {
      padding: 0 25px 50px 30px;
 }
  #heads {
-     padding: 50px 70px 20px 70px;
+     padding: 70px 70px 20px 95px;
 }
  .events-header {
      display: flex;
@@ -488,6 +492,8 @@ const suggestions = computed(() => {
      display: grid;
      grid-template-columns: repeat(4, 1fr);
      width: 100%;
+     max-width: 1698px;
+     padding: 25px 0 0 50px;
 }
  .clubpics-item {
      position: relative;
@@ -496,9 +502,10 @@ const suggestions = computed(() => {
  .clubpics-item img {
      border-radius: 0;
      width: 100%;
-     height: 412px;
+     height: 411.75px;
      object-fit: cover;
      object-position: top;
+     max-width: 411.75px 
 }
  .clubpics-info {
      background: #4c403699;
@@ -517,15 +524,28 @@ const suggestions = computed(() => {
      height: 55px;
 }
  #view {
-     max-width: 130px;
-     height: 40px;
+     max-width: 177px;
+     height: 60px;
      opacity: 1;
-     padding: 10px 17px;
-     gap: 10px;
+     padding: 8px 16px;
      font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 16px;
+     font-weight: 600;
+     font-style: Semi Bold;
+     font-size: 20px;
+     leading-trim: NONE;
+     line-height: 100%;
+     letter-spacing: 0%;
+     text-align: center;
+}
+ .suggestions-header {
+     padding: 57px 45px 45px 78px;
+}
+ .suggestions-header h3 {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 36px;
+     leading-trim: CAP_HEIGHT;
      line-height: 100%;
      letter-spacing: 0%;
 }
@@ -533,7 +553,8 @@ const suggestions = computed(() => {
      display: grid;
      grid-template-columns: repeat(4, 1fr);
      width: 100%;
-     gap: 20px 
+     gap: 25px;
+     padding: 0 45px 0 82px;
 }
  .suggestions-card, .suggestion-card {
      position: relative;
@@ -545,6 +566,7 @@ const suggestions = computed(() => {
      height: 295px;
      object-fit: cover;
      object-position: top;
+     max-width: 394px 
 }
  .suggestions-card .img-overlay, .suggestion-card .img-overlay {
      background: #4c403699;
@@ -559,7 +581,9 @@ const suggestions = computed(() => {
      font-family: Inter;
      display: flex;
      height: 70px;
-     gap: 20px;
+     gap: 15px;
+     width: 394px;
+     padding: 15px 20px;
 }
  .img-overlay .names {
      font-family: Inter;
@@ -576,6 +600,10 @@ const suggestions = computed(() => {
      font-size: 14px;
      line-height: 20px;
      letter-spacing: 0px;
+}
+ #joincontainer {
+     margin-top: 195px;
+     margin-left: 10px;
 }
  .site-footer {
      padding-top: 25px;
@@ -595,9 +623,9 @@ const suggestions = computed(() => {
 }
  .event-img, .fallback-box {
      width: 100%;
-     max-width: 50px;
-     height: 50px;
-     border-radius: 7px;
+     max-width: 40px;
+     height: 40px;
+     border-radius: 50%;
      object-fit: cover;
      background-color: #f0f0f0;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);

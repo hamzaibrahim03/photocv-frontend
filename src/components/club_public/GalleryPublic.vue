@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -54,8 +54,8 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.vue" class="icon notification-desktop">
-                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
+                        <a class="icon notification-desktop">
+                            <NotificationBell />
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
@@ -181,7 +181,7 @@
                                         <button class="btn btn-sm" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View All</button>
                                     </router-link>
                                 </div>
-                                <div class="clubpics">
+                                <div class="clubpics" style="margin-top: -5px;">
                                      <div v-for="(item, index) in ChunkedCards.flat().slice(0, 8)" :key="item.id || index" class="clubpics-item">
                                         <div v-if="item.image_url">
                                             <img :src="item.image_url" :alt="item.username" style="object-fit: cover; object-position: top;" />
@@ -327,6 +327,8 @@ import { useUserStore } from '@/stores/club_admin/UserStore';
 import { useRouter } from "vue-router";
 import { useHomeStore } from '@/stores/club_public/ClubData';
 import { storeToRefs } from 'pinia'
+import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
+
 const router = useRouter();
 const isNavOpen = ref(false);
 const isDropdownOpen = ref(false);
@@ -495,11 +497,13 @@ onMounted(async () => {
 }
  #cl {
      margin-bottom: 50px;
+     margin-right: 5px;
 }
  .clubpics {
      display: grid;
      grid-template-columns: repeat(4, 1fr);
      width: 100%;
+     max-width: 1644px;
 }
  .clubpics-item {
      position: relative;
@@ -508,7 +512,8 @@ onMounted(async () => {
  .clubpics-item img {
      border-radius: 0;
      width: 100%;
-     height: 412px;
+     height: 411px;
+     max-width: 411px;
      object-fit: cover;
      object-position: top;
 }

@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" :class="{ active: $route.path === '/ryton' }" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" :class="{ active: $route.path === '/ryton' }" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -54,8 +54,8 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.vue" class="icon notification-desktop">
-                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
+                        <a class="icon notification-desktop">
+                            <NotificationBell />
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
@@ -148,7 +148,7 @@
                         <h2 class="events-title" :style="{ color: Color.text_color }">Competition Results</h2>
                         <div class="search-bar">
                             <i class="fas fa-search"></i>
-                             <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search" aria-controls="example1" />
+                             <input v-model="searchText" type="search" class="search-input" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                         </div>
                     </div>
                 </div>
@@ -163,12 +163,12 @@
 
                         <div class="custom-filter">
                             <label class="filter-label">Season</label>
-                            <select class="search-bars" v-model="search">
+                            <select class="search-bars" v-model="searchSeason">
                                 <option value="">
                                     - Select -
-                                    </option>
-                                <option v-for="s in options" :key="s.id" :value="s.id">
-                                    {{ s.label }}
+                                </option>
+                                <option v-for="opt in options" :key="opt.id" :value="opt.id">
+                                    {{ opt.label }}
                                 </option>
                             </select>
                         </div>
@@ -177,7 +177,7 @@
             </section>
 
             <section class="competition-wrapper">
-                <div class="competition-grid">
+                <div class="container competition-grid">
                     <div v-for="(competition, compIndex) in CompRes" :key="compIndex" class="competition-card" @click="goToSingleResult(competition.id)">
                         <div class="covers">
                             <img :src="getTopEntries(competition)[0]?.entry_image_url" />
@@ -190,13 +190,13 @@
                                     by {{ getTopEntries(competition)[0]?.member_name }}
                                     </span>
                                 </div>
-                            <img v-if="getMedalIcon(1)" style="width: 20px; height: 20px; position: relative; text-align: right" :src="getMedalIcon(1).src"/>
+                            <img v-if="getMedalIcon(1)" style="width: 25.23px; height: 30.16px; position: relative; text-align: right" :src="getMedalIcon(1).src"/>
                             </div>
                         </div>
                         <div class="card-body">
                             <h3 class="title">{{ competition.name }}</h3>
                             <p class="date" :style="{color: Color.accent_color}">
-                                {{ formatDate(competition.start_date) }}
+                                {{ formatDate(competition.start_date) }},
                                 {{ formatTime(competition.start_date) }}
                             </p>
                             <div v-for="(entry, index) in getTopEntries(competition).slice(1)" :key="index" class="entry-row">
@@ -406,7 +406,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useRytonCompResultStore } from '@/stores/club_public/RytonCompResults';
 import { storeToRefs } from 'pinia';
 import Loader from "@/components/LoaderAll.vue";
@@ -416,6 +416,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useUserStore } from '@/stores/club_admin/UserStore';
 import { useRouter } from "vue-router";
 import { useHomeStore } from '@/stores/club_public/ClubData';
+import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
 
 const router = useRouter();
 const isNavOpen = ref(false);
@@ -431,7 +432,8 @@ const toggleDropdown = () => {
 };
 const user = useUserStore();
 const { username, profile_image_url } = storeToRefs(user)
-const search = ref("")
+const searchText = ref("")
+const searchSeason = ref("")
 
 const handleLogout = async () => {
   await user.logout();
@@ -451,21 +453,24 @@ const Club = computed(() => resultStore.compresData?.clubSettings?.original.data
 const Color = computed(() => resultStore.compresData?.clubSettings?.original.data.settings || {});
 const CompRes = computed(() => resultStore.compresData?.competitionResults?.original?.data || {})
 const options = computed(() => {
-  return resultStore.compresData?.clubSettings?.original?.data?.club?.seasons?.map(season => {
-    const startYear = new Date(season.start_date).getFullYear();
-    const endYear = new Date(season.end_date).getFullYear();
+  return (
+    resultStore.compresData?.clubSettings?.original?.data?.club?.seasons?.map(
+      season => {
+        const startYear = new Date(season.start_date).getFullYear();
+        const endYear = new Date(season.end_date).getFullYear();
 
-    return {
-      id: season.id,
-      label: `Season ${startYear} - ${endYear}`
-    };
-  }) || [];
+        return {
+          id: season.id,
+          label: `Season ${startYear}-${endYear}`,
+        };
+      }
+    ) || []
+  );
 });
 
-const selectedSeasonLabel = computed(() => {
-  const season = options.value.find(s => s.id === search.value);
-  return season ? season.label : "Season";
-});
+const selectedSeasonLabel = computed(() => { const season = options.value.find(s => s.id === searchSeason.value); return season ? season.label : "Season"; });
+
+
 
 
 const formatDate = (dateString) => {
@@ -523,7 +528,6 @@ const getMedalIcon = (position) => {
 }
 
 
-// Flatten members → entries & take top 3
 const getTopEntries = (competition) => {
   return competition.competition_members
     .flatMap(m =>
@@ -559,6 +563,11 @@ onMounted(async () => {
 
 });
 
+watch(options, (opts) => {
+  if (opts.length && !searchSeason.value) {
+    searchSeason.value = opts.id   
+  }
+}, { immediate: true })
 
 </script>
 <style scoped>
@@ -620,7 +629,7 @@ onMounted(async () => {
      width: 636px;
      height: 60px;
      transition: border-color 0.2s ease;
-     gap: 20px 
+     gap: 20px;
 }
  .search-bar:hover, .search-bar:focus-within {
      border-color: #d1d5db;
@@ -683,7 +692,7 @@ onMounted(async () => {
      width: 3px;
 }
  .competition-wrapper {
-     padding: 0 70px 30px 140px;
+     padding: 0 70px 30px 125px;
 }
  .competition-grid {
      display: grid;
@@ -739,13 +748,14 @@ onMounted(async () => {
      letter-spacing: 0%;
      color: #f97316;
      margin-bottom: 40px;
+     text-align: left;
 }
  .entry-row {
      display: flex;
      align-items: center;
      background: #f9f9f9;
      border-radius: 9.23px;
-     padding: 10px 20px 10px 20px;
+     padding: 10px 20px 10px 15px;
      margin-bottom: 10px;
      position: relative;
      width: 346px;
@@ -795,7 +805,7 @@ onMounted(async () => {
      letter-spacing: 0%;
 }
  .medal {
-     width: 23px;
+     width: 23.07px;
      height: 28px;
 }
  .icon-circles .flickr-dots i, .flickr-dots i{

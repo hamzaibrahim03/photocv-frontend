@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -53,8 +53,8 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.vue" class="icon notification-desktop">
-                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
+                        <a class="icon notification-desktop">
+                            <NotificationBell />
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
@@ -100,33 +100,24 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[3]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                    <div class="hero-section" :style="{ background: `url(${Notice[0].featured_image_medium}) no-repeat center center / cover`, color: '#E7EFF233' }">
                         <div class="hero-overlay">
-                            <div class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
-                                <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img :src="Notice[0].featured_image_url" alt="Notice Image" />
+                            <div class="events-card">
+                                <p class="date" style="text-align: left; margin-top: 103px; margin-bottom: 44px">
+                                    Latest Notice | {{ formatDate(Notice[0].created_at) }}
+                                </p>
 
-                                    <div>
-                                        <div>
-                                            <div class="events-card">
-                                                <h5 class="mb-2">{{ Notice[0].title || 'Untitled Notice' }}</h5>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Notice[0].created_at) || 'Date Not Available' }}</p>
-                                                    <div class="icon-container d-flex gap-2">
-                                                        <img :src="Notice[0].notice_type?.icon_url" :alt="Notice[0].notice_type?.name" class="virtual" style="width: 25px; height: 25px" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p class="text-secondary" v-html=" Notice[0].description || 'No description provided.'">
-                                            </p>
-                                        </div>
-                                        <div class="button-group mt-3 d-flex">
-                                            <router-link :to="{ name: 'NoticeSinglePublic', params: { id: Notice[0].id } }" custom v-slot="{ navigate }">
-                                                <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View</button>
-                                            </router-link>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h5 class="" :style="{ color: Color.background_color, marginBottom: '26px' }">
+                                    {{ Notice[0].title }}
+                                </h5>
+                            </div>
+
+                            <p class="text-secondaryy" :style="{ color: Color.background_color, marginBottom: '30px' }" v-html=" Notice[0].description">
+                            </p>
+                            <div class="button-group mt-3 d-flex">
+                                <router-link :to="{ name: 'NoticeSinglePublic', params: { id: Notice[0].id } }" custom v-slot="{ navigate }">
+                                    <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View Details</button>
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -162,7 +153,7 @@
                                     <div class="mt-4">
                                         <div v-if="paginatedNotice.length">
                                             <div v-for="e in paginatedNotice" :key="e.id" class="events-cards p-3">
-                                                <img v-if="e.featured_thumb_url" :src="e.featured_thumb_url" alt="Notice Image"/>
+                                                <img v-if="e.featured_image_thumb" :src="e.featured_image_thumb" alt="Notice Image"/>
                                                 <div class="flex-grow-1 d-flex flex-column justify-content-between" id="detail">
                                                     <div class="d-flex w-100 justify-content-between align-items-center">
                                                         <h5 id="ename" :style="{color: Color.text_color}">{{ e.title || 'Untitled News' }}</h5>
@@ -416,6 +407,7 @@ import { useHomeStore } from '@/stores/club_public/ClubData';
 import apiClient from '@/api/axios'
 import { storeToRefs } from 'pinia'
 import { useRytonFilterStore } from "@/stores/club_public/RytonFilters";
+import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
 
 const router = useRouter();
 const isNavOpen = ref(false);
@@ -713,7 +705,7 @@ function goToPage(page) {
      display: flex;
      align-items: center;
      background-color: white;
-     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
      margin-bottom: 35px;
      border-radius: 10px;
      width: 975px;
@@ -894,8 +886,8 @@ function goToPage(page) {
      width: 470px;
      padding: 20px;
      border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
 }
  .button-group button {
      margin-right: 8px;
@@ -986,6 +978,14 @@ function goToPage(page) {
  #joincontainer {
      margin-top: 270px;
 }
+.events-card h5 {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 48px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
  @media only screen and (max-width: 1399px) {
      #overall {
          padding: 0 25px 60px 35px;
@@ -1009,7 +1009,7 @@ function goToPage(page) {
          display: flex;
          align-items: center;
          background-color: white;
-         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
          margin-bottom: 35px;
          border-radius: 10px;
          width: 710px;
@@ -1079,7 +1079,7 @@ function goToPage(page) {
          display: flex;
          align-items: center;
          background-color: white;
-         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
          margin-bottom: 35px;
          border-radius: 10px;
          width: 550px;
@@ -1188,7 +1188,7 @@ function goToPage(page) {
          display: flex;
          align-items: center;
          background-color: white;
-         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
          margin-bottom: 35px;
          border-radius: 10px;
          width: 700px;
@@ -1288,7 +1288,7 @@ function goToPage(page) {
          display: flex;
          align-items: center;
          background-color: white;
-         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
          margin-bottom: 35px;
          border-radius: 10px;
          width: 500px;
@@ -1392,7 +1392,7 @@ function goToPage(page) {
          display: flex;
          align-items: center;
          background-color: white;
-         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
          margin-bottom: 35px;
          border-radius: 10px;
          width: 300px;
@@ -1499,7 +1499,7 @@ function goToPage(page) {
          display: flex;
          align-items: center;
          background-color: white;
-         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
          margin-bottom: 35px;
          border-radius: 10px;
          width: 300px;

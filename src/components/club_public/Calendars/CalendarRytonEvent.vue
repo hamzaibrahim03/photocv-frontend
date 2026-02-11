@@ -2,11 +2,11 @@
     <div class="calendar" :style="{ '--border-color': Color.primary_color }">
 
         <div class="calendar-header" :style="{ backgroundColor: Color.primary_color, color: Color.background_color, }">
-            <button class="previous" @click="prevMonth" :style="{ backgroundColor: Color.primary_color, color: Color.background_color }">
+            <button class="previous" @click="prevMonth" :style="{ backgroundColor: Color.primary_color, color: Color.background_color, marginLeft: '10px' }">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <h2>{{ monthNames[currentMonth] }} {{ currentYear }}</h2>
-            <button class="next" @click="nextMonth" :style="{ backgroundColor: Color.primary_color, color: Color.background_color }">
+            <button class="next" @click="nextMonth" :style="{ backgroundColor: Color.primary_color, color: Color.background_color, marginRight: '10px' }">
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
         </div>
@@ -169,14 +169,18 @@ onMounted(async () => {
   border-radius: 10px;
   margin: auto;
   font-family: sans-serif;
+  padding-bottom: 10px
 }
 
 h2 {
   margin-top: 2%;
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 100%;
   letter-spacing: 0%;
+  font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
 
 .calendar-header {
@@ -195,7 +199,7 @@ h2 {
   margin-bottom: 15px;
 }
 .days {
-  margin-top: 10px;
+  margin-top: -10px;
 }
 .labels-container {
   display: flex;
@@ -206,7 +210,6 @@ h2 {
 }
 .previous,
 .next {
-  font-size: 28px;
   width: 40px;
   height: 40px;
   align-items: center;
@@ -216,7 +219,7 @@ h2 {
 .weekdays {
   font-weight: bold;
   text-align: center;
-  margin-top: 35px;
+  margin-top: 25px;
 }
 
 .day {

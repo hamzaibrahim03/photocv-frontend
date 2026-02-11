@@ -12,7 +12,7 @@ export const useRytonSingleEventStore = defineStore('sinevent', {
     async fetchRytonSingleEventData(event_id) {
       this.loading = true;
       try {
-        const response = await api.getAllRytonSingleEvent(event_id); 
+        const response = await api.getAllRytonSingleEvent(event_id);
         this.sineventData = response.data;
         console.log("Single Event data =>", this.sineventData);
         this.error = null;
@@ -21,6 +21,6 @@ export const useRytonSingleEventStore = defineStore('sinevent', {
       } finally {
         this.loading = false;
       }
-    }    
+    }
   }
 });

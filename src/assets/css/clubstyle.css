@@ -138,6 +138,7 @@
   background-position: center;
   background-repeat: no-repeat;
   overflow: hidden;
+  border-radius: 20px;
 }
 .hero-section::before {
   content: "";
@@ -152,6 +153,7 @@
   background: rgba(76, 64, 54, 0.5);
   padding: 53px 42px;
   width: 825px;
+  height: 558px;
   margin-left: 2%;
   border-radius: 10px;
   color: #fff;
@@ -840,6 +842,9 @@
   .custom-nav {
       margin-left: 35px;
  }
+  .custom-nav .nav-item {
+      margin-right: 0;
+ }
   .admin-dropdown {
       width: 180px;
  }
@@ -1090,6 +1095,9 @@
   .resultpics-infos {
       font-size: 1rem;
  }
+  .comments-cards {
+      width: 95% !important;
+ }
   #facebook {
       width: 250px;
  }
@@ -1104,6 +1112,15 @@
  }
   .custom-nav {
       margin-left: 5px;
+ }
+  .navbar-nav .nav-link {
+      font-weight: 400;
+      font-size: 14px;
+      padding: 8px 13px;
+      font-family: Inter;
+      font-style: Regular;
+      line-height: 100%;
+      letter-spacing: 0%;
  }
   #login {
       width: 75px;

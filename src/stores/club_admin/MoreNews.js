@@ -15,8 +15,8 @@ export function useNewsComments() {
     try {
       const res = await NewsCommentsAPI.getAllNewsComments()
       const randomList = res?.data?.data?.random_news || []
-console.log("Comments News :", randomList)
-randomnews.value = randomList
+      console.log("Comments News :", randomList)
+      randomnews.value = randomList
       eventCount.value = randomList.length
 
       const today = new Date()

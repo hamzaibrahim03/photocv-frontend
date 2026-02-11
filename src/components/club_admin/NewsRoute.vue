@@ -77,8 +77,7 @@
                                                 <p class="date">
                                                     {{ formatDate(news.publish_date) || 'Date Not Available' }}
                                                 </p>
-                                                <p class="text-secondary">
-                                                    {{ news.description || 'No description provided.' }}
+                                                <p class="text-secondary" v-html="news.description || 'No description provided.'">
                                                 </p>
                                                 <div class="d-flex justify-content-between align-items-center mt-3 w-100">
                                                     <div class="button-group d-flex align-items-center gap-2">
@@ -127,8 +126,8 @@
                                 <CalendarDashboard />
                             </div>
                             <div id="news">
-                                <RecentComments/>
-                                <MoreNews  style="height: auto"/>
+                                <RecentComments />
+                                <MoreNews style="height: auto" />
                             </div>
                         </div>
                     </section>
@@ -162,13 +161,7 @@ import Share from "@/assets/icons/event_list/share.svg"
 import Books from "@/assets/icons/event_list/bookmark.svg"
 import Loader from "@/components/LoaderAll.vue";
 
-const {
-    news,
-    fetchNews,
-    memberCount,
-    currentMonthCount,
-    completedDaysAgo
-} = useNewsStore()
+const { news, fetchNews, memberCount, currentMonthCount, completedDaysAgo } = useNewsStore()
 
 const MemberCount = memberCount
 const CurrentMonthCount = currentMonthCount
@@ -218,14 +211,14 @@ watch(search, (newSearch) => {
 })
 
 const loadNews = async () => {
-  isLoading.value = true
-  try {
-    await fetchNews()   
-  } catch (error) {
-    console.error("Error fetching news:", error)
-  } finally {
-    isLoading.value = false  
-  }
+    isLoading.value = true
+    try {
+        await fetchNews()
+    } catch (error) {
+        console.error("Error fetching news:", error)
+    } finally {
+        isLoading.value = false
+    }
 }
 onMounted(() => {
     loadNews()
@@ -269,7 +262,6 @@ const formatDate = (date) => {
 }
 </script>
 
-
 <style scoped>
 .container {
      max-width: 1810px;
@@ -295,7 +287,7 @@ const formatDate = (date) => {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }

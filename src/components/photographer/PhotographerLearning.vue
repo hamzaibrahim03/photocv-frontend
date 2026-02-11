@@ -46,7 +46,6 @@
 
     <div class="card" style="height: auto; padding: 15px;">
         <div class="d-flex justify-content-between align-items-center">
-            <!-- Search Input -->
             <div class="dt-search">
                 <div class="input-group">
                     <span class="input-group-text" style="background-color: #fff; border: 1px solid #a0846c;">
@@ -56,7 +55,6 @@
                 </div>
             </div>
 
-            <!-- Buttons -->
             <div class="button-group d-flex align-items-center gap-2">
                 <button class="btn d-flex align-items-center gap-2 px-3 py-2 text-white" style="background-color: #99816B;">
                     <i class="fas fa-sticky-note"></i> Note
@@ -348,9 +346,7 @@
 <script setup>
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
-import {
-    useUserStore
-} from "@/stores/club_admin/UserStore";
+import { useUserStore } from "@/stores/club_admin/UserStore";
 import {
     ref
 } from 'vue'

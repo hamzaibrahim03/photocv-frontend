@@ -297,7 +297,7 @@
 
                         <div class="d-flex justify-content-between align-items-center">
                             <label class="small">
-                                <input type="checkbox"  />Not Visited
+                                <input type="checkbox" />Not Visited
                             </label>
                             <div class="d-flex gap-2">
                                 <button class="icon-btn" @click="deleteNote">
@@ -425,7 +425,7 @@
 
                         <div class="d-flex justify-content-between align-items-center">
                             <label class="small">
-                                <input type="checkbox"  />Not Visited
+                                <input type="checkbox" />Not Visited
                             </label>
                             <div class="d-flex gap-2">
                                 <button class="icon-btn" @click="deleteNote">
@@ -553,7 +553,7 @@
 
                         <div class="d-flex justify-content-between align-items-center">
                             <label class="small">
-                                <input type="checkbox"  />Not Visited
+                                <input type="checkbox" />Not Visited
                             </label>
                             <div class="d-flex gap-2">
                                 <button class="icon-btn" @click="deleteNote">
@@ -593,28 +593,25 @@ const editNote = () => {
 
 <style scoped>
 .note-card {
-    background-color: #EBE6E1;
-    border-radius: 10px;
-    padding: 24px;
-    gap: 40px;
-    height: auto
+     background-color: #EBE6E1;
+     border-radius: 10px;
+     padding: 24px;
+     gap: 40px;
+     height: auto;
 }
-
 .note-img {
-  width: 180px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 6px;
+     width: 180px;
+     height: 140px;
+     object-fit: cover;
+     border-radius: 6px;
 }
-
 .icon-btn {
-    background: none;
-    border: none;
-    color: #c96f6f;
-    cursor: pointer;
+     background: none;
+     border: none;
+     color: #c96f6f;
+     cursor: pointer;
 }
-
 .icon-btn:hover {
-    color: #a35050;
+     color: #a35050;
 }
 </style>

@@ -142,7 +142,7 @@
                                     <div class="form-control">
                                         <input type="radio" name="status" value="deleted" ref="statusdeleted" class="icheck-status" />&nbsp;
                                         <label style="font-size: 11px">Delete</label>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +213,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-control">
-                                <input type="radio" name="comment_allowed" value="public" ref="commentpublic" class="icheck-comment"/>&nbsp;
+                                <input type="radio" name="comment_allowed" value="public" ref="commentpublic" class="icheck-comment" />&nbsp;
                                 <span style="font-size: 12px">Public</span>
                             </div>
                         </div>
@@ -402,18 +402,18 @@ export default {
             this.fetchFormData(noticeId)
         }
         this.$nextTick(() => {
-        $('.icheck-comment').on('ifChecked', (event) => {
-            this.comment_allowed = event.target.value
-        })
-        $('.icheck-urgency').on('ifChecked', (event) => {
-            this.urgency_importance = event.target.value
-        })
-        $('.icheck-status').on('ifChecked', (event) => {
-            this.status = event.target.value
-        })
-        $('.icheck-poll').on('ifChecked', (event) => {
-            this.poll = event.target.value
-        })
+            $('.icheck-comment').on('ifChecked', (event) => {
+                this.comment_allowed = event.target.value
+            })
+            $('.icheck-urgency').on('ifChecked', (event) => {
+                this.urgency_importance = event.target.value
+            })
+            $('.icheck-status').on('ifChecked', (event) => {
+                this.status = event.target.value
+            })
+            $('.icheck-poll').on('ifChecked', (event) => {
+                this.poll = event.target.value
+            })
         })
 
         document.addEventListener("click", this.handleClickOutside);
@@ -422,72 +422,69 @@ export default {
         document.removeEventListener("click", this.handleClickOutside);
     },
     watch: {
-  comment_allowed(newVal) {
-    this.$nextTick(() => {
-      $('.icheck-comment').iCheck('uncheck')
-      $(`.icheck-comment[value="${newVal}"]`).iCheck('check')
-    })
-  },
-  urgency_importance(newVal) {
-    this.$nextTick(() => {
-      $('.icheck-urgency').iCheck('uncheck') 
-      $(`.icheck-urgency[value="${newVal}"]`).iCheck('check')
-    })
-  },
-  poll(newVal) {
-    this.$nextTick(() => {
-      $('.icheck-poll').iCheck('uncheck')
-      $(`.icheck-poll[value="${newVal}"]`).iCheck('check')
-    })
-  },
-  status(newVal) {
-    this.$nextTick(() => {
-      $('.icheck-status').iCheck('uncheck') 
-      $(`.icheck-status[value="${newVal}"]`).iCheck('check')
-    })
-  }
-}
+        comment_allowed(newVal) {
+            this.$nextTick(() => {
+                $('.icheck-comment').iCheck('uncheck')
+                $(`.icheck-comment[value="${newVal}"]`).iCheck('check')
+            })
+        },
+        urgency_importance(newVal) {
+            this.$nextTick(() => {
+                $('.icheck-urgency').iCheck('uncheck')
+                $(`.icheck-urgency[value="${newVal}"]`).iCheck('check')
+            })
+        },
+        poll(newVal) {
+            this.$nextTick(() => {
+                $('.icheck-poll').iCheck('uncheck')
+                $(`.icheck-poll[value="${newVal}"]`).iCheck('check')
+            })
+        },
+        status(newVal) {
+            this.$nextTick(() => {
+                $('.icheck-status').iCheck('uncheck')
+                $(`.icheck-status[value="${newVal}"]`).iCheck('check')
+            })
+        }
+    }
 
 }
 </script>
 
 <style scoped>
 .form-control {
-    height: 50px;
-    font-size: 16.61px;
-    font-weight: 400;
-    padding: 12px;
-    border-radius: 5px;
-    color: #4C4036;
-    border: 1px solid #ccc;
+     height: 50px;
+     font-size: 16.61px;
+     font-weight: 400;
+     padding: 12px;
+     border-radius: 5px;
+     color: #4C4036;
+     border: 1px solid #ccc;
 }
-
 .tag-input {
-    width: 100%;
-    height: 50px;
-    padding: 10px;
-    border: 1px solid #695cfe;
-    background-color: #242526;
-    border-radius: 10px;
-    font-size: 1.5rem;
-    outline: none;
-    color: white;
+     width: 100%;
+     height: 50px;
+     padding: 10px;
+     border: 1px solid #695cfe;
+     background-color: #242526;
+     border-radius: 10px;
+     font-size: 1.5rem;
+     outline: none;
+     color: white;
 }
-
 .tag {
-    display: inline-block;
-    background-color: #695cfe;
-    width: auto;
-    font-size: 0.5rem;
-    text-transform: capitalize;
-    padding-left: 10px;
-    line-height: 1rem;
-    margin: 5px;
-    border-radius: 5px;
-    color: white;
+     display: inline-block;
+     background-color: #695cfe;
+     width: auto;
+     font-size: 0.5rem;
+     text-transform: capitalize;
+     padding-left: 10px;
+     line-height: 1rem;
+     margin: 5px;
+     border-radius: 5px;
+     color: white;
 }
-
 input::placeholder {
-    color: #aaa;
+     color: #aaa;
 }
 </style>

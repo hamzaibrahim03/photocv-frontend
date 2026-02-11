@@ -103,7 +103,7 @@ const routes = [
     name: "events_add",
     path: '/events_add',
     component: EventsAdd,
-  },  
+  },
   {
     name: "Competitions",
     path: "/competitions",

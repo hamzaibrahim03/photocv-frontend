@@ -12,7 +12,7 @@ export const useRandomMember = defineStore('member', {
     async fetchRandomMemberGallery(domain) {
       this.loading = true;
       try {
-        const response = await api.getAllRandomMember(domain); 
+        const response = await api.getAllRandomMember(domain);
         this.memberrandom = response.data;
         console.log("Random Member data =>", this.memberrandom);
         this.error = null;
@@ -21,6 +21,6 @@ export const useRandomMember = defineStore('member', {
       } finally {
         this.loading = false;
       }
-    }    
+    }
   }
 });

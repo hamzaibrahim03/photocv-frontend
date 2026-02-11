@@ -85,74 +85,63 @@ export default {
 
 <style scoped>
 .cardddd {
-  background: white;
-  width: 90%;
-  padding: 20px;
-  height: 390px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+     background: white;
+     width: 90%;
+     padding: 20px;
+     height: 390px;
+     border-radius: 10px;
+     margin-bottom: 20px;
 }
-
-.button-group button {
-  margin-right: 8px;
+ .button-group button {
+     margin-right: 8px;
 }
-
-.event-list {
-  padding-top: 30px;
+ .event-list {
+     padding-top: 30px;
 }
-
-.event-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+ .event-list {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
 }
-
-.event-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+ .event-item {
+     display: flex;
+     align-items: center;
+     gap: 10px;
 }
-
-.event-item img {
-  width: 100%;
-  max-width: 50px;
-  height: 50px;
-  border-radius: 5px;
-  object-fit: cover;
+ .event-item img {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 5px;
+     object-fit: cover;
 }
-
-.event-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex: 1;
-  font-size: 0.875rem;
-  width: 100%;
+ .event-details {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     flex: 1;
+     font-size: 0.875rem;
+     width: 100%;
 }
-
-#ename {
-  font-family: Inter;
-  font-weight: 500;
-  font-style: Regular;
-  font-size: 16px;
-  line-height: 100%;
-  letter-spacing: 0%;
+ #ename {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.event-img,
-.fallback-box {
-  width: 100%;
-  max-width: 50px;
-  height: 50px;
-  border-radius: 5px;
-  object-fit: cover;
-  background-color: #ddd;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+ .event-img, .fallback-box {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 5px;
+     object-fit: cover;
+     background-color: #ddd;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-
-.fallback-box {
-  font-size: 14px;
-  color: #888;
+ .fallback-box {
+     font-size: 14px;
+     color: #888;
 }
 </style>
-

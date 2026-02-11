@@ -16,17 +16,17 @@ export const useRytonSingleClubGalStore = defineStore('singleClubGallery', {
       try {
         const response = await api.getAllRytonClubSingleGalleries(galleryId);
         console.log("✅ Single Club Gallery API Response =>", response.data);
-    
+
         const galleryData = response.data?.data?.clubGallery?.original?.data || {};
-    
+
         this.sinclubgalData = galleryData;
         this.galleryName = galleryData?.gallery_name || 'Unnamed Gallery';
         this.galleryImages = (galleryData?.photos || []).map(photo => ({
           ...photo,
           id: photo.id ?? photo.photo_id
         }))
-        
-    console.log(galleryData)
+
+        console.log(galleryData)
         console.log("🖼️ Final Photos:", this.sinclubgalData);
       } catch (err) {
         console.error("❌ Error fetching single club gallery:", err);
@@ -35,6 +35,6 @@ export const useRytonSingleClubGalStore = defineStore('singleClubGallery', {
         this.loading = false;
       }
     }
-    
+
   },
 });

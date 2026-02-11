@@ -243,7 +243,7 @@ export default {
             fetchCompetitions()
         })
 
-        const competition = computed(() => competitions.value[0] || {}) 
+        const competition = computed(() => competitions.value[0] || {})
 
         return {
             competition,
@@ -259,6 +259,6 @@ export default {
 
 <style scoped>
 .calen {
-    margin-top: 15px;
+     margin-top: 15px;
 }
 </style>

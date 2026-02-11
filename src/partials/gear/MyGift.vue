@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex align-items-center gap-3 p-2 mb-3">
-                
+
                 <img src="@/assets/images/gear/w1.png" alt="wish" style="width: 45px; height: 45px; border-radius: 7px; border: 0.3px solid #4C4036;" />
                 <div class="flex-grow-1">
                     <div class="d-flex justify-content-between align-items-center">
@@ -21,7 +21,7 @@
 
         <div class="col-md-6">
             <div class="d-flex align-items-center gap-3 p-2 mb-3">
-                
+
                 <img src="@/assets/images/gear/w2.jpg" alt="wish" style="width: 45px; height: 45px; border-radius: 7px; border: 0.3px solid #4C4036;" />
                 <div class="flex-grow-1">
                     <div class="d-flex justify-content-between align-items-center">
@@ -37,7 +37,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex align-items-center gap-3 p-2 mb-3">
-                
+
                 <img src="@/assets/images/gear/w3.png" alt="wish" style="width: 45px; height: 45px; border-radius: 7px; border: 0.3px solid #4C4036;" />
                 <div class="flex-grow-1">
                     <div class="d-flex justify-content-between align-items-center">
@@ -51,7 +51,7 @@
 
         <div class="col-md-6">
             <div class="d-flex align-items-center gap-3 p-2 mb-3">
-                
+
                 <img src="@/assets/images/gear/w4.png" alt="wish" style="width: 45px; height: 45px; border-radius: 7px; border: 0.3px solid #4C4036;" />
                 <div class="flex-grow-1">
                     <div class="d-flex justify-content-between align-items-center">
@@ -67,7 +67,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex align-items-center gap-3 p-2 mb-3">
-                
+
                 <img src="@/assets/images/gear/w5.jpg" alt="wish" style="width: 45px; height: 45px; border-radius: 7px; border: 0.3px solid #4C4036;" />
                 <div class="flex-grow-1">
                     <div class="d-flex justify-content-between align-items-center">
@@ -81,7 +81,7 @@
 
         <div class="col-md-6">
             <div class="d-flex align-items-center gap-3 p-2 mb-3">
-                
+
                 <img src="@/assets/images/gear/w6.png" alt="wish" style="width: 45px; height: 45px; border-radius: 7px; border: 0.3px solid #4C4036;" />
                 <div class="flex-grow-1">
                     <div class="d-flex justify-content-between align-items-center">
@@ -97,7 +97,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex align-items-center gap-3 p-2 mb-3">
-                
+
                 <img src="@/assets/images/gear/w5.jpg" alt="wish" style="width: 45px; height: 45px; border-radius: 7px; border: 0.3px solid #4C4036;" />
                 <div class="flex-grow-1">
                     <div class="d-flex justify-content-between align-items-center">
@@ -111,7 +111,7 @@
 
         <div class="col-md-6">
             <div class="d-flex align-items-center gap-3 p-2 mb-3">
-                
+
                 <img src="@/assets/images/gear/w6.png" alt="wish" style="width: 45px; height: 45px; border-radius: 7px; border: 0.3px solid #4C4036;" />
                 <div class="flex-grow-1">
                     <div class="d-flex justify-content-between align-items-center">

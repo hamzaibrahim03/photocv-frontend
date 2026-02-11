@@ -12,7 +12,7 @@ export const useRytonSingleCompStore = defineStore('sincomp', {
     async fetchRytonSingleCompData(competition_id) {
       this.loading = true;
       try {
-        const response = await api.getAllRytonSingleComp(competition_id); 
+        const response = await api.getAllRytonSingleComp(competition_id);
         this.sincompData = response.data;
         console.log("Single competition data =>", this.sincompData);
         this.error = null;
@@ -21,6 +21,6 @@ export const useRytonSingleCompStore = defineStore('sincomp', {
       } finally {
         this.loading = false;
       }
-    }    
+    }
   }
 });

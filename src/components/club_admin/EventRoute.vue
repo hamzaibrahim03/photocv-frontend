@@ -55,97 +55,127 @@
                 </div>
             </section>
 
-            
-                
-            <div class="row">
-                <div class="col-md-8">
-                    <section>
-                        <div class="container">
-                            <div class="mt-4">
-                                <div class="d-flex justify-content-end">
-                                    <button class="btn" id="edit" style="max-width: 158px; width: 158px; height: 40px;" @click="navigate">Export Events&nbsp;<i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i></button>
-                                </div>
-                                <div v-if="filteredEvents.length">
-                                    <div v-for="event in filteredEvents" :key="event.id" class="custom-card mb-3">
-                                        <div class="d-flex gap-3" style="flex: 1;">
-                                            <img v-if="event.images" :src="event.featured_image_url" alt="Event Image" />
-                                            <div class="flex-grow-1 d-flex flex-column justify-content-between">
-                                                <div>
-                                                    <div class="d-flex justify-content-between align-items-start">
-                                                        <h5>{{ event.name || 'Untitled Event' }}</h5>
-                                                        <div class="icon-container ms-3">
-                                                            <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                                            <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                                            <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                                            <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <section>
+                                <div class="container">
+                                    <div class="mt-4">
+                                        <div class="d-flex justify-content-end">
+                                            <button class="btn" id="edit" style="max-width: 158px; width: 158px; height: 40px;" @click="navigate">Export Events&nbsp;<i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i></button>
+                                        </div>
+                                        <div v-if="filteredEvents.length">
+                                            <div v-for="event in filteredEvents" :key="event.id" class="custom-card mb-3">
+                                                <div class="d-flex gap-3" style="flex: 1;">
+                                                    <img v-if="event.images" :src="event.featured_image_url" alt="Event Image" />
+                                                    <div class="flex-grow-1 d-flex flex-column justify-content-between">
+                                                        <div>
+                                                            <div class="d-flex justify-content-between align-items-start">
+                                                                <h5>{{ event.name || 'Untitled Event' }}</h5>
+                                                                <div class="icon-container ms-3">
+                                                                    <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
+                                                                    <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
+                                                                    <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
+                                                                    <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+                                                                </div>
+                                                            </div>
+                                                            <p class="date">
+                                                                {{ formatDate(event.event_date) || 'Date Not Available' }}
+                                                            </p>
+                                                            <p class="text-secondary" v-html="event.description || 'No description provided.'">
+                                                            </p>
                                                         </div>
-                                                    </div>
-                                                    <p class="date">
-                                                        {{ formatDate(event.event_date) || 'Date Not Available' }}
-                                                    </p>
-                                                    <p class="text-secondary">
-                                                        {{ event.description || 'No description provided.' }}
-                                                    </p>
-                                                </div>
 
-                                                <div class="d-flex justify-content-between align-items-center mt-3 w-100">
-                                                    <div class="button-group d-flex align-items-center gap-2">
-                                                        <router-link :to="{ name: 'eventsingle', params: { id: event.id } }" custom v-slot="{ navigate }">
-                                                            <button class="btn" id="view" @click="navigate">View</button>
-                                                        </router-link>
+                                                        <div class="d-flex justify-content-between align-items-center mt-3 w-100">
+                                                            <div class="button-group d-flex align-items-center gap-2">
+                                                                <router-link :to="{ name: 'eventsingle', params: { id: event.id } }" custom v-slot="{ navigate }">
+                                                                    <button class="btn" id="view" @click="navigate">View</button>
+                                                                </router-link>
 
-                                                        <router-link :to="{ name: 'events_add', params: { id: event.id } }" custom v-slot="{ navigate }">
-                                                            <button class="btn" id="edit" @click="navigate">Edit</button>
-                                                        </router-link>
-                                                    </div>
+                                                                <router-link :to="{ name: 'events_add', params: { id: event.id } }" custom v-slot="{ navigate }">
+                                                                    <button class="btn" id="edit" @click="navigate">Edit</button>
+                                                                </router-link>
+                                                            </div>
 
-                                                    <div class="d-flex align-items-center gap-2">
-                                                        <img :src="Book" alt="icon" style="width:20px; height:20px" />
-                                                        <img :src="Share" alt="icon" style="width:20px; height:20px" />
+                                                            <div class="d-flex align-items-center gap-2">
+                                                                <img :src="Book" alt="icon" style="width:20px; height:20px" />
+                                                                <img :src="Share" alt="icon" style="width:20px; height:20px" />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                        </div>
+
+                                        <div v-else class="text-center text-muted">No events found.</div>
+
+                                        <div class="dt-paging">
+                                            <nav aria-label="pagination">
+                                                <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
+                                                    ‹
+                                                </button>
+
+                                                <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
+                                                    {{ page }}
+                                                </button>
+
+                                                <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
+                                                    ›
+                                                </button>
+                                            </nav>
                                         </div>
                                     </div>
-
                                 </div>
+                            </section>
+                        </div>
+                        <div class="col-md-4">
+                            <section>
+                                <div class="container" id="right">
+                                    <div class="cardddd" style="padding: 0px; height: auto">
+                                        <CalendarDashboard />
+                                    </div>
+                                    <div id="news">
+                                        <div class="cardddd d-flex flex-column" :style="{padding: '35px'}">
+                                            <h5 class="head">Recent Comments</h5>
 
-                                <div v-else class="text-center text-muted">No events found.</div>
+                                            <div class="row" style="margin-bottom: 10px" v-for="c in eventcomments.slice(0, 4)" :key="c.id">
+                                                <div v-for="comment in c.comments" :key="comment.id" class="row">
+                                                    <div class="col-md-2">
+                                                        <img :src="comment.user?.profile_image_url" alt="Com" style="width: 50px; height: 50px" />
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <p class="text-secondary">{{ comment.comment }}</p>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <div class="event-time" style="text-align: right">
+                                                            <small class="event-date">{{ formatDate(comment.created_at) }}</small><br />
+                                                            <small class="event-time-details">{{ formatTime(comment.created_at) }}</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                <div class="dt-paging">
-                                    <nav aria-label="pagination">
-                                        <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
-                                            ‹
-                                        </button>
+                                            <div class="button-group mt-auto">
+                                                <router-link to="/notices" custom v-slot="{ navigate }">
+                                                    <button class="btn btn-sm" id="view" @click="navigate">View All</button>
+                                                </router-link>
+                                                <router-link to="/notice_single" custom v-slot="{ navigate }">
+                                                    <button class="btn btn-sm" id="new" @click="navigate">Add New</button>
+                                                </router-link>
+                                            </div>
+                                        </div>
 
-                                        <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
-                                            {{ page }}
-                                        </button>
-
-                                        <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
-                                            ›
-                                        </button>
-                                    </nav>
+                                        <MoreEvents style="height: auto"/>
+                                    </div>
                                 </div>
-                            </div>
+                            </section>
                         </div>
-                    </section>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <section>
-                        <div class="container" id="right">
-                            <div class="cardddd" style="padding: 0px; height: auto">
-                                <CalendarDashboard />
-                            </div>
-                            <div id="news">
-                                <RecentComments />
-                                <MoreEvents style="height: auto"/>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-            
+            </section>
+
         </div>
     </div>
 </div>
@@ -170,8 +200,8 @@ import Book from "@/assets/icons/event_list/bookmark.svg"
 import HeaderRoute from '@/components/HeaderRoute.vue'
 import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
 import NavigationRoute from '@/components/NavigationRoute.vue'
-import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
 import Loader from "@/components/LoaderAll.vue";
+import { useEventComments } from "@/stores/club_admin/EventComments";
 import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
 
 const {
@@ -181,6 +211,10 @@ const {
     eventCount,
     eventDay
 } = useEventStore()
+const {
+    eventcomments,
+    fetchEventComments
+} = useEventComments();
 const MemberCount = memberCount
 const EventDay = eventDay
 const EventCount = eventCount
@@ -221,14 +255,14 @@ const fetchSearchedEvents = debounce(async (query) => {
 }, 400)
 
 const loadEvents = async () => {
-  isLoading.value = true
-  try {
-    await fetchEvents()
-  } catch (error) {
-    console.error("Error fetching events:", error)
-  } finally {
-    isLoading.value = false  
-  }
+    isLoading.value = true
+    try {
+        await fetchEvents()
+    } catch (error) {
+        console.error("Error fetching events:", error)
+    } finally {
+        isLoading.value = false
+    }
 }
 
 watch(search, (newSearch) => {
@@ -240,7 +274,8 @@ watch(search, (newSearch) => {
 })
 
 onMounted(() => {
-    loadEvents()
+    loadEvents();
+    fetchEventComments();
 })
 
 const filteredEvents = computed(() => {
@@ -271,221 +306,249 @@ function goToPage(page) {
 
 <style scoped>
 .container {
-     max-width: 1810px;
-     padding: 0 15px;
-     margin: 0 auto;
+    max-width: 1810px;
+    padding: 0 15px;
+    margin: 0 auto;
 }
- .content {
-     padding: 0 30px;
+
+.content {
+    padding: 0 30px;
 }
- .dashboard-card {
-     gap: 15px;
-     border-radius: 10px;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     width: 100%;
-     padding: 20px 0px 40px;
+
+.dashboard-card {
+    gap: 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 0px 40px;
 }
- .profile-card {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     background: white;
-     padding: 30px;
-     border-radius: 10px;
-     width: 975px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-     height: 148px;
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 67%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    height: 148px;
 }
- .profile-left {
-     display: flex;
-     align-items: left;
+
+.profile-left {
+    display: flex;
+    align-items: left;
 }
- .profile-left img {
-     width: 100%;
-     max-width: 108px;
-     height: 108px;
-     border-radius: 50%;
+
+.profile-left img {
+    width: 100%;
+    max-width: 108px;
+    height: 108px;
+    border-radius: 50%;
 }
- .greeting {
-     color: #99816b;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     font-style: Regular;
-     font-family: Inter;
+
+.greeting {
+    color: #99816b;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    font-style: Regular;
+    font-family: Inter;
 }
- .name {
-     font-weight: 500;
-     font-size: 30px;
-     line-height: 100%;
-     color: #4c4036;
-     font-style: Medium;
-     font-family: Inter;
+
+.name {
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 100%;
+    color: #4c4036;
+    font-style: Medium;
+    font-family: Inter;
 }
- .names {
-     font-family: Inter;
-     font-weight: 400;
-     font-size: 18.68px;
-     line-height: 20.76px;
-     letter-spacing: 0%;
+
+.names {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 18.68px;
+    line-height: 20.76px;
+    letter-spacing: 0%;
 }
- .namess {
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: #4c4036;
-     padding-left: 20px;
-     font-family: Inter;
-     text-align: justify;
+
+.namess {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    color: #4c4036;
+    padding-left: 20px;
+    font-family: Inter;
+    text-align: justify;
 }
- .left-header-container {
-     display: flex;
-     align-items: center;
-     gap: 10px;
+
+.left-header-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
- .role {
-     color: #cc445e;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     font-family: Inter;
-     font-style: Regular;
+
+.role {
+    color: #cc445e;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    font-family: Inter;
+    font-style: Regular;
 }
- .profile-icons {
-     display: flex;
-     gap: 10px;
-     flex-direction: column;
+
+.profile-icons {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
 }
- .profile-icon {
-     display: flex;
-     flex-direction: column;
+
+.profile-icon {
+    display: flex;
+    flex-direction: column;
 }
- .icons {
-     display: flex;
-     align-items: center;
-     color: white;
-     font-size: 14px;
-     gap: 5px;
+
+.icons {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 14px;
+    gap: 5px;
 }
- .icon {
-     display: flex;
-     align-items: center;
-     color: #cc445e;
-     font-size: 14px;
-     gap: 5px;
+
+.icon {
+    display: flex;
+    align-items: center;
+    color: #cc445e;
+    font-size: 14px;
+    gap: 5px;
 }
- .icon i {
-     margin-right: 5px;
+
+.icon i {
+    margin-right: 5px;
 }
- .stat-card {
-     background: #cc445e;
-     color: white;
-     padding: 20px;
-     border-radius: 8px;
-     text-align: center;
-     width: 219px;
-     font-family: Inter;
-     font-size: 1.2rem;
-     height: 148px;
+
+.stat-card {
+    background: #cc445e;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 219px;
+    font-family: Inter;
+    font-size: 1.2rem;
+    height: 148px;
 }
- .event-card {
-     background: #755840;
-     color: white;
-     padding: 20px;
-     height: 148px;
-     border-radius: 8px;
-     text-align: center;
-     font-family: Inter;
-     font-size: 1.2rem;
-     width: 219px;
+
+.event-card {
+    background: #755840;
+    color: white;
+    padding: 20px;
+    height: 148px;
+    border-radius: 8px;
+    text-align: center;
+    font-family: Inter;
+    font-size: 1.2rem;
+    width: 219px;
 }
- .number {
-     font-weight: 500;
-     font-size: 48px;
-     font-family: Inter;
-     line-height: 100%;
-     color: white;
-     margin-top: 30px;
+
+.number {
+    font-weight: 500;
+    font-size: 48px;
+    font-family: Inter;
+    line-height: 100%;
+    color: white;
+    margin-top: 30px;
 }
- .ca-details {
-     font-weight: 400;
-     font-size: 20px;
-     font-family: Inter;
-     line-height: 100%;
+
+.ca-details {
+    font-weight: 400;
+    font-size: 20px;
+    font-family: Inter;
+    line-height: 100%;
 }
- .days {
-     margin-top: 35px;
-     font-weight: 400;
-     font-family: Inter;
-     font-size: 16px;
-     line-height: 100%;
+
+.days {
+    margin-top: 35px;
+    font-weight: 400;
+    font-family: Inter;
+    font-size: 16px;
+    line-height: 100%;
 }
- .card-section {
-     display: flex;
-     gap: 35px;
-     width: 31.5%;
+
+.card-section {
+    display: flex;
+    gap: 35px;
+    width: 31.5%;
 }
- .cardddd:first-child {
-     background: white;
-     width: 100%;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     margin-top: 20px;
+
+.cardddd:first-child {
+    background: white;
+    width: 100%;
+    padding: 20px;
+    height: 390px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
- .cardddd {
-     background: white;
-     width: 100%;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
+
+.cardddd {
+    background: white;
+    width: 100%;
+    padding: 20px;
+    height: 390px;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
- .custom-card {
-     display: flex;
-     align-items: center;
-     background-color: white;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-     margin-bottom: 15px;
-     padding: 30px;
-     border-radius: 10px;
-     width: 975px;
-     height: 310px;
-     margin-right: auto;
-     flex-direction: row;
-     margin-top: 30px;
+
+.custom-card {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    padding: 30px;
+    border-radius: 10px;
+    width: 100%;
+    height: 310px;
+    margin-right: auto;
+    flex-direction: row;
+    margin-top: 30px;
 }
- .custom-card img {
-     max-width: 300px;
-     height: 250px;
-     width: 300px;
-     border-radius: 7px;
+
+.custom-card img {
+    max-width: 300px;
+    height: 250px;
+    width: 300px;
+    border-radius: 7px;
 }
- #view {
-     width: 120px;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #99816b;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     font-family: Inter;
-     color: white;
+
+#view {
+    width: 120px;
+    max-width: 120px;
+    height: 40px;
+    border-radius: 7px;
+    background-color: #99816b;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    font-family: Inter;
+    color: white;
 }
- #edit {
-     width: 120px;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #4c4036;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: white;
-     font-family: Inter;
+
+#edit {
+    width: 120px;
+    max-width: 120px;
+    height: 40px;
+    border-radius: 7px;
+    background-color: #4c4036;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    color: white;
+    font-family: Inter;
 }
 </style>

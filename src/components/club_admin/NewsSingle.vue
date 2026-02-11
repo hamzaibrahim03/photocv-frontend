@@ -206,9 +206,7 @@
 import { onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import dayjs from 'dayjs'
-
 import { useCompetitionStore } from '@/stores/club_admin/CompetitionStore'
-
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
 import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
@@ -219,43 +217,37 @@ import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetition
 const route = useRoute()
 const id = route.params.id
 
-const {
-  competitions,
-  fetchCompetitions,
-  memberCount,
-  eventDay
-} = useCompetitionStore()
+const { competitions, fetchCompetitions, memberCount, eventDay } = useCompetitionStore()
 
 onMounted(() => {
-  fetchCompetitions()
+    fetchCompetitions()
 })
 
 const competition = computed(() =>
-  competitions.value.find(e => e.id == id) || {}
+    competitions.value.find(e => e.id == id) || {}
 )
 
 const formattedStartDate = computed(() =>
-  competition.value?.start_date
-    ? dayjs(competition.value.start_date).format('MMMM D, YYYY h:mm A')
-    : ''
+    competition.value?.start_date ?
+    dayjs(competition.value.start_date).format('MMMM D, YYYY h:mm A') :
+    ''
 )
 
 const formattedEndDate = computed(() =>
-  competition.value?.submission_deadline
-    ? dayjs(competition.value.submission_deadline).format('MMMM D, YYYY h:mm A')
-    : ''
+    competition.value?.submission_deadline ?
+    dayjs(competition.value.submission_deadline).format('MMMM D, YYYY h:mm A') :
+    ''
 )
 
 const formattedResultDate = computed(() =>
-  competition.value?.result_announcement_date
-    ? dayjs(competition.value.result_announcement_date).format('MMMM D, YYYY h:mm A')
-    : ''
+    competition.value?.result_announcement_date ?
+    dayjs(competition.value.result_announcement_date).format('MMMM D, YYYY h:mm A') :
+    ''
 )
 
 const MemberCount = memberCount
 const EventDay = eventDay
 </script>
-
 
 <style scoped>
 .container {
@@ -282,7 +274,7 @@ const EventDay = eventDay
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }
@@ -600,7 +592,7 @@ const EventDay = eventDay
      font-size: 14px;
      color: #888;
 }
- .icon-circles .flickr-dots i, .flickr-dots i{
+ .icon-circles .flickr-dots i, .flickr-dots i {
      font-size: 8px;
      padding-bottom: 8px;
      margin: 1px;

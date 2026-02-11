@@ -127,11 +127,7 @@ import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboa
 import RecentSubmissions from "@/partials/club_admin/competitions/RecentSubmissions.vue";
 import MoreCompetitions from "@/partials/club_admin/competitions/MoreCompetitions.vue";
 
-const {
-    competitions,
-    fetchCompetitions,
-    eventDay
-} = useCompetitionStore()
+const { competitions, fetchCompetitions, eventDay } = useCompetitionStore()
 const EventDay = eventDay
 const search = ref('')
 const currentPage = ref(1)
@@ -221,16 +217,15 @@ const formatDate = (date) => {
 
 <style scoped>
 .calen {
-    margin-top: 15px;
+     margin-top: 15px;
+}
+ .icon-container i {
+     color: #666;
+     font-size: 16px;
+}
+ .custom-card {
+     margin-left: 1%;
+     width: 103% 
 }
 
-.icon-container i {
-    color: #666;
-    font-size: 16px;
-}
-
-.custom-card {
-    margin-left: 1%;
-    width: 103%
-}
 </style>

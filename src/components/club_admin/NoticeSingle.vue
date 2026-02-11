@@ -57,11 +57,7 @@ import MoreNotices from "@/partials/club_admin/notices/MoreNotices.vue";
 import ProfileWithoutSearch from "@/partials/club_admin/competitionsadd/ProfileWithoutSearch.vue";
 import NoticeForm from "@/partials/club_admin/noticesingle/NoticeForm.vue";
 
-const {
-    completedDaysAgo,
-    fetchNotices,
-    memberCount,
-} = useNoticeStore()
+const { completedDaysAgo, fetchNotices, memberCount, } = useNoticeStore()
 
 const MemberCount = memberCount
 const EventDay = completedDaysAgo
@@ -95,7 +91,7 @@ onMounted(() => {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }
@@ -413,7 +409,7 @@ onMounted(() => {
      font-size: 14px;
      color: #888;
 }
- .icon-circles .flickr-dots i, .flickr-dots i{
+ .icon-circles .flickr-dots i, .flickr-dots i {
      font-size: 8px;
      padding-bottom: 8px;
      margin: 1px;

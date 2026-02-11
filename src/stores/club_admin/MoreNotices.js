@@ -15,8 +15,8 @@ export function useNoticeComments() {
     try {
       const res = await NoticeCommentsAPI.getAllNoticeComments()
       const randomList = res?.data?.data?.random_notices || []
-console.log("Comments Notices :", randomList)
-randomnotices.value = randomList
+      console.log("Comments Notices :", randomList)
+      randomnotices.value = randomList
       eventCount.value = randomList.length
 
       const today = new Date()

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import api from '@/api/club_public/rytoncompresults'; 
+import api from '@/api/club_public/rytoncompresults';
 
 export const useRytonCompResultStore = defineStore('comp', {
   state: () => ({
@@ -12,7 +12,7 @@ export const useRytonCompResultStore = defineStore('comp', {
     async fetchRytonCompResData(domain) {
       this.loading = true;
       try {
-        const response = await api.getAllRytonCompResults(domain); 
+        const response = await api.getAllRytonCompResults(domain);
         this.compresData = response.data.data;
         console.log("Competition Result data =>", this.compresData);
         this.error = null;
@@ -21,6 +21,6 @@ export const useRytonCompResultStore = defineStore('comp', {
       } finally {
         this.loading = false;
       }
-    }    
+    }
   }
 });

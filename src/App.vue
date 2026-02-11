@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+<div id="app">
     <NavigationRoute v-if="isAuthPage" />
     <router-view />
-  </div>
+</div>
 </template>
 
 <script setup>
@@ -13,22 +13,20 @@ import { useDashboardStore } from "@/stores/club_admin/DashboardStore";
 const dashboardStore = useDashboardStore();
 
 onMounted(() => {
-  dashboardStore.fetchDashboardData();
+    dashboardStore.fetchDashboardData();
 
-  const token = localStorage.getItem("token");
-  if (!token && window.location.pathname.startsWith("/")) {
-    console.log("Token is from Apps.vue:", token);
-  }
-  console.log("Token is from App.vue:", token);
+    const token = localStorage.getItem("token");
+    if (!token && window.location.pathname.startsWith("/")) {
+        console.log("Token is from Apps.vue:", token);
+    }
+    console.log("Token is from App.vue:", token);
 });
 </script>
 
-
 <style>
 #app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  width: 100.5%;
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+     width: 100.5%;
 }
-
 </style>

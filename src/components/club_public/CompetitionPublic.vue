@@ -15,7 +15,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -52,8 +52,8 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.vue" class="icon notification-desktop">
-                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
+                        <a class="icon notification-desktop">
+                            <NotificationBell />
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
@@ -163,8 +163,8 @@
                                                 <div class="flex-grow-1 d-flex flex-column justify-content-between" id="detail">
                                                     <div class="d-flex w-100 justify-content-between align-items-center">
                                                         <h5 id="ename" :style="{color: Color.text_color}">{{ e.name || 'Untitled Competition' }}</h5>
-                                                        <div class="icon-container d-flex gap-2">
-                                                            <img :src="Type.icon_url" :alt="Type.name" class="virtual" style="width: 25px; height: 25px" />
+                                                        <div class="icon-container d-flex align-items-center">
+                                                            <img v-if="e.competition_type" :src="e.competition_type.icon_url" :alt="e.competition_type.name" class="type-icon" style="width: 25px; height: 25px"/>
                                                         </div>
                                                     </div>
                                                     <p class="galtext" id="edate" :style="{color: Color.accent_color}">
@@ -172,9 +172,14 @@
                                                     </p>
                                                     <p class="text-secondary" :style="{color: Color.text_color}" v-html="e.description || 'No description provided.'">
                                                     </p>
-                                                    <p id="espeaker" :style="{color: Color.accent_color}">
-                                                        {{"Judge: " + e.judging_panel}}
+                                                    <p id="espeaker" :style="{ color: Color.accent_color }">
+                                                        Judge:
+                                                        <span v-for="(judge, i) in e.judges" :key="judge.id">
+                                                            {{ judge.first_name }} {{ judge.last_name }}
+                                                            <span v-if="i < e.judges.length - 1">, </span>
+                                                        </span>
                                                     </p>
+
                                                     <div class="button-groups mt-auto d-flex">
                                                         <router-link :to="{ name: 'CompetitionSinglePublic', params: { id: e.id } }" custom v-slot="{ navigate }">
                                                             <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.primary_color}">View Details</button>
@@ -424,6 +429,7 @@ import {
 import {
     useRytonFilterStore
 } from "@/stores/club_public/RytonFilters";
+import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
 
 const router = useRouter();
 const isNavOpen = ref(false);
@@ -486,7 +492,19 @@ const {
 const domain = window.location.hostname.split('.')[0];
 const memData = computed(() => rytoncompStore.compData?.data?.clubSettings?.original?.data || {});
 const evData = computed(() => rytoncompStore.compData?.data?.clubSettings?.original?.data?.upcoming_event_days_count || {});
-const Type = computed(() => rytoncompStore.compData?.data?.competitions?.original?.data?.competitions?.original?.data?. [0]?.competition_type || {});
+// const Types = computed(() => {
+//   const competitions =
+//     rytoncompStore.compData?.data?.competitions?.original?.data?.competitions?.original?.data || []
+
+//   return competitions.flatMap(comp =>
+//     Array.isArray(comp.competition_type)
+//       ? comp.competition_type
+//       : comp.competition_type
+//       ? [comp.competition_type]
+//       : []
+//   )
+// })
+
 const Events = computed(() => rytoncompStore.compData?.data?.events || []);
 const sessions = computed(() => rytoncompStore.compData?.data?.clubSettings?.original?.data?.seasons || {});
 const Club = computed(() => memData.value.club || {});
@@ -760,13 +778,13 @@ function goToPage(page) {
     display: flex;
     align-items: center;
     background-color: white;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
     margin-bottom: 35px;
     border-radius: 10px;
     width: 975px;
     height: 310px;
     flex-direction: row;
-    gap: 50px
+    gap: 45px
 }
 
 .events-cards img {
@@ -971,8 +989,8 @@ function goToPage(page) {
     padding: 20px;
     height: auto;
     border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 24px;
+    box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
     margin-top: -5px;
 }
 
@@ -982,8 +1000,8 @@ function goToPage(page) {
     width: 470px;
     padding: 20px;
     border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 24px;
+    box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
 }
 
 .more-card {
@@ -992,8 +1010,8 @@ function goToPage(page) {
     width: 470px;
     padding: 20px;
     border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 24px;
+    box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
 }
 
 .button-group button {
@@ -1243,7 +1261,7 @@ function goToPage(page) {
         display: flex;
         align-items: center;
         background-color: white;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
         margin-bottom: 35px;
         border-radius: 10px;
         width: 710px;
@@ -1360,7 +1378,7 @@ function goToPage(page) {
         display: flex;
         align-items: center;
         background-color: white;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
         margin-bottom: 35px;
         border-radius: 10px;
         width: 550px;
@@ -1534,7 +1552,7 @@ function goToPage(page) {
         display: flex;
         align-items: center;
         background-color: white;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
         margin-bottom: 35px;
         border-radius: 10px;
         width: 700px;
@@ -1692,7 +1710,7 @@ function goToPage(page) {
         display: flex;
         align-items: center;
         background-color: white;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
         margin-bottom: 35px;
         border-radius: 10px;
         width: 500px;
@@ -1855,7 +1873,7 @@ function goToPage(page) {
         display: flex;
         align-items: center;
         background-color: white;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
         margin-bottom: 35px;
         border-radius: 10px;
         width: 300px;
@@ -2014,7 +2032,7 @@ function goToPage(page) {
         display: flex;
         align-items: center;
         background-color: white;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
         margin-bottom: 35px;
         border-radius: 10px;
         width: 300px;

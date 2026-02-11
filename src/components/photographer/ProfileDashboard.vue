@@ -281,20 +281,18 @@ import KamranGallery from "@/partials/club_admin/membersingle/KamranGallery.vue"
 
 <style scoped>
 .comments-cards {
-    width: 95%;
-    margin-left: 4%;
-    max-height: 250px;
-    overflow-y: auto;
-    padding-right: 10px;
+     width: 95%;
+     margin-left: 4%;
+     max-height: 250px;
+     overflow-y: auto;
+     padding-right: 10px;
 }
-
 .card {
-    width: 95%;
-    height: 360px;
-    padding: 15px;
+     width: 95%;
+     height: 360px;
+     padding: 15px;
 }
-
 .social-media-icones {
-    margin-top: 15%
+     margin-top: 15%
 }
 </style>

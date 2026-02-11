@@ -26,7 +26,7 @@
             </div>
         </div>
     </section>
-    
+
     <section>
         <div class="container">
             <div class="photographeres">
@@ -60,11 +60,11 @@
             </div>
         </div>
     </section>
-    
+
     <section>
         <div class="container">
             <KamranGallery />
-            
+
             <div class="dt-paging">
                 <nav aria-label="pagination">
                     <button class="dt-paging-button disabled first" role="link" type="button" aria-controls="example1" aria-disabled="true" aria-label="First" data-dt-idx="first" tabindex="-1">
@@ -126,7 +126,7 @@ import KamranGallery from "@/partials/club_admin/membersingle/KamranGallery.vue"
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }
@@ -444,7 +444,7 @@ import KamranGallery from "@/partials/club_admin/membersingle/KamranGallery.vue"
      font-size: 14px;
      color: #888;
 }
- .icon-circles .flickr-dots i, .flickr-dots i{
+ .icon-circles .flickr-dots i, .flickr-dots i {
      font-size: 8px;
      padding-bottom: 8px;
      margin: 1px;

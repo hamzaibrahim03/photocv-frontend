@@ -12,7 +12,7 @@ export const useRytonSingleNewsStore = defineStore('sinnews', {
     async fetchRytonSingleNewsData(news_id) {
       this.loading = true;
       try {
-        const response = await api.getAllRytonSingleNews(news_id); 
+        const response = await api.getAllRytonSingleNews(news_id);
         this.sinnewsData = response.data;
         console.log("Single news data =>", this.sinnewsData);
         this.error = null;
@@ -21,6 +21,6 @@ export const useRytonSingleNewsStore = defineStore('sinnews', {
       } finally {
         this.loading = false;
       }
-    }    
+    }
   }
 });

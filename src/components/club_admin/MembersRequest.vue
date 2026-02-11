@@ -108,14 +108,8 @@
 </template>
 
 <script setup>
-import {
-    ref,
-    computed,
-    onMounted
-} from 'vue'
-import {
-    useMemberStore
-} from '@/stores/club_admin/MemberStore';
+import { ref, computed, onMounted } from 'vue'
+import { useMemberStore } from '@/stores/club_admin/MemberStore';
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
 import Ima from "@/assets/icons/member/image.svg"
@@ -197,7 +191,7 @@ function goToPage(page) {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import api from '@/api/club_public/rytongallery'; 
+import api from '@/api/club_public/rytongallery';
 
 export const useRytonGalleryStore = defineStore('gallery', {
   state: () => ({
@@ -12,7 +12,7 @@ export const useRytonGalleryStore = defineStore('gallery', {
     async fetchRytonGalleryData(domain) {
       this.loading = true;
       try {
-        const response = await api.getAllRytonGalleries(domain); 
+        const response = await api.getAllRytonGalleries(domain);
         this.galleryData = response.data;
         console.log("Gallery data =>", this.galleryData);
         this.error = null;
@@ -21,6 +21,6 @@ export const useRytonGalleryStore = defineStore('gallery', {
       } finally {
         this.loading = false;
       }
-    }    
+    }
   }
 });

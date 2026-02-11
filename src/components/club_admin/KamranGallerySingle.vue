@@ -51,13 +51,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="comments-card" style="
-            width: 100%;
-            margin-left: 4%;
-            max-height: 250px;
-            overflow-y: auto;
-            padding-right: 10px;
-          ">
+            <div class="comments-card" style=" width: 100%; margin-left: 4%; max-height: 250px; overflow-y: auto; padding-right: 10px; ">
                 <h5>Comments</h5>
                 <div class="row">
                     <div class="col-md-1">
@@ -358,7 +352,7 @@ export default {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }

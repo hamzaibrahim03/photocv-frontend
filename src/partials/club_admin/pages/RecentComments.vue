@@ -32,12 +32,8 @@
 </template>
 
 <script>
-import {
-    onMounted
-} from "vue";
-import {
-    usePageComments
-} from "@/stores/club_admin/PageComments";
+import { onMounted } from "vue";
+import { usePageComments } from "@/stores/club_admin/PageComments";
 
 export default {
     props: {

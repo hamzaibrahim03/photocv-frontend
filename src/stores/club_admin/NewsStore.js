@@ -29,8 +29,8 @@ export function useNewsStore() {
           date.getFullYear() === today.getFullYear()
         )
       }).length
-      
-      
+
+
       const isValidDate = (d) => d instanceof Date && !isNaN(d)
 
       const pastNews = newsList

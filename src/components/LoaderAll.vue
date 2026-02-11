@@ -1,19 +1,18 @@
-<!-- components/Loader.vue -->
 <template>
-  <div v-if="show" class="loader-overlay">
+<div v-if="show" class="loader-overlay">
     <div class="loader"></div>
     <p>Loading, please wait...</p>
-  </div>
+</div>
 </template>
 
 <script>
 export default {
-  props: {
-    show: {
-      type: Boolean,
-      default: false
+    props: {
+        show: {
+            type: Boolean,
+            default: false
+        }
     }
-  }
 }
 </script>
 
@@ -49,7 +48,7 @@ export default {
      margin: 8px;
      animation-duration: 3s;
 }
- @keyframes l15{
+ @keyframes l15 {
      100% {
          transform: rotate(1turn) 
     }

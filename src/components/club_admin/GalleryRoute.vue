@@ -57,7 +57,6 @@
                             <div v-for="(gallery, index) in member_gallery" :key="gallery.id" class="col-3 p-0">
                                 <div class="galleriy" v-if="gallery.galleries.length && gallery.galleries[0].photos.length">
                                     <div class="galleriy-item">
-                                        <!-- Corrected image path -->
                                         <img :src="gallery.galleries[0].photos[0].image_url" alt="Gallery Photo" class="img-fluid" style="border-radius:0px; max-width: 493px; max-height: 370px; object-fit: cover;" />
                                         <div style="border-radius: 0px" :class="[ 'galleriy-infos', index % 2 === 0 ? 'even-info' : 'odd-info', ]">
                                             <div class="gal-item">
@@ -148,13 +147,8 @@ import Ima from "@/assets/icons/gallery/image.svg"
 import Hea from "@/assets/icons/gallery/heart.svg"
 import Com from "@/assets/icons/gallery/comment.svg"
 import Loader from "@/components/LoaderAll.vue";
-
-import {
-    useMemberGallery
-} from '@/stores/club_admin/MemberGallery'
-import {
-    useClubGallery
-} from '@/stores/club_admin/ClubGallery'
+import { useMemberGallery } from '@/stores/club_admin/MemberGallery'
+import { useClubGallery } from '@/stores/club_admin/ClubGallery'
 
 const isLoading = ref(true);
 
@@ -169,15 +163,15 @@ const {
 } = useClubGallery()
 
 const loadGalleries = async () => {
-  isLoading.value = true
-  try {
-    await fetchMemberGallery();
-    await fetchClubGallery();
-  } catch (error) {
-    console.error("Error fetching galleries:", error)
-  } finally {
-    isLoading.value = false   
-  }
+    isLoading.value = true
+    try {
+        await fetchMemberGallery();
+        await fetchClubGallery();
+    } catch (error) {
+        console.error("Error fetching galleries:", error)
+    } finally {
+        isLoading.value = false
+    }
 }
 
 onMounted(() => {
@@ -210,7 +204,7 @@ onMounted(() => {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }

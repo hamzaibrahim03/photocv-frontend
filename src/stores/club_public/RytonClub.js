@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import api from '@/api/club_public/rytonclub'; 
+import api from '@/api/club_public/rytonclub';
 
 export const useRytonClubStore = defineStore('club', {
   state: () => ({
@@ -12,7 +12,7 @@ export const useRytonClubStore = defineStore('club', {
     async fetchRytonClubData(domain) {
       this.loading = true;
       try {
-        const response = await api.getAllRytonClub(domain); 
+        const response = await api.getAllRytonClub(domain);
         this.clubData = response.data;
         console.log("Club data =>", this.clubData);
         this.error = null;
@@ -21,6 +21,6 @@ export const useRytonClubStore = defineStore('club', {
       } finally {
         this.loading = false;
       }
-    }    
+    }
   }
 });

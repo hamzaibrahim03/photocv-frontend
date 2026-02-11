@@ -1,7 +1,6 @@
 <template>
 <section class="signup-container">
     <div class="content-wrapper">
-        <!-- Left Panel -->
         <div class="form-section">
             <div class="logo-wrapper">
                 <img src="@/assets/images/club.png" alt="Camera Club Logo" class="logo" />
@@ -10,27 +9,20 @@
             <h2 class="title">{{ title }}</h2>
             <p class="subtitle">{{ subtitle }}</p>
 
-            <!-- Tab Control -->
             <div class="tab-control">
                 <div v-for="(step, index) in steps" :key="index" class="step-wrapper">
-                    <div class="step" :class="{
-        active: index === currentStep,
-        completed: index < currentStep
-      }" @click="selectStep(index)">
+                    <div class="step" :class="{ active: index === currentStep, completed: index < currentStep }" @click="selectStep(index)">
                         <span class="circle">{{ index + 1 }}</span>
                         <span class="label">{{ step }}</span>
                     </div>
 
-                    <!-- Connecting line -->
                     <div v-if="index < steps.length - 1" class="line" :class="{ filled: index < currentStep }"></div>
                 </div>
             </div>
 
-            <!-- Dynamic Step -->
             <component :is="currentComponent" />
         </div>
 
-        <!-- Right Panel -->
         <div class="image-section" style="justify-content: right">
             <img src="@/assets/images/loginc.png" alt="Background" />
         </div>
@@ -39,11 +31,7 @@
 </template>
 
 <script setup>
-import {
-    ref,
-    computed
-} from 'vue'
-
+import { ref, computed } from 'vue'
 import Step1General from '@/steps_signup/Step1General.vue'
 import Step2Appearance from '@/steps_signup/Step2Appearance.vue'
 import Step3Membership from '@/steps_signup/Step3Membership.vue'

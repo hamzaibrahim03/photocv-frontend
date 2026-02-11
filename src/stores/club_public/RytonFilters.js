@@ -12,7 +12,7 @@ export const useRytonFilterStore = defineStore('filter', {
     async fetchRytonFilterData(domain) {
       this.loading = true;
       try {
-        const response = await api.getAllRytonFilters(domain); 
+        const response = await api.getAllRytonFilters(domain);
         this.filterData = response.data.data;
         console.log("Filter data =>", this.filterData);
         this.error = null;
@@ -21,6 +21,6 @@ export const useRytonFilterStore = defineStore('filter', {
       } finally {
         this.loading = false;
       }
-    }    
+    }
   }
 });

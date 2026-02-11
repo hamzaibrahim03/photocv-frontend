@@ -14,6 +14,6 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
-    "no-undef": "off", // ⛔ disables defineEmits undefined error
+    "no-undef": "off",
   },
 };

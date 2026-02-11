@@ -1,11 +1,7 @@
 <template>
-<ClubSignup
-    title="Let's Start!"
-    subtitle="We just need a few basic details of the club."
-  />
+<ClubSignup title="Let's Start!" subtitle="We just need a few basic details of the club." />
 <div class="form">
     <h5 class="head">Basic Details</h5>
-    <!-- Club Name & Tagline -->
     <div class="row">
         <div class="col-md-6 mb-3">
             <label for="names"> Club Name </label>
@@ -39,7 +35,7 @@
 
             <div class="input-group mt-3">
                 <input type="text" class="form-control" v-model="domainName" placeholder="yourclubname" />
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" >
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
                     {{ selectedDomain }}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -71,7 +67,6 @@
 
     </div>
 
-
     <div class="button-group" style="justify-content:left">
         <button class="btn btn-sm" id="edit">Next</button>
     </div>
@@ -85,32 +80,30 @@ const domainName = ref("");
 const selectedDomain = ref(".cameraclub.website");
 
 const domainOptions = [
-  ".cameraclub.website",
-  ".ca.cameraclub.website",
-  ".uk.cameraclub.website",
-  ".aus.cameraclub.website",
+    ".cameraclub.website",
+    ".ca.cameraclub.website",
+    ".uk.cameraclub.website",
+    ".aus.cameraclub.website",
 ];
 
 const selectDomain = (item) => {
-  selectedDomain.value = item;
+    selectedDomain.value = item;
 };
 </script>
 
-
 <style scoped>
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+     display: flex;
+     flex-direction: column;
+     gap: 24px;
 }
-
 .form-control {
-    height: 50px;
-    font-size: 16.61px;
-    font-weight: 400;
-    padding: 12px;
-    border-radius: 5px;
-    color: #4C4036;
-    border: 1.04px solid #99816B;
+     height: 50px;
+     font-size: 16.61px;
+     font-weight: 400;
+     padding: 12px;
+     border-radius: 5px;
+     color: #4C4036;
+     border: 1.04px solid #99816B;
 }
 </style>

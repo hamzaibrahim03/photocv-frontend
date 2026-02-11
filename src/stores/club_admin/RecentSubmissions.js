@@ -15,8 +15,8 @@ export function useMoreCompetitions() {
     try {
       const res = await MoreCompetitionsAPI.getAllMoreCompetitions()
       const randomList = res?.data?.data?.recent_submissions || []
-console.log("Submission :", randomList)
-recentsubmissions.value = randomList
+      console.log("Submission :", randomList)
+      recentsubmissions.value = randomList
       eventCount.value = randomList.length
 
       const today = new Date()

@@ -106,7 +106,36 @@
                 <CalendarDashboard />
             </div>
             <div id="news">
-                <RecentComments style="width: 90%" />
+                <div class="cardddd d-flex flex-column" :style="{padding: '35px'}">
+                    <h5 class="head">Recent Comments</h5>
+
+                    <div class="row" style="margin-bottom: 10px" v-for="c in eventcomments.slice(0, 4)" :key="c.id">
+                        <div v-for="comment in c.comments" :key="comment.id" class="row">
+                            <div class="col-md-2">
+                                <img :src="comment.user?.profile_image_url" alt="Com" style="width: 50px; height: 50px" />
+                            </div>
+                            <div class="col-md-5">
+                                <p class="text-secondary">{{ comment.comment }}</p>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="event-time" style="text-align: right">
+                                    <small class="event-date">{{ formatDate(comment.created_at) }}</small><br />
+                                    <small class="event-time-details">{{ formatTime(comment.created_at) }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group mt-auto">
+                        <router-link to="/notices" custom v-slot="{ navigate }">
+                            <button class="btn btn-sm" id="view" @click="navigate">View All</button>
+                        </router-link>
+                        <router-link to="/notice_single" custom v-slot="{ navigate }">
+                            <button class="btn btn-sm" id="new" @click="navigate">Add New</button>
+                        </router-link>
+                    </div>
+                </div>
+
                 <MoreEvents style="width: 90%" />
             </div>
         </div>
@@ -121,8 +150,9 @@ import { useEventStore } from '@/stores/club_admin/EventStore'
 import HeaderRoute from '@/components/HeaderRoute.vue'
 import NavigationRoute from '@/components/NavigationRoute.vue'
 import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
-import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
+import { useEventComments } from "@/stores/club_admin/EventComments";
 import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
+
 
 const {
     events,
@@ -130,6 +160,10 @@ const {
     memberCount,
     eventDay
 } = useEventStore()
+const {
+    eventcomments,
+    fetchEventComments
+} = useEventComments();
 const MemberCount = memberCount
 const EventDay = eventDay
 const search = ref('')
@@ -176,7 +210,8 @@ watch(search, (newSearch) => {
 })
 
 onMounted(() => {
-    fetchEvents()
+    fetchEvents();
+    fetchEventComments();
 })
 
 const filteredEvents = computed(() => {

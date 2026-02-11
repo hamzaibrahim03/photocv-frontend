@@ -52,8 +52,8 @@
             <MySales />
         </div>
         <div class="col-md-6">
-        <MyWishlist />
-        <MyGift />
+            <MyWishlist />
+            <MyGift />
         </div>
     </div>
 </section>

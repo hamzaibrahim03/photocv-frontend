@@ -82,18 +82,17 @@
 
 <style scoped>
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+     display: flex;
+     flex-direction: column;
+     gap: 24px;
 }
-
 .form-control {
-    height: 50px;
-    font-size: 16.61px;
-    font-weight: 400;
-    padding: 12px;
-    border-radius: 5px;
-    color: #4C4036;
-    border: 1.04px solid #99816B;
+     height: 50px;
+     font-size: 16.61px;
+     font-weight: 400;
+     padding: 12px;
+     border-radius: 5px;
+     color: #4C4036;
+     border: 1.04px solid #99816B;
 }
 </style>

@@ -1,12 +1,10 @@
 <template>
     <div class="drawer-overlay" @click.self="$emit('close')">
         <div class="drawer">
-            <!-- TOP -->
             <div class="top">
                 <span class="title">Details</span>
                 <button class="close" @click="$emit('close')">×</button>
             </div>
-            <!-- EXIF -->
             <div class="block">
                 <div class="block-head" @click="exifOpen = !exifOpen">
                     <span>EXIF Details</span>
@@ -43,7 +41,6 @@
                 </div>
             </div>
 
-            <!-- COMMENTS -->
             <div class="block comments-block">
                 <div class="block-head" @click="commentsOpen = !commentsOpen">
                     <span>Comments</span>
@@ -52,21 +49,32 @@
 
                 <div v-if="commentsOpen" class="comments" ref="commentsRef">
                     <div class="comment" v-for="c in comments" :key="c.id">
-                        <strong>{{ c.posted_by || "User" }}</strong>
+                        <strong>
+                            {{ c.user?.first_name || "User" }}
+                            {{ c.user?.last_name || "" }}
+                        </strong>
                         <p>{{ c.comment }}</p>
-                        <small>{{ time(c.posted_at) }}</small>
+                        <small>{{ time(c.created_at) }}</small>
                     </div>
-
-                    
-
                     <p v-if="!loading && !comments.length" class="empty">
                         No comments yet
                     </p>
-                    <!-- INPUT -->
                     <div class="input-bar">
                         <input v-model="newComment" placeholder="Add a comment..." @keyup.enter="postComment" />
                         <button @click="postComment">➤</button>
                     </div>
+                    <div class="comment-stats">
+                        <div class="stat">
+                            <span class="icon heart">♥</span>
+                            <span class="count">{{ like  }}</span>
+                        </div>
+
+                        <div class="stat">
+                            <span class="icon comment">💬</span>
+                            <span class="count">{{ comments.length }}</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <label></label>
@@ -93,13 +101,11 @@ const commentsRef = ref(null)
 const exifOpen = ref(true)
 const commentsOpen = ref(true)
 
-/* EXIF */
-const exif = computed(() => props.photo?.exif || {})
+const exif = computed(() => props.photo?.exif ?? {})
+const like = computed(() => props.photo?.likes )
 
-/* ✅ LOCAL COMMENTS STATE */
 const comments = ref([])
 
-/* ✅ Sync props → local state */
 watch(
   () => props.photo,
   (val) => {
@@ -108,20 +114,22 @@ watch(
   { immediate: true }
 )
 
-/* POST COMMENT */
 const postComment = async () => {
   if (!newComment.value.trim()) return
 
   await commentsApi.postComment(
-    props.photo.photo_id,
+    props.photo.entry_id,   
     newComment.value
   )
 
   comments.value.push({
     id: Date.now(),
     comment: newComment.value,
-    posted_by: "You",
-    posted_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
+    user: {
+      first_name: "You",
+      last_name: ""
+    }
   })
 
   newComment.value = ""
@@ -129,8 +137,10 @@ const postComment = async () => {
   commentsRef.value.scrollTop = commentsRef.value.scrollHeight
 }
 
-const time = t => new Date(t).toLocaleDateString()
+const time = (t) =>
+  t ? new Date(t).toLocaleString() : ""
 </script>
+
 
 
 
@@ -138,37 +148,44 @@ const time = t => new Date(t).toLocaleDateString()
 <style scoped>
 .drawer-overlay {
   position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.5);
-  display: flex;
-  justify-content: flex-end;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 680px;      
+  background: transparent;
+  pointer-events: auto;
+  z-index: 50;
 }
 
 .drawer {
-  width: 360px;
+   width: 610px;
   background: #121212;
-  height: 100%;
+  height: 90vh;
   display: flex;
   flex-direction: column;
-  color: #fff;
+  color: rgba(30, 30, 30, 0.9);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-right: 70px
 }
 
-/* TOP */
 .top {
-  padding: 14px 16px;
-  display: flex;
+   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #1f1f1f;
+  height: 57px;
 }
 
 .close {
   background: none;
   border: none;
   color: #aaa;
-  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  top: 30px;
+  right: 80px
 }
 
-/* BLOCK */
 .block {
   padding: 14px 16px;
   border-bottom: 1px solid #1f1f1f;
@@ -188,7 +205,6 @@ letter-spacing: 0px;
 
 }
 
-/* EXIF */
 .exif-grid {
   margin-top: 12px;
   display: grid;
@@ -216,10 +232,9 @@ letter-spacing: 0px;
 color: rgba(255, 255, 255, 0.9);
 }
 
-/* COMMENTS */
 .comments {
   margin-top: 12px;
-  max-height: 280px;
+  max-height: 300px;
   overflow-y: auto;
 }
 
@@ -242,7 +257,6 @@ color: rgba(255, 255, 255, 0.9);
   color: #777;
 }
 
-/* INPUT */
 .input-bar {
   margin-top: auto;
   padding: 12px;
@@ -266,5 +280,42 @@ color: rgba(255, 255, 255, 0.9);
   padding: 0 14px;
   border-radius: 6px;
 }
+.comment-stats {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  padding: 10px 12px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.02),
+    rgba(0,0,0,0.4)
+  );
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #ddd;
+}
+
+.stat .icon {
+  font-size: 16px;
+}
+
+.stat .heart {
+  color: #ff4d6d;
+}
+
+.stat .comment {
+  color: #aaa;
+}
+
+.stat .count {
+  font-weight: 500;
+}
+
 </style>
 

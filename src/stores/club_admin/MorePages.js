@@ -15,8 +15,8 @@ export function usePageComments() {
     try {
       const res = await PageCommentsAPI.getAllPageComments()
       const randomList = res?.data?.data?.random_pages || []
-console.log("Comments Pages :", randomList)
-randompages.value = randomList
+      console.log("Comments Pages :", randomList)
+      randompages.value = randomList
       eventCount.value = randomList.length
 
       const today = new Date()

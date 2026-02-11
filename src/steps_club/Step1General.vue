@@ -101,7 +101,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-control">
-                            <input type="radio" name="privacy" value="Public" ref="privacyPublic" v-model="clubStore.step1.privacy" class="icheck-privacy"/>&nbsp;
+                            <input type="radio" name="privacy" value="Public" ref="privacyPublic" v-model="clubStore.step1.privacy" class="icheck-privacy" />&nbsp;
                             <span>Public</span>
                         </div>
                     </div>
@@ -175,12 +175,12 @@ const clubStore = useClubFormStore();
 
 <style scoped>
 .form-control {
-    height: 50px;
-    font-size: 16.61px;
-    font-weight: 400;
-    padding: 12px;
-    border-radius: 5px;
-    color: #4C4036;
-    border: 1.04px solid #99816B;
+     height: 50px;
+     font-size: 16.61px;
+     font-weight: 400;
+     padding: 12px;
+     border-radius: 5px;
+     color: #4C4036;
+     border: 1.04px solid #99816B;
 }
 </style>

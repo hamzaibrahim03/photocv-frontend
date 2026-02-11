@@ -21,6 +21,6 @@ export const useRytonNoticeStore = defineStore('notice', {
       } finally {
         this.loading = false;
       }
-    }    
+    }
   }
 });

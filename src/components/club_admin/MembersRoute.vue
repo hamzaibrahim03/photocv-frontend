@@ -56,7 +56,7 @@
                                         <button @click="deleteItem(member)">Delete</button>
                                     </div>
                                 </div>
-                                <img v-if="member.profile_image_url" class="img-fluid event-img" :src="member.profile_image_url" alt="News" @error="member.profile_image_url = null" style="display: flex; text-align: center; justify-content: center; align-items: center;"/>
+                                <img v-if="member.profile_image_url" class="img-fluid event-img" :src="member.profile_image_url" alt="News" @error="member.profile_image_url = null" style="display: flex; text-align: center; justify-content: center; align-items: center;" />
                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                 </div>
                                 <div class="social-media-icons">
@@ -67,9 +67,9 @@
                                 <h3>{{ member.username }}</h3>
                                 <small class="role">{{ member.tag_line }}</small>
                                 <div class="social-icons">
-                                    <div class="icon"><span>{{member.gallery_total_photos}}</span><img :src="Ima" alt="icon" style="width: 20px; height: 20px"/></div>
-                                    <div class="icon"><span>{{member.gallery_total_comments}}</span><img :src="Com" alt="icon" style="width: 20px; height: 20px"/></div>
-                                    <div class="icon"><span>{{member.gallery_total_likes}}</span><img :src="Lik" alt="icon" style="width: 20px; height: 20px"/></div>
+                                    <div class="icon"><span>{{member.gallery_total_photos}}</span><img :src="Ima" alt="icon" style="width: 20px; height: 20px" /></div>
+                                    <div class="icon"><span>{{member.gallery_total_comments}}</span><img :src="Com" alt="icon" style="width: 20px; height: 20px" /></div>
+                                    <div class="icon"><span>{{member.gallery_total_likes}}</span><img :src="Lik" alt="icon" style="width: 20px; height: 20px" /></div>
                                 </div>
                                 <div class="gallery-preview">
                                     <div v-for="(gallery, index) in member.galleries.slice(0, 2)" :key="index" class="pic-item">
@@ -126,7 +126,6 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useMemberStore } from '@/stores/club_admin/MemberStore';
-
 import NavigationRoute from "@/components/NavigationRoute.vue"
 import HeaderRoute from "@/components/HeaderRoute.vue"
 import Ima from "@/assets/icons/member/image.svg"
@@ -143,37 +142,31 @@ const itemsPerPage = 24
 const MemberCount = computed(() => memberStore.memberCount)
 const EventCount = computed(() => memberStore.eventCount)
 
-const isLoading = ref(true) 
+const isLoading = ref(true)
 
 const openMenuIndex = ref(null);
 
 const toggleMenu = (index) => {
-  openMenuIndex.value = openMenuIndex.value === index ? null : index;
+    openMenuIndex.value = openMenuIndex.value === index ? null : index;
 };
-
-
 
 const closeMenu = () => {
-  openMenuIndex.value = null;
+    openMenuIndex.value = null;
 };
 
-
-// close menu when clicking outside
 const handleClickOutside = () => {
-  closeMenu();
+    closeMenu();
 };
 
 onMounted(async () => {
-  console.log("Total Interactions (Comments + Likes):", EventCount);
-  document.addEventListener("click", handleClickOutside)
-  await memberStore.fetchMembers(); 
-  isLoading.value = false;
+    console.log("Total Interactions (Comments + Likes):", EventCount);
+    document.addEventListener("click", handleClickOutside)
+    await memberStore.fetchMembers();
+    isLoading.value = false;
 });
 onBeforeUnmount(() =>
-  document.removeEventListener("click", handleClickOutside)
+    document.removeEventListener("click", handleClickOutside)
 );
-
-
 
 const paginatedCards = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage
@@ -184,27 +177,27 @@ const paginatedCards = computed(() => {
 const chunkedCards = computed(() => {
     const chunkSize = 4
     const chunks = []
-    let i =0;
+    let i = 0;
     const currentPageItems = paginatedCards.value
-    for (i= 0; i < currentPageItems.length; i += chunkSize) {
+    for (i = 0; i < currentPageItems.length; i += chunkSize) {
         chunks.push(currentPageItems.slice(i, i + chunkSize))
     }
     return chunks
 })
 
 const editItem = (member) => {
-  alert("Edit", + member.username);
-  closeMenu();
+    alert("Edit", +member.username);
+    closeMenu();
 };
 
 const shareItem = (member) => {
-  alert("Share", + member.username);
-  closeMenu();
+    alert("Share", +member.username);
+    closeMenu();
 };
 
 const deleteItem = (member) => {
-  alert("Delete", + member.username);
-  closeMenu();
+    alert("Delete", +member.username);
+    closeMenu();
 };
 
 const totalPages = computed(() => {
@@ -252,7 +245,7 @@ function goToPage(page) {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }
@@ -440,7 +433,7 @@ function goToPage(page) {
      padding: 8px 0;
      min-width: 130px;
      z-index: 999;
-     box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
  .dropdown-menu-custom button {
      width: 100%;

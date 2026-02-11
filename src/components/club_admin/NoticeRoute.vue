@@ -76,8 +76,7 @@
                                                 </div>
                                                 <p class="names" style="font-size: 14px">{{ notice.names }}</p>
                                                 <p class="date">{{ formatDate(notice.created_at) }}</p>
-                                                <p class="text-secondary">
-                                                    {{ notice.description || 'No description provided.' }}
+                                                <p class="text-secondary" v-html="notice.description || 'No description provided.'">
                                                 </p>
                                                 <div class="d-flex justify-content-between align-items-center mt-3 w-100">
                                                     <div class="button-group d-flex align-items-center gap-2">
@@ -300,7 +299,7 @@ const formatDate = (date) => {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }
@@ -486,4 +485,5 @@ const formatDate = (date) => {
  #right {
      margin-left: 20px;
 }
+
 </style>

@@ -2,7 +2,7 @@ import apiClient from './axios';
 
 export default {
   getLogOut() {
-      alert("ok")
+    alert("ok")
     return apiClient.get('/logout');
   },
 };

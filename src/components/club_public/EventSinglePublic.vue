@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -53,8 +53,8 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.vue" class="icon notification-desktop">
-                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
+                        <a class="icon notification-desktop">
+                            <NotificationBell />
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
@@ -100,32 +100,25 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <div v-if="Color.cover_images && Color.cover_images.length" class="hero-section" :style="{ background: `url(${Color.cover_images[2]?.url}) no-repeat center center / cover`, color: '#E7EFF233' }">
+                    <div v-if="Events.length" class="hero-section" :style="{ backgroundImage: `url(${Events[0].featured_medium_url})` }">
                         <div class="hero-overlay">
-                            <div v-if="Events.length" class="custom-card mb-3 p-3" style="margin-top: 10%; width: 100%">
-                                <div class="d-flex flex-column flex-sm-row gap-3" style="flex: 1">
-                                    <img v-if="Events[0].images" :src="Events[0].featured_thumb_url" :alt="Events[0].name" />
+                            <div class="events-card">
+                                <p class="date" style="text-align: left; margin-top: 103px; margin-bottom: 44px">
+                                    Upcoming Event | {{ formatDate(Events[0].event_date) }}
+                                </p>
 
-                                    <div>
-                                        <div>
-                                            <div class="events-card">
-                                                <h5 class="mb-2" :style="{color: Color.text_color}">{{ Events[0].name || 'Untitled Event' }}</h5>
-                                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                                    <p class="date mb-0" :style="{color: Color.accent_color}">{{ formatDate(Events[0].event_date) || 'Date Not Available' }}</p>
-                                                    <div class="icon-container d-flex gap-2">
-                                                        <img :src="Events[0].types?.[0]?.icon_url" :alt="Events[0].types?.name" class="virtual" style="width: 25px; height: 25px" />
-                                                    </div>
-                                                </div>
-                                            </div>                  
-                                            <p class="text-secondary" :style="{color: Color.text_color}" v-html="Events[0].description || 'No description provided.'"></p>
-                                        </div>
-                                        <div class="button-group mt-auto d-flex event-button">
-                                            <router-link :to="{ name: 'EventSinglePublic', params: { id: Events[0].id } }" custom v-slot="{ navigate }">
-                                                <button class="btn me-2" id="view" @click="navigate" :style="{backgroundColor: Color.accent_color, color: Color.background_color}">View</button>
-                                            </router-link>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h5 class="" :style="{ color: Color.background_color, marginBottom: '26px' }">
+                                    {{ Events[0].name }}
+                                </h5>
+                            </div>
+
+                            <p class="text-secondaryy" :style="{ color: Color.background_color, marginBottom: '30px' }" v-html="Events[0].description">
+                            </p>
+
+                            <div class="button-group mt-3 d-flex" style="margin-bottom: 55px">
+                                <router-link :to="{ name: 'EventSinglePublic', params: { id: Events[0].id } }" custom v-slot="{ navigate }">
+                                    <button class="btn me-2" id="view" @click="navigate" :style="{color: Color.background_color, backgroundColor: Color.accent_color}">View Details</button>
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -161,11 +154,10 @@
                                         <img :src=" sinevent.featured_image_url" :alt=" sinevent.name" style="max-width: 850px; height: 350px; border-radius: 8px"/>
                                         <div class="d-flex justify-content-between" style="width: 850px">
                                             <h5 class="head" :style="{ color: Color.text_color }">{{  sinevent.name }}</h5>
-                                            <div v-for="(t, i) in sinevent.types" :key="i" class="d-flex align-items-center justify-content-center gap-2 mb-1">
-                                                <img :src="t.icon_url" style="width:20px; height:20px" />
-                                                <h5 class="head m-0" :style="{ color: Color.text_color, fontWeight: '400', fontStyle: 'Regular', fontSize: '18px', lineHeight: '100%', letterSpacing: '0%' }">{{ t.name }}</h5>
+                                            <div v-for="(t, i) in sinevent.types" :key="i" class="d-flex align-items-center justify-content-center gap-3">
+                                                <img class="head" :src="t.icon_url" style="width:20px; height:20px" />
+                                                <h5 class="head" :style="{ color: Color.text_color, fontWeight: '400', fontStyle: 'Regular', fontSize: '18px', lineHeight: '100%', letterSpacing: '0%' }">{{ t.name }}</h5>
                                             </div>
-
                                         </div>
                                         <p id="edate" :style="{ color: Color.accent_color }">
                                             {{ formatDate( sinevent.event_date) }}
@@ -174,8 +166,7 @@
                                         <p class="text-secondary" :style="{ color: Color.text_color }" style="margin-bottom: 25px" v-html="sinevent.description"></p>
                                         <p class="text-secondary" :style="{ color: Color.text_color }" style="margin-bottom: 25px" v-html="sinevent.description"></p>
                                         <p class="text-secondary" :style="{ color: Color.text_color }" v-html="sinevent.description"></p>
-
-                                        <div class="divider4"></div>
+                                        <div class="divider4" style="margin-left: -5px"></div>
 
                                         <div class="row" id="eventdetails">
                                             <div class="col-md-5">
@@ -543,6 +534,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { storeToRefs } from 'pinia'
 import Event from "@/assets/icons/navigation/events.svg"
 import Competition from "@/assets/icons/navigation/competition.svg"
+import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
 
 
 dayjs.extend(relativeTime);
@@ -583,9 +575,10 @@ const formatDate = (dateString) => {
   const day = date.getDate();
   const month = date.toLocaleString("en-GB", { month: "long" });
   const year = date.getFullYear();
-  const suffix = day % 10 === 1 && day !== 11 ? "st" :
-                 day % 10 === 2 && day !== 12 ? "nd" :
-                 day % 10 === 3 && day !== 13 ? "rd" : "th";
+  const suffix =
+    day % 10 === 1 && day !== 11 ? "st" :
+    day % 10 === 2 && day !== 12 ? "nd" :
+    day % 10 === 3 && day !== 13 ? "rd" : "th";
   return `${day}${suffix} ${month} ${year}`;
 };
 
@@ -736,21 +729,22 @@ onMounted(async () => {
      margin-top: 50px;
      display: grid;
      grid-template-columns: repeat(4, 1fr);
-     width: 100%;
-     margin-bottom: -107px;
+     width: 1093px;
+     margin-bottom: -47px;
+     margin-left: -10px
 }
  .resultpics-items {
      position: relative;
      overflow: hidden;
 }
  .resultpics-items img {
-     width: 100%;
-     height: 275px;
+     width: 273.25px;
+     height: 273.25px;
      object-fit: cover;
      object-position: top;
 }
  #joincontainer {
-     margin-top: 330px;
+     margin-top: 280px;
 }
  .site-footer {
      padding-top: 25px;
@@ -871,8 +865,8 @@ onMounted(async () => {
      padding: 20px;
      height: auto;
      border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
      margin-top: -5px;
 }
  .season-card {
@@ -881,8 +875,8 @@ onMounted(async () => {
      width: 470px;
      padding: 20px;
      border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
 }
  .more-card {
      height: 580px;
@@ -890,8 +884,8 @@ onMounted(async () => {
      width: 470px;
      padding: 20px;
      border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
 }
  .event-list {
      padding-top: 20px;
@@ -1061,6 +1055,14 @@ onMounted(async () => {
 }
  #right {
      margin-left: 20px;
+}
+.events-card h5 {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 48px;
+     line-height: 20px;
+     letter-spacing: 0%;
 }
  @media only screen and (max-width: 1399px) {
      #overall {

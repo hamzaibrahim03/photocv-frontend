@@ -1,6 +1,5 @@
 <template>
 <div class="login-container" style="align-items: center;">
-    <!-- Logo centered above both boxes -->
     <img src="@/assets/images/club.png" alt="Logo" class="top-logo" />
 
     <div class="login-box">
@@ -28,8 +27,6 @@
                 <button type="submit" class="btn btn-dark">Login</button>
             </form>
 
-            <!-- OR Divider -->
-
         </div>
         <div class="or-divider">
             <span>OR</span>
@@ -49,9 +46,7 @@
 </template>
 
 <script setup>
-import {
-    ref
-} from 'vue';
+import { ref } from 'vue';
 
 const email = ref('');
 const password = ref('');

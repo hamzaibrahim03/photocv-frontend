@@ -35,19 +35,19 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-control">
-                            <input type="radio" name="home_page_blocks" value="All" ref="home_page_blocksAll" v-model="clubStore.step4.home_page_blocks" class="icheck-home_page_blocks"/>&nbsp;
+                            <input type="radio" name="home_page_blocks" value="All" ref="home_page_blocksAll" v-model="clubStore.step4.home_page_blocks" class="icheck-home_page_blocks" />&nbsp;
                             <span>All</span>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-control">
-                            <input type="radio" name="home_page_blocks" value="Fewer" ref="home_page_blocksFewer" v-model="clubStore.step4.home_page_blocks" class="icheck-home_page_blocks"/>&nbsp;
+                            <input type="radio" name="home_page_blocks" value="Fewer" ref="home_page_blocksFewer" v-model="clubStore.step4.home_page_blocks" class="icheck-home_page_blocks" />&nbsp;
                             <span>Fewer</span>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-control">
-                            <input type="radio" name="home_page_blocks" value="Fewest" ref="home_page_blocksFewest" v-model="clubStore.step4.home_page_blocks" class="icheck-home_page_blocks"/>&nbsp;
+                            <input type="radio" name="home_page_blocks" value="Fewest" ref="home_page_blocksFewest" v-model="clubStore.step4.home_page_blocks" class="icheck-home_page_blocks" />&nbsp;
                             <span>Fewest</span>
                         </div>
                     </div>
@@ -58,19 +58,19 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-control">
-                            <input type="radio" name="reminders" value="All" ref="remindersAll" v-model="clubStore.step4.reminders" class="icheck-reminders"/>&nbsp;
+                            <input type="radio" name="reminders" value="All" ref="remindersAll" v-model="clubStore.step4.reminders" class="icheck-reminders" />&nbsp;
                             <span>All</span>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-control">
-                            <input type="radio" name="reminders" value="Some" ref="remindersSome" v-model="clubStore.step4.reminders" class="icheck-reminders"/>&nbsp;
+                            <input type="radio" name="reminders" value="Some" ref="remindersSome" v-model="clubStore.step4.reminders" class="icheck-reminders" />&nbsp;
                             <span>Some</span>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-control">
-                            <input type="radio" name="reminders" value="None" ref="remindersNone" v-model="clubStore.step4.reminders" class="icheck-reminders"/>&nbsp;
+                            <input type="radio" name="reminders" value="None" ref="remindersNone" v-model="clubStore.step4.reminders" class="icheck-reminders" />&nbsp;
                             <span>None</span>
                         </div>
                     </div>
@@ -140,17 +140,16 @@
 import { useClubFormStore } from '@/stores/club_admin/ClubFormData';
 
 const clubStore = useClubFormStore();
-
 </script>
 
 <style scoped>
 .form-control {
-    height: 50px;
-    font-size: 16.61px;
-    font-weight: 400;
-    padding: 12px;
-    border-radius: 5px;
-    color: #4C4036;
-    border: 1.04px solid #99816B;
+     height: 50px;
+     font-size: 16.61px;
+     font-weight: 400;
+     padding: 12px;
+     border-radius: 5px;
+     color: #4C4036;
+     border: 1.04px solid #99816B;
 }
 </style>

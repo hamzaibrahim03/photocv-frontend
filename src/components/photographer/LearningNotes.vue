@@ -46,7 +46,6 @@
 
     <div class="card" style="height: auto; padding: 15px;">
         <div class="d-flex justify-content-between align-items-center">
-            <!-- Search Input -->
             <div class="dt-search">
                 <div class="input-group">
                     <span class="input-group-text" style="background-color: #fff; border: 1px solid #a0846c;">
@@ -56,7 +55,6 @@
                 </div>
             </div>
 
-            <!-- Buttons -->
             <div class="button-group d-flex align-items-center gap-2">
                 <button class="btn d-flex align-items-center gap-2 px-3 py-2 text-white" style="background-color: #99816B;">
                     <i class="fas fa-sticky-note"></i> Note
@@ -71,7 +69,6 @@
         </div>
     </div>
     <div class="notes-app d-flex">
-        <!-- Sidebar -->
         <aside class="sidebars p-3">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">My Notes</h5>
@@ -95,7 +92,6 @@
 
         </aside>
 
-        <!-- Editor Section -->
         <main class="editor p-4">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>

@@ -84,19 +84,19 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card" style="width: 95%; height: auto">
-            <SalesCards />
+                <SalesCards />
             </div>
         </div>
         <div class="col-md-6">
             <div class="card" style="width: 95%; height: 1000px">
-            <PhotoRequests />
+                <PhotoRequests />
             </div>
             <div class="card" style="width: 95%; height: 340px">
                 <div class="d-flex justify-content-between align-items-center mb-3" style="padding: 15px">
                     <h4>My QR Code</h4>
                 </div>
                 <div style="text-align: center">
-                    <img src="@/assets/images/profile/qr_code.png" alt="QR CODE"/>
+                    <img src="@/assets/images/profile/qr_code.png" alt="QR CODE" />
                     <div class="divider3"></div>
                     <p class="text-secondary" style="text-align: center">username.photo.cv</p>
                 </div>

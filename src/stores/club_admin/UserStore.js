@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 export const useUserStore = defineStore("user", {
   state: () => ({
 
-    username: "", 
+    username: "",
     first_name: "",
     profile_image_url: "",
     tag_line: "",
@@ -26,7 +26,7 @@ export const useUserStore = defineStore("user", {
       this.token = userData.token || "";
       this.role = userData.role
 
-      
+
       localStorage.setItem("token", this.token);
     },
 
@@ -41,7 +41,7 @@ export const useUserStore = defineStore("user", {
     },
 
     async logout() {
-      const router = useRouter(); 
+      const router = useRouter();
       try {
         const response = await apiClient.post('/logout');
         console.log("Logout API success:", response.data);

@@ -56,8 +56,8 @@
                             <div class="divider3"></div>
                             <div class="row" style=" background-color: #99816b33; margin-top: 15px; border-radius: 7px; padding: 10px; margin-left: 2px;">
                                 <h5>Event Description</h5>
-                                <textarea  v-model="description" style="border: none; background-color: transparent;">
-                                </textarea>    
+                                <textarea v-model="description" style="border: none; background-color: transparent;">
+                                </textarea>
                             </div>
                             <div class="divider3"></div>
                             <div class="row">
@@ -185,10 +185,10 @@
 
                             <div class="row mt-3">
                                 <div class="col-md-12 d-flex gap-3 flex-wrap">
-                                    <div v-for="(img, index) in images" :key="index" class="image-card" >
+                                    <div v-for="(img, index) in images" :key="index" class="image-card">
                                         <button class="close-btn" @click="removeImage(index)">×</button>
                                         <img :src="img" class="preview-image" />
-                                        <textarea class="caption-box" v-model="captions[index]" placeholder="Add caption..." ></textarea>
+                                        <textarea class="caption-box" v-model="captions[index]" placeholder="Add caption..."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -204,11 +204,10 @@
                                         <div class="file-icon">📄</div>
                                         <small class="file-name">{{ file.name }}</small>
 
-                                        <button class="remove-btn" @click="removeAttachment(index)" >✖</button>
+                                        <button class="remove-btn" @click="removeAttachment(index)">✖</button>
                                     </div>
                                 </div>
                             </div>
-
 
                             <div class="divider3"></div>
 
@@ -230,7 +229,36 @@
                         <CalendarDashboard />
                     </div>
                     <div id="news">
-                        <RecentComments />
+                        <div class="cardddd d-flex flex-column" :style="{padding: '35px'}">
+                            <h5 class="head">Recent Comments</h5>
+
+                            <div class="row" style="margin-bottom: 10px" v-for="c in eventcomments.slice(0, 4)" :key="c.id">
+                                <div v-for="comment in c.comments" :key="comment.id" class="row">
+                                    <div class="col-md-2">
+                                        <img :src="comment.user?.profile_image_url" alt="Com" style="width: 50px; height: 50px" />
+                                    </div>
+                                    <div class="col-md-5">
+                                        <p class="text-secondary">{{ comment.comment }}</p>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="event-time" style="text-align: right">
+                                            <small class="event-date">{{ formatDate(comment.created_at) }}</small><br />
+                                            <small class="event-time-details">{{ formatTime(comment.created_at) }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="button-group mt-auto">
+                                <router-link to="/notices" custom v-slot="{ navigate }">
+                                    <button class="btn btn-sm" id="view" @click="navigate">View All</button>
+                                </router-link>
+                                <router-link to="/notice_single" custom v-slot="{ navigate }">
+                                    <button class="btn btn-sm" id="new" @click="navigate">Add New</button>
+                                </router-link>
+                            </div>
+                        </div>
+
                         <MoreEvents style="height: auto" />
                     </div>
                 </div>
@@ -239,6 +267,7 @@
     </div>
 </div>
 </template>
+
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -247,8 +276,8 @@ import { useEventStore } from '@/stores/club_admin/EventStore'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
 import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboard.vue'
-import RecentComments from '@/partials/club_admin/events/RecentComments.vue'
 import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
+import { useEventComments } from "@/stores/club_admin/EventComments";
 /* global $ */
 
 const route = useRoute();
@@ -258,12 +287,12 @@ const selectedTags = ref([]);
 const attachments = ref([]);
 
 const allTags = ref([
-  "Urgent",
-  "Meeting",
-  "Reminder",
-  "Policy Update",
-  "Holiday Notice",
-  "Exam Schedule",
+    "Urgent",
+    "Meeting",
+    "Reminder",
+    "Policy Update",
+    "Holiday Notice",
+    "Exam Schedule",
 ]);
 
 const searchInput = ref("");
@@ -288,629 +317,690 @@ const url = ref("");
 const rsvp_detail = ref("");
 const tags_keywords = ref("");
 
-
-
 const {
     memberCount,
     eventCount,
     fetchEvents,
     eventDay
 } = useEventStore()
+const {
+    eventcomments,
+    fetchEventComments
+} = useEventComments();
 const MemberCount = memberCount
 const EventDay = eventDay
 const EventCount = eventCount
 
 const filteredTags = computed(() => {
-  const query = searchInput.value.toLowerCase();
-  return allTags.value.filter(
-    (tag) =>
-      tag.toLowerCase().includes(query) &&
-      !selectedTags.value.includes(tag)
-  );
+    const query = searchInput.value.toLowerCase();
+    return allTags.value.filter(
+        (tag) =>
+        tag.toLowerCase().includes(query) &&
+        !selectedTags.value.includes(tag)
+    );
 });
 
 const submitForm = async () => {
-  const payload = {
-    featured_image: featured_image.value,
-    name: name.value,
-    event_date: event_date.value,
-    event_type_id: event_type_id.value,
-    event_kind_id: event_kind_id.value,
-    description: description.value,
-    duration: duration.value,
-    status: status.value,
-    speaker: speaker.value,
-    speaker_club: speaker_club.value,
-    speaker_qualification: speaker_qualification.value,
-    required_gear: required_gear.value,
-    url: url.value,
-    rsvp_detail: rsvp_detail.value,
-    tags_keywords: tags_keywords.value,
-  };
+    const payload = {
+        featured_image: featured_image.value,
+        name: name.value,
+        event_date: event_date.value,
+        event_type_id: event_type_id.value,
+        event_kind_id: event_kind_id.value,
+        description: description.value,
+        duration: duration.value,
+        status: status.value,
+        speaker: speaker.value,
+        speaker_club: speaker_club.value,
+        speaker_qualification: speaker_qualification.value,
+        required_gear: required_gear.value,
+        url: url.value,
+        rsvp_detail: rsvp_detail.value,
+        tags_keywords: tags_keywords.value,
+    };
 
-  const eventId = route.params.id;
+    const eventId = route.params.id;
 
-  try {
-    if (eventId) {
-      await apiClient.put(`/events/${eventId}`, payload);
-    } else {
-      await apiClient.post(`/events`, payload);
+    try {
+        if (eventId) {
+            await apiClient.put(`/events/${eventId}`, payload);
+        } else {
+            await apiClient.post(`/events`, payload);
+        }
+
+        alert("Event saved successfully!");
+        router.push("/event");
+    } catch (error) {
+        console.error("Error submitting event:", error);
     }
-
-    alert("Event saved successfully!");
-    router.push("/event");
-  } catch (error) {
-    console.error("Error submitting event:", error);
-  }
 };
 
 const fetchEvent = async (id) => {
-  try {
-    const response = await apiClient.get(`/events/${id}`);
-    const data = response?.data?.data || {};
+    try {
+        const response = await apiClient.get(`/events/${id}`);
+        const data = response?.data?.data || {};
 
-    const rawDate = data.event_date;
+        const rawDate = data.event_date;
 
-    featured_image.value = data.featured_image || "";
-    name.value = data.name || "";
-    event_date.value = rawDate ? rawDate.substring(0, 10) : "";
-    event_kind_id.value = data.event_kind_id || "";
-    event_type_id.value = data.event_type_id || "";
-    description.value = data.description || "";
-    duration.value = data.duration || "";
-    speaker.value = data.speaker || "";
-    speaker_club.value = data.speaker_club || "";
-    speaker_qualification.value = data.speaker_qualification || "";
-    status.value = data.status || "";
-    required_gear.value = data.required_gear || "";
-    url.value = data.url || "";
-    rsvp_detail.value = data.rsvp_detail || "";
-    tags_keywords.value = data.tags_keywords || "";
+        featured_image.value = data.featured_image || "";
+        name.value = data.name || "";
+        event_date.value = rawDate ? rawDate.substring(0, 10) : "";
+        event_kind_id.value = data.event_kind_id || "";
+        event_type_id.value = data.event_type_id || "";
+        description.value = data.description || "";
+        duration.value = data.duration || "";
+        speaker.value = data.speaker || "";
+        speaker_club.value = data.speaker_club || "";
+        speaker_qualification.value = data.speaker_qualification || "";
+        status.value = data.status || "";
+        required_gear.value = data.required_gear || "";
+        url.value = data.url || "";
+        rsvp_detail.value = data.rsvp_detail || "";
+        tags_keywords.value = data.tags_keywords || "";
 
-    console.log("Populated fields:", data);
-  } catch (error) {
-    console.error("Error fetching event by ID:", error);
-  }
+        console.log("Populated fields:", data);
+    } catch (error) {
+        console.error("Error fetching event by ID:", error);
+    }
 };
 
 const addTag = (tag) => {
-  if (!selectedTags.value.includes(tag)) {
-    selectedTags.value.push(tag);
-    searchInput.value = "";
-  }
+    if (!selectedTags.value.includes(tag)) {
+        selectedTags.value.push(tag);
+        searchInput.value = "";
+    }
 };
 
 const removeTag = (index) => {
-  selectedTags.value.splice(index, 1);
+    selectedTags.value.splice(index, 1);
 };
 
 const toggleDropdown = () => {
-  showDropdown.value = true;
+    showDropdown.value = true;
 };
 
 const handleImageUpload = (event) => {
-  const files = Array.from(event.target.files);
+    const files = Array.from(event.target.files);
 
-  if (images.value.length + files.length > 4) {
-    alert("You can upload a maximum of 4 images.");
+    if (images.value.length + files.length > 4) {
+        alert("You can upload a maximum of 4 images.");
+        event.target.value = "";
+        return;
+    }
+
+    files.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            images.value.push(e.target.result);
+            captions.value.push("");
+        };
+        reader.readAsDataURL(file);
+    });
+
     event.target.value = "";
-    return;
-  }
-
-  files.forEach((file) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      images.value.push(e.target.result);
-      captions.value.push("");
-    };
-    reader.readAsDataURL(file);
-  });
-
-  event.target.value = "";
 };
 
 const removeImage = (index) => {
-  images.value.splice(index, 1);
-  captions.value.splice(index, 1);
+    images.value.splice(index, 1);
+    captions.value.splice(index, 1);
 };
 
 const handleAttachmentUpload = (event) => {
-  const files = Array.from(event.target.files);
+    const files = Array.from(event.target.files);
 
-  if (attachments.value.length + files.length > 4) {
-    alert("You can upload a maximum of 4 attachments.");
+    if (attachments.value.length + files.length > 4) {
+        alert("You can upload a maximum of 4 attachments.");
+        event.target.value = "";
+        return;
+    }
+
+    files.forEach((file) => attachments.value.push(file));
+
     event.target.value = "";
-    return;
-  }
-
-  files.forEach((file) => attachments.value.push(file));
-
-  event.target.value = "";
 };
 
 const removeAttachment = (index) => {
-  attachments.value.splice(index, 1);
+    attachments.value.splice(index, 1);
 };
 
 const handleClickOutside = (event) => {
-  const imageWrapper = document.querySelector("#imageWrapper");
-  const modal = document.querySelector(".lightbox-modal");
+    const imageWrapper = document.querySelector("#imageWrapper");
+    const modal = document.querySelector(".lightbox-modal");
 
-  if (imageWrapper && modal) {
-    if (!imageWrapper.contains(event.target) && !modal.contains(event.target)) {
-      showLightbox.value = false;
+    if (imageWrapper && modal) {
+        if (!imageWrapper.contains(event.target) && !modal.contains(event.target)) {
+            showLightbox.value = false;
+        }
+    } else {
+        showLightbox.value = false;
     }
-  } else {
-    showLightbox.value = false;
-  }
 };
 
 onMounted(() => {
+    fetchEventComments();
     fetchEvents()
-  const eventId = route.params.id;
-  if (eventId) {
-    fetchEvent(eventId);
-  }
+    const eventId = route.params.id;
+    if (eventId) {
+        fetchEvent(eventId);
+    }
 
-  setTimeout(() => {
-    $(".icheck-status").on("ifChecked", (event) => {
-      status.value = event.target.value;
-    });
-  }, 0);
+    setTimeout(() => {
+        $(".icheck-status").on("ifChecked", (event) => {
+            status.value = event.target.value;
+        });
+    }, 0);
 
-  document.addEventListener("click", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 });
 
 onBeforeUnmount(() => {
-  document.removeEventListener("click", handleClickOutside);
+    document.removeEventListener("click", handleClickOutside);
 });
 
 watch(status, (newVal) => {
-  setTimeout(() => {
-    $(".icheck-status").iCheck("uncheck");
-    $(`.icheck-status[value="${newVal}"]`).iCheck("check");
-  }, 0);
+    setTimeout(() => {
+        $(".icheck-status").iCheck("uncheck");
+        $(`.icheck-status[value="${newVal}"]`).iCheck("check");
+    }, 0);
 });
 </script>
 
-
-
 <style scoped>
 .container {
-     max-width: 1810px;
-     padding: 0 15px;
-     margin: 0 auto;
+    max-width: 1810px;
+    padding: 0 15px;
+    margin: 0 auto;
 }
- .content {
-     padding: 0 30px;
+
+.content {
+    padding: 0 30px;
 }
- .dashboard-card {
-     gap: 15px;
-     border-radius: 10px;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     padding: 20px 0px;
-     width: 100%;
+
+.dashboard-card {
+    gap: 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0px;
+    width: 100%;
 }
- .profile-card {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     background: white;
-     padding: 15px 25px;
-     border-radius: 12px;
-     width: 975px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-     height: 148px;
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    width: 67%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    height: 148px;
 }
- .profile-left {
-     display: flex;
-     align-items: left;
+
+.profile-left {
+    display: flex;
+    align-items: left;
 }
- .profile-left img {
-     width: 100%;
-     max-width: 108px;
-     height: 108px;
-     border-radius: 50%;
+
+.profile-left img {
+    width: 100%;
+    max-width: 108px;
+    height: 108px;
+    border-radius: 50%;
 }
- .greeting {
-     color: #99816b;
-     font-weight: 400;
-     font-size: 18px;
-     line-height: 100%;
-     font-family: Inter;
+
+.greeting {
+    color: #99816b;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    font-family: Inter;
 }
- .name {
-     font-weight: 500;
-     font-size: 30px;
-     line-height: 100%;
-     color: #4c4036;
-     font-family: Inter;
+
+.name {
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 100%;
+    color: #4c4036;
+    font-family: Inter;
 }
- .names {
-     font-family: Inter;
-     font-weight: 400;
-     font-size: 18.68px;
-     line-height: 20.76px;
-     letter-spacing: 0%;
+
+.names {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 18.68px;
+    line-height: 20.76px;
+    letter-spacing: 0%;
 }
- .namess {
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: #4c4036;
-     padding-left: 20px;
-     font-family: Inter;
-     text-align: justify;
+
+.namess {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    color: #4c4036;
+    padding-left: 20px;
+    font-family: Inter;
+    text-align: justify;
 }
- .left-header-container {
-     display: flex;
-     align-items: center;
-     gap: 10px;
+
+.left-header-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
- .role {
-     color: #cc445e;
-     font-weight: 400;
-     font-size: 18px;
-     line-height: 100%;
-     font-family: Inter;
+
+.role {
+    color: #cc445e;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    font-family: Inter;
 }
- .profile-icons {
-     display: flex;
-     gap: 10px;
-     flex-direction: column;
+
+.profile-icons {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
 }
- .profile-icon {
-     display: flex;
-     flex-direction: column;
+
+.profile-icon {
+    display: flex;
+    flex-direction: column;
 }
- .icons {
-     display: flex;
-     align-items: center;
-     color: white;
-     font-size: 14px;
-     gap: 5px;
+
+.icons {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 14px;
+    gap: 5px;
 }
- .icon {
-     display: flex;
-     align-items: center;
-     color: #cc445e;
-     font-size: 14px;
-     gap: 5px;
+
+.icon {
+    display: flex;
+    align-items: center;
+    color: #cc445e;
+    font-size: 14px;
+    gap: 5px;
 }
- .icon i {
-     margin-right: 5px;
+
+.icon i {
+    margin-right: 5px;
 }
- .stat-card {
-     background: #cc445e;
-     color: white;
-     padding: 20px;
-     border-radius: 8px;
-     text-align: center;
-     width: 219px;
-     font-family: Inter;
-     font-size: 1.2rem;
-     height: 148px;
+
+.stat-card {
+    background: #cc445e;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 219px;
+    font-family: Inter;
+    font-size: 1.2rem;
+    height: 148px;
 }
- .event-card {
-     background: #755840;
-     color: white;
-     padding: 20px;
-     height: 148px;
-     border-radius: 8px;
-     text-align: center;
-     font-family: Inter;
-     font-size: 1.2rem;
-     width: 219px;
+
+.event-card {
+    background: #755840;
+    color: white;
+    padding: 20px;
+    height: 148px;
+    border-radius: 8px;
+    text-align: center;
+    font-family: Inter;
+    font-size: 1.2rem;
+    width: 219px;
 }
- .number {
-     font-weight: 500;
-     font-size: 48px;
-     font-family: Inter;
-     line-height: 100%;
-     color: white;
-     margin-top: 30px;
+
+.number {
+    font-weight: 500;
+    font-size: 48px;
+    font-family: Inter;
+    line-height: 100%;
+    color: white;
+    margin-top: 30px;
 }
- .ca-details {
-     font-weight: 400;
-     font-size: 20px;
-     font-family: Inter;
-     line-height: 100%;
+
+.ca-details {
+    font-weight: 400;
+    font-size: 20px;
+    font-family: Inter;
+    line-height: 100%;
 }
- .days {
-     margin-top: 35px;
-     font-weight: 400;
-     font-family: Inter;
-     font-size: 16px;
-     line-height: 100%;
+
+.days {
+    margin-top: 35px;
+    font-weight: 400;
+    font-family: Inter;
+    font-size: 16px;
+    line-height: 100%;
 }
- .card-section {
-     display: flex;
-     gap: 35px;
-     width: 31.5%;
+
+.card-section {
+    display: flex;
+    gap: 35px;
+    width: 31.5%;
 }
- #news {
-     width: 975px;
-     margin-left: 10px;
+
+#news {
+    width: 67%;
+    margin-left: 10px;
 }
- .cardddd {
-     background: white;
-     width: 100%;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-bottom: 20px;
+
+.cardddd {
+    background: white;
+    width: 100%;
+    padding: 20px;
+    height: 390px;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
- .cardddd:first-child {
-     background: white;
-     width: 100%;
-     padding: 20px;
-     height: 390px;
-     border-radius: 10px;
-     margin-top: 20px;
+
+.cardddd:first-child {
+    background: white;
+    width: 100%;
+    padding: 20px;
+    height: 390px;
+    border-radius: 10px;
+    margin-top: 20px;
 }
- .event-list {
-     padding-top: 30px;
+
+.event-list {
+    padding-top: 30px;
 }
- .event-list {
-     display: flex;
-     flex-direction: column;
-     gap: 10px;
+
+.event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
- .event-item {
-     display: flex;
-     align-items: center;
-     gap: 10px;
+
+.event-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
- .event-item img {
-     width: 100%;
-     max-width: 50px;
-     height: 50px;
-     border-radius: 5px;
-     object-fit: cover;
+
+.event-item img {
+    width: 100%;
+    max-width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    object-fit: cover;
 }
- .event-details {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     flex: 1;
-     font-size: 0.875rem;
-     width: 100%;
+
+.event-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    font-size: 0.875rem;
+    width: 100%;
 }
- #ename {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 20px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+#ename {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- #view {
-     width: 100%;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #99816b;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     font-family: Inter;
-     color: white;
+
+#view {
+    width: 100%;
+    max-width: 120px;
+    height: 40px;
+    border-radius: 7px;
+    background-color: #99816b;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    font-family: Inter;
+    color: white;
 }
- #edit {
-     width: 100%;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #4c4036;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: white;
-     font-family: Inter;
+
+#edit {
+    width: 100%;
+    max-width: 120px;
+    height: 40px;
+    border-radius: 7px;
+    background-color: #4c4036;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    color: white;
+    font-family: Inter;
 }
- #new {
-     width: 100%;
-     max-width: 120px;
-     height: 40px;
-     border-radius: 7px;
-     background-color: #4c4036;
-     font-weight: 400;
-     font-size: 16px;
-     line-height: 100%;
-     color: white;
-     font-family: Inter;
+
+#new {
+    width: 100%;
+    max-width: 120px;
+    height: 40px;
+    border-radius: 7px;
+    background-color: #4c4036;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    color: white;
+    font-family: Inter;
 }
- .card {
-     background: white;
-     border-radius: 10px;
-     flex: 1;
-     width: 65%;
-     height: auto;
-     padding-bottom: 15px;
-     border: none;
+
+.card {
+    background: white;
+    border-radius: 10px;
+    flex: 1;
+    width: 65%;
+    height: auto;
+    padding-bottom: 15px;
+    border: none;
 }
- .site-footer {
-     padding: 15px 0;
-     text-align: center;
-     font-size: 14px;
-     color: #99816b;
-     bottom: 0;
-     left: 0;
-     width: 100%;
-     position: relative;
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.site-footer {
+    padding: 15px 0;
+    text-align: center;
+    font-size: 14px;
+    color: #99816b;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    position: relative;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- .ultrahead {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 72px;
-     line-height: 20px;
-     letter-spacing: 0%;
+
+.ultrahead {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 72px;
+    line-height: 20px;
+    letter-spacing: 0%;
 }
- .heading {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 36px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.heading {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- .head {
-     font-family: Inter;
-     font-weight: 500;
-     font-style: Medium;
-     font-size: 24px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.head {
+    font-family: Inter;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- .clubhead {
-     font-family: Inter;
-     font-weight: 600;
-     font-style: Semi Bold;
-     font-size: 20px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.clubhead {
+    font-family: Inter;
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- .subhead {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 18px;
-     line-height: 36px;
-     letter-spacing: 0%;
+
+.subhead {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 18px;
+    line-height: 36px;
+    letter-spacing: 0%;
 }
- .memtext {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 16px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.memtext {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- .prehead {
-     font-family: Inter;
-     font-weight: 400;
-     font-style: Regular;
-     font-size: 14px;
-     line-height: 20px;
-     letter-spacing: 0%;
+
+.prehead {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0%;
 }
- .galtext {
-     font-family: Inter;
-     font-weight: 400;
-     font-size: 12px;
-     line-height: 100%;
-     letter-spacing: 0%;
+
+.galtext {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
 }
- .event-img, .fallback-box {
-     width: 100%;
-     max-width: 50px;
-     height: 50px;
-     border-radius: 5px;
-     object-fit: cover;
-     background-color: #f0f0f0;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+.event-img,
+.fallback-box {
+    width: 100%;
+    max-width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    object-fit: cover;
+    background-color: #f0f0f0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
- .fallback-box {
-     font-size: 14px;
-     color: #888;
+
+.fallback-box {
+    font-size: 14px;
+    color: #888;
 }
- .icon-circles .flickr-dots i, .flickr-dots i{
-     font-size: 8px;
-     padding-bottom: 8px;
-     margin: 1px;
+
+.icon-circles .flickr-dots i,
+.flickr-dots i {
+    font-size: 8px;
+    padding-bottom: 8px;
+    margin: 1px;
 }
- .form-control {
-     height: 50px;
-     font-size: 16.61px;
-     font-weight: 400;
-     padding: 12px;
-     border-radius: 5px;
-     color: #4C4036;
-     border: 1.04px solid #99816B;
+
+.form-control {
+    height: 50px;
+    font-size: 16.61px;
+    font-weight: 400;
+    padding: 12px;
+    border-radius: 5px;
+    color: #4C4036;
+    border: 1.04px solid #99816B;
 }
- .image-card {
-     position: relative;
-     background: #f5ede7;
-     border-radius: 12px;
-     padding: 15px;
-     width: 100%;
-     max-width: 400px;
-     margin-bottom: 20px;
+
+.image-card {
+    position: relative;
+    background: #f5ede7;
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
 }
- .preview-image {
-     width: 100%;
-     border-radius: 10px;
-     object-fit: cover;
+
+.preview-image {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
 }
- .caption-box {
-     width: 100%;
-     margin-top: 10px;
-     padding: 12px;
-     border: 1px solid #d9d9d9;
-     border-radius: 8px;
-     font-size: 14px;
-     resize: none;
-     height: 70px;
-     outline: none;
+
+.caption-box {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    font-size: 14px;
+    resize: none;
+    height: 70px;
+    outline: none;
 }
- .caption-box:focus {
-     border-color: #c3b2a6;
+
+.caption-box:focus {
+    border-color: #c3b2a6;
 }
- .close-btn {
-     position: absolute;
-     top: 8px;
-     right: 10px;
-     background: #d9534f;
-     border: none;
-     color: white;
-     font-size: 20px;
-     font-weight: bold;
-     padding: 2px 8px;
-     border-radius: 50%;
-     cursor: pointer;
-     line-height: 18px;
+
+.close-btn {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: #d9534f;
+    border: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    line-height: 18px;
 }
- .close-btn:hover {
-     background: #c9302c;
+
+.close-btn:hover {
+    background: #c9302c;
 }
- .attachment-box {
-     width: 60px;
-     height: 60px;
-     background: #ece8e3;
-     border-radius: 6px;
-     padding: 5px;
-     text-align: center;
+
+.attachment-box {
+    width: 60px;
+    height: 60px;
+    background: #ece8e3;
+    border-radius: 6px;
+    padding: 5px;
+    text-align: center;
 }
- .file-icon {
-     font-size: 26px;
+
+.file-icon {
+    font-size: 26px;
 }
- .file-name {
-     font-size: 10px;
-     display: block;
-     margin-top: 2px;
-     text-overflow: ellipsis;
-     overflow: hidden;
-     width: 100%;
-     white-space: nowrap;
+
+.file-name {
+    font-size: 10px;
+    display: block;
+    margin-top: 2px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
 }
- .remove-btn {
-     position: absolute;
-     top: -6px;
-     right: -6px;
-     background: red;
-     color: white;
-     border: none;
-     border-radius: 50%;
-     font-size: 12px;
-     width: 20px;
-     height: 20px;
+
+.remove-btn {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 12px;
+    width: 20px;
+    height: 20px;
 }
 </style>

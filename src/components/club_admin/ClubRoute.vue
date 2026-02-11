@@ -24,7 +24,6 @@
         </div>
     </div>
 
-    <!-- Tabs -->
     <div class="tab-control">
         <div v-for="(step, index) in steps" :key="index" class="step" :class="{ active: index === currentStep }" @click="selectStep(index)">
             <span class="circle">{{ index + 1 }}</span>
@@ -41,17 +40,11 @@
 </template>
 
 <script setup>
-import {
-    ref,
-    onMounted
-} from 'vue';
+import { ref, onMounted } from 'vue';
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
 import ClubProfile from "@/partials/club_admin/club/ClubProfile.vue";
-import {
-    useEventStore
-} from "@/stores/club_admin/EventStore";
-
+import { useEventStore } from "@/stores/club_admin/EventStore";
 import Step1General from '@/steps_club/Step1General.vue';
 import Step2Appearance from '@/steps_club/Step2Appearance.vue';
 import Step3Membership from '@/steps_club/Step3Membership.vue';
@@ -123,5 +116,5 @@ body {
  .step.active .label {
      font-weight: bold;
      color: #CC445E;
- }
+}
 </style>

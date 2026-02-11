@@ -9,15 +9,9 @@
     </div>
     <div v-for="(row, rowIndex) in chunkedCards" :key="rowIndex" class="row-wrapper">
         <div class="galleriy">
-            <div v-for="(item, index) in row" :key="item.id" class="galleriy-item" :class="{
-                'bottom-left-radius': rowIndex === 1 && index === 0,
-                'bottom-right-radius': rowIndex === 1 && index === row.length - 1
-                }">
+            <div v-for="(item, index) in row" :key="item.id" class="galleriy-item" :class="{ 'bottom-left-radius': rowIndex === 1 && index === 0, 'bottom-right-radius': rowIndex === 1 && index === row.length - 1 }">
                 <img :src="item.image" alt="Gallery Image" />
-                <div :class="[
-              'galleriy-infos',
-              (rowIndex * 4 + index) % 2 === 0 ? 'even-info' : 'odd-info',
-            ]">
+                <div :class="[ 'galleriy-infos', (rowIndex * 4 + index) % 2 === 0 ? 'even-info' : 'odd-info', ]">
                     <span>{{item.name}}</span>
                     <div class="profile-icon">
                         <div class="icons">
@@ -140,24 +134,20 @@ export default {
 
 <style scoped>
 .row-wrapper {
-    display: flex;
+     display: flex;
 }
-
 .even-info {
-    background-color: #99816b;
+     background-color: #99816b;
 }
-
 .odd-info {
-    background-color: #4c4036;
+     background-color: #4c4036;
 }
-
 .bottom-left-radius img,
 .bottom-left-radius .pic-info {
-    border-bottom-left-radius: 10px;
+     border-bottom-left-radius: 10px;
 }
-
 .bottom-right-radius img,
 .bottom-right-radius .pic-info {
-    border-bottom-right-radius: 10px;
+     border-bottom-right-radius: 10px;
 }
 </style>

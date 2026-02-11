@@ -98,16 +98,10 @@
 </template>
 
 <script setup>
-import {
-    onMounted,
-    ref,
-    computed
-} from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import NavigationRoute from "@/components/NavigationRoute.vue";
 import HeaderRoute from "@/components/HeaderRoute.vue";
-import {
-    useClubGallery
-} from '@/stores/club_admin/ClubGallery'
+import { useClubGallery } from '@/stores/club_admin/ClubGallery'
 import Ima from "@/assets/icons/gallery/image.svg"
 import Hea from "@/assets/icons/gallery/heart.svg"
 import Com from "@/assets/icons/gallery/comment.svg"
@@ -178,7 +172,7 @@ onMounted(async () => {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }

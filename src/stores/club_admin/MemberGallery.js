@@ -12,7 +12,7 @@ export function useMemberGallery() {
   const fetchMemberGallery = async () => {
     loading.value = true
     error.value = null
-  
+
     try {
       const res = await apiClient.get('/members-galleries')
       const galleryList = res?.data?.data || []
@@ -21,7 +21,7 @@ export function useMemberGallery() {
       console.log(galleryList)
       galleryList.forEach((member) => {
         console.log(`👤 Member: ${member.first_name} ${member.last_name}`)
-        
+
         if (Array.isArray(member.galleries)) {
           member.galleries.forEach((gallery, index) => {
             console.log(`📁 Gallery ${index + 1}: ${gallery.gallery_name || 'No name'}`)
@@ -36,17 +36,17 @@ export function useMemberGallery() {
         } else {
           console.log('❌ No galleries found for this member')
         }
-  
+
         console.log('--------------------------')
       })
-  
+
     } catch (err) {
       error.value = err.message || 'Failed to load galleries'
     } finally {
       loading.value = false
     }
   }
-  
+
 
   return {
     member_gallery,

@@ -594,6 +594,6 @@ export default {
 
 <style scoped>
 .row-wrapper {
-    display: flex;
+     display: flex;
 }
 </style>

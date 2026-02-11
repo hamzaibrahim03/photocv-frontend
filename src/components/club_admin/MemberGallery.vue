@@ -45,7 +45,6 @@
             <div v-for="(row, rowIndex) in chunkedCards" :key="'row-' + rowIndex" class="row g-0" style="margin-left: 0; margin-right: 0;">
                 <div v-for="(gallery, index) in row" :key="gallery.id" class="galleriy col-4 p-0">
                     <div class="galleriy-item">
-                        <!-- Corrected image path -->
                         <img :src="gallery.galleries[0].photos[0].image_url" alt="Gallery Photo" class="img-fluid" style="border-radius:0px; max-width: 493px; max-height: 370px; object-fit: cover;" />
                         <div style="border-radius: 0px" :class="[ 'galleriy-infos', index % 2 === 0 ? 'even-info' : 'odd-info', ]">
                             <div class="gal-item">
@@ -77,28 +76,28 @@
     </div>
 
     <div class="dt-paging">
-    <nav aria-label="pagination">
-        <button class="dt-paging-button first" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(1)" aria-label="First">
-            «
-        </button>
+        <nav aria-label="pagination">
+            <button class="dt-paging-button first" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(1)" aria-label="First">
+                «
+            </button>
 
-        <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
-            ‹
-        </button>
+            <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
+                ‹
+            </button>
 
-        <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
-            {{ page }}
-        </button>
+            <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
+                {{ page }}
+            </button>
 
-        <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
-            ›
-        </button>
+            <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
+                ›
+            </button>
 
-        <button class="dt-paging-button last" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(totalPages)" aria-label="Last">
-            »
-        </button>
-    </nav>
-</div>
+            <button class="dt-paging-button last" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(totalPages)" aria-label="Last">
+                »
+            </button>
+        </nav>
+    </div>
 </section>
 </template>
 
@@ -111,7 +110,10 @@ import Hea from "@/assets/icons/gallery/heart.svg"
 import Com from "@/assets/icons/gallery/comment.svg"
 import { useMemberGallery } from '@/stores/club_admin/MemberGallery'
 
-const { member_gallery, fetchMemberGallery } = useMemberGallery()
+const {
+    member_gallery,
+    fetchMemberGallery
+} = useMemberGallery()
 
 const cards = ref([])
 const loading = ref(true)
@@ -150,7 +152,6 @@ onMounted(async () => {
 })
 </script>
 
-
 <style scoped>
 .container {
      max-width: 1810px;
@@ -176,7 +177,7 @@ onMounted(async () => {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }

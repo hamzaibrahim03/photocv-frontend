@@ -12,7 +12,7 @@ export const useRytonEventStore = defineStore('event', {
     async fetchRytonEventData(domain) {
       this.loading = true;
       try {
-        const response = await api.getAllRytonEvents(domain); 
+        const response = await api.getAllRytonEvents(domain);
         this.eventData = response.data;
         console.log("Event data =>", this.eventData);
         this.error = null;
@@ -21,6 +21,6 @@ export const useRytonEventStore = defineStore('event', {
       } finally {
         this.loading = false;
       }
-    }    
+    }
   }
 });

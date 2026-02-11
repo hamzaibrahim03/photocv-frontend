@@ -4,7 +4,7 @@
 <section class="content">
     <div class="dashboard-card">
         <div class="profile-card">
-            <div class="profile-left"  style="align-items: center">
+            <div class="profile-left" style="align-items: center">
                 <img class="img-fluid" :src="user.profile_image" alt="Profile Picture" />
                 <div class="profile-info">
                     <h2 class="name">{{ user.first_name }}</h2>
@@ -121,10 +121,7 @@ import { useNoticeStore } from '@/stores/club_admin/NoticeStore'
 import RecentComments from "@/partials/club_admin/notices/RecentComments.vue";
 import MoreNotices from "@/partials/club_admin/notices/MoreNotices.vue";
 
-const {
-    notices,
-    fetchNotices,
-} = useNoticeStore()
+const { notices, fetchNotices } = useNoticeStore()
 
 const search = ref('')
 const currentPage = ref(1)
@@ -139,7 +136,6 @@ const debounce = (func, delay) => {
         }, delay)
     }
 }
-
 
 let lastSearched = ''
 
@@ -213,21 +209,18 @@ const formatDate = (date) => {
 }
 
 const user = useUserStore();
-
 </script>
 
 <style scoped>
 #news {
-    margin-top: 8%
+     margin-top: 8%
 }
-
 .icon-container i {
-    color: #666;
-    font-size: 16px;
+     color: #666;
+     font-size: 16px;
 }
-
 .custom-card {
-    margin-left: 1%;
-    width: 103%
+     margin-left: 1%;
+     width: 103%
 }
 </style>

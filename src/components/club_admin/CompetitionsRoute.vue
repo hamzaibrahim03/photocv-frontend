@@ -54,97 +54,102 @@
                     </div>
                 </div>
             </section>
-            <div class="row">
-                <div class="col-md-8">
-                    <section>
-                        <div class="container">
-                            <div class="mt-4">
-                                <div class="d-flex justify-content-end">
-                                    <button class="btn" id="edit" style="max-width: 240px; width: 240px; height: 40px;" @click="navigate">Export Competitions&nbsp;<i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i></button>
-                                </div>
-                                <div v-if="filteredCompetitions.length">
-                                    <div v-for="competition in filteredCompetitions" :key="competition.id" class="custom-card mb-3 p-3">
-                                        <div class="d-flex gap-3" style="flex: 1">
-                                            <img :src="competition.featured_image" alt="Competition Image" />
-                                            <div class="flex-grow-1 d-flex flex-column justify-content-between">
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <h5>{{ competition.name || 'Untitled Competition' }}</h5>
-                                                    <div class="icon-container ms-3">
-                                                        <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
-                                                        <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
-                                                    </div>
-                                                </div>
-                                                <p style="margin: 5px 0; font-size: 14px; columns: 2">
-                                                    <strong style="color: red">Open:</strong>{{formatDate(competition.start_date)}}
-                                                    <br />
-                                                    <strong style="color: brown">Result:</strong> {{formatDate(competition.result_announcement_date)}}
-                                                    <br />
-                                                    <strong style="color: brown">Theme:</strong>{{competition.theme_id}}<br />
-                                                    <strong style="color: red">Close:</strong>{{formatDate(competition.submission_deadline)}}
-                                                    <br />
-                                                    <strong style="color: brown">Max:</strong>{{competition.max_entries_print}}
-                                                    <br />
-                                                    <strong style="color: brown">Format:</strong> {{competition.allowed_image_formats}}
-                                                </p>
-                                                <p class="text-secondary">
-                                                    {{ competition.description || 'No description provided.' }}
-                                                </p>
-                                                <div class="d-flex justify-content-between align-items-center mt-3 w-100">
-                                                    <div class="button-group d-flex align-items-center gap-2">
-                                                        <router-link :to="{ name: 'competitionsingle', params: { id: competition.id } }" custom v-slot="{ navigate }">
-                                                            <button class="btn me-2" id="view" @click="navigate">View</button>
-                                                        </router-link>
-                                                        <router-link :to="{ name: 'comp_edit', params: { id: competition.id } }" custom v-slot="{ navigate }">
-                                                            <button class="btn" id="edit" @click="navigate">Edit</button>
-                                                        </router-link>
-                                                    </div>
 
-                                                    <div class="d-flex align-items-center gap-2">
-                                                        <img :src="Book" alt="icon" style="width:20px; height:20px" />
-                                                        <img :src="Share" alt="icon" style="width:20px; height:20px" />
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <section>
+                                <div class="container">
+                                    <div class="mt-4">
+                                        <div class="d-flex justify-content-end">
+                                            <button class="btn" id="edit" style="max-width: 240px; width: 240px; height: 40px;" @click="navigate">Export Competitions&nbsp;<i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown"></i></button>
+                                        </div>
+                                        <div v-if="filteredCompetitions.length">
+                                            <div v-for="competition in filteredCompetitions" :key="competition.id" class="custom-card mb-3 p-3">
+                                                <div class="d-flex gap-3" style="flex: 1">
+                                                    <img :src="competition.featured_image" alt="Competition Image" />
+                                                    <div class="flex-grow-1 d-flex flex-column justify-content-between">
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h5>{{ competition.name || 'Untitled Competition' }}</h5>
+                                                            <div class="icon-container ms-3">
+                                                                <img :src="Mess" alt="icon" style="width: 20px; height: 20px" />
+                                                                <img :src="Cam" alt="icon" style="width: 20px; height: 20px" />
+                                                                <img :src="Pro" alt="icon" style="width: 20px; height: 20px" />
+                                                                <img :src="Cal" alt="icon" style="width: 20px; height: 20px" />
+                                                            </div>
+                                                        </div>
+                                                        <p style="margin: 5px 0; font-size: 14px; columns: 2">
+                                                            <strong style="color: red">Open:</strong>{{formatDate(competition.start_date)}}
+                                                            <br />
+                                                            <strong style="color: brown">Result:</strong> {{formatDate(competition.result_announcement_date)}}
+                                                            <br />
+                                                            <strong style="color: brown">Theme:</strong>{{competition.theme_id}}<br />
+                                                            <strong style="color: red">Close:</strong>{{formatDate(competition.submission_deadline)}}
+                                                            <br />
+                                                            <strong style="color: brown">Max:</strong>{{competition.max_entries_print}}
+                                                            <br />
+                                                            <strong style="color: brown">Format:</strong> {{competition.allowed_image_formats}}
+                                                        </p>
+                                                        <p class="text-secondary" v-html=" competition.description || 'No description provided.'">
+                                                        </p>
+                                                        <div class="d-flex justify-content-between align-items-center mt-3 w-100">
+                                                            <div class="button-group d-flex align-items-center gap-2">
+                                                                <router-link :to="{ name: 'competitionsingle', params: { id: competition.id } }" custom v-slot="{ navigate }">
+                                                                    <button class="btn me-2" id="view" @click="navigate">View</button>
+                                                                </router-link>
+                                                                <router-link :to="{ name: 'comp_edit', params: { id: competition.id } }" custom v-slot="{ navigate }">
+                                                                    <button class="btn" id="edit" @click="navigate">Edit</button>
+                                                                </router-link>
+                                                            </div>
+
+                                                            <div class="d-flex align-items-center gap-2">
+                                                                <img :src="Book" alt="icon" style="width:20px; height:20px" />
+                                                                <img :src="Share" alt="icon" style="width:20px; height:20px" />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div v-else class="text-center text-muted">No competitions found.</div>
+                                        <div class="dt-paging">
+                                            <nav aria-label="pagination">
+                                                <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
+                                                    ‹
+                                                </button>
+
+                                                <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
+                                                    {{ page }}
+                                                </button>
+
+                                                <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
+                                                    ›
+                                                </button>
+                                            </nav>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div v-else class="text-center text-muted">No competitions found.</div>
-                                <div class="dt-paging">
-                                    <nav aria-label="pagination">
-                                        <button class="dt-paging-button previous" :class="{ disabled: currentPage === 1 }" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)" aria-label="Previous">
-                                            ‹
-                                        </button>
-
-                                        <button v-for="page in totalPages" :key="page" class="dt-paging-button" :class="{ current: page === currentPage }" @click="goToPage(page)">
-                                            {{ page }}
-                                        </button>
-
-                                        <button class="dt-paging-button next" :class="{ disabled: currentPage === totalPages }" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)" aria-label="Next">
-                                            ›
-                                        </button>
-                                    </nav>
+                            </section>
+                        </div>
+                        <div class="col-md-4">
+                            <section>
+                                <div class="container" id="right">
+                                    <div class="cardddd" style="padding: 0; height: auto">
+                                        <CalendarDashboard />
+                                    </div>
+                                    <div id="news">
+                                        <RecentSubmissions />
+                                        <MoreCompetitions style="height: auto" />
+                                    </div>
                                 </div>
-                            </div>
+                            </section>
                         </div>
-                    </section>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <section>
-                        <div class="container" id="right">
-                            <div class="cardddd" style="padding: 0; height: auto">
-                                <CalendarDashboard />
-                            </div>
-                            <div id="news">
-                                <RecentSubmissions />
-                                <MoreCompetitions style="height: auto"/>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
+            </section>
+
         </div>
     </div>
 </div>
@@ -220,14 +225,14 @@ const fetchSearchedCompetitions = debounce(async (query) => {
 }, 400)
 
 const loadCompetitions = async () => {
-  isLoading.value = true
-  try {
-    await fetchCompetitions()  
-  } catch (error) {
-    console.error("Error fetching competitions:", error)
-  } finally {
-    isLoading.value = false  
-  }
+    isLoading.value = true
+    try {
+        await fetchCompetitions()
+    } catch (error) {
+        console.error("Error fetching competitions:", error)
+    } finally {
+        isLoading.value = false
+    }
 }
 
 watch(search, (newSearch) => {
@@ -273,7 +278,6 @@ const formatDate = (date) => {
     })
 }
 
-
 function goToPage(page) {
     if (page >= 1 && page <= totalPages.value) {
         currentPage.value = page
@@ -306,7 +310,7 @@ function goToPage(page) {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }
@@ -461,7 +465,7 @@ function goToPage(page) {
      margin-bottom: 15px;
      padding: 30px;
      border-radius: 10px;
-     width: 975px;
+     width: 100%;
      height: 310px;
      margin-right: auto;
      flex-direction: row;

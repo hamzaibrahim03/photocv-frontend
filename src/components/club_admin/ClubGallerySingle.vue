@@ -25,13 +25,7 @@
     <div class="card" style="height: 600px">
         <h5 style="margin-top: 15px; margin-left: 10px">Club Gallery - Food</h5>
         <a class="prev" onclick="changeImage(-1)">&#10094;</a>
-        <img id="display-img" class="card-img-top" src="" alt="Selected Image" style="
-          height: 450px;
-          width: 92%;
-          margin-left: 40px;
-          border-radius: 0px;
-          margin-top: 10px;
-        " />
+        <img id="display-img" class="card-img-top" src="" alt="Selected Image" style=" height: 450px; width: 92%; margin-left: 40px; border-radius: 0px; margin-top: 10px; " />
         <p id="img-description" class="card-text" style="margin-top: 10px; margin-left: 40px"></p>
         <a class="nexts" onclick="changeImage(1)">&#10095;</a>
     </div>
@@ -49,13 +43,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="comments-card" style="
-            width: 100%;
-            margin-left: 4%;
-            max-height: 250px;
-            overflow-y: auto;
-            padding-right: 10px;
-          ">
+            <div class="comments-card" style=" width: 100%; margin-left: 4%; max-height: 250px; overflow-y: auto; padding-right: 10px; ">
                 <h5>Comments</h5>
                 <div class="row">
                     <div class="col-md-1">
@@ -357,7 +345,7 @@ export default {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }

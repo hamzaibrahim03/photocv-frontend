@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -53,8 +53,8 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.vue" class="icon notification-desktop">
-                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
+                        <a class="icon notification-desktop">
+                            <NotificationBell />
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
@@ -168,10 +168,10 @@
                                     <div class="card">
                                         <img :src="sincomp.featured_image_url" alt="Meeting" style="max-width: 850px; height: 350px; border-radius: 8px"/>
                                         <div class="d-flex justify-content-between" style="width: 850px">
-                                            <h5 class="head" :style="{color: Color.text_color, marginBottom: '0px'}">{{sincomp.name}}</h5>
-                                            <div class="d-flex align-items-center gap-2 mb-1">
-                                                <img :src="sincomp.competition_type.icon_url" style="width:20px; height:20px" />
-                                                <h5 class="head m-0" :style="{ color: Color.text_color, fontWeight: '400', fontStyle: 'Regular', fontSize: '18px', lineHeight: '100%', letterSpacing: '0%' }">{{ sincomp.competition_type.name }}</h5>
+                                            <h5 class="head" :style="{color: Color.text_color}">{{sincomp.name}}</h5>
+                                            <div class="d-flex align-items-center justify-content-center gap-3">
+                                                <img class="head" :src="sincomp.competition_type.icon_url" style="width:20px; height:20px" />
+                                                <h5 class="head" :style="{ color: Color.text_color, fontWeight: '400', fontStyle: 'Regular', fontSize: '18px', lineHeight: '100%', letterSpacing: '0%' }">{{ sincomp.competition_type.name }}</h5>
                                             </div>
                                         </div>
                                         <p id="edate" :style="{color: Color.accent_color}">{{formatDate(sincomp.start_date)}}</p>
@@ -198,7 +198,12 @@
                                                 <h5 class="clubhead" :style="{color: Color.accent_color}">Competition Judge</h5>
                                             </div>
                                             <div class="col-md-7">
-                                                <h5 class="clubhead" :style="{color: Color.text_color}">{{sincomp.judging_panel}}</h5>
+                                                <h5 class="clubhead" :style="{color: Color.text_color}">
+                                                    <span v-for="(judge, i) in sincomp.judges" :key="judge.id">
+                                                        {{ judge.first_name }} {{ judge.last_name }}
+                                                        <span v-if="i < sincomp.judges.length - 1">, </span>
+                                                    </span>
+                                                </h5>
                                             </div>
                                         </div>
             
@@ -509,6 +514,7 @@ import { useHomeStore } from '@/stores/club_public/ClubData';
 import { storeToRefs } from 'pinia'
 import Event from "@/assets/icons/navigation/events.svg"
 import Competition from "@/assets/icons/navigation/competition.svg"
+import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
 
 
 
@@ -768,7 +774,6 @@ onMounted(async () => {
      line-height: 100%;
      letter-spacing: 0%;
      margin-top: 50px;
-     margin-bottom: 70px;
 }
  .card .text-secondary {
      font-family: Inter;
@@ -802,10 +807,12 @@ onMounted(async () => {
      border-bottom: 1px solid rgba(217, 217, 217, 1);
 }
  .resultpics {
-     margin-top: -15px;
+     margin-top: 60px;
+     margin-left: 20px;
      display: grid;
      grid-template-columns: repeat(3, 1fr);
      width: 100%;
+     max-width: 1068px;
 }
  .resultpics-items {
      position: relative;
@@ -816,6 +823,7 @@ onMounted(async () => {
      height: 364px;
      object-fit: cover;
      object-position: top;
+     max-width: 356px;
 }
  .resultpics-infos {
      background: #4c403699;
@@ -839,7 +847,7 @@ onMounted(async () => {
      height: 36px !important;
 }
  #joincontainer {
-     margin-top: 180px;
+     margin-top: 80px;
 }
  .site-footer {
      padding-top: 25px;
@@ -960,8 +968,8 @@ onMounted(async () => {
      padding: 20px;
      height: auto;
      border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
      margin-top: -5px;
 }
  .season-card {
@@ -970,8 +978,8 @@ onMounted(async () => {
      width: 470px;
      padding: 20px;
      border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
 }
  .more-card {
      height: 580px;
@@ -979,8 +987,8 @@ onMounted(async () => {
      width: 470px;
      padding: 20px;
      border-radius: 10px;
-     margin-bottom: 20px;
-     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
 }
  .event-list {
      padding-top: 0px;
@@ -1148,12 +1156,9 @@ onMounted(async () => {
      border: none;
      color: white 
 }
- .divider5{
-     width: 1100px;
-     height: 1px;
-     background-color: rgba(217, 217, 217, 1);
-     margin-top: 30px;
-     border-bottom: 1px solid rgba(217, 217, 217, 1);
+.divider5 {
+    margin-bottom: 0px;
+    margin-top: 30px;
 }
  @media only screen and (max-width: 1399px) {
      #overall {

@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" :class="{ active: $route.path === '/ryton' }" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color, fontFamily: 'Inter', fontSize: '18px' }">
+                            <a class="nav-link" :class="{ active: $route.path === '/ryton' }" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -53,8 +53,8 @@
                     </ul>
 
                     <div class="right-header d-flex align-items-center">
-                        <a href="notification.vue" class="icon notification-desktop">
-                            <i class="fa-regular fa-bell text-lg mx-3" :style="{ color: Color.text_color, fontSize: '22px' }"></i>
+                        <a class="icon notification-desktop">
+                            <NotificationBell />
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
@@ -145,18 +145,20 @@
             </section>
 
             <section class="competition-section">
-                <h2 class="heading">
-                    {{ competitionTitle }} - {{ competitionSeason }}
-                </h2>
-                <div class="gallery-grid">
-                    <div v-for="item in entries" :key="item.id" class="gallery-card" @click="openSlide(item)">
-                        <img :src="item.image" class="gallery-img" />
-                        <div class="overlay">
-                            <div class="text">
-                                <p class="title">{{ item.title }}</p>
-                                <span class="author">by {{ item.author }}</span>
+                <div class="container">
+                    <h2 class="heading">
+                        {{ competitionTitle }} - {{ competitionSeason }}
+                    </h2>
+                    <div class="gallery-grid">
+                        <div v-for="item in entries" :key="item.id" class="gallery-card" @click="openSlide(item)">
+                            <img :src="item.image" class="gallery-img" />
+                            <div class="overlay">
+                                <div class="text">
+                                    <p class="title">{{ item.title }}</p>
+                                    <span class="author">by {{ item.author }}</span>
+                                </div>
+                                <img v-if="getMedalIcon(item.position)" :src="getMedalIcon(item.position).src" :alt="getMedalIcon(item.position).name" id="badge" />
                             </div>
-                            <img v-if="getMedalIcon(item.position)" :src="getMedalIcon(item.position).src" :alt="getMedalIcon(item.position).name" id="badge" />
                         </div>
                     </div>
                 </div>
@@ -323,6 +325,7 @@ import {
     useRoute,
     useRouter
 } from 'vue-router';
+import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
 
 dayjs.extend(relativeTime);
 
@@ -408,7 +411,7 @@ const suggestion = computed(() => {
 const openSlide = (clickedImage) => {
     if (!clickedImage) return
 
-    const allImages = entries.value // ✅ FIX
+    const allImages = entries.value 
 
     const startIndex = allImages.findIndex(
         img => img.id === clickedImage.id
@@ -587,7 +590,10 @@ onMounted(async () => {
                     image: item.entry_image,
                     title: item.entry_image_title,
                     author: item.member_name || "Unknown",
-                    position: item.position
+                    position: item.position,
+                    exif: item.exif ?? {},
+                    comments: item.comments ?? [],
+                    likes: item.likes_count
                 });
             }
         });
@@ -801,13 +807,11 @@ onUnmounted(() => {
     grid-template-columns: repeat(4, 1fr);
 }
 
-/* Card */
 .gallery-card {
     position: relative;
     overflow: hidden;
 }
 
-/* Image */
 .gallery-img {
     max-width: 100%;
     height: 100%;
@@ -815,7 +819,6 @@ onUnmounted(() => {
     display: block;
 }
 
-/* Overlay */
 .overlay {
     position: absolute;
     bottom: 0;

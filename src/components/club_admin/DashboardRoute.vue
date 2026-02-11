@@ -7,59 +7,59 @@
 
         <div class="content" style="margin-bottom: 20px">
             <section>
-            <div class="container">
-                <div class="dashboard-card" id="cl">
-                    <div class="profile-card">
-                        <div class="profile-left">
-                            <img class="img-fluid" :src="dashboardData?.data?.user_details?.profile_image" alt="Profile Picture"/>
-                            <div class="profile-info" style="margin-left: 15px">
-                                <span class="greeting">
-                                    {{ greetingMessage + dashboardData?.data?.user_details?.username }}
-                                </span>
-                                <h2 class="name">
-                                    {{ dashboardData?.data?.user_details?.first_name }}
-                                </h2>
-                                <p class="role">
-                                    {{ dashboardData?.data?.user_details?.role }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="profile-icons">
-                            <div class="icon">
-                                <span>20</span>
-                                <img :src="Image" alt="image-icon" style="width: 15px; height: 15px"/>
-                            </div>
-                            <div class="icon">
-                                <span>53</span>
-                                <img :src="Comment" alt="comment-icon" style="width: 15px; height: 15px"/>
-                            </div>
-                            <div class="icon">
-                                <span>39</span>
-                                <img :src="Point" alt="point-icon" style="width: 15px; height: 15px"/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-section">
-                        <div class="stat-card">
-                            <small class="ca-details">Members</small>
-                            <h3 class="number">{{ dashboardStore?.dashboardData?.data?.total_members_count }}</h3>
-                        </div>
-
-                        <div class="event-card">
-                            <small class="ca-details">Next Event</small>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <h3 class="number">{{ remainingDays }}</h3>
+                <div class="container">
+                    <div class="dashboard-card" id="cl">
+                        <div class="profile-card">
+                            <div class="profile-left">
+                                <img class="img-fluid" :src="dashboardData?.data?.user_details?.profile_image" alt="Profile Picture" />
+                                <div class="profile-info" style="margin-left: 15px">
+                                    <span class="greeting">
+                                        {{ greetingMessage + dashboardData?.data?.user_details?.username }}
+                                    </span>
+                                    <h2 class="name">
+                                        {{ dashboardData?.data?.user_details?.first_name }}
+                                    </h2>
+                                    <p class="role">
+                                        {{ dashboardData?.data?.user_details?.role }}
+                                    </p>
                                 </div>
-                                <div class="days col-md-7">
-                                    <span>days to go</span>
+                            </div>
+                            <div class="profile-icons">
+                                <div class="icon">
+                                    <span>20</span>
+                                    <img :src="Image" alt="image-icon" style="width: 15px; height: 15px" />
+                                </div>
+                                <div class="icon">
+                                    <span>53</span>
+                                    <img :src="Comment" alt="comment-icon" style="width: 15px; height: 15px" />
+                                </div>
+                                <div class="icon">
+                                    <span>39</span>
+                                    <img :src="Point" alt="point-icon" style="width: 15px; height: 15px" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-section">
+                            <div class="stat-card">
+                                <small class="ca-details">Members</small>
+                                <h3 class="number">{{ dashboardStore?.dashboardData?.data?.total_members_count }}</h3>
+                            </div>
+
+                            <div class="event-card">
+                                <small class="ca-details">Next Event</small>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <h3 class="number">{{ remainingDays }}</h3>
+                                    </div>
+                                    <div class="days col-md-7">
+                                        <span>days to go</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </section>
 
             <section>
@@ -186,7 +186,7 @@
                             <div class="pics">
                                 <div v-for="(item, index) in chunkedCards.flat() || []" :key="item.id || index" class="pics-items" :class="getPositionClass(index, chunkedCards.flat().length)">
                                     <div v-if="item.image_url">
-                                        <img :src="item.image_url" :alt="item.username" style="object-fit: cover; object-position: top;"/>
+                                        <img :src="item.image_url" :alt="item.username" style="object-fit: cover; object-position: top;" />
                                         <div class="pics-infos" :class="getPositionClass(index, chunkedCards.flat().length)" :style="{ backgroundColor: hexToRgba('#7FA483', 0.7) }">
                                             <div :style="{ color: 'white' }">
                                                 {{ item.gallery_name }}
@@ -211,7 +211,7 @@
 
                             <div class="pic">
                                 <div v-for="(item, index) in picture.slice(0, 6) || []" :key="item.id || index" class="pic-item" :class="getPositionClass(index, picture.length)">
-                                    <img v-if="item.image" class="img-fluid" :src="item.image" :alt="item.gallery_name" @error="item.image = null" style="object-fit: cover; object-position: top;"/>
+                                    <img v-if="item.image" class="img-fluid" :src="item.image" :alt="item.gallery_name" @error="item.image = null" style="object-fit: cover; object-position: top;" />
                                     <div class="pic-info" :class="getPositionClass(index, picture.length)" :style="{ backgroundColor: hexToRgba('#7FA483', 0.7) }">
                                         <div :style="{ color: 'white' }">
                                             {{ item.gallery_name }}
@@ -328,7 +328,7 @@
                             <div class="pics">
                                 <div v-for="(item, index) in chunkCards.flat()" :key="item.id || index" class="pics-items" :class="getPositionClass(index, chunkCards.flat().length)">
                                     <div v-if="item.photos && item.photos.length">
-                                        <img :src="item.photos[0].image" :alt="item.photos[0].title"/>
+                                        <img :src="item.photos[0].image" :alt="item.photos[0].title" />
                                         <div class="pics-infos" :class="getPositionClass(index, chunkCards.flat().length)" :style="{ backgroundColor: hexToRgba('#7FA483', 0.7) }">
                                             {{ item.gallery_name }}
                                         </div>
@@ -345,7 +345,7 @@
                 </div>
             </footer>
         </div>
-        
+
     </div>
 </div>
 </template>
@@ -363,93 +363,91 @@ import Loader from "@/components/LoaderAll.vue";
 
 const dashboardStore = useDashboardStore();
 const dashboardData = computed(() => dashboardStore.dashboardData);
-const columns = ref(5); 
+const columns = ref(5);
 const isLoading = ref(true);
-
 
 const hour = new Date().getHours();
 const greetingMessage = computed(() => {
-  if (hour >= 5 && hour < 12) return "Good morning!";
-  if (hour === 12) return "Good noon!";
-  if (hour > 12 && hour < 17) return "Good afternoon!";
-  if (hour >= 17 && hour < 21) return "Good evening!";
-  return "Good night!";
+    if (hour >= 5 && hour < 12) return "Good morning!";
+    if (hour === 12) return "Good noon!";
+    if (hour > 12 && hour < 17) return "Good afternoon!";
+    if (hour >= 17 && hour < 21) return "Good evening!";
+    return "Good night!";
 });
 
 const remainingDays = computed(() => {
-  const days = dashboardStore?.dashboardData?.data?.upcoming_event?.remaining_days;
+    const days = dashboardStore?.dashboardData?.data?.upcoming_event?.remaining_days;
 
-  if (!days && days !== 0) return "00";
+    if (!days && days !== 0) return "00";
 
-  return String(days).padStart(2, "0");
+    return String(days).padStart(2, "0");
 });
 
-
 const formatDate = (date) =>
-  new Date(date).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
+    new Date(date).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+    });
 
 const formatTime = (datetimeStr) => {
-  const date = new Date(datetimeStr);
-  return date.toLocaleTimeString("en-US", {
-      weekday: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+    const date = new Date(datetimeStr);
+    return date.toLocaleTimeString("en-US", {
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
 };
 const upcomingEvents = computed(() => {
-  const allEvents = dashboardStore.dashboardData?.data?.events || [];
-  const now = new Date();
+    const allEvents = dashboardStore.dashboardData?.data?.events || [];
+    const now = new Date();
 
-  return allEvents
-    .filter((event) => {
-      const eventDate = new Date(event.event_date);
-      return eventDate >= now;
-    })
-    .sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
+    return allEvents
+        .filter((event) => {
+            const eventDate = new Date(event.event_date);
+            return eventDate >= now;
+        })
+        .sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
 });
 
 const upcomingCompetitions = computed(() => {
-  const allCompetitions =
-    dashboardStore.dashboardData?.data?.competitions || [];
-  const now = new Date();
+    const allCompetitions =
+        dashboardStore.dashboardData?.data?.competitions || [];
+    const now = new Date();
 
-  return allCompetitions
-    .filter((competition) => {
-      const competitionDate = new Date(competition.start_date);
-      return competitionDate >= now;
-    })
-    .sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
+    return allCompetitions
+        .filter((competition) => {
+            const competitionDate = new Date(competition.start_date);
+            return competitionDate >= now;
+        })
+        .sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
 });
 
 const latestNews = computed(() => {
-  const allNews = dashboardStore.dashboardData?.data?.club_news || [];
-  const now = new Date();
+    const allNews = dashboardStore.dashboardData?.data?.club_news || [];
+    const now = new Date();
 
-  return allNews
-    .filter((news) => new Date(news.publish_date) <= now)
-    .sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date))
-    .slice(0, 6);
+    return allNews
+        .filter((news) => new Date(news.publish_date) <= now)
+        .sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date))
+        .slice(0, 6);
 });
 
 const recentNotices = computed(() => {
-  const notices = dashboardStore.dashboardData?.data?.member_notices || [];
-  const now = new Date();
-  const oneWeekAgo = new Date();
-  oneWeekAgo.setDate(now.getDate() - 30);
+    const notices = dashboardStore.dashboardData?.data?.member_notices || [];
+    const now = new Date();
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(now.getDate() - 30);
 
-  return notices
-    .filter((notice) => {
-      const createdDate = new Date(notice.created_at);
-      return createdDate >= oneWeekAgo && createdDate <= now;
-    })
-    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-    .slice(0, 6);
+    return notices
+        .filter((notice) => {
+            const createdDate = new Date(notice.created_at);
+            return createdDate >= oneWeekAgo && createdDate <= now;
+        })
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .slice(0, 6);
 });
- 
+
 const cards = computed(() => {
     const members = dashboardData.value?.data?.member_galleries || [];
 
@@ -465,25 +463,25 @@ const cards = computed(() => {
     }).filter(card => card.image_url);
 });
 const cardes = computed(
-  () => dashboardData.value?.data?.clubGalleries?.original?.data || []
+    () => dashboardData.value?.data?.clubGalleries?.original?.data || []
 );
 
 const chunkedCards = computed(() => {
-  const chunkSize = 5;
-  const chunks = [];
-  for (let i = 0; i < cards.value.length; i += chunkSize) {
-    chunks.push(cards.value.slice(i, i + chunkSize));
-  }
-  return chunks;
+    const chunkSize = 5;
+    const chunks = [];
+    for (let i = 0; i < cards.value.length; i += chunkSize) {
+        chunks.push(cards.value.slice(i, i + chunkSize));
+    }
+    return chunks;
 });
 
 const chunkCards = computed(() => {
-  const chunkSize = 5;
-  const chunks = [];
-  for (let i = 0; i < cardes.value.length; i += chunkSize) {
-    chunks.push(cardes.value.slice(i, i + chunkSize));
-  }
-  return chunks;
+    const chunkSize = 5;
+    const chunks = [];
+    for (let i = 0; i < cardes.value.length; i += chunkSize) {
+        chunks.push(cardes.value.slice(i, i + chunkSize));
+    }
+    return chunks;
 });
 
 const picture = computed(() => {
@@ -494,10 +492,10 @@ const picture = computed(() => {
 
         return members.flatMap(member =>
             (member.entries || [])
-            .filter(entry => entry.position === 1 && entry.is_published === 1)
+            .filter(entry => entry.position === 1 && entry.is_published === true)
             .map(entry => ({
                 id: entry.id,
-                image: entry.entry_image_url,
+                image: entry.entry_image_thumb,
                 gallery_name: entry.entry_image_title || "No Name"
             }))
         );
@@ -505,66 +503,65 @@ const picture = computed(() => {
 });
 
 function updateColumns() {
-  if (window.innerWidth < 575) {
-    columns.value = 1; 
-  } else if (window.innerWidth < 991) {
-    columns.value =2;
-  } else if (window.innerWidth < 1199) {
-    columns.value = 3;
-  } else {
-    columns.value = 5;
-  }
+    if (window.innerWidth < 575) {
+        columns.value = 1;
+    } else if (window.innerWidth < 991) {
+        columns.value = 2;
+    } else if (window.innerWidth < 1199) {
+        columns.value = 3;
+    } else {
+        columns.value = 5;
+    }
 }
 
 const hexToRgba = (hex, alpha) => {
-  let r = 0, g = 0, b = 0;
+    let r = 0,
+        g = 0,
+        b = 0;
 
-  if (hex.length === 4) {
-    r = parseInt(hex[1] + hex[1], 16);
-    g = parseInt(hex[2] + hex[2], 16);
-    b = parseInt(hex[3] + hex[3], 16);
-  }
-  else if (hex.length === 7) {
-    r = parseInt(hex[1] + hex[2], 16);
-    g = parseInt(hex[3] + hex[4], 16);
-    b = parseInt(hex[5] + hex[6], 16);
-  }
+    if (hex.length === 4) {
+        r = parseInt(hex[1] + hex[1], 16);
+        g = parseInt(hex[2] + hex[2], 16);
+        b = parseInt(hex[3] + hex[3], 16);
+    } else if (hex.length === 7) {
+        r = parseInt(hex[1] + hex[2], 16);
+        g = parseInt(hex[3] + hex[4], 16);
+        b = parseInt(hex[5] + hex[6], 16);
+    }
 
-  return `rgba(${r},${g},${b},${alpha})`;
+    return `rgba(${r},${g},${b},${alpha})`;
 }
 
-
 onMounted(async () => {
-  try {
-    await dashboardStore.fetchDashboardData();
-   
+    try {
+        await dashboardStore.fetchDashboardData();
 
-  } catch (error) {
-    console.error("Error fetching home data:", error);
-  } finally {
-        isLoading.value = false; 
+    } catch (error) {
+        console.error("Error fetching home data:", error);
+    } finally {
+        isLoading.value = false;
     }
-  updateColumns();
+    updateColumns();
 
 });
 onUnmounted(() => {
-  window.removeEventListener("resize", updateColumns);
+    window.removeEventListener("resize", updateColumns);
 });
 
 function getPositionClass(index, total) {
-  const row = Math.floor(index / columns.value);
-  const col = index % columns.value;
-  const lastIndex = total - 1;
+    const row = Math.floor(index / columns.value);
+    const col = index % columns.value;
+    const lastIndex = total - 1;
 
-  if (index === 0) return "top-left";
+    if (index === 0) return "top-left";
 
-  if (row === 0 && col === columns.value - 1) return "top-right";
+    if (row === 0 && col === columns.value - 1) return "top-right";
 
-  if (row === Math.floor(lastIndex / columns.value) && col === 0) return "bottom-left";
+    if (row === Math.floor(lastIndex / columns.value) && col === 0) return "bottom-left";
 
-  if (index === lastIndex) return "bottom-right";
+    if (index === lastIndex) return "bottom-right";
 
-  return "";
+    return "";
 }
 </script>
 
@@ -593,7 +590,7 @@ function getPositionClass(index, total) {
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 975px;
+     width: 67%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }
@@ -996,7 +993,7 @@ function getPositionClass(index, total) {
      font-size: 14px;
      color: #888;
 }
- .icon-circles .flickr-dots i, .flickr-dots i{
+ .icon-circles .flickr-dots i, .flickr-dots i {
      font-size: 8px;
      padding-bottom: 8px;
      margin: 1px;
