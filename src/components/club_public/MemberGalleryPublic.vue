@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
+                            <a class="nav-link" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -330,8 +330,9 @@ const homeStore = useHomeStore();
 
 
 const handleLogout = async () => {
-  await user.logout();
-};
+  await user.logout()
+  router.push("/")
+}
 
 const { username, profile_image_url } = storeToRefs(user)
 const memData = computed(() => rytongalleryStore.galleryData?.data?.clubSettings?.original?.data || {});

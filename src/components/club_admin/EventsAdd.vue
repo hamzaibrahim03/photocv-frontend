@@ -9,7 +9,7 @@
                     <div class="profile-left">
                         <div class="profile-info">
                             <small class="greeting">Viewing Event</small>
-                            <h2 class="name">Zoom Lecture</h2>
+                            <h2 class="name">{{name}}</h2>
                             <p class="role">{{EventCount}} Events to go</p>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                         <form @submit.prevent="submitForm">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <img :src="featured_image" alt="Meeting" />
+                                    <img :src="featured_thumb_url" alt="Meeting" />
                                 </div>
                                 <div class="col-md-8 mb-3">
                                     <label for="names"> Event Name </label>
@@ -232,10 +232,13 @@
                         <div class="cardddd d-flex flex-column" :style="{padding: '35px'}">
                             <h5 class="head">Recent Comments</h5>
 
-                            <div class="row" style="margin-bottom: 10px" v-for="c in eventcomments.slice(0, 4)" :key="c.id">
-                                <div v-for="comment in c.comments" :key="comment.id" class="row">
+                            <div class="event-list" style="margin-bottom: 10px" v-for="c in eventcomments.slice(0, 1)" :key="c.id">
+                                <div v-for="comment in c.comments" :key="comment.id" class="event-item">
                                     <div class="col-md-2">
-                                        <img :src="comment.user?.profile_image_url" alt="Com" style="width: 50px; height: 50px" />
+                                        <img v-if="comment.user?.profile_image_url" :src="comment.user?.profile_image_url" alt="Com" style="width: 50px; height: 50px" />
+                                        <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
+                                            <i class="fa-regular fa-user" style="font-size: 24px; color: gray"></i>
+                                        </div>
                                     </div>
                                     <div class="col-md-5">
                                         <p class="text-secondary">{{ comment.comment }}</p>
@@ -300,8 +303,9 @@ const showDropdown = ref(false);
 
 const images = ref([]);
 const captions = ref([]);
+const showLightbox = ref(false);
 
-const featured_image = ref("");
+const featured_thumb_url = ref("");
 const name = ref("");
 const event_date = ref("");
 const event_kind_id = ref("");
@@ -342,7 +346,7 @@ const filteredTags = computed(() => {
 
 const submitForm = async () => {
     const payload = {
-        featured_image: featured_image.value,
+        featured_thumb_url: featured_thumb_url.value,
         name: name.value,
         event_date: event_date.value,
         event_type_id: event_type_id.value,
@@ -382,7 +386,7 @@ const fetchEvent = async (id) => {
 
         const rawDate = data.event_date;
 
-        featured_image.value = data.featured_image || "";
+        featured_thumb_url.value = data.featured_thumb_url || "";
         name.value = data.name || "";
         event_date.value = rawDate ? rawDate.substring(0, 10) : "";
         event_kind_id.value = data.event_kind_id || "";
@@ -475,7 +479,21 @@ const handleClickOutside = (event) => {
         showLightbox.value = false;
     }
 };
+const formatDate = (date) =>
+    new Date(date).toLocaleDateString("en-GB", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+    });
 
+const formatTime = (datetimeStr) => {
+    const date = new Date(datetimeStr);
+    return date.toLocaleTimeString("en-US", {
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+};
 onMounted(() => {
     fetchEventComments();
     fetchEvents()
@@ -533,7 +551,7 @@ watch(status, (newVal) => {
     background: white;
     padding: 15px 25px;
     border-radius: 12px;
-    width: 67%;
+    width: 65.8%;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     height: 148px;
 }
@@ -680,11 +698,11 @@ watch(status, (newVal) => {
 .card-section {
     display: flex;
     gap: 35px;
-    width: 31.5%;
+    width: 32%;
 }
 
 #news {
-    width: 67%;
+    width: 100%;
     margin-left: 10px;
 }
 

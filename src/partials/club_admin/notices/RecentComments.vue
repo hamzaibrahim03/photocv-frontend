@@ -2,7 +2,7 @@
 <div class="cardddd d-flex flex-column" style="padding: 35px">
     <h5 class="head">{{ heading }}</h5>
 
-    <div class="event-list" style="margin-bottom: 10px" v-for="c in noticecomments.slice(0, 4)" :key="c.id">
+    <div class="event-list" style="margin-bottom: 10px" v-for="c in noticecomments.slice(0, 2)" :key="c.id">
         <div v-for="comment in c.comments" :key="comment.id" class="event-item">
             <img v-if="comment.user?.profile_image_url" class="img-fluid event-img" :src="comment.user.profile_image_url" @error="comment.user.profile_image_url = null" />
             <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">

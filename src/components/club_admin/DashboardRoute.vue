@@ -5,19 +5,19 @@
         <NavigationRoute />
         <HeaderRoute />
 
-        <div class="content" style="margin-bottom: 20px">
+        <div class="content">
             <section>
                 <div class="container">
                     <div class="dashboard-card" id="cl">
                         <div class="profile-card">
                             <div class="profile-left">
                                 <img class="img-fluid" :src="dashboardData?.data?.user_details?.profile_image" alt="Profile Picture" />
-                                <div class="profile-info" style="margin-left: 15px">
+                                <div class="profile-info">
                                     <span class="greeting">
-                                        {{ greetingMessage + dashboardData?.data?.user_details?.username }}
+                                        {{ greetingMessage }}
                                     </span>
                                     <h2 class="name">
-                                        {{ dashboardData?.data?.user_details?.first_name }}
+                                        {{ dashboardData?.data?.user_details?.first_name + " " + dashboardData?.data?.user_details?.last_name }}
                                     </h2>
                                     <p class="role">
                                         {{ dashboardData?.data?.user_details?.role }}
@@ -27,15 +27,15 @@
                             <div class="profile-icons">
                                 <div class="icon">
                                     <span>20</span>
-                                    <img :src="Image" alt="image-icon" style="width: 15px; height: 15px" />
+                                    <img :src="Image" alt="image-icon" style="width: 20px; height: 20px" />
                                 </div>
                                 <div class="icon">
                                     <span>53</span>
-                                    <img :src="Comment" alt="comment-icon" style="width: 15px; height: 15px" />
+                                    <img :src="Comment" alt="comment-icon" style="width: 20px; height: 20px" />
                                 </div>
                                 <div class="icon">
                                     <span>39</span>
-                                    <img :src="Point" alt="point-icon" style="width: 15px; height: 15px" />
+                                    <img :src="Point" alt="point-icon" style="width: 20px; height: 20px" />
                                 </div>
                             </div>
                         </div>
@@ -43,10 +43,10 @@
                         <div class="card-section">
                             <div class="stat-card">
                                 <small class="ca-details">Members</small>
-                                <h3 class="number">{{ dashboardStore?.dashboardData?.data?.total_members_count }}</h3>
+                                <h3 class="number">{{ memberCount }}</h3>
                             </div>
 
-                            <div class="event-card">
+                            <div class="event-cards">
                                 <small class="ca-details">Next Event</small>
                                 <div class="row">
                                     <div class="col-md-5">
@@ -65,7 +65,7 @@
             <section>
                 <div class="container">
                     <div class="upcoming-sections">
-                        <div class="cardddd d-flex flex-column" :style="{ padding: '35px'}">
+                        <div class="event-card d-flex flex-column">
                             <h5 class="head">Upcoming Events</h5>
 
                             <div class="event-list" v-if="upcomingEvents.length">
@@ -75,7 +75,7 @@
                                     </div>
 
                                     <div class="event-details">
-                                        <div class="event-info" style="display: flex; flex-direction: column">
+                                        <div class="event-info">
                                             <span id="ename">{{ event.name }}</span>
                                         </div>
 
@@ -101,17 +101,17 @@
                             </div>
                         </div>
 
-                        <div class="cardddd d-flex flex-column" :style="{ padding: '35px'}">
+                        <div class="comp-card d-flex flex-column">
                             <h5 class="head">Upcoming Competitions</h5>
 
                             <div class="event-list" v-if="dashboardData?.data?.competitions?.length">
-                                <div class="event-item" v-for="comp in upcomingCompetitions" :key="comp.id || index" style="margin-bottom: 10px">
+                                <div class="event-item" v-for="comp in upcomingCompetitions" :key="comp.id || index">
                                     <img v-if="comp.featured_image_url" class="img-fluid event-img" :src="comp.featured_image_url" alt="Event" @error="comp.featured_image_url = null" />
                                     <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                     </div>
 
                                     <div class="event-details">
-                                        <div class="event-info" style="display: flex; flex-direction: column">
+                                        <div class="event-info">
                                             <span id="ename">{{ comp.name }}</span>
                                         </div>
 
@@ -136,7 +136,7 @@
                             </div>
                         </div>
 
-                        <div class="cardddd d-flex flex-column" style="height: auto; padding: 0">
+                        <div class="cal-card d-flex flex-column">
                             <Calendar />
                         </div>
                     </div>
@@ -145,16 +145,16 @@
 
             <section>
                 <div class="container">
-                    <div class="upcoming-section" style="display: flex">
-                        <div class="lcardddd d-flex flex-column" :style="{color: '#333333'}">
-                            <h5 class="head" :style="{color: '#333333'}">Latest Members</h5>
-                            <div class="row" style="padding-top: 30px;">
-                                <div class="col-6" style="margin-bottom: 20px;" v-for="latestMember in dashboardData?.data?.latest_members.slice(0, 6)" :key="latestMember.id">
-                                    <div class="event-items text-center" style="gap: 20px">
-                                        <img v-if="latestMember.profile_image_url" class="img-fluid event-img" :src="latestMember.profile_image_url" alt="Profile" @error="latestMember.profile_image_url = null" :style="{width:'50px', height: '50px', borderRadius: '7px',  objectFit: 'cover', objectPosition: 'top', backgroundColor: '#7FA483'}" />
+                    <div class="upcoming-section">
+                        <div class="member-card d-flex flex-column">
+                            <h5 class="head">Latest Members</h5>
+                            <div class="row">
+                                <div class="col-6" v-for="latestMember in dashboardData?.data?.latest_members.slice(0, 6)" :key="latestMember.id">
+                                    <div class="event-items text-center">
+                                        <img v-if="latestMember.profile_image_url" class="img-fluid event-img" :src="latestMember.profile_image_url" alt="Profile" @error="latestMember.profile_image_url = null" />
                                         <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                         </div>
-                                        <div class="memtext" id="memname" :style="{color: '#333333'}">
+                                        <div class="memtext" id="memname">
                                             <span>{{ latestMember.first_name +' '+ latestMember.last_name}}</span>
                                         </div>
                                     </div>
@@ -174,8 +174,8 @@
                             </div>
                         </div>
 
-                        <div class="card" style="height: auto; border: none; margin-top: -1px; padding-bottom: 0" :style="{backgroundColor: 'white', margin: '0px'}">
-                            <div class="d-flex justify-content-between align-items-center mb-3" style="padding: 10px">
+                        <div class="card">
+                            <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
                                 <h5 class="head">Member Galleries</h5>
                                 <router-link to="/club_gallery" custom v-slot="{ navigate }">
                                     <button class="btn btn-sm" id="view" @click="navigate">
@@ -186,9 +186,9 @@
                             <div class="pics">
                                 <div v-for="(item, index) in chunkedCards.flat() || []" :key="item.id || index" class="pics-items" :class="getPositionClass(index, chunkedCards.flat().length)">
                                     <div v-if="item.image_url">
-                                        <img :src="item.image_url" :alt="item.username" style="object-fit: cover; object-position: top;" />
+                                        <img :src="item.image_url" :alt="item.username" />
                                         <div class="pics-infos" :class="getPositionClass(index, chunkedCards.flat().length)" :style="{ backgroundColor: hexToRgba('#7FA483', 0.7) }">
-                                            <div :style="{ color: 'white' }">
+                                            <div>
                                                 {{ item.gallery_name }}
                                             </div>
                                         </div>
@@ -203,17 +203,17 @@
             <section>
                 <div class="container">
                     <div class="upcoming-sections">
-                        <div class="cardddd d-flex flex-column" style="padding: 0">
-                            <div class="d-flex justify-content-between mb-3" style="padding-left: 35px; padding-top: 35px; padding-right: 35px">
+                        <div class="result-card d-flex flex-column">
+                            <div class="d-flex justify-content-between mb-2">
                                 <h5 class="head">Recent Results</h5>
                                 <button class="btn btn-sm" id="view">View All</button>
                             </div>
 
                             <div class="pic">
-                                <div v-for="(item, index) in picture.slice(0, 6) || []" :key="item.id || index" class="pic-item" :class="getPositionClass(index, picture.length)">
-                                    <img v-if="item.image" class="img-fluid" :src="item.image" :alt="item.gallery_name" @error="item.image = null" style="object-fit: cover; object-position: top;" />
-                                    <div class="pic-info" :class="getPositionClass(index, picture.length)" :style="{ backgroundColor: hexToRgba('#7FA483', 0.7) }">
-                                        <div :style="{ color: 'white' }">
+                                <div v-for="(item, index) in picture.slice(0, 6) || []" :key="item.id || index" class="pic-item" :class="getPositionedClass(index, picture.length)">
+                                    <img v-if="item.image" class="img-fluid" :src="item.image" :alt="item.gallery_name" @error="item.image = null" />
+                                    <div class="pic-info" :class="getPositionedClass(index, picture.length)" :style="{ backgroundColor: hexToRgba('#7FA483', 0.7) }">
+                                        <div>
                                             {{ item.gallery_name }}
                                         </div>
                                     </div>
@@ -221,15 +221,15 @@
                             </div>
                         </div>
 
-                        <div class="cardddd d-flex flex-column" style="padding: 35px">
-                            <h5 class="head" :style="{color: '#333333'}">Recent Notices</h5>
-                            <div class="event-list" v-if="recentNotices.length" style="padding-top: 20px">
-                                <div class="event-item" v-for="notice in recentNotices" :key="notice.id || index" style="margin-bottom: 10px;">
+                        <div class="notice-card d-flex flex-column">
+                            <h5 class="head">Recent Notices</h5>
+                            <div class="event-list" v-if="recentNotices.length">
+                                <div class="event-item" v-for="notice in recentNotices" :key="notice.id || index">
                                     <img v-if="notice.featured_image_url" class="img-fluid event-img" :src="notice.featured_image_url" alt="News" @error="notice.featured_image_url = null" />
                                     <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                     </div>
                                     <div class="event-details">
-                                        <span id="pname" :style="{color: '#333333', fontWeight: '600'}">{{ notice.title }}</span>
+                                        <span id="pname">{{ notice.title }}</span>
                                         <div class="event-time" id="edate">
                                             <small class="event-date galtext">{{ formatDate(notice.created_at) }}</small><br />
                                             <small class="event-time-details galtext">{{ formatTime(notice.created_at) }}</small>
@@ -251,8 +251,8 @@
                             </div>
                         </div>
 
-                        <div class="cardddd d-flex flex-column" style="padding: 35px">
-                            <h5 class="head" :style="{color: '#333333'}">Latest News</h5>
+                        <div class="news-card d-flex flex-column">
+                            <h5 class="head">Latest News</h5>
                             <div class="event-list" v-if="latestNews.length" style="padding-top: 20px">
                                 <div class="event-item" v-for="news in latestNews" :key="news.id || index" style="margin-bottom: 10px;">
                                     <img v-if="news.featured_image_url" class="img-fluid event-img" :src="news.featured_image_url" alt="News" @error="news.featured_image_url = null" />
@@ -288,15 +288,15 @@
             <section>
                 <div class="container">
                     <div class="upcoming-section" style="display: flex">
-                        <div class="lcardddd d-flex flex-column" :style="{color: '#333333'}">
+                        <div class="member-card d-flex flex-column">
                             <h5 class="head">Recent Pages</h5>
-                            <div class="row" style="padding-top: 30px;">
-                                <div class="col-6" style="margin-bottom: 20px;" v-for="page in dashboardData?.data?.pages.slice(0, 6)" :key="page.id">
-                                    <div class="event-items text-center" style="gap: 20px">
-                                        <img v-if="page.featured_image_url" class="img-fluid event-img" :src="page.featured_image_url" alt="Profile" @error="page.featured_image_url = null" :style="{maxWidth:'60px', height: '60px', borderRadius: '7px',  objectFit: 'cover', objectPosition: 'top', backgroundColor: '#7FA483'}" />
+                            <div class="row">
+                                <div class="col-6" v-for="page in dashboardData?.data?.pages.slice(0, 6)" :key="page.id">
+                                    <div class="event-items text-center">
+                                        <img v-if="page.featured_image_url" class="img-fluid event-img" :src="page.featured_image_url" alt="Profile" @error="page.featured_image_url = null"/>
                                         <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                         </div>
-                                        <div class="memtext" id="memname" :style="{color: '#333333'}">
+                                        <div class="memtext" id="memname">
                                             <span>{{ page.title }}</span>
                                         </div>
                                     </div>
@@ -316,8 +316,8 @@
                             </div>
                         </div>
 
-                        <div class="card" style="height: auto; border: none; margin-top: -1px; padding-bottom: 0" :style="{backgroundColor: 'white', margin: '0px'}">
-                            <div class="d-flex justify-content-between align-items-center mb-3" style="padding: 10px">
+                        <div class="card">
+                            <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
                                 <h5 class="head">Club Galleries</h5>
                                 <router-link to="/club_gallery" custom v-slot="{ navigate }">
                                     <button class="btn btn-sm" id="view" @click="navigate">
@@ -364,6 +364,7 @@ import Loader from "@/components/LoaderAll.vue";
 const dashboardStore = useDashboardStore();
 const dashboardData = computed(() => dashboardStore.dashboardData);
 const columns = ref(5);
+const columnss = ref(3);
 const isLoading = ref(true);
 
 const hour = new Date().getHours();
@@ -373,6 +374,13 @@ const greetingMessage = computed(() => {
     if (hour > 12 && hour < 17) return "Good afternoon!";
     if (hour >= 17 && hour < 21) return "Good evening!";
     return "Good night!";
+});
+const memberCount = computed(() => {
+    const member = dashboardStore?.dashboardData?.data?.total_members_count;
+
+    if (!member && member !== 0) return "00";
+
+    return String(member).padStart(2, "0");
 });
 
 const remainingDays = computed(() => {
@@ -384,8 +392,8 @@ const remainingDays = computed(() => {
 });
 
 const formatDate = (date) =>
-    new Date(date).toLocaleDateString("en-US", {
-        month: "short",
+    new Date(date).toLocaleDateString("en-GB", {
+        month: "long",
         day: "numeric",
         year: "numeric",
     });
@@ -514,6 +522,18 @@ function updateColumns() {
     }
 }
 
+function updatedColumns() {
+    if (window.innerWidth < 575) {
+        columnss.value = 1;
+    } else if (window.innerWidth < 991) {
+        columnss.value = 2;
+    } else if (window.innerWidth < 1199) {
+        columnss.value = 3;
+    } else {
+        columnss.value = 3;
+    }
+}
+
 const hexToRgba = (hex, alpha) => {
     let r = 0,
         g = 0,
@@ -542,10 +562,12 @@ onMounted(async () => {
         isLoading.value = false;
     }
     updateColumns();
+    updatedColumns();
 
 });
 onUnmounted(() => {
     window.removeEventListener("resize", updateColumns);
+    window.removeEventListener("resize", updatedColumns);
 });
 
 function getPositionClass(index, total) {
@@ -563,16 +585,33 @@ function getPositionClass(index, total) {
 
     return "";
 }
+
+function getPositionedClass(index, total) {
+    const row = Math.floor(index / columnss.value);
+    const col = index % columnss.value;
+    const lastIndex = total - 1;
+
+    if (index === 0) return "top-left";
+
+    if (row === 0 && col === columnss.value - 1) return "top-right";
+
+    if (row === Math.floor(lastIndex / columnss.value) && col === 0) return "bottom-left";
+
+    if (index === lastIndex) return "bottom-right";
+
+    return "";
+}
 </script>
 
 <style scoped>
 .container {
      max-width: 1810px;
-     padding: 0 15px;
+     padding: 0 15px 10px 15px;
      margin: 0 auto;
 }
  .content {
-     padding: 0 30px;
+     padding: 0 15px 0 35px;
+     margin-bottom: 20px
 }
  .dashboard-card {
      gap: 15px;
@@ -580,7 +619,7 @@ function getPositionClass(index, total) {
      display: flex;
      align-items: center;
      justify-content: space-between;
-     padding: 20px 0px;
+     padding: 15px 0px 10px;
      width: 100%;
 }
  .profile-card {
@@ -588,15 +627,16 @@ function getPositionClass(index, total) {
      align-items: center;
      justify-content: space-between;
      background: white;
-     padding: 15px 25px;
+     padding: 15px 20px 15px 30px;
      border-radius: 12px;
-     width: 67%;
+     width: 65.8%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }
  .profile-left {
      display: flex;
      align-items: left;
+     width: 100%;
 }
  .profile-left img {
      width: 100%;
@@ -617,6 +657,10 @@ function getPositionClass(index, total) {
      line-height: 100%;
      color: #4c4036;
      font-family: Inter;
+}
+.pname {
+     color: #333333;
+     font-weight: 600
 }
  .names {
      font-family: Inter;
@@ -677,19 +721,19 @@ function getPositionClass(index, total) {
      color: white;
      padding: 20px;
      border-radius: 8px;
-     text-align: center;
+     text-align: left;
      width: 219px;
      font-family: Inter;
      font-size: 1.2rem;
      height: 148px;
 }
- .event-card {
+ .event-cards {
      background: #755840;
      color: white;
      padding: 20px;
      height: 148px;
      border-radius: 8px;
-     text-align: center;
+     text-align: left;
      font-family: Inter;
      font-size: 1.2rem;
      width: 219px;
@@ -718,34 +762,56 @@ function getPositionClass(index, total) {
  .card-section {
      display: flex;
      gap: 35px;
-     width: 31.5%;
+     width: 32%;
 }
  .upcoming-sections {
      display: flex;
      border-radius: 10px;
-     padding-top: 20px;
-     padding-bottom: 20px;
+     padding: 20px 0px;
      align-items: start;
      width: 100%;
      flex-wrap: wrap;
-     gap: 40px;
+     gap: 30px;
 }
  .cardddd {
      background: white;
      width: 32%;
      padding: 20px;
-     height: 410px;
+     height: 368px;
      border-radius: 10px;
 }
- .cardddd:last-child {
+ .event-card, .comp-card, .notice-card {
      background: white;
-     width: 30%;
-     padding: 20px;
-     height: 410px;
+     width: 32%;
+     padding: 30px;
+     height: 368px;
      border-radius: 10px;
+     text-align: left;
+}
+ .news-card {
+     background: white;
+     width: 31.9%;
+     padding: 30px;
+     height: 368px;
+     border-radius: 10px;
+     text-align: left;
+}
+ .result-card {
+     background: white;
+     width: 32%;
+     height: 351px;
+     border-radius: 10px;
+}
+ .cal-card {
+     background: white;
+     width: 31.9%;
+     padding: 0px;
+     height: 368px;
+     border-radius: 10px;
+     height: auto;
 }
  .event-list {
-     padding-top: 30px;
+     padding-top: 20px;
 }
  .event-list {
      display: flex;
@@ -755,7 +821,20 @@ function getPositionClass(index, total) {
  .event-item {
      display: flex;
      align-items: center;
-     gap: 10px;
+     gap: 20px;
+     margin-bottom: 10px
+}
+.event-items {
+    gap: 20px;
+}
+.event-info {
+    display: flex; 
+    flex-direction: column;
+}
+.event-time {
+    margin-right: 10px;
+    width: 32%;
+    text-align: right;
 }
  .event-item img {
      width: 100%;
@@ -779,6 +858,12 @@ function getPositionClass(index, total) {
      font-size: 20px;
      line-height: 100%;
      letter-spacing: 0%;
+     color: black
+}
+.button-group {
+     display: flex;
+     gap: 20px;
+     margin-top: 30px;
 }
  #view {
      width: 100%;
@@ -816,21 +901,69 @@ function getPositionClass(index, total) {
      color: white;
      font-family: Inter;
 }
- .lcardddd {
+ .member-card {
      background: white;
-     width: 32.3%;
-     padding: 40px;
-     height: 430px;
+     width: 32%;
+     padding: 25px 30px 35px 30px;
+     height: 351px;
      border-radius: 10px;
+     color: #333333;
+}
+.member-card .row {
+     padding-top: 20px;
+}
+.member-card img {
+     width: 45px;
+     height: 45px;
+     border-radius: 7px;
+     object-fit: cover;
+     object-position: top;
+     background-color: #7FA483
+}
+.member-card head {
+     color: #333333;
+}
+.member-card .row .col-6 {
+     margin-bottom: 15px;
 }
  .card {
      background: white;
      border-radius: 10px;
      flex: 1;
      width: 65%;
-     height: auto;
-     padding-bottom: 15px;
+     height: 351px;
      border: none;
+     margin-top: -1px;
+     margin: 0px
+}
+.card .head {
+     padding-left: 20px;
+     padding-top: 5px;
+}
+.result-card .head {
+     padding-left: 30px;
+     padding-top: 20px;
+}
+.card #view, .result-card #view {
+     width: 80px;
+     height: 30px;
+     border-radius: 7px;
+     opacity: 1;
+     background-color:#99816B;
+     color: white;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 15px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+.card button {
+     margin-right: 10px
+}
+.result-card button {
+     margin-right: 18px;
+     margin-top: 17px
 }
  .upcoming-section {
      display: flex;
@@ -838,7 +971,8 @@ function getPositionClass(index, total) {
      align-items: start;
      width: 100%;
      flex-wrap: wrap;
-     gap: 40px;
+     gap: 30px;
+     padding-top: 5px
 }
  .pics {
      align-items: start;
@@ -853,7 +987,7 @@ function getPositionClass(index, total) {
 }
  .pics-items img {
      width: 100%;
-     height: 179px;
+     height: 146px;
      object-fit: cover;
      object-position: top;
 }
@@ -870,7 +1004,8 @@ function getPositionClass(index, total) {
      display: flex;
      align-items: center;
      justify-content: center;
-     height: 32px 
+     height: 32px;
+     color: white;
 }
  .pic {
      display: grid;
@@ -964,6 +1099,7 @@ function getPositionClass(index, total) {
      font-size: 16px;
      line-height: 100%;
      letter-spacing: 0%;
+     color: #333333;
 }
  .prehead {
      font-family: Inter;
@@ -1016,6 +1152,24 @@ function getPositionClass(index, total) {
  .pics-infos.bottom-right {
      border-bottom-right-radius: 10px;
 }
+ .pic-item.top-left img {
+     border-top-left-radius: 10px;
+}
+ .pic-item.top-right img {
+     border-top-right-radius: 10px;
+}
+ .pic-item.bottom-left img {
+     border-bottom-left-radius: 10px;
+}
+ .pic-item.bottom-right img {
+     border-bottom-right-radius: 10px;
+}
+ .pic-info.bottom-left {
+     border-bottom-left-radius: 10px;
+}
+ .pic-info.bottom-right {
+     border-bottom-right-radius: 10px;
+}
  @media only screen and (max-width: 1399px) {
      .profile-card {
          width: 60% 
@@ -1030,7 +1184,7 @@ function getPositionClass(index, total) {
      .cardddd:last-child {
          margin: 0 auto;
     }
-     .lcardddd {
+     .member-card {
          width: 47% !important;
          margin: 0;
     }
@@ -1049,7 +1203,7 @@ function getPositionClass(index, total) {
      .cardddd:last-child {
          margin: 0 auto;
     }
-     .lcardddd {
+     .member-card {
          width: 100% !important;
          margin: 0;
          height: 390px;

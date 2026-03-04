@@ -279,7 +279,7 @@ const EventDay = eventDay
      background: white;
      padding: 15px 25px;
      border-radius: 12px;
-     width: 67%;
+     width: 65.8%;
      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
      height: 148px;
 }
@@ -407,7 +407,7 @@ const EventDay = eventDay
  .card-section {
      display: flex;
      gap: 35px;
-     width: 31.5%;
+     width: 32%;
 }
  .cardddd {
      background: white;

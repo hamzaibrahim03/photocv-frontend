@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import apiClient from "@/api/axios";
-import { useRouter } from "vue-router";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -14,6 +13,10 @@ export const useUserStore = defineStore("user", {
     token: localStorage.getItem("token") || "",
     users: [],
   }),
+
+  getters: {
+    isLoggedIn: (state) => !!state.token
+  },
 
   actions: {
     login(userData) {
@@ -41,17 +44,17 @@ export const useUserStore = defineStore("user", {
     },
 
     async logout() {
-      const router = useRouter();
       try {
         const response = await apiClient.post('/logout');
         console.log("Logout API success:", response.data);
-        localStorage.removeItem("token");
       } catch (err) {
         console.error("Logout API failed:", err.message);
       }
-      if (router) router.push('/login');
+    
+      localStorage.removeItem("token");
       this.resetUser();
     },
+    
 
     async fetchUsers() {
       try {

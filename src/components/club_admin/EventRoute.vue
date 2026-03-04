@@ -58,7 +58,7 @@
             <section>
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-8" style="padding: 0px">
                             <section>
                                 <div class="container">
                                     <div class="mt-4">
@@ -88,7 +88,7 @@
                                                         </div>
 
                                                         <div class="d-flex justify-content-between align-items-center mt-3 w-100">
-                                                            <div class="button-group d-flex align-items-center gap-2">
+                                                            <div class="button-group d-flex align-items-center">
                                                                 <router-link :to="{ name: 'eventsingle', params: { id: event.id } }" custom v-slot="{ navigate }">
                                                                     <button class="btn" id="view" @click="navigate">View</button>
                                                                 </router-link>
@@ -140,10 +140,13 @@
                                         <div class="cardddd d-flex flex-column" :style="{padding: '35px'}">
                                             <h5 class="head">Recent Comments</h5>
 
-                                            <div class="row" style="margin-bottom: 10px" v-for="c in eventcomments.slice(0, 4)" :key="c.id">
-                                                <div v-for="comment in c.comments" :key="comment.id" class="row">
+                                            <div class="event-list" style="margin-bottom: 10px" v-for="c in eventcomments.slice(0, 1)" :key="c.id">
+                                                <div v-for="comment in c.comments" :key="comment.id" class="event-item">
                                                     <div class="col-md-2">
-                                                        <img :src="comment.user?.profile_image_url" alt="Com" style="width: 50px; height: 50px" />
+                                                        <img v-if="comment.user?.profile_image_url" :src="comment.user?.profile_image_url" alt="Com" style="width: 50px; height: 50px" />
+                                                        <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
+                                                            <i class="fa-regular fa-user" style="font-size: 24px; color: gray"></i>
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-5">
                                                         <p class="text-secondary">{{ comment.comment }}</p>
@@ -157,17 +160,8 @@
                                                 </div>
                                             </div>
 
-                                            <div class="button-group mt-auto">
-                                                <router-link to="/notices" custom v-slot="{ navigate }">
-                                                    <button class="btn btn-sm" id="view" @click="navigate">View All</button>
-                                                </router-link>
-                                                <router-link to="/notice_single" custom v-slot="{ navigate }">
-                                                    <button class="btn btn-sm" id="new" @click="navigate">Add New</button>
-                                                </router-link>
-                                            </div>
                                         </div>
 
-                                        <MoreEvents style="height: auto"/>
                                     </div>
                                 </div>
                             </section>
@@ -175,6 +169,11 @@
                     </div>
                 </div>
             </section>
+            <footer class="site-footer">
+                <div class="footer-content">
+                    <p class="memtext" id="fcopy">Copyright &copy; 2025 – {{dashboardStore?.dashboardData?.data?.user_details?.username}}</p>
+                </div>
+            </footer>
 
         </div>
     </div>
@@ -202,7 +201,7 @@ import CalendarDashboard from '@/components/club_admin/Calendars/CalendarDashboa
 import NavigationRoute from '@/components/NavigationRoute.vue'
 import Loader from "@/components/LoaderAll.vue";
 import { useEventComments } from "@/stores/club_admin/EventComments";
-import MoreEvents from '@/partials/club_admin/events/MoreEvents.vue'
+import { useDashboardStore } from "@/stores/club_admin/DashboardStore";
 
 const {
     events,
@@ -222,6 +221,7 @@ const search = ref('')
 const currentPage = ref(1)
 const isLoading = ref(true);
 const rowsPerPage = 4
+const dashboardStore = useDashboardStore();
 
 let debounceTimeout
 const debounce = (func, delay) => {
@@ -258,6 +258,7 @@ const loadEvents = async () => {
     isLoading.value = true
     try {
         await fetchEvents()
+        await dashboardStore.fetchDashboardData();
     } catch (error) {
         console.error("Error fetching events:", error)
     } finally {
@@ -288,14 +289,21 @@ const totalPages = computed(() => {
     return Math.max(Math.ceil(events.value.length / rowsPerPage), 1)
 })
 
-const formatDate = (date) => {
-    const d = new Date(date)
-    return isNaN(d) ? '' : d.toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
-    })
-}
+const formatDate = (date) =>
+    new Date(date).toLocaleDateString("en-GB", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+    });
+
+const formatTime = (datetimeStr) => {
+    const date = new Date(datetimeStr);
+    return date.toLocaleTimeString("en-US", {
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+};
 
 function goToPage(page) {
     if (page >= 1 && page <= totalPages.value) {
@@ -322,7 +330,7 @@ function goToPage(page) {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 20px 0px 40px;
+    padding: 15px 0px 35px;
 }
 
 .profile-card {
@@ -332,7 +340,7 @@ function goToPage(page) {
     background: white;
     padding: 30px;
     border-radius: 10px;
-    width: 67%;
+    width: 65.8%;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     height: 148px;
 }
@@ -384,7 +392,9 @@ function goToPage(page) {
     font-family: Inter;
     text-align: justify;
 }
-
+.date {
+    text-align: left;
+}
 .left-header-container {
     display: flex;
     align-items: center;
@@ -482,7 +492,7 @@ function goToPage(page) {
 .card-section {
     display: flex;
     gap: 35px;
-    width: 31.5%;
+    width: 32%;
 }
 
 .cardddd:first-child {
@@ -525,7 +535,9 @@ function goToPage(page) {
     width: 300px;
     border-radius: 7px;
 }
-
+.button-group {
+    gap: 20px;
+}
 #view {
     width: 120px;
     max-width: 120px;
@@ -550,5 +562,77 @@ function goToPage(page) {
     line-height: 100%;
     color: white;
     font-family: Inter;
+}
+ .event-list {
+     padding-top: 30px;
+}
+ .event-list {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+}
+ .event-item {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+}
+ .event-item img {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 5px;
+     object-fit: cover;
+}
+ .event-details {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     flex: 1;
+     font-size: 0.875rem;
+     width: 100%;
+}
+ #ename {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+#right {
+    margin-top: -30px;
+    width: 103%
+}
+ .event-img, .fallback-box {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 5px;
+     object-fit: cover;
+     background-color: #ddd;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+ .fallback-box {
+     font-size: 14px;
+     color: #888;
+}
+ .site-footer {
+     padding-top: 25px;
+     padding-bottom: 10px;
+     text-align: center;
+     font-size: 14px;
+     color: #555;
+     border-top: 1px solid #ddd;
+     margin-top: 40px;
+}
+ .site-footer a {
+     color: #007bff;
+     text-decoration: none;
+}
+ .site-footer a:hover {
+     text-decoration: underline;
+}
+.memtext {
+    text-align: center
 }
 </style>

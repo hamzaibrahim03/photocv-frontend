@@ -15,11 +15,21 @@
 
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" :class="{ active: $route.path === '/ryton' }" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
-                                Home
-                            </a>
-                        </li>
+                        <template v-if="isLoggedIn">
+                            <li class="nav-item">
+                                <a class="nav-link" :class="{ active: $route.path === '/' }" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color }">
+                                    Home
+                                </a>
+                            </li>
+                        </template>
+
+                        <template v-else>
+                            <li class="nav-item">
+                                <a class="nav-link" :class="{ active: $route.path === '/' }" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color }">
+                                    Home
+                                </a>
+                            </li>
+                        </template>
                         <li class="nav-item">
                             <a class="nav-link" href="/rytonevent" :style="{ color: Color.text_color }">
                                 Events
@@ -58,24 +68,56 @@
                         </a>
                         <div class="divider"></div>
                         <div class="admin-dropdown position-relative">
+
+                            <!-- Profile Icon -->
                             <a href="#" class="icon profile-mobile">
-                                <img v-if="User && User.isLoggedIn && User.profile_image_url" :src="User.profile_image_url" alt="Profile" class="w-10 h-10 rounded-full object-cover" />
-                                <i v-else class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }"></i>
+                                <div style="cursor: pointer">
+                                    <template v-if="isLoggedIn && profile_image_url">
+                                        <img :src="profile_image_url" alt="Profile" style="width:44px;height:44px;border-radius:50%;object-fit:cover;" />
+                                    </template>
+
+                                    <template v-else>
+                                        <i class="fa-regular fa-user-circle" :style="{ color: Color.accent_color, fontSize: '44px' }">
+                                        </i>
+                                    </template>
+                                </div>
                             </a>
-                            <router-link v-if="!User || !User.isLoggedIn" to="/login" custom v-slot="{ navigate }" style="cursor: pointer">
-                                <span class="nav-item" id="login">
-                                    <span @click="navigate">
-                                        Login
-                                    </span>&nbsp;
-                                    <i class="fa-solid fa-chevron-down text-xs text-gray-500 down" @click.stop.prevent="toggleDropdown"></i>
+
+                            <!-- Username OR Login -->
+                            <template v-if="isLoggedIn">
+                                <span class="notification-desktop">
+                                    {{ username }}
                                 </span>
-                            </router-link>
+                            </template>
+
+                            <template v-else>
+                                <router-link to="/login" class="notification-desktop" id="login" :style="{ color: Color.text_color, textDecoration: 'none' }">
+                                    Login
+                                </router-link>
+                            </template>
+
+                            <!-- Dropdown Arrow -->
+                            <i class="fa-solid fa-chevron-down text-xs text-gray-500 down notification-desktop" @click.stop.prevent="toggleDropdown">
+                            </i>
+
+                            <!-- Dropdown Menu -->
                             <div class="dropdown-menu" v-show="isDropdownOpen">
-                                <a class="nav-link" href="#" @click.prevent="handleLogout">
-                                    Register
-                                </a>
+
+                                <template v-if="isLoggedIn">
+                                    <a class="nav-link" href="#" @click.prevent="handleLogout">
+                                        Log Out
+                                    </a>
+                                </template>
+
+                                <template v-else>
+                                    <router-link class="nav-link" to="/signup">
+                                        Register
+                                    </router-link>
+                                </template>
+
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -158,7 +200,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="carousel-item">
                     <div class="hero-section" :style="{ background: `url(${Notice.featured_image_medium}) no-repeat center center / cover`, color: '#E7EFF233' }">
                         <div class="hero-overlay">
@@ -729,6 +771,9 @@ import {
     useRouter
 } from "vue-router";
 import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
+import {
+    useUserStore
+} from '@/stores/club_admin/UserStore';
 
 const columns = ref(5);
 
@@ -752,7 +797,13 @@ const homeStore = useHomeStore();
 const {
     homeData
 } = storeToRefs(homeStore);
+const user = useUserStore();
 
+const {
+    username,
+    profile_image_url,
+    isLoggedIn
+} = storeToRefs(user)
 const memData = computed(() => homeStore.homeData?.data?.clubSettings?.original?.data || {});
 const evData = computed(() => homeStore.homeData?.data?.clubSettings?.original?.data?.upcoming_event_days_count || {});
 const Events = computed(() => homeStore.homeData?.data?.upcomingEvents || []);
@@ -779,8 +830,7 @@ const cards = computed(() => {
 });
 const Interaction = computed(() =>
     Array.isArray(homeStore.homeData.data?.latestInteractions) ?
-    homeStore.homeData.data.latestInteractions :
-    []
+    homeStore.homeData.data.latestInteractions : []
 );
 
 const flatComments = computed(() => {
@@ -903,6 +953,10 @@ const chunkedcards = computed(() => {
     }
     return chunkds;
 });
+const handleLogout = async () => {
+  await user.logout()
+  router.push("/")
+}
 const userRole = "club_admin"
 onMounted(async () => {
     document.addEventListener("click", (e) => {
@@ -917,6 +971,7 @@ onMounted(async () => {
     }
     updateColumns();
     window.addEventListener("resize", updateColumns);
+    console.log(user.username)
     const carouselEl = document.querySelector('#carouselExampleIndicators')
     if (carouselEl && window.bootstrap) {
         new window.bootstrap.Carousel(carouselEl)
@@ -1197,11 +1252,11 @@ function getPositionClass(index, total) {
 
 .events-card h5 {
     font-family: Inter;
-font-weight: 400;
-font-style: Regular;
-font-size: 48px;
-line-height: 20px;
-letter-spacing: 0%;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 48px;
+    line-height: 20px;
+    letter-spacing: 0%;
 }
 
 @media only screen and (max-width: 767px) {

@@ -1,5 +1,5 @@
 <template>
-<div class="cardddd d-flex flex-column" :style="{ padding: '35px'}">
+<div class="cardddd d-flex flex-column" :style="{ padding: '35px', height: 'auto'}">
     <h5 class="head">{{ heading }}</h5>
     <div class="event-list" v-if="randomevents.length">
         <div class="event-item" v-for="c in randomevents.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
@@ -84,9 +84,8 @@ export default {
 <style scoped>
 .cardddd {
      background: white;
-     width: 90%;
+     width: 100%;
      padding: 20px;
-     height: 390px;
      border-radius: 10px;
      margin-bottom: 20px;
 }

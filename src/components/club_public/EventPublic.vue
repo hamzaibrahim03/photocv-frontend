@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse custom-collapse" :class="{ show: isNavOpen }" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0 custom-nav">
                         <li class="nav-item">
-                            <a class="nav-link" @click.prevent="router.push('/ryton'); closeNav()" :style="{ color: Color.text_color }">
+                            <a class="nav-link" @click.prevent="router.push('/'); closeNav()" :style="{ color: Color.text_color }">
                                 Home
                             </a>
                         </li>
@@ -457,8 +457,9 @@ const filteredEvents = computed(() => {
 
 
 const handleLogout = async () => {
-  await user.logout();
-};
+  await user.logout()
+  router.push("/")
+}
 
 const rytoneventStore = useRytonEventStore();
 dayjs.extend(relativeTime);
@@ -681,6 +682,7 @@ function goToPage(page) {
      text-align: center;
      justify-content: center;
      align-items: center;
+     margin-top: -3px;
 }
  .filter-btn:hover {
      border-color: #6f8c6f;

@@ -42,7 +42,6 @@ import PhotographerLearning from "@/components/photographer/PhotographerLearning
 import PhotographerPlans from "@/components/photographer/PhotographerPlans.vue"
 import LearningNotes from "@/components/photographer/LearningNotes.vue"
 // club public
-import RytonHomeRoute from "@/components/club_public/RytonHomeRoute.vue"
 import HomeRoute from "@/components/club_public/HomeRoute.vue"
 import EventPublic from "@/components/club_public/EventPublic.vue"
 import EventSinglePublic from "@/components/club_public/EventSinglePublic.vue"
@@ -305,11 +304,6 @@ const routes = [
     name: "HomeRoute",
     path: "/",
     component: HomeRoute,
-  },
-  {
-    name: "RytonHomeRoute",
-    path: "/ryton",
-    component: RytonHomeRoute,
   },
   {
     name: "EventPublic",
