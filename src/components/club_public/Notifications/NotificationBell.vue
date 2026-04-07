@@ -37,24 +37,22 @@ const toggle = () => {
 
 <style scoped>
 .notification-wrapper {
-  position: relative;
+   position: relative;
 }
-
 .bell-btn {
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  position: relative;
+   background: none;
+   border: none;
+   font-size: 22px;
+   cursor: pointer;
+   position: relative;
 }
-
 .badge {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  background: #6aa96a;
-  color: #fff;
-  font-size: 11px;
-  border-radius: 50%;
+   position: absolute;
+   top: 0px;
+   right: 0px;
+   background: #6aa96a;
+   color: #fff;
+   font-size: 11px;
+   border-radius: 50%;
 }
 </style>

@@ -1,38 +1,156 @@
 <template>
 <div class="sidebar">
+    
+    <!-- Top Logo -->
     <img src="@/assets/images/photo.png" style="margin-left: 25px" />
     <div class="divider3"></div>
+
+    <!-- CLUB ADMIN -->
     <template v-if="user.role === 'club_admin'">
-        <a href="#" style="font-size: 24px"><img src="@/assets/images/eye.png" alt="Logo" class="img-fluid mb-3" id="side-logo" />My Club</a>
-        <a href="/dashboard" :class="{ active: $route.path === '/dashboard' }"><img :src="Dashboard" alt="point-icon" style="width: 20px; height: 20px;" /> Dashboard</a>
-        <a href="/event" :class="{ active: $route.path === '/event' }"><img :src="Event" alt="event" style="width: 20px; height: 20px" /> Events</a>
-        <a href="/competitions" :class="{ active: $route.path === '/competitions' }"><img :src="Competition" alt="point-icon" style="width: 20px; height: 20px" /> Competitions</a>
-        <a href="/members" :class="{ active: $route.path === '/members' }"><img :src="Member" alt="point-icon" style="width: 20px; height: 20px" /> Members</a>
-        <a href="/gallery" :class="{ active: $route.path === '/gallery' }"><img :src="Gallery" alt="point-icon" style="width: 20px; height: 20px" /> Galleries</a>
-        <a href="/notices" :class="{ active: $route.path === '/notices' }"><img :src="Notice" alt="point-icon" style="width: 20px; height: 20px" /> Notices</a>
-        <a href="/news" :class="{ active: $route.path === '/news' }"><img :src="News" alt="point-icon" style="width: 20px; height: 20px" /> News</a>
-        <a href="/pages" :class="{ active: $route.path === '/pages' }"><img :src="Page" alt="point-icon" style="width: 20px; height: 20px" /> Pages</a>
-        <a href="/club" :class="{ active: $route.path === '/club' }"><i class="bi bi-people"></i> Club</a>
+
+        <router-link to="#" style="font-size: 24px">
+            <img src="@/assets/images/eye.png" id="side-logo" />
+            My Club
+        </router-link>
+
+        <router-link 
+            to="/dashboard" 
+            :class="{ active: isActiveGroup(['Dashboard']) }"
+        >
+            <img :src="Dashboard" style="width: 20px; height: 20px" /> Dashboard
+        </router-link>
+
+        <router-link 
+            to="/event" 
+            :class="{ active: isActiveGroup(['Event','eventsingle','events_add','events_edit']) }"
+        >
+            <img :src="Event" style="width: 20px; height: 20px" /> Events
+        </router-link>
+
+        <router-link 
+            to="/competitions" 
+            :class="{ active: isActiveGroup(['Competitions','competitionsingle','comp_edit','CompetitionsAdd','CompetitionSettings']) }"
+        >
+            <img :src="Competition" style="width: 20px; height: 20px" /> Competitions
+        </router-link>
+
+        <router-link 
+            to="/members" 
+            :class="{ active: isActiveGroup(['MembersRoute','MemberAdd','member_edit','MembersRequest','MemberSingle']) }"
+        >
+            <img :src="Member" style="width: 20px; height: 20px"/> Members
+        </router-link>
+
+        <router-link 
+            to="/gallery" 
+            :class="{ active: isActiveGroup(['GalleryRoute']) }"
+        >
+            <img :src="Gallery" style="width: 20px; height: 20px"/> Galleries
+        </router-link>
+
+        <router-link 
+            to="/notices" 
+            :class="{ active: isActiveGroup(['NoticeRoute','noticeadd','noticeedit','noticesingle']) }"
+        >
+            <img :src="Notice" style="width: 20px; height: 20px"/> Notices
+        </router-link>
+
+        <router-link 
+            to="/news" 
+            :class="{ active: isActiveGroup(['NewsRoute','newssingle','news_edit','NewsAdd']) }"
+        >
+            <img :src="News" style="width: 20px; height: 20px"/> News
+        </router-link>
+
+        <router-link 
+            to="/pages" 
+            :class="{ active: isActiveGroup(['PagesRoute']) }"
+        >
+            <img :src="Page" style="width: 20px; height: 20px"/> Pages
+        </router-link>
+
+        <router-link 
+            to="/club" 
+            :class="{ active: isActiveGroup(['Club']) }"
+        >
+            <i class="bi bi-people" style="width: 20px; height: 20px"></i> Club
+        </router-link>
+
     </template>
 
+    <!-- MEMBER -->
     <template v-else-if="user.role === 'member'">
-        <a href="#"><img src="@/assets/images/eyep.png" alt="Logo" class="img-fluid mb-3" />&nbsp;My Profile</a>
-        <a href="/about" :class="{ active: $route.path === '/about' }"><img :src="About" alt="point-icon" style="width: 20px; height: 20px" /> About Me</a>
-        <a href="/portfolio" :class="{ active: $route.path === '/portfolio' }"><img :src="Portfolio" alt="point-icon" style="width: 20px; height: 20px" /> Portfolio</a>
-        <a href="/gear" :class="{ active: $route.path === '/gear' }"><img :src="Gear" alt="point-icon" style="width: 20px; height: 20px" /> Gear</a>
-        <a href="/learn" :class="{ active: $route.path === '/learn' }"><img :src="Learn" alt="point-icon" style="width: 20px; height: 20px" /> Learning</a>
-        <a href="/post" :class="{ active: $route.path === '/post' }"><img :src="Post" alt="point-icon" style="width: 20px; height: 20px" /> Posts</a>
-        <a href="/plans" :class="{ active: $route.path === '/plans' }"><img :src="Plan" alt="point-icon" style="width: 20px; height: 20px" /> Plans</a>
+
+        <router-link to="#">
+            <img src="@/assets/images/eyep.png" />
+            My Profile
+        </router-link>
+
+        <router-link 
+            to="/about" 
+            :class="{ active: isActiveGroup(['about']) }"
+        >
+            <img :src="About" style="width: 20px; height: 20px" /> About Me
+        </router-link>
+
+        <router-link 
+            to="/portfolio" 
+            :class="{ active: isActiveGroup(['portfolio']) }"
+        >
+            <img :src="Portfolio" style="width: 20px; height: 20px" /> Portfolio
+        </router-link>
+
+        <router-link 
+            to="/gear" 
+            :class="{ active: isActiveGroup(['gear']) }"
+        >
+            <img :src="Gear" style="width: 20px; height: 20px" /> Gear
+        </router-link>
+
+        <router-link 
+            to="/learn" 
+            :class="{ active: isActiveGroup(['learn']) }"
+        >
+            <img :src="Learn" style="width: 20px; height: 20px" /> Learning
+        </router-link>
+
+        <router-link 
+            to="/post" 
+            :class="{ active: isActiveGroup(['post']) }"
+        >
+            <img :src="Post" style="width: 20px; height: 20px" /> Posts
+        </router-link>
+
+        <router-link 
+            to="/plans" 
+            :class="{ active: isActiveGroup(['plans']) }"
+        >
+            <img :src="Plan" style="width: 20px; height: 20px" /> Plans
+        </router-link>
+
     </template>
 
     <div class="divider1"></div>
 
-    <a href="/settings" :class="{ active: $route.path === '/settings' }"><img :src="Settings" alt="point-icon" style="width: 20px; height: 20px" /> Settings</a>
-    <a href="#" @click.prevent="handleLogout"><img :src="Logout" alt="point-icon" style="width: 20px; height: 20px" /> Logout</a>
+    <!-- COMMON -->
+    <router-link 
+        to="/settings" 
+        :class="{ active: isActiveGroup(['settings']) }"
+    >
+        <img :src="Settings" style="width: 20px; height: 20px" /> Settings
+    </router-link>
+
+    <a href="#" @click.prevent="handleLogout">
+        <img :src="Logout" style="width: 20px; height: 20px" /> Logout
+    </a>
+
 </div>
 </template>
 
 <script setup>
+import { useUserStore } from "@/stores/club_admin/UserStore";
+import { useRouter, useRoute } from "vue-router";
+
 import About from "@/assets/icons/navigation/about.svg"
 import Competition from "@/assets/icons/navigation/competition.svg"
 import Dashboard from "@/assets/icons/navigation/dashboard.svg"
@@ -49,15 +167,42 @@ import Page from "@/assets/icons/navigation/pages.svg"
 import Learn from "@/assets/icons/navigation/learn.svg"
 import Gear from "@/assets/icons/navigation/gear.svg"
 import Plan from "@/assets/icons/navigation/plans.svg"
-import {
-    useUserStore
-} from "@/stores/club_admin/UserStore";
-import { useRouter } from "vue-router";
+
 const router = useRouter();
+const route = useRoute();
 const user = useUserStore();
+
+const isActiveGroup = (names) => names.includes(route.name);
+
 const handleLogout = async () => {
     await user.logout();
-  router.push("/")
-
+    router.push("/");
 };
 </script>
+
+<style scoped>
+/* Default */
+.sidebar a,
+.sidebar .router-link-active {
+  color: black;
+}
+
+/* Active link */
+.sidebar a.active,
+.sidebar .router-link-active {
+  color: #CC445E;
+}
+
+/* Icon default */
+.sidebar .nav-icon {
+  width: 20px;
+  height: 20px;
+  transition: 0.3s;
+}
+
+/* 🔥 Icon active */
+.sidebar a.active .nav-icon,
+.sidebar .router-link-active .nav-icon {
+  filter: brightness(0) saturate(100%) invert(32%) sepia(58%) saturate(585%) hue-rotate(314deg) brightness(95%) contrast(92%);
+}
+</style>

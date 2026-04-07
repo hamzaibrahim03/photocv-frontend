@@ -127,7 +127,7 @@
                         <h2 class="events-title" :style="{ color: Color.text_color }">Galleries</h2>
                         <div class="search-bar">
                             <i class="fas fa-search"></i>
-                            <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search galleries..." aria-controls="example1" />
+                            <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                         </div>
                     </div>
                 </div>
@@ -425,7 +425,7 @@ onMounted(async () => {
      padding: 16px 53px 50px 77px;
 }
  #heads {
-     padding: 60px 70px 20px 90px;
+     padding: 62px 73px 20px 94px;
 }
  #galcontainer {
      padding: 55px 0 13px;
@@ -455,10 +455,11 @@ onMounted(async () => {
      background-color: #fff;
      border: 1px solid #e5e7eb;
      border-radius: 8px;
-     padding: 6px 10px;
+     padding: 6px 30px;
      width: 470px;
      height: 60px;
      transition: border-color 0.2s ease;
+     gap: 20px
 }
  .search-bar:hover, .search-bar:focus-within {
      border-color: #d1d5db;

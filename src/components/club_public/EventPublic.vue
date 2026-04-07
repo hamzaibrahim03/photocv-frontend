@@ -212,7 +212,7 @@
                                     <div class="more-card d-flex flex-column" :style="{ padding: '30px', height: 'auto'}" id="eve">
                                         <h5 class="head">Competitions</h5>
                                         <div class="event-list" v-if="Competitions.length">
-                                            <div class="event-item" v-for="c in Competitions.slice(0, 6)" :key="c.id" style="margin-bottom: 10px; gap: 20px">
+                                            <div class="event-item" v-for="c in Competitions.slice(0, 6)" :key="c.id" style="gap: 20px">
                                                 <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" :alt="c.name" @error="c.featured_image_url = null"/>
                                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                                 </div>
@@ -638,7 +638,8 @@ function goToPage(page) {
      width: 470px;
      height: 60px;
      transition: border-color 0.2s ease;
-     gap: 20px 
+     gap: 20px;
+     margin-top: 5px;
 }
  .search-bar:hover, .search-bar:focus-within {
      border-color: #d1d5db;
@@ -726,7 +727,8 @@ function goToPage(page) {
      width: 985px;
      height: 310px;
      flex-direction: row;
-     gap: 50px 
+     gap: 50px;
+     margin-top: 5px;
 }
  .events-cards img {
      max-width: 300px;
@@ -782,7 +784,7 @@ function goToPage(page) {
      text-align: left;
 }
  #right {
-     margin-left: 20px;
+     margin-left: 26px;
      flex: 1;
 }
  .button-groups #view {
@@ -809,7 +811,10 @@ function goToPage(page) {
      font-size: 14px;
      color: #555;
      border-top: 1px solid #ddd;
-     margin-top: 40px;
+     margin-top: 80px;
+}
+#joincontainer{
+    margin-left: 15px;
 }
  .site-footer a {
      color: #007bff;
@@ -941,7 +946,7 @@ function goToPage(page) {
  .event-list {
      display: flex;
      flex-direction: column;
-     gap: 10px;
+     gap: 20px;
 }
  .event-item {
      display: flex;
@@ -962,6 +967,9 @@ function goToPage(page) {
      flex: 1;
      font-size: 0.875rem;
      width: 100%;
+}
+.more-card .event-details #edate {
+     margin-right: 10px
 }
  #ename {
      font-family: Inter;

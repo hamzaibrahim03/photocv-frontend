@@ -45,23 +45,23 @@
             <div v-for="(row, rowIndex) in chunkedCards" :key="'row-' + rowIndex" class="row g-0" style="margin-left: 0; margin-right: 0;">
                 <div v-for="(gallery, index) in row" :key="gallery.id" class="galleriy col-4 p-0">
                     <div class="galleriy-item">
-                        <img :src="gallery.photos[0].image" alt="Gallery Photo" class="img-fluid" style="border-radius:0px; max-width: 493px; max-height: 370px; object-fit: cover;" />
-                        <div style="border-radius: 0px" :class="[ 'galleriy-infos', index % 2 === 0 ? 'even-info' : 'odd-info', ]">
+                        <img :src="gallery.photos[0].image" alt="Gallery Photo" class="img-fluid" />
+                        <div :class="[ 'galleriy-infos', index % 2 === 0 ? 'even-info' : 'odd-info', ]">
                             <div class="gal-item">
                                 <span>{{ gallery.photos[0].title }}</span>
                             </div>
                             <div class="profile-icon d-flex justify-content-between">
                                 <div class="icons">
                                     <span>{{ gallery.total_photos }}</span>
-                                    <img :src="Ima" alt="icon" style="width:14px; height: 14px;" />
+                                    <img :src="Ima" alt="icon" />
                                 </div>
                                 <div class="icons">
                                     <span>{{ gallery.photos[0].likes_count }}</span>
-                                    <img :src="Hea" alt="icon" style="width:14px; height: 14px;" />
+                                    <img :src="Hea" alt="icon" />
                                 </div>
                                 <div class="icons">
                                     <span>{{ gallery.photos[0].comments_count }}</span>
-                                    <img :src="Com" alt="icon" style="width:14px; height: 14px;" />
+                                    <img :src="Com" alt="icon" />
                                 </div>
                             </div>
                         </div>
@@ -310,5 +310,18 @@ onMounted(async () => {
 }
  .even-info {
      background-color: #4c4036 !important;
+}
+.galleriy-item img {
+     border-radius:0px; 
+     max-width: 493px; 
+     max-height: 370px; 
+     object-fit: cover;
+}
+.galleriy-infos {
+     border-radius: 0px;
+}
+.profile-icon .icons img  {
+     width:14px; 
+     height: 14px;
 }
 </style>

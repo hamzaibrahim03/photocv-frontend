@@ -17,7 +17,7 @@
                                 </div>
                             </div>
                             <div class="dt-search mx-auto">
-                                <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search notices..." aria-controls="example1" />
+                                <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                             </div>
                             <div class="quick-filter text-end">
                                 <strong>Quick Filter</strong>
@@ -322,299 +322,262 @@ const formatTime = (datetimeStr) => {
 
 <style scoped>
 .container {
-    max-width: 1810px;
-    padding: 0 15px;
-    margin: 0 auto;
+     max-width: 1810px;
+     padding: 0 15px;
+     margin: 0 auto;
 }
-
-.content {
-    padding: 0 30px;
+ .content {
+     padding: 0 30px;
 }
-
-.dashboard-card {
-    gap: 15px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 0px;
-    width: 100%;
+ .dashboard-card {
+     gap: 15px;
+     border-radius: 10px;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     padding: 20px 0px;
+     width: 100%;
 }
-
-.profile-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: white;
-    padding: 15px 25px;
-    border-radius: 12px;
-    width: 65.8%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    height: 148px;
+ .profile-card {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     background: white;
+     padding: 15px 25px;
+     border-radius: 12px;
+     width: 65.8%;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     height: 148px;
 }
-
-.profile-left {
-    display: flex;
-    align-items: left;
+ .profile-left {
+     display: flex;
+     align-items: left;
 }
-
-.profile-left img {
-    width: 100%;
-    max-width: 108px;
-    height: 108px;
-    border-radius: 50%;
+ .profile-left img {
+     width: 100%;
+     max-width: 108px;
+     height: 108px;
+     border-radius: 50%;
 }
-
-.greeting {
-    color: #99816b;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 100%;
-    font-family: Inter;
+ .greeting {
+     color: #99816b;
+     font-weight: 400;
+     font-size: 18px;
+     line-height: 100%;
+     font-family: Inter;
 }
-
-.name {
-    font-weight: 500;
-    font-size: 30px;
-    line-height: 100%;
-    color: #4c4036;
-    font-family: Inter;
+ .name {
+     font-weight: 500;
+     font-size: 30px;
+     line-height: 100%;
+     color: #4c4036;
+     font-family: Inter;
 }
-
-.names {
-    font-family: Inter;
-    font-weight: 400;
-    font-size: 18.68px;
-    line-height: 20.76px;
-    letter-spacing: 0%;
+ .names {
+     font-family: Inter;
+     font-weight: 400;
+     font-size: 18.68px;
+     line-height: 20.76px;
+     letter-spacing: 0%;
 }
-
-.namess {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 100%;
-    color: #4c4036;
-    padding-left: 20px;
-    font-family: Inter;
-    text-align: justify;
+ .namess {
+     font-weight: 400;
+     font-size: 16px;
+     line-height: 100%;
+     color: #4c4036;
+     padding-left: 20px;
+     font-family: Inter;
+     text-align: justify;
 }
-
-.left-header-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+ .left-header-container {
+     display: flex;
+     align-items: center;
+     gap: 10px;
 }
-
-.role {
-    color: #cc445e;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 100%;
-    font-family: Inter;
+ .role {
+     color: #cc445e;
+     font-weight: 400;
+     font-size: 18px;
+     line-height: 100%;
+     font-family: Inter;
 }
-
-.profile-icons {
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
+ .profile-icons {
+     display: flex;
+     gap: 10px;
+     flex-direction: column;
 }
-
-.profile-icon {
-    display: flex;
-    flex-direction: column;
+ .profile-icon {
+     display: flex;
+     flex-direction: column;
 }
-
-.icons {
-    display: flex;
-    align-items: center;
-    color: white;
-    font-size: 14px;
-    gap: 5px;
+ .icons {
+     display: flex;
+     align-items: center;
+     color: white;
+     font-size: 14px;
+     gap: 5px;
 }
-
-.icon {
-    display: flex;
-    align-items: center;
-    color: #cc445e;
-    font-size: 14px;
-    gap: 5px;
+ .icon {
+     display: flex;
+     align-items: center;
+     color: #cc445e;
+     font-size: 14px;
+     gap: 5px;
 }
-
-.icon i {
-    margin-right: 5px;
+ .icon i {
+     margin-right: 5px;
 }
-
-.stat-card {
-    background: #cc445e;
-    color: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    width: 219px;
-    font-family: Inter;
-    font-size: 1.2rem;
-    height: 148px;
+ .stat-card {
+     background: #cc445e;
+     color: white;
+     padding: 20px;
+     border-radius: 8px;
+     text-align: center;
+     width: 219px;
+     font-family: Inter;
+     font-size: 1.2rem;
+     height: 148px;
 }
-
-.event-card {
-    background: #755840;
-    color: white;
-    padding: 20px;
-    height: 148px;
-    border-radius: 8px;
-    text-align: center;
-    font-family: Inter;
-    font-size: 1.2rem;
-    width: 219px;
+ .event-card {
+     background: #755840;
+     color: white;
+     padding: 20px;
+     height: 148px;
+     border-radius: 8px;
+     text-align: center;
+     font-family: Inter;
+     font-size: 1.2rem;
+     width: 219px;
 }
-
-.number {
-    font-weight: 500;
-    font-size: 48px;
-    font-family: Inter;
-    line-height: 100%;
-    color: white;
-    margin-top: 30px;
+ .number {
+     font-weight: 500;
+     font-size: 48px;
+     font-family: Inter;
+     line-height: 100%;
+     color: white;
+     margin-top: 30px;
 }
-
-.ca-details {
-    font-weight: 400;
-    font-size: 20px;
-    font-family: Inter;
-    line-height: 100%;
+ .ca-details {
+     font-weight: 400;
+     font-size: 20px;
+     font-family: Inter;
+     line-height: 100%;
 }
-
-.days {
-    margin-top: 35px;
-    font-weight: 400;
-    font-family: Inter;
-    font-size: 16px;
-    line-height: 100%;
+ .days {
+     margin-top: 35px;
+     font-weight: 400;
+     font-family: Inter;
+     font-size: 16px;
+     line-height: 100%;
 }
-
-.card-section {
-    display: flex;
-    gap: 35px;
-    width: 32%;
+ .card-section {
+     display: flex;
+     gap: 35px;
+     width: 32%;
 }
-
-.cardddd:first-child {
-    background: white;
-    width: 95%;
-    padding: 20px;
-    height: 390px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    margin-top: 20px;
+ .cardddd:first-child {
+     background: white;
+     width: 95%;
+     padding: 20px;
+     height: 390px;
+     border-radius: 10px;
+     margin-bottom: 20px;
+     margin-top: 20px;
 }
-
-.cardddd {
-    background: white;
-    width: 95%;
-    padding: 20px;
-    height: 390px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+ .cardddd {
+     background: white;
+     width: 95%;
+     padding: 20px;
+     height: 390px;
+     border-radius: 10px;
+     margin-bottom: 20px;
 }
-
-.custom-card {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    padding: 20px;
-    border-radius: 10px;
-    width: 103.5%;
-    margin-right: auto;
-    flex-direction: row;
+ .custom-card {
+     display: flex;
+     align-items: center;
+     background-color: white;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     margin-bottom: 15px;
+     padding: 20px;
+     border-radius: 10px;
+     width: 103.5%;
+     margin-right: auto;
+     flex-direction: row;
 }
-
-#view {
-    width: 120px;
-    max-width: 120px;
-    height: 40px;
-    border-radius: 7px;
-    background-color: #99816b;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 100%;
-    font-family: Inter;
-    color: white;
+ #view {
+     width: 120px;
+     max-width: 120px;
+     height: 40px;
+     border-radius: 7px;
+     background-color: #99816b;
+     font-weight: 400;
+     font-size: 16px;
+     line-height: 100%;
+     font-family: Inter;
+     color: white;
 }
-
-#edit {
-    width: 120px;
-    max-width: 120px;
-    height: 40px;
-    border-radius: 7px;
-    background-color: #4c4036;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 100%;
-    color: white;
-    font-family: Inter;
+ #edit {
+     width: 120px;
+     max-width: 120px;
+     height: 40px;
+     border-radius: 7px;
+     background-color: #4c4036;
+     font-weight: 400;
+     font-size: 16px;
+     line-height: 100%;
+     color: white;
+     font-family: Inter;
 }
-
-#right {
-    margin-left: 20px;
+ #right {
+     margin-left: 20px;
 }
-
-.event-list {
-    padding-top: 30px;
+ .event-list {
+     padding-top: 30px;
 }
-
-.event-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+ .event-list {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
 }
-
-.event-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+ .event-item {
+     display: flex;
+     align-items: center;
+     gap: 10px;
 }
-
-.event-item img {
-    width: 100%;
-    max-width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    object-fit: cover;
+ .event-item img {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 5px;
+     object-fit: cover;
 }
-
-.event-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex: 1;
-    font-size: 0.875rem;
-    width: 100%;
+ .event-details {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     flex: 1;
+     font-size: 0.875rem;
+     width: 100%;
 }
-
-#ename {
-    font-family: Inter;
-    font-weight: 500;
-    font-style: Regular;
-    font-size: 16px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ #ename {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.event-img,
-.fallback-box {
-    width: 100%;
-    max-width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    object-fit: cover;
-    background-color: #ddd;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+ .event-img, .fallback-box {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 5px;
+     object-fit: cover;
+     background-color: #ddd;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
-
-.fallback-box {
-    font-size: 14px;
-    color: #888;
+ .fallback-box {
+     font-size: 14px;
+     color: #888;
 }
 </style>

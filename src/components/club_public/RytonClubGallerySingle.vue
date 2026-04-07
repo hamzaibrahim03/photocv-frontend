@@ -133,7 +133,7 @@
                         </nav>
                         <div class="search-bar">
                             <i class="fas fa-search"></i>
-                            <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search galleries..." aria-controls="example1" />
+                            <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                         </div>
                     </div>
                 </div>
@@ -517,10 +517,11 @@ const galleryImages = computed(() => store.galleryImages)
      background-color: #fff;
      border: 1px solid #e5e7eb;
      border-radius: 8px;
-     padding: 6px 10px;
+     padding: 6px 30px;
      width: 470px;
      height: 60px;
      transition: border-color 0.2s ease;
+     gap: 20px;
 }
  .search-bar:hover, .search-bar:focus-within {
      border-color: #d1d5db;
@@ -709,9 +710,6 @@ const galleryImages = computed(() => store.galleryImages)
      cursor: pointer;
      transition: transform 0.3s ease;
 }
- .gallery-big img:hover, .gallery-small img:hover, .gallery-half img:hover {
-     transform: scale(1.03);
-}
  .gallery-row-bottom {
      display: grid;
      grid-template-columns: 1fr 1fr;
@@ -755,7 +753,12 @@ const galleryImages = computed(() => store.galleryImages)
      font-weight: 500;
      font-size: 18px;
 }
- .gallery-big, .gallery-small, .gallery-half {
+.gallery-big {
+     position: relative;
+     overflow: hidden;
+     width: 1093px;
+}
+ .gallery-small, .gallery-half {
      position: relative;
      overflow: hidden;
 }

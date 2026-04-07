@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="dt-search mx-auto">
-                <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search competitions..." aria-controls="example1" />
+                <input v-model="search" type="search" class="form-control" id="dt-search-1" placeholder="Search" aria-controls="example1" />
             </div>
             <div class="quick-filter text-end">
                 <strong>Quick Filter</strong>

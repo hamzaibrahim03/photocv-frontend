@@ -9,7 +9,7 @@
             <NotificationBell />
         </a>
         <div class="admin-dropdown">
-            <img :src="dashboardData?.data?.user_details?.profile_image" alt="profile image" style="cursor: pointer" />
+            <img :src="dashboardData?.data?.user_details?.profile_image" alt="profile image" />
             <span v-if="first_name"> {{ first_name }}&nbsp;<i class="fa-solid fa-chevron-down"></i></span>
             <span v-else>Welcome, Guest</span>
 
@@ -53,4 +53,7 @@ const handleLogout = async () => {
 </script>
 
 <style scoped>
+.admin-dropdown img {
+    cursor: pointer;
+}
 </style>

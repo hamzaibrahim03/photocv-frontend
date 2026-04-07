@@ -22,11 +22,11 @@
             </div>
         </div>
     </div>
-    <div class="card" style="height: 600px">
-        <h5 style="margin-top: 15px; margin-left: 10px">Club Gallery - Food</h5>
+    <div class="card">
+        <h5>Club Gallery - Food</h5>
         <a class="prev" onclick="changeImage(-1)">&#10094;</a>
-        <img id="display-img" class="card-img-top" src="" alt="Selected Image" style=" height: 450px; width: 92%; margin-left: 40px; border-radius: 0px; margin-top: 10px; " />
-        <p id="img-description" class="card-text" style="margin-top: 10px; margin-left: 40px"></p>
+        <img id="display-img" class="card-img-top" src="" alt="Selected Image" />
+        <p id="img-description" class="card-text"></p>
         <a class="nexts" onclick="changeImage(1)">&#10095;</a>
     </div>
     <div id="lightbox" class="lightbox">
@@ -43,7 +43,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="comments-card" style=" width: 100%; margin-left: 4%; max-height: 250px; overflow-y: auto; padding-right: 10px; ">
+            <div class="comments-card">
                 <h5>Comments</h5>
                 <div class="row">
                     <div class="col-md-1">
@@ -115,7 +115,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="comments-cards" style="width: 92%; margin-left: 5%">
+            <div class="comments-cards">
                 <h5>Likes</h5>
                 <div class="row">
                     <div class="col-md-2 like-item">
@@ -474,5 +474,34 @@ export default {
      display: flex;
      gap: 35px;
      width: 32%;
+}
+.card {
+     height: 600px
+}
+.card h5 {
+     margin-top: 15px; 
+     margin-left: 10px
+}
+.card-img-top {
+     height: 450px; 
+     width: 92%; 
+     margin-left: 40px; 
+     border-radius: 0px; 
+     margin-top: 10px; 
+}
+.card-text {
+     margin-top: 10px; 
+     margin-left: 40px
+}
+.comments-card {
+     width: 100%; 
+     margin-left: 4%; 
+     max-height: 250px; 
+     overflow-y: auto; 
+     padding-right: 10px;
+}
+.comments-cards {
+     width: 92%; 
+     margin-left: 5%
 }
 </style>

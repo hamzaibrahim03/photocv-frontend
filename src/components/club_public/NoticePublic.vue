@@ -764,7 +764,7 @@ function goToPage(page) {
      text-align: left;
 }
  #right {
-     margin-left: 20px;
+     margin-left: 26px;
      flex: 1;
 }
  .button-groups #view {

@@ -24,7 +24,7 @@
 
             <div class="labels-container">
                 <div v-if="eventsByDate[`${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`]" class="event-labels">
-                    <div v-for="ev in eventsByDate[`${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`]" :key="ev.eventName" class="event-label" :style="{ color: '#7FA483', backgroundColor: 'white' }">
+                    <div v-for="ev in eventsByDate[`${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`]" :key="ev.eventName" class="event-label" :style="{ color: ev.type === 'events' ? Color.accent_color : Color.primary_color, backgroundColor: Color.background_color }">
                         {{ ev.eventName }}
                     </div>
                 </div>
@@ -178,7 +178,7 @@ const getDayClass = (day) => {
   const hasEvent = activities.some(a => a.type === "event");
   const hasCompetition = activities.some(a => a.type === "competition");
 
-  if (hasEvent && hasCompetition) return "has-both";
+  if (hasEvent && hasCompetition) return "has-competition";
   if (hasCompetition) return "has-competition";
   if (hasEvent) return "has-event";
 
@@ -188,133 +188,114 @@ const getDayClass = (day) => {
 
 <style scoped>
 .calendar {
-    border-radius: 10px;
-    margin: 0;
-    font-family: sans-serif;
+     border-radius: 10px;
+     margin: 0;
+     font-family: sans-serif;
 }
-
-h2 {
-    margin-top: 2%;
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 100%;
-    letter-spacing: 0%;
+ h2 {
+     margin-top: 2%;
+     font-size: 22px;
+     font-weight: 400;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.calendar-header {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    height: 60px;
+ .calendar-header {
+     display: flex;
+     width: 100%;
+     justify-content: space-between;
+     align-items: center;
+     border-top-left-radius: 10px;
+     border-top-right-radius: 10px;
+     height: 60px;
 }
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    margin-bottom: 15px;
+ .calendar-grid {
+     display: grid;
+     grid-template-columns: repeat(7, 1fr);
+     margin-bottom: 15px;
 }
-
-.days {
-    margin-top: 10px;
+ .days {
+     margin-top: 10px;
 }
-
-.labels-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: nowrap;
-    gap: 4px;
-    margin-top: 4px;
+ .labels-container {
+     display: flex;
+     justify-content: center;
+     flex-wrap: nowrap;
+     gap: 4px;
+     margin-top: 4px;
 }
-
-.previous,
-.next {
-    font-size: 28px;
-    width: 40px;
-    height: 40px;
-    align-items: center;
-    border: none;
+ .previous, .next {
+     font-size: 28px;
+     width: 40px;
+     height: 40px;
+     align-items: center;
+     border: none;
 }
-
-.weekdays {
-    font-weight: bold;
-    text-align: center;
-    margin-top: 35px;
+ .weekdays {
+     font-weight: bold;
+     text-align: center;
+     margin-top: 35px;
 }
-
-.day {
-    min-height: 48px;
-    text-align: center;
-    padding: 4px;
-    position: relative;
-    border: 2px solid transparent;
+ .day {
+     min-height: 48px;
+     text-align: center;
+     padding: 4px;
+     position: relative;
+     border: 2px solid transparent;
 }
-
-.day-number {
-    font-size: 16px;
-    border-radius: 7px;
-    border: 2px solid transparent;
-    display: flex;
-    width: 38px;
-    height: 30px;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
+ .day-number {
+     font-size: 16px;
+     border-radius: 7px;
+     border: 2px solid transparent;
+     display: flex;
+     width: 38px;
+     height: 30px;
+     justify-content: center;
+     align-items: center;
+     margin: auto;
 }
-
-.day.hoverable:hover span {
-    border: 2px solid var(--border-color);
-    cursor: pointer;
+ .day.hoverable:hover span {
+     border: 2px solid var(--border-color);
+     cursor: pointer;
 }
-
-.today-badge {
-    border-radius: 7px;
-    display: inline-block;
-    width: 40px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
+ .today-badge {
+     border-radius: 7px;
+     display: inline-block;
+     width: 40px;
+     height: 32px;
+     display: flex;
+     justify-content: center;
+     text-align: center;
+     align-items: center;
 }
-
-.event-labels {
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-    gap: 2px;
-    z-index: 2;
+ .event-labels {
+     position: absolute;
+     top: -15px;
+     left: 50%;
+     transform: translateX(-50%);
+     display: none;
+     gap: 2px;
+     z-index: 2;
 }
-
-.event-label {
-    font-size: 12px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    white-space: nowrap;
+ .event-label {
+     font-size: 12px;
+     padding: 2px 6px;
+     border-radius: 4px;
+     white-space: nowrap;
 }
-
-.day.hoverable:hover .event-labels {
-    display: flex;
+ .day.hoverable:hover .event-labels {
+     display: flex;
 }
-
-.day.has-event .day-number {
-  border: 2px solid v-bind(Color.accent_color);
+ .day.has-event .day-number {
+     border: 2px solid v-bind(Color.accent_color);
 }
-
-.day.has-competition .day-number {
-  border: 2px solid v-bind(Color.primary_color);
+ .day.has-competition .day-number {
+     border: 2px solid v-bind(Color.primary_color);
 }
-
 /* Hover label color */
-.day.has-event:hover .event-label {
-  color: v-bind(Color.accent_color);
+ .day.has-event:hover .event-label {
+     color: v-bind(Color.accent_color);
 }
-
-.day.has-competition:hover .event-label {
-  color: v-bind(Color.primary_color);
+ .day.has-competition:hover .event-label {
+     color: v-bind(Color.primary_color);
 }
 </style>

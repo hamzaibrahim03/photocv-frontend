@@ -133,7 +133,7 @@
                         </nav>
                         <div class="search-bar">
                             <i class="fas fa-search"></i>
-                            <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search galleries..." aria-controls="example1" />
+                            <input v-model="search" type="search" class="search-input" id="dt-search-1" placeholder="Search" aria-controls="example1" />
                         </div>
                     </div>
                 </div>

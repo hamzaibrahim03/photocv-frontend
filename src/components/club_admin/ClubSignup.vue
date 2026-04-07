@@ -23,7 +23,7 @@
             <component :is="currentComponent" />
         </div>
 
-        <div class="image-section" style="justify-content: right">
+        <div class="image-section">
             <img src="@/assets/images/loginc.png" alt="Background" />
         </div>
     </div>
@@ -115,9 +115,9 @@ const subtitle = computed(() => subtitles[currentStep.value])
      flex: 0.3;
      background-color: #000;
      display: flex;
-     justify-content: center;
      align-items: center;
      overflow: hidden;
+     justify-content: right
 }
  .image-section img {
      width: 100%;

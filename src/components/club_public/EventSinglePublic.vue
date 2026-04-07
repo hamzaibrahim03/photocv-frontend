@@ -341,7 +341,7 @@
                                     <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
                                         <h5 class="head">Competitions</h5>
                                         <div class="event-list" v-if="Competitions.length">
-                                            <div class="event-item" v-for="c in Competitions.slice(0, 6)" :key="c.id" style="margin-bottom: 10px; gap: 20px">
+                                            <div class="event-item" v-for="c in Competitions.slice(0, 6)" :key="c.id" style="gap: 20px">
                                                 <img v-if="c.featured_image_url" class="img-fluid event-img" :src="c.featured_image_url" :alt="c.name" @error="c.featured_image_url = null"/>
                                                 <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                                 </div>
@@ -660,17 +660,19 @@ onMounted(async () => {
      background-color: #fff;
      border: 1px solid #e5e7eb;
      border-radius: 8px;
-     padding: 6px 10px;
+     padding: 6px 30px;
      width: 470px;
      height: 60px;
      transition: border-color 0.2s ease;
+     gap: 20px;
+     margin-top: -5px;
 }
  .search-bar:hover, .search-bar:focus-within {
      border-color: #d1d5db;
 }
  .search-bar i {
      color: #c0c0c0;
-     font-size: 14px;
+     font-size: 20px;
      margin-right: 8px;
 }
  .search-input {
@@ -690,6 +692,7 @@ onMounted(async () => {
      gap: 8px;
      font-size: 14px;
      color: #6b7280;
+     margin-top: 5px;
 }
  .breadcrumb-item {
      text-decoration: none;
@@ -712,7 +715,7 @@ onMounted(async () => {
      margin-top: 50px;
 }
  .card #edate {
-     margin-bottom: 50px;
+     margin-bottom: 44px;
      margin-top: 5px;
 }
  .card .text-secondary {
@@ -731,7 +734,7 @@ onMounted(async () => {
      display: grid;
      grid-template-columns: repeat(4, 1fr);
      width: 1093px;
-     margin-bottom: -47px;
+     margin-bottom: -102px;
      margin-left: -10px
 }
  .resultpics-items {
@@ -745,7 +748,7 @@ onMounted(async () => {
      object-position: top;
 }
  #joincontainer {
-     margin-top: 280px;
+     margin-top: 335px;
 }
  .site-footer {
      padding-top: 25px;
@@ -894,7 +897,7 @@ onMounted(async () => {
  .event-list {
      display: flex;
      flex-direction: column;
-     gap: 10px;
+     gap: 20px;
 }
  .event-item {
      display: flex;
@@ -1055,7 +1058,8 @@ onMounted(async () => {
      color: white 
 }
  #right {
-     margin-left: 20px;
+     margin-left: 19px;
+     margin-top: 10px;
 }
 .events-card h5 {
      font-family: Inter;

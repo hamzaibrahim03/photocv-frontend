@@ -1,12 +1,12 @@
 <template>
-<div class="login-container" style="align-items: center;">
+<div class="login-container">
     <img src="@/assets/images/club.png" alt="Logo" class="top-logo" />
 
     <div class="login-box">
         <div class="left-box">
-            <h2 style="font-family: Inter; font-weight: 600; font-style: Semi Bold; font-size: 48px; text-align: center; color: #4C4036">Login</h2>
+            <h2>Login</h2>
 
-            <p class="text-secondary" style="text-align: center;">Log in to access your club dashboard.</p>
+            <p class="text-secondary">Log in to access your club dashboard.</p>
 
             <form @submit.prevent="login">
                 <div class="inputBox mb-3">
@@ -21,7 +21,7 @@
                         <input type="checkbox" id="remember" />
                         <span for="remember">Remember me</span>
                     </div>
-                    <a href="change_password.html" style="color: #cc445e">Forgot Password</a>
+                    <a href="change_password.html">Forgot Password</a>
                 </div>
 
                 <button type="submit" class="btn btn-dark">Login</button>
@@ -34,7 +34,7 @@
 
         <div class="right-box">
             <h3>Create your club website in minutes... Honestly!</h3>
-            <p style="text-align: center; width: 500px">
+            <p>
                 No tech headaches, no long forms. Just pick a name, choose a look,
                 and you're live. Perfect for clubs that want to make an impact
                 without the hassle.
@@ -72,6 +72,7 @@ const login = () => {
      border-radius: 8px;
      overflow: hidden;
      background-color: white;
+     align-items: center;
 }
  .login-box {
      display: flex;
@@ -85,6 +86,21 @@ const login = () => {
      display: flex;
      flex-direction: column;
      justify-content: center;
+}
+.left-box h2 {
+     font-family: Inter; 
+     font-weight: 600; 
+     font-style: Semi Bold; 
+     font-size: 48px; 
+     text-align: center; 
+     color: #4C4036;
+}
+.left-box p {
+     text-align: center;
+}
+.right-box p {
+     text-align: center; 
+     width: 500px
 }
  .logo-wrapper {
      display: flex;
@@ -157,7 +173,7 @@ const login = () => {
 }
  .remember-forgot a {
      text-decoration: none;
-     color: #3d302b;
+     color: #cc445e
 }
  .remember-forgot a:hover {
      text-decoration: underline;

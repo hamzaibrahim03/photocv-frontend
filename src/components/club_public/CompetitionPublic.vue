@@ -218,7 +218,7 @@
                                         <CalendarEvent />
                                     </div>
 
-                                    <div class="more-card d-flex flex-column" :style="{ padding: '35px', height: 'auto'}" id="eve">
+                                    <div class="more-card d-flex flex-column" :style="{ padding: '30px', height: 'auto'}" id="eve">
                                         <h5 class="head">Events</h5>
                                         <div class="event-list" v-if="Events.length">
                                             <div class="event-item" v-for="c in Events.slice(0, 6)" :key="c.id" style="margin-bottom: 10px">
@@ -395,40 +395,21 @@
 </template>
 
 <script setup>
-import {
-    ref,
-    onMounted,
-    computed,
-    watch
-} from 'vue';
-import {
-    useRytonCompStore
-} from '@/stores/club_public/RytonComp';
-import {
-    useRytonEventStore
-} from '@/stores/club_public/RytonEvent';
+import { ref, onMounted, computed, watch } from 'vue';
+import { useRytonCompStore } from '@/stores/club_public/RytonComp';
+import { useRytonEventStore } from '@/stores/club_public/RytonEvent';
 import Loader from "@/components/LoaderAll.vue";
 import CalendarEvent from "@/components/club_public/Calendars/CalendarRytonEvent.vue";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {
-    useUserStore
-} from '@/stores/club_admin/UserStore';
-import {
-    useRouter
-} from "vue-router";
-import {
-    useHomeStore
-} from '@/stores/club_public/ClubData';
+import { useUserStore } from '@/stores/club_admin/UserStore';
+import { useRouter } from "vue-router";
+import { useHomeStore } from '@/stores/club_public/ClubData';
 import apiClient from '@/api/axios'
 import Event from "@/assets/icons/navigation/events.svg"
 import Competition from "@/assets/icons/navigation/competition.svg"
-import {
-    storeToRefs
-} from 'pinia'
-import {
-    useRytonFilterStore
-} from "@/stores/club_public/RytonFilters";
+import { storeToRefs } from 'pinia'
+import { useRytonFilterStore } from "@/stores/club_public/RytonFilters";
 import NotificationBell from '@/components/club_public/Notifications/NotificationBell.vue'
 
 const router = useRouter();
@@ -562,11 +543,7 @@ const formatDate = (dateString) => {
         month: "long"
     });
     const year = date.getFullYear();
-    const suffix =
-        day % 10 === 1 && day !== 11 ? "st" :
-        day % 10 === 2 && day !== 12 ? "nd" :
-        day % 10 === 3 && day !== 13 ? "rd" : "th";
-    return `${day}${suffix} ${month} ${year}`;
+    return `${day} ${month} ${year}`;
 };
 
 const formatsDate = (dateString) => {
@@ -642,1493 +619,1267 @@ function goToPage(page) {
 }
 </script>
 
-<style src="@/assets/css/clubstyle.css"></style><style scoped>
+<style src="@/assets/css/clubstyle.css"></style>
+<style scoped>
 #overall {
-    padding: 0 25px 60px 75px;
-}
-
-#events-left {
-    flex: 3;
-}
-
-#heads {
-    padding: 60px 70px 48px 90px;
-}
-
-.events-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.events-title {
-    font-family: Inter;
-    font-weight: 500;
-    font-style: Medium;
-    font-size: 36px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    margin: 0;
-}
-
-.search-bar {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 6px 30px;
-    width: 470px;
-    height: 60px;
-    transition: border-color 0.2s ease;
-    gap: 20px
-}
-
-.search-bar:hover,
-.search-bar:focus-within {
-    border-color: #d1d5db;
-}
-
-.search-bar i {
-    color: #c0c0c0;
-    font-size: 20px;
-    margin-right: 8px;
-}
-
-.search-input {
-    border: none;
-    outline: none;
-    font-size: 20px;
-    color: #333;
-    flex: 1;
-    background: transparent;
-}
-
-.search-input::placeholder {
-    color: #c0c0c0;
-}
-
-.filter-buttons {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    padding-bottom: 50px;
-}
-
-.filter-btn {
-    padding: 10px 16px;
-    border: 1px solid rgba(127, 164, 131, 1);
-    border-radius: 8px;
-    background-color: transparent;
-    color: rgba(127, 164, 131, 1);
-    width: 122.71px;
-    height: 40px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    font-family: Inter;
-    font-style: Regular;
-    letter-spacing: 0%;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
-
-.filter-btn:hover {
-    border-color: #6f8c6f;
-    color: #2e2e2e;
-}
-
-.filter-btn .icones {
-    width: 16px;
-    height: 16px;
-    transition: 0.3s;
-}
-
-.filter-btn .label {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0%;
-    margin-left: 5px
-}
-
-.filter-btn.active {
-    background-color: #7a9c7a;
-    color: #fff;
-    border-color: #7a9c7a;
-}
-
-.filter-btn.active .icones {
-    filter: brightness(0) invert(1);
-}
-
-.filter-btn.active .label {
-    color: white;
-}
-
-.hero-overlay {
-    width: 820px;
-}
-
-.events-cards {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
-    margin-bottom: 35px;
-    border-radius: 10px;
-    width: 975px;
-    height: 310px;
-    flex-direction: row;
-    gap: 45px
-}
-
-.events-cards img {
-    max-width: 300px;
-    width: 550px;
-    height: 250px;
-    border-radius: 8px;
-    opacity: 1;
-    margin-left: 20px;
-    margin-right: 0;
-}
-
-.events-cards #ename {
-    font-family: Inter;
-    font-weight: 500;
-    font-style: Medium;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    margin-top: -15px;
-}
-
-.events-cards #edate {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 12px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    text-align: left;
-}
-
-.events-cards .text-secondary {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0%;
-    margin-bottom: 25px;
-}
-
-#detail {
-    margin-right: 20px;
-    width: 99%;
-}
-
-.events-cards #espeaker {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 12px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    text-align: left;
-}
-
-#right {
-    margin-left: 20px;
-    flex: 1;
-}
-
-.button-groups #view {
-    max-width: 130px;
-    height: 40px;
-    opacity: 1;
-    padding: 10px 17px;
-    gap: 10px;
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 16px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    margin-top: 15px;
-}
-
-#joincontainer {
-    margin-top: 160px;
-}
-
-.site-footer {
-    padding-top: 25px;
-    padding-bottom: 10px;
-    text-align: center;
-    font-size: 14px;
-    color: #555;
-    border-top: 1px solid #ddd;
-    margin-top: 40px;
-}
-
-.site-footer a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.site-footer a:hover {
-    text-decoration: underline;
-}
-
-.ultrahead {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 72px;
-    line-height: 20px;
-    letter-spacing: 0%;
-}
-
-.heading {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 36px;
-    line-height: 100%;
-    letter-spacing: 0%;
-}
-
-.head {
-    font-family: Inter;
-    font-weight: 500;
-    font-style: Medium;
-    font-size: 24px;
-    line-height: 100%;
-    letter-spacing: 0%;
-}
-
-.clubhead {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 20px;
-    line-height: 100%;
-    letter-spacing: 0%;
-}
-
-.subhead {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 18px;
-    line-height: 36px;
-    letter-spacing: 0%;
-}
-
-.memtext {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 16px;
-    line-height: 100%;
-    letter-spacing: 0%;
-}
-
-.prehead {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0%;
-}
-
-.galtext {
-    font-family: Inter;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 100%;
-    letter-spacing: 0%;
-}
-
-.event-img,
-.fallback-box {
-    width: 100%;
-    max-width: 50px;
-    height: 50px;
-    border-radius: 7px;
-    object-fit: cover;
-    background-color: #f0f0f0;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-.event-item {
-    gap: 20px;
-}
-
-.fallback-box {
-    font-size: 14px;
-    color: #888;
-}
-
-.icon-circles .flickr-dots i,
-.flickr-dots i {
-    font-size: 8px;
-    padding-bottom: 10px;
-    margin: 1px;
-}
-
-.calendar-card {
-    background: white;
-    width: 470px;
-    padding: 20px;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 24px;
-    box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
-    margin-top: -5px;
-}
-
-.season-card {
-    height: 470px;
-    background: white;
-    width: 470px;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 24px;
-    box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
-}
-
-.more-card {
-    height: 580px;
-    background: white;
-    width: 470px;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 24px;
-    box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
-}
-
-.button-group button {
-    margin-right: 8px;
-}
-
-.event-list {
-    padding-top: 20px;
-}
-
-.event-list {
-    display: flex;
-}
-
-.event-item {
-    display: flex;
-    gap: 10px;
-}
-
-.event-item img {
-    width: 100%;
-    max-width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    object-fit: cover;
-}
-
-.event-details {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex: 1;
-    font-size: 0.875rem;
-    width: 100%;
-}
-
-#ename {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 14px;
-    line-height: 100%;
-    letter-spacing: 0%;
-}
-
-#espeaker {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 10px;
-    line-height: 20px;
-    letter-spacing: 0%;
-}
-
-.notification-mobile {
-    display: none;
-}
-
-.session-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 25px 0px;
-}
-
-.session-card {
-    width: 410px;
-    height: 160px;
-    background: rgba(236, 237, 230, 0.3);
-    border: 1px solid rgba(51, 51, 51, 0.2);
-    border-radius: 12px;
-    padding: 15px 10px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease;
-}
-
-.session-card:hover {
-    transform: translateY(-2px);
-}
-
-.session-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.session-header h3 {
-    font-size: 20px;
-    color: #333;
-    margin: 0;
-}
-
-.status {
-    display: flex;
-    align-items: center;
-    border-radius: 20px;
-    padding: 3px 10px;
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 11.85px;
-    line-height: 100%;
-    letter-spacing: 0%;
-}
-
-.status .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    margin-right: 6px;
-}
-
-.status.active {
-    background: #eaf8ef;
-    color: #22c55e;
-}
-
-.status.active .dot {
-    background: #22c55e;
-}
-
-.status.inactive {
-    background: #f0f0f0;
-    color: #777;
-}
-
-.status.inactive .dot {
-    background: #bdbdbd;
-}
-
-.session-body {
-    display: flex;
-    justify-content: space-between;
-    margin: 40px 40px 20px 20px;
-}
-
-.info {
-    font-size: 15px;
-    color: #444;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.icon {
-    font-size: 16px;
-}
-
-.session-footer {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 12px;
-    line-height: 100%;
-    letter-spacing: 0%;
-}
-
-.dt-paging {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: 20px;
-    gap: 5px;
-    margin-left: -10px;
-}
-
-.dt-paging-button {
-    border: 1px solid green;
-    background: #ffffff;
-    color: black;
-    margin: 2px;
-    border-radius: 7px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    margin-left: 8px;
-}
-
-.dt-paging-button.disabled {
-    background: #ffffff;
-    color: black;
-    border: 1px solid #99816b;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.dt-paging-button.current {
-    background: orange;
-    font-weight: bold;
-    border: none;
-    color: white
-}
-
-@media only screen and (max-width: 1399px) {
-    #overall {
-        padding: 0 25px 60px 35px;
-    }
-
-    #heads {
-        padding: 50px 25px 50px 50px;
-    }
-
-    .search-bar {
-        display: flex;
-        align-items: center;
-        background-color: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 6px 30px;
-        width: 400px;
-        height: 60px;
-        transition: border-color 0.2s ease;
-        gap: 20px
-    }
-
-    .filter-buttons {
-        display: flex;
-        gap: 25px;
-        flex-wrap: wrap;
-        padding-bottom: 50px;
-    }
-
-    .filter-btn {
-        padding: 10px 16px;
-        border: 1px solid rgba(127, 164, 131, 1);
-        border-radius: 8px;
-        background-color: transparent;
-        color: rgba(127, 164, 131, 1);
-        width: 340px;
-        height: 40px;
-        cursor: pointer;
-        transition: all 0.25s ease;
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 16px;
-        line-height: 100%;
-        letter-spacing: 0%;
-    }
-
-    .events-cards {
-        display: flex;
-        align-items: center;
-        background-color: white;
-        box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
-        margin-bottom: 35px;
-        border-radius: 10px;
-        width: 710px;
-        height: 310px;
-        flex-direction: row;
-        gap: 50px
-    }
-
-    .events-cards img {
-        max-width: 200px;
-        width: 450px;
-        height: 250px;
-        border-radius: 8px;
-        opacity: 1;
-        margin-left: 20px;
-        margin-right: 0;
-    }
-
-    .events-cards #edate {
-        width: 150px;
-    }
-
-    .events-cards #espeaker {
-        width: 150px;
-    }
-
-    .calendar-card,
-    .season-card,
-    .more-card {
-        width: 110% !important;
-    }
-
-    #right {
-        margin-left: -10px;
-    }
-
-    #edate {
-        width: 120px;
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 12px;
-        line-height: 100%;
-        letter-spacing: 0%;
-        text-align: left;
-    }
-
-    .event-date {
-        width: 120px;
-        display: block;
-    }
-
-    #ename {
-        font-size: 13px
-    }
-
-    .session-card {
-        width: 100%;
-    }
-
-    .info {
-        font-size: 13px;
-    }
-}
-
-@media only screen and (max-width: 1199px) {
-    #overall {
-        padding: 0 25px 60px 35px;
-    }
-
-    #heads {
-        padding: 50px 25px 50px 50px;
-    }
-
-    .search-bar {
-        display: flex;
-        align-items: center;
-        background-color: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 6px 30px;
-        width: 400px;
-        height: 60px;
-        transition: border-color 0.2s ease;
-        gap: 20px
-    }
-
-    .filter-buttons {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-        padding-bottom: 50px;
-    }
-
-    .filter-btn {
-        padding: 8px;
-        border: 1px solid rgba(127, 164, 131, 1);
-        border-radius: 8px;
-        background-color: transparent;
-        color: rgba(127, 164, 131, 1);
-        width: 250px;
-        height: 40px;
-        cursor: pointer;
-        transition: all 0.25s ease;
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 16px;
-        line-height: 100%;
-        letter-spacing: 0%;
-    }
-
-    .events-cards {
-        display: flex;
-        align-items: center;
-        background-color: white;
-        box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
-        margin-bottom: 35px;
-        border-radius: 10px;
-        width: 550px;
-        height: 310px;
-        flex-direction: row;
-        gap: 40px
-    }
-
-    .events-cards img {
-        max-width: 150px;
-        width: 400px;
-        height: 200px;
-        border-radius: 8px;
-        opacity: 1;
-        margin-left: 20px;
-        margin-right: 0;
-    }
-
-    .events-cards #ename {
-        font-size: 20px;
-    }
-
-    .events-cards .text-secondary {
-        font-size: 12px;
-        line-height: 16px;
-    }
-
-    .events-cards #edate {
-        width: 150px;
-    }
-
-    .events-cards #espeaker {
-        width: 150px;
-    }
-
-    .calendar-card,
-    .season-card,
-    .more-card {
-        width: 120% !important;
-    }
-
-    .event-details {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .event-info {
-        width: 180px;
-    }
-
-    .day-number {
-        width: 30px;
-    }
-
-    #right {
-        margin-left: -30px;
-    }
-
-    #edate {
-        width: 120px;
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 12px;
-        line-height: 100%;
-        letter-spacing: 0%;
-        text-align: left;
-    }
-
-    .event-date {
-        width: 120px;
-        display: block;
-        text-align: left;
-    }
-
-    #ename {
-        font-size: 14px
-    }
-
-    .session-card {
-        width: 100%;
-    }
-
-    .session-body {
-        margin: 40px 20px 20px 0;
-    }
-
-    .info {
-        font-size: 13px;
-    }
-}
-
-@media only screen and (max-width: 991px) {
-
-    .right-header .profile-mobile,
-    .right-header .divider,
-    .notification-desktop,
-    .down {
-        display: none !important;
-    }
-
-    .notification-mobile {
-        display: inline-flex !important;
-        margin-right: 10px;
-    }
-
-    #login {
-        padding: 0px 15px 20px 45px;
-        display: flex;
-        font-size: 18px;
-        font-family: Inter;
-        font-weight: 400;
-    }
-
-    .navbar .right-header {
-        margin-left: 0;
-    }
-
-    #overall {
-        padding: 0 25px 60px 35px;
-    }
-
-    #overall .row {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #heads {
-        padding: 50px 25px 50px 50px;
-    }
-
-    .search-bar {
-        display: flex;
-        align-items: center;
-        background-color: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 6px 30px;
-        width: 400px;
-        height: 60px;
-        transition: border-color 0.2s ease;
-        gap: 20px
-    }
-
-    .filter-buttons {
-        display: flex;
-        gap: 20px;
-        flex-wrap: nowrap;
-        padding-bottom: 50px;
-    }
-
-    .filter-btn {
-        padding: 8px;
-        border: 1px solid rgba(127, 164, 131, 1);
-        border-radius: 8px;
-        background-color: transparent;
-        color: rgba(127, 164, 131, 1);
-        width: 350px;
-        height: 40px;
-        cursor: pointer;
-        transition: all 0.25s ease;
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 14px;
-        line-height: 100%;
-        letter-spacing: 0%;
-    }
-
-    .events-cards {
-        display: flex;
-        align-items: center;
-        background-color: white;
-        box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
-        margin-bottom: 35px;
-        border-radius: 10px;
-        width: 700px;
-        height: auto;
-        flex-direction: column;
-        gap: 40px;
-        text-align: center;
-        justify-content: center;
-    }
-
-    #detail {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .events-cards img {
-        max-width: 300px;
-        width: 550px;
-        height: auto;
-        border-radius: 8px;
-        opacity: 1;
-        margin-left: 20px;
-        margin-right: 0;
-    }
-
-    .events-cards #ename {
-        font-size: 24px;
-    }
-
-    .events-cards .text-secondary {
-        font-size: 14px;
-        line-height: 20px;
-    }
-
-    .events-cards #edate {
-        width: 150px;
-    }
-
-    .events-cards #espeaker {
-        width: 150px;
-    }
-
-    .calendar-card,
-    .season-card,
-    .more-card {
-        width: 700px !important;
-    }
-
-    #events-left {
-        order: 1;
-        width: 155%;
-    }
-
-    #right {
-        order: 2;
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    .event-details {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .event-info {
-        width: 100%;
-    }
-
-    #edate {
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 12px;
-        line-height: 100%;
-        letter-spacing: 0%;
-        text-align: left;
-    }
-
-    #ename {
-        font-size: 16px
-    }
-
-    .session-card {
-        width: 100%;
-    }
-
-    .session-body {
-        margin: 40px 40px 20px 20px;
-    }
-
-    .info {
-        font-size: 15px;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    #overall {
-        padding: 0 25px 60px 35px;
-    }
-
-    #overall .row {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #heads {
-        padding: 50px 25px 50px 50px;
-    }
-
-    .search-bar {
-        display: flex;
-        align-items: center;
-        background-color: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 6px 30px;
-        width: 250px;
-        height: 60px;
-        transition: border-color 0.2s ease;
-        gap: 20px
-    }
-
-    .filter-buttons {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-        padding-bottom: 50px;
-    }
-
-    .events-title {
-        font-size: 30px;
-    }
-
-    .filter-btn {
-        padding: 5px;
-        border: 1px solid rgba(127, 164, 131, 1);
-        border-radius: 8px;
-        background-color: transparent;
-        color: rgba(127, 164, 131, 1);
-        width: 230px;
-        height: 40px;
-        cursor: pointer;
-        transition: all 0.25s ease;
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 14px;
-        line-height: 100%;
-        letter-spacing: 0%;
-    }
-
-    .events-cards {
-        display: flex;
-        align-items: center;
-        background-color: white;
-        box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
-        margin-bottom: 35px;
-        border-radius: 10px;
-        width: 500px;
-        height: auto;
-        flex-direction: column;
-        gap: 40px;
-        text-align: center;
-        justify-content: center;
-    }
-
-    #detail {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .events-cards img {
-        max-width: 550px;
-        width: 300px;
-        height: auto;
-        border-radius: 8px;
-        opacity: 1;
-        margin-left: 20px;
-        margin-right: 0;
-    }
-
-    .events-cards #ename {
-        font-size: 24px;
-    }
-
-    .events-cards .text-secondary {
-        font-size: 14px;
-        line-height: 20px;
-    }
-
-    .events-cards #edate {
-        width: 150px;
-    }
-
-    .events-cards #espeaker {
-        width: 150px;
-    }
-
-    .calendar-card,
-    .season-card,
-    .more-card {
-        width: 500px !important;
-        margin-left: 10px;
-    }
-
-    #events-left {
-        order: 1;
-        width: 100%;
-    }
-
-    #right {
-        order: 2;
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    .event-details {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .event-info {
-        width: 100%;
-    }
-
-    #edate {
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 12px;
-        line-height: 100%;
-        letter-spacing: 0%;
-        text-align: left;
-    }
-
-    #ename {
-        font-size: 16px
-    }
-
-    .session-card {
-        width: 100%;
-    }
-
-    .session-body {
-        margin: 40px 40px 20px 20px;
-    }
-
-    .info {
-        font-size: 15px;
-    }
-}
-
-@media only screen and (max-width: 575px) {
-    #overall {
-        padding: 0 25px 60px 35px;
-    }
-
-    #overall .row {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #heads {
-        padding: 50px 25px 50px 50px;
-    }
-
-    .events-header {
-        gap: 20px;
-    }
-
-    .events-title {
-        font-size: 20px;
-    }
-
-    .search-bar {
-        display: flex;
-        align-items: center;
-        background-color: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 6px 30px;
-        width: 250px;
-        height: 50px;
-        transition: border-color 0.2s ease;
-        gap: 20px
-    }
-
-    .filter-buttons {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-        padding-bottom: 50px;
-    }
-
-    .filter-btn {
-        padding: 5px;
-        border: 1px solid rgba(127, 164, 131, 1);
-        border-radius: 8px;
-        background-color: transparent;
-        color: rgba(127, 164, 131, 1);
-        width: 270px;
-        height: 40px;
-        cursor: pointer;
-        transition: all 0.25s ease;
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 14px;
-        line-height: 100%;
-        letter-spacing: 0%;
-    }
-
-    .events-cards {
-        display: flex;
-        align-items: center;
-        background-color: white;
-        box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
-        margin-bottom: 35px;
-        border-radius: 10px;
-        width: 300px;
-        height: auto;
-        flex-direction: column;
-        gap: 40px;
-        text-align: center;
-        justify-content: center;
-    }
-
-    #detail {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .events-cards img {
-        max-width: 400px;
-        width: 200px;
-        height: auto;
-        border-radius: 8px;
-        opacity: 1;
-        margin-left: 20px;
-        margin-right: 0;
-    }
-
-    .events-cards #ename {
-        font-size: 24px;
-    }
-
-    .events-cards .text-secondary {
-        font-size: 14px;
-        line-height: 20px;
-    }
-
-    .events-cards #edate {
-        width: 150px;
-    }
-
-    .events-cards #espeaker {
-        width: 150px;
-    }
-
-    .calendar-card,
-    .season-card,
-    .more-card {
-        width: 320px !important;
-        margin-left: 10px;
-    }
-
-    #events-left {
-        order: 1;
-        width: 100%;
-    }
-
-    #right {
-        order: 2;
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    .event-details {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .event-info {
-        width: 100%;
-    }
-
-    #edate {
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 12px;
-        line-height: 100%;
-        letter-spacing: 0%;
-        text-align: left;
-    }
-
-    #ename {
-        font-size: 16px
-    }
-
-    .session-card {
-        width: 100%;
-    }
-
-    .session-body {
-        margin: 40px 20px 20px 0;
-    }
-
-    .info {
-        font-size: 13px;
-    }
-}
-
-@media only screen and (max-width: 359px) {
-    #overall {
-        padding: 0 25px 60px 35px;
-    }
-
-    #overall .row {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #heads {
-        padding: 50px 25px 50px 50px;
-    }
-
-    .events-title {
-        font-size: 20px;
-    }
-
-    .search-bar {
-        display: flex;
-        align-items: center;
-        background-color: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 6px 30px;
-        width: 200px;
-        height: 60px;
-        transition: border-color 0.2s ease;
-        gap: 20px
-    }
-
-    .filter-buttons {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-        padding-bottom: 50px;
-    }
-
-    .filter-btn {
-        padding: 5px;
-        border: 1px solid rgba(127, 164, 131, 1);
-        border-radius: 8px;
-        background-color: transparent;
-        color: rgba(127, 164, 131, 1);
-        width: 100px;
-        height: 40px;
-        cursor: pointer;
-        transition: all 0.25s ease;
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 14px;
-        line-height: 100%;
-        letter-spacing: 0%;
-    }
-
-    .events-cards {
-        display: flex;
-        align-items: center;
-        background-color: white;
-        box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
-        margin-bottom: 35px;
-        border-radius: 10px;
-        width: 300px;
-        height: auto;
-        flex-direction: column;
-        gap: 40px;
-        text-align: center;
-        justify-content: center;
-    }
-
-    #detail {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .events-cards img {
-        max-width: 400px;
-        width: 200px;
-        height: auto;
-        border-radius: 8px;
-        opacity: 1;
-        margin-left: 20px;
-        margin-right: 0;
-    }
-
-    .events-cards #ename {
-        font-size: 24px;
-    }
-
-    .events-cards .text-secondary {
-        font-size: 14px;
-        line-height: 20px;
-    }
-
-    .events-cards #edate {
-        width: 150px;
-    }
-
-    .events-cards #espeaker {
-        width: 150px;
-    }
-
-    .calendar-card,
-    .season-card,
-    .more-card {
-        width: 320px !important;
-        margin-left: 10px;
-    }
-
-    #events-left {
-        order: 1;
-        width: 100%;
-    }
-
-    #right {
-        order: 2;
-        width: 100%;
-        margin-top: 20px;
-    }
-
-    .event-details {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .event-info {
-        width: 100%;
-    }
-
-    #edate {
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 12px;
-        line-height: 100%;
-        letter-spacing: 0%;
-        text-align: left;
-    }
-
-    #ename {
-        font-size: 16px
-    }
-
-    .session-card {
-        width: 100%;
-    }
-
-    .session-body {
-        margin: 40px 20px 20px 0;
-    }
-
-    .info {
-        font-size: 13px;
+     padding: 0 25px 60px 75px;
+}
+ #events-left {
+     flex: 3;
+}
+ #heads {
+     padding: 60px 70px 48px 90px;
+}
+ .events-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 1.5rem;
+     flex-wrap: wrap;
+}
+ .events-title {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     margin: 0;
+}
+ .search-bar {
+     display: flex;
+     align-items: center;
+     background-color: #fff;
+     border: 1px solid #e5e7eb;
+     border-radius: 8px;
+     padding: 6px 30px;
+     width: 470px;
+     height: 60px;
+     transition: border-color 0.2s ease;
+     gap: 20px 
+}
+ .search-bar:hover, .search-bar:focus-within {
+     border-color: #d1d5db;
+}
+ .search-bar i {
+     color: #c0c0c0;
+     font-size: 20px;
+     margin-right: 8px;
+}
+ .search-input {
+     border: none;
+     outline: none;
+     font-size: 20px;
+     color: #333;
+     flex: 1;
+     background: transparent;
+}
+ .search-input::placeholder {
+     color: #c0c0c0;
+}
+ .filter-buttons {
+     display: flex;
+     gap: 20px;
+     flex-wrap: wrap;
+     padding-bottom: 50px;
+     margin-left: -6px;
+}
+ .filter-btn {
+     padding: 10px 16px;
+     border: 1px solid rgba(127, 164, 131, 1);
+     border-radius: 8px;
+     background-color: transparent;
+     color: rgba(127, 164, 131, 1);
+     width: 122.71px;
+     height: 40px;
+     cursor: pointer;
+     transition: all 0.25s ease;
+     font-family: Inter;
+     font-style: Regular;
+     letter-spacing: 0%;
+     display: flex;
+     text-align: center;
+     justify-content: center;
+     align-items: center;
+}
+ .filter-btn:hover {
+     border-color: #6f8c6f;
+     color: #2e2e2e;
+}
+ .filter-btn .icones {
+     width: 16px;
+     height: 16px;
+     transition: 0.3s;
+}
+ .filter-btn .label {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 20px;
+     letter-spacing: 0%;
+     margin-left: 5px 
+}
+ .filter-btn.active {
+     background-color: #7a9c7a;
+     color: #fff;
+     border-color: #7a9c7a;
+}
+ .filter-btn.active .icones {
+     filter: brightness(0) invert(1);
+}
+ .filter-btn.active .label {
+     color: white;
+}
+ .hero-overlay {
+     width: 820px;
+}
+ .events-cards {
+     display: flex;
+     align-items: center;
+     background-color: white;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+     margin-bottom: 35px;
+     border-radius: 10px;
+     width: 975px;
+     height: 310px;
+     flex-direction: row;
+     gap: 50px;
+     margin-top: 5px;
+}
+ .events-cards img {
+     max-width: 300px;
+     width: 550px;
+     height: 250px;
+     border-radius: 8px;
+     opacity: 1;
+     margin-left: 20px;
+     margin-right: 0;
+}
+ .events-cards #ename {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 24px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     margin-top: -15px;
+}
+ .events-cards #edate {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     text-align: left;
+}
+ .events-cards .text-secondary {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 20px;
+     letter-spacing: 0%;
+     margin-bottom: 25px;
+}
+ #detail {
+     margin-right: 20px;
+     width: 99%;
+     margin-top: 5px;
+}
+ .events-cards #espeaker {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     text-align: left;
+}
+ #right {
+     margin-left: 26px;
+     flex: 1;
+}
+ .button-groups #view {
+     max-width: 130px;
+     height: 40px;
+     opacity: 1;
+     padding: 10px 17px;
+     gap: 10px;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     margin-top: 15px;
+}
+ #joincontainer {
+     margin-top: 160px;
+}
+ .site-footer {
+     padding-top: 25px;
+     padding-bottom: 10px;
+     text-align: center;
+     font-size: 14px;
+     color: #555;
+     border-top: 1px solid #ddd;
+     margin-top: 40px;
+}
+ .site-footer a {
+     color: #007bff;
+     text-decoration: none;
+}
+ .site-footer a:hover {
+     text-decoration: underline;
+}
+ .ultrahead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 72px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .heading {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .head {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 24px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .clubhead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 20px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .subhead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 18px;
+     line-height: 36px;
+     letter-spacing: 0%;
+}
+ .memtext {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .prehead {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .galtext {
+     font-family: Inter;
+     font-weight: 400;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .event-img, .fallback-box {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 7px;
+     object-fit: cover;
+     background-color: #f0f0f0;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+ .event-item {
+     gap: 20px;
+}
+ .fallback-box {
+     font-size: 14px;
+     color: #888;
+}
+ .icon-circles .flickr-dots i, .flickr-dots i {
+     font-size: 8px;
+     padding-bottom: 10px;
+     margin: 1px;
+}
+ .calendar-card {
+     background: white;
+     width: 470px;
+     padding: 20px;
+     height: auto;
+     border-radius: 10px;
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+     margin-top: -5px;
+}
+ .season-card {
+     height: 470px;
+     background: white;
+     width: 470px;
+     padding: 20px;
+     border-radius: 10px;
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+}
+ .more-card {
+     height: 580px;
+     background: white;
+     width: 470px;
+     padding: 20px;
+     border-radius: 10px;
+     margin-bottom: 24px;
+     box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+}
+ .button-group button {
+     margin-right: 8px;
+}
+ .event-list {
+     padding-top: 20px;
+}
+ .event-list {
+     display: flex;
+}
+ .event-item {
+     display: flex;
+     align-items: center;
+     gap: 20px;
+}
+ .event-item img {
+     width: 100%;
+     max-width: 50px;
+     height: 50px;
+     border-radius: 5px;
+     object-fit: cover;
+}
+ .event-details {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     flex: 1;
+     font-size: 0.875rem;
+     width: 100%;
+}
+ #ename {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ #espeaker {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 10px;
+     line-height: 20px;
+     letter-spacing: 0%;
+}
+ .notification-mobile {
+     display: none;
+}
+ .session-container {
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+     padding: 25px 0px;
+}
+ .session-card {
+     width: 410px;
+     height: 160px;
+     background: rgba(236, 237, 230, 0.3);
+     border: 1px solid rgba(51, 51, 51, 0.2);
+     border-radius: 12px;
+     padding: 15px 10px;
+     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+     transition: transform 0.2s ease;
+}
+ .session-card:hover {
+     transform: translateY(-2px);
+}
+ .session-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 12px;
+}
+ .session-header h3 {
+     font-size: 20px;
+     color: #333;
+     margin: 0;
+}
+ .status {
+     display: flex;
+     align-items: center;
+     border-radius: 20px;
+     padding: 3px 10px;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 11.85px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .status .dot {
+     width: 6px;
+     height: 6px;
+     border-radius: 50%;
+     margin-right: 6px;
+}
+ .status.active {
+     background: #eaf8ef;
+     color: #22c55e;
+}
+ .status.active .dot {
+     background: #22c55e;
+}
+ .status.inactive {
+     background: #f0f0f0;
+     color: #777;
+}
+ .status.inactive .dot {
+     background: #bdbdbd;
+}
+ .session-body {
+     display: flex;
+     justify-content: space-between;
+     margin: 40px 40px 20px 20px;
+}
+ .info {
+     font-size: 15px;
+     color: #444;
+     display: flex;
+     align-items: center;
+     gap: 6px;
+}
+ .icon {
+     font-size: 16px;
+}
+ .session-footer {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 12px;
+     line-height: 100%;
+     letter-spacing: 0%;
+}
+ .dt-paging {
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     flex-wrap: wrap;
+     margin-top: 20px;
+     gap: 5px;
+     margin-left: -10px;
+}
+ .dt-paging-button {
+     border: 1px solid green;
+     background: #ffffff;
+     color: black;
+     margin: 2px;
+     border-radius: 7px;
+     cursor: pointer;
+     font-size: 16px;
+     transition: background 0.3s ease;
+     width: 40px;
+     height: 40px;
+     padding: 0;
+     margin-left: 8px;
+}
+ .dt-paging-button.disabled {
+     background: #ffffff;
+     color: black;
+     border: 1px solid #99816b;
+     cursor: not-allowed;
+     opacity: 0.6;
+}
+ .dt-paging-button.current {
+     background: orange;
+     font-weight: bold;
+     border: none;
+     color: white 
+}
+ @media only screen and (max-width: 1399px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 25px;
+         flex-wrap: wrap;
+         padding-bottom: 50px;
+    }
+     .filter-btn {
+         padding: 10px 16px;
+         border: 1px solid rgba(127, 164, 131, 1);
+         border-radius: 8px;
+         background-color: transparent;
+         color: rgba(127, 164, 131, 1);
+         width: 340px;
+         height: 40px;
+         cursor: pointer;
+         transition: all 0.25s ease;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 16px;
+         line-height: 100%;
+         letter-spacing: 0%;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 710px;
+         height: 310px;
+         flex-direction: row;
+         gap: 50px 
+    }
+     .events-cards img {
+         max-width: 200px;
+         width: 450px;
+         height: 250px;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 110% !important;
+    }
+     #right {
+         margin-left: -10px;
+    }
+     #edate {
+         width: 120px;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     .event-date {
+         width: 120px;
+         display: block;
+    }
+     #ename {
+         font-size: 13px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+ @media only screen and (max-width: 1199px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 20px;
+         flex-wrap: wrap;
+         padding-bottom: 50px;
+    }
+     .filter-btn {
+         padding: 8px;
+         border: 1px solid rgba(127, 164, 131, 1);
+         border-radius: 8px;
+         background-color: transparent;
+         color: rgba(127, 164, 131, 1);
+         width: 250px;
+         height: 40px;
+         cursor: pointer;
+         transition: all 0.25s ease;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 16px;
+         line-height: 100%;
+         letter-spacing: 0%;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 550px;
+         height: 310px;
+         flex-direction: row;
+         gap: 40px 
+    }
+     .events-cards img {
+         max-width: 150px;
+         width: 400px;
+         height: 200px;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 20px;
+    }
+     .events-cards .text-secondary {
+         font-size: 12px;
+         line-height: 16px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 120% !important;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 180px;
+    }
+     .day-number {
+         width: 30px;
+    }
+     #right {
+         margin-left: -30px;
+    }
+     #edate {
+         width: 120px;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     .event-date {
+         width: 120px;
+         display: block;
+         text-align: left;
+    }
+     #ename {
+         font-size: 14px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 20px 20px 0;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+ @media only screen and (max-width: 991px) {
+     .right-header .profile-mobile, .right-header .divider, .notification-desktop, .down {
+         display: none !important;
+    }
+     .notification-mobile {
+         display: inline-flex !important;
+         margin-right: 10px;
+    }
+     #login {
+         padding: 0px 15px 20px 45px;
+         display: flex;
+         font-size: 18px;
+         font-family: Inter;
+         font-weight: 400;
+    }
+     .navbar .right-header {
+         margin-left: 0;
+    }
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 400px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 20px;
+         flex-wrap: nowrap;
+         padding-bottom: 50px;
+    }
+     .filter-btn {
+         padding: 8px;
+         border: 1px solid rgba(127, 164, 131, 1);
+         border-radius: 8px;
+         background-color: transparent;
+         color: rgba(127, 164, 131, 1);
+         width: 350px;
+         height: 40px;
+         cursor: pointer;
+         transition: all 0.25s ease;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 14px;
+         line-height: 100%;
+         letter-spacing: 0%;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 700px;
+         height: auto;
+         flex-direction: column;
+         gap: 40px;
+         text-align: center;
+         justify-content: center;
+    }
+     #detail {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+    }
+     .events-cards img {
+         max-width: 300px;
+         width: 550px;
+         height: auto;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 24px;
+    }
+     .events-cards .text-secondary {
+         font-size: 14px;
+         line-height: 20px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 700px !important;
+    }
+     #events-left {
+         order: 1;
+         width: 155%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: row;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 40px 20px 20px;
+    }
+     .info {
+         font-size: 15px;
+    }
+}
+ @media only screen and (max-width: 767px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 250px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 20px;
+         flex-wrap: wrap;
+         padding-bottom: 50px;
+    }
+     .events-title {
+         font-size: 30px;
+    }
+     .filter-btn {
+         padding: 5px;
+         border: 1px solid rgba(127, 164, 131, 1);
+         border-radius: 8px;
+         background-color: transparent;
+         color: rgba(127, 164, 131, 1);
+         width: 230px;
+         height: 40px;
+         cursor: pointer;
+         transition: all 0.25s ease;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 14px;
+         line-height: 100%;
+         letter-spacing: 0%;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 500px;
+         height: auto;
+         flex-direction: column;
+         gap: 40px;
+         text-align: center;
+         justify-content: center;
+    }
+     #detail {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+    }
+     .events-cards img {
+         max-width: 550px;
+         width: 300px;
+         height: auto;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 24px;
+    }
+     .events-cards .text-secondary {
+         font-size: 14px;
+         line-height: 20px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 500px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: row;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 40px 20px 20px;
+    }
+     .info {
+         font-size: 15px;
+    }
+}
+ @media only screen and (max-width: 575px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .events-header {
+         gap: 20px;
+    }
+     .events-title {
+         font-size: 20px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 250px;
+         height: 50px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 20px;
+         flex-wrap: wrap;
+         padding-bottom: 50px;
+    }
+     .filter-btn {
+         padding: 5px;
+         border: 1px solid rgba(127, 164, 131, 1);
+         border-radius: 8px;
+         background-color: transparent;
+         color: rgba(127, 164, 131, 1);
+         width: 270px;
+         height: 40px;
+         cursor: pointer;
+         transition: all 0.25s ease;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 14px;
+         line-height: 100%;
+         letter-spacing: 0%;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 300px;
+         height: auto;
+         flex-direction: column;
+         gap: 40px;
+         text-align: center;
+         justify-content: center;
+    }
+     #detail {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+    }
+     .events-cards img {
+         max-width: 400px;
+         width: 200px;
+         height: auto;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 24px;
+    }
+     .events-cards .text-secondary {
+         font-size: 14px;
+         line-height: 20px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 320px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 20px 20px 0;
+    }
+     .info {
+         font-size: 13px;
+    }
+}
+ @media only screen and (max-width: 359px) {
+     #overall {
+         padding: 0 25px 60px 35px;
+    }
+     #overall .row {
+         display: flex;
+         flex-direction: column;
+    }
+     #heads {
+         padding: 50px 25px 50px 50px;
+    }
+     .events-title {
+         font-size: 20px;
+    }
+     .search-bar {
+         display: flex;
+         align-items: center;
+         background-color: #fff;
+         border: 1px solid #e5e7eb;
+         border-radius: 8px;
+         padding: 6px 30px;
+         width: 200px;
+         height: 60px;
+         transition: border-color 0.2s ease;
+         gap: 20px 
+    }
+     .filter-buttons {
+         display: flex;
+         gap: 20px;
+         flex-wrap: wrap;
+         padding-bottom: 50px;
+    }
+     .filter-btn {
+         padding: 5px;
+         border: 1px solid rgba(127, 164, 131, 1);
+         border-radius: 8px;
+         background-color: transparent;
+         color: rgba(127, 164, 131, 1);
+         width: 100px;
+         height: 40px;
+         cursor: pointer;
+         transition: all 0.25s ease;
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 14px;
+         line-height: 100%;
+         letter-spacing: 0%;
+    }
+     .events-cards {
+         display: flex;
+         align-items: center;
+         background-color: white;
+         box-shadow: 0px 10px 20px 0px rgba(153, 129, 107, 0.15);
+         margin-bottom: 35px;
+         border-radius: 10px;
+         width: 300px;
+         height: auto;
+         flex-direction: column;
+         gap: 40px;
+         text-align: center;
+         justify-content: center;
+    }
+     #detail {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+    }
+     .events-cards img {
+         max-width: 400px;
+         width: 200px;
+         height: auto;
+         border-radius: 8px;
+         opacity: 1;
+         margin-left: 20px;
+         margin-right: 0;
+    }
+     .events-cards #ename {
+         font-size: 24px;
+    }
+     .events-cards .text-secondary {
+         font-size: 14px;
+         line-height: 20px;
+    }
+     .events-cards #edate {
+         width: 150px;
+    }
+     .events-cards #espeaker {
+         width: 150px;
+    }
+     .calendar-card, .season-card, .more-card {
+         width: 320px !important;
+         margin-left: 10px;
+    }
+     #events-left {
+         order: 1;
+         width: 100%;
+    }
+     #right {
+         order: 2;
+         width: 100%;
+         margin-top: 20px;
+    }
+     .event-details {
+         display: flex;
+         flex-direction: column;
+    }
+     .event-info {
+         width: 100%;
+    }
+     #edate {
+         font-family: Inter;
+         font-weight: 400;
+         font-style: Regular;
+         font-size: 12px;
+         line-height: 100%;
+         letter-spacing: 0%;
+         text-align: left;
+    }
+     #ename {
+         font-size: 16px 
+    }
+     .session-card {
+         width: 100%;
+    }
+     .session-body {
+         margin: 40px 20px 20px 0;
+    }
+     .info {
+         font-size: 13px;
     }
 }
 </style>

@@ -27,15 +27,15 @@
                             <div class="profile-icons">
                                 <div class="icon">
                                     <span>20</span>
-                                    <img :src="Image" alt="image-icon" style="width: 20px; height: 20px" />
+                                    <img :src="Image" alt="image-icon"/>
                                 </div>
                                 <div class="icon">
                                     <span>53</span>
-                                    <img :src="Comment" alt="comment-icon" style="width: 20px; height: 20px" />
+                                    <img :src="Comment" alt="comment-icon"/>
                                 </div>
                                 <div class="icon">
                                     <span>39</span>
-                                    <img :src="Point" alt="point-icon" style="width: 20px; height: 20px" />
+                                    <img :src="Point" alt="point-icon"/>
                                 </div>
                             </div>
                         </div>
@@ -259,7 +259,7 @@
                                     <div v-else class="event-img fallback-box d-flex justify-content-center align-items-center">
                                     </div>
                                     <div class="event-details">
-                                        <span id="pname" :style="{color: '#333333', fontWeight: '600'}">{{ news.title }}</span>
+                                        <span id="pname">{{ news.title }}</span>
                                         <div class="event-time" id="edate">
                                             <small class="event-date galtext">{{ formatDate(news.publish_date) }}</small><br />
                                             <small class="event-time-details galtext">{{ formatTime(news.publish_date) }}</small>
@@ -445,7 +445,7 @@ const recentNotices = computed(() => {
     const notices = dashboardStore.dashboardData?.data?.member_notices || [];
     const now = new Date();
     const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(now.getDate() - 30);
+    oneWeekAgo.setDate(now.getDate() - 360);
 
     return notices
         .filter((notice) => {
@@ -651,6 +651,10 @@ function getPositionedClass(index, total) {
      line-height: 100%;
      font-family: Inter;
 }
+.profile-icons .icon img {
+     width: 20px; 
+     height: 20px
+}
  .name {
      font-weight: 500;
      font-size: 30px;
@@ -658,9 +662,13 @@ function getPositionedClass(index, total) {
      color: #4c4036;
      font-family: Inter;
 }
-.pname {
-     color: #333333;
-     font-weight: 600
+#pname {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 20px;
+     letter-spacing: 0%;
 }
  .names {
      font-family: Inter;
@@ -767,7 +775,7 @@ function getPositionedClass(index, total) {
  .upcoming-sections {
      display: flex;
      border-radius: 10px;
-     padding: 20px 0px;
+     padding: 10px 0px;
      align-items: start;
      width: 100%;
      flex-wrap: wrap;
@@ -972,7 +980,8 @@ function getPositionedClass(index, total) {
      width: 100%;
      flex-wrap: wrap;
      gap: 30px;
-     padding-top: 5px
+     padding-top: 12px;
+     padding-bottom: 10px
 }
  .pics {
      align-items: start;
@@ -1042,8 +1051,7 @@ function getPositionedClass(index, total) {
      text-align: center;
      font-size: 14px;
      color: #555;
-     border-top: 1px solid #ddd;
-     margin-top: 40px;
+     margin-top: 100px;
 }
  .site-footer a {
      color: #007bff;

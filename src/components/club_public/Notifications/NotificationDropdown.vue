@@ -119,147 +119,134 @@ const filteredNotifications = computed(() => {
 
 <style scoped>
 .dropdown {
-  position: absolute;
-  right: 0;
-  top: 70px;
-  width: 510px;
-  background: #fff;
-  border-radius: 23.72px;
-  box-shadow: 0px 3.56px 17.79px 0px #0000001A;
-  z-index: 999;
-  height: 576px;
+     position: absolute;
+     right: 0;
+     top: 70px;
+     width: 510px;
+     background: #fff;
+     border-radius: 23.72px;
+     box-shadow: 0px 3.56px 17.79px 0px #0000001A;
+     z-index: 999;
+     height: 576px;
 }
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  padding: 31px;
-  margin-left: 0px;
-  background-color: white;
-  width: 100%;
-  border-radius: 23px;
+ .header {
+     display: flex;
+     justify-content: space-between;
+     padding: 31px;
+     margin-left: 0px;
+     background-color: white;
+     width: 100%;
+     border-radius: 23px;
 }
-
-.header h4 {
-  font-family: Inter;
-  font-weight: 400;
-  font-style: Regular;
-  font-size: 18.98px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  text-align: center;
+ .header h4 {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 18.98px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     text-align: center;
 }
-
-.close {
-  background-color: white;
-  color: black;
-  width: 15px;
-  height: 15px;
-  border: none;
-  top: 10px;
-  right: 41px
+ .close {
+     background-color: white;
+     color: black;
+     width: 15px;
+     height: 15px;
+     border: none;
+     top: 10px;
+     right: 41px 
 }
-
-.filter-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 31px;
-  border-bottom: 1px solid #eee;
+ .filter-bar {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 31px;
+     border-bottom: 1px solid #eee;
 }
-
-.tab {
-  font-family: Inter;
-  font-weight: 500;
-  font-style: Medium;
-  font-size: 16.47px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  text-align: center;
-  color: black;
-  border-bottom: 2px solid #6aa96a;
-  padding-bottom: 4px;
+ .tab {
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 16.47px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     text-align: center;
+     color: black;
+     border-bottom: 2px solid #6aa96a;
+     padding-bottom: 4px;
 }
-
-.filter-select {
-  padding: 0px 13px;
-  border-radius: 4.84px;
-  border: 0.65px solid #4C403666;
-  font-size: 13px;
-  width: 182px;
-  height: 32px;
-  background-color: white;
+ .filter-select {
+     padding: 0px 13px;
+     border-radius: 4.84px;
+     border: 0.65px solid #4C403666;
+     font-size: 13px;
+     width: 182px;
+     height: 32px;
+     background-color: white;
 }
-
-
-.content {
-  margin-left: 0px;
-  width: 81%;
-  background-color: white;
+ .content {
+     margin-left: 0px;
+     width: 81%;
+     background-color: white;
 }
-
-.list {
-  max-height: 360px;
-  overflow-y: auto;
+ .list {
+     max-height: 360px;
+     overflow-y: auto;
 }
-
-.item {
-  display: flex;
-  gap: 20px;
-  padding: 10px 31px;
-  position: relative;
+ .item {
+     display: flex;
+     gap: 20px;
+     padding: 10px 31px;
+     position: relative;
 }
-
-.avatar {
-  width: 30.84px;
-  height: 30.84px;
-  border-radius: 50%;
+ .avatar {
+     width: 30.84px;
+     height: 30.84px;
+     border-radius: 50%;
 }
-.note {
-  font-family: Inter;
-  font-weight: 400;
-  font-style: Regular;
-  font-size: 14.23px;
-  line-height: 100%;
-  letter-spacing: 0px;
-  color: #333333
+ .note {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14.23px;
+     line-height: 100%;
+     letter-spacing: 0px;
+     color: #333333 
 }
-
-.dot {
-  width: 9px;
-  height: 9px;
-  background: #6aa96a;
-  border-radius: 50%;
-  position: absolute;
-  right: 14px;
+ .dot {
+     width: 9px;
+     height: 9px;
+     background: #6aa96a;
+     border-radius: 50%;
+     position: absolute;
+     right: 14px;
 }
-
-.footer {
-    display: flex;
-    text-align: center;
-    padding: 10px;
-    bottom: 10px;
-    position: absolute;
-    left: 200px;
-    background-color: white;
-    font-family: Arimo;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 16.6px;
-    line-height: 23.72px;
-    letter-spacing: 0px;
-    color: #7FA483;
-    cursor: pointer;
-    border-top: 1px solid #ccc;
-    border-top-width: 100%
+ .footer {
+     display: flex;
+     text-align: center;
+     padding: 10px;
+     bottom: 10px;
+     position: absolute;
+     left: 200px;
+     background-color: white;
+     font-family: Arimo;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16.6px;
+     line-height: 23.72px;
+     letter-spacing: 0px;
+     color: #7FA483;
+     cursor: pointer;
+     border-top: 1px solid #ccc;
+     border-top-width: 100% 
 }
-.date {
-  font-family: Inter;
-  font-weight: 400;
-  font-style: Regular;
-  font-size: 9.49px;
-  line-height: 100%;
-  letter-spacing: 0px;
-  color:  #787878;
+ .date {
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 9.49px;
+     line-height: 100%;
+     letter-spacing: 0px;
+     color: #787878;
 }
 </style>

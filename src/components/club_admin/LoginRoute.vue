@@ -120,308 +120,266 @@ export default {
 
 <style scoped>
 body {
-    justify-content: center;
-    align-items: center;
-    background: #fff;
-    height: 90vh;
+     justify-content: center;
+     align-items: center;
+     background: #fff;
+     height: 90vh;
 }
-
-.container {
-    display: flex;
-    height: 90vh;
-    border-radius: 10px;
-    overflow: hidden;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
+ .container {
+     display: flex;
+     height: 90vh;
+     border-radius: 10px;
+     overflow: hidden;
+     text-align: center;
+     justify-content: center;
+     align-items: center;
+     padding: 0;
 }
-
-.login-container {
-    width: 265px;
-    flex: 1;
-    padding: 50px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+ .login-container {
+     width: 265px;
+     flex: 1;
+     padding: 50px;
+     text-align: center;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     position: relative;
 }
-
-.login-container img {
-    width: 435px;
-    height: 100px;
-    margin-bottom: 120px;
+ .login-container img {
+     width: 435px;
+     height: 100px;
+     margin-bottom: 115px;
+     margin-top: 332px;
+     margin-right: 115px;
 }
-
-.form-control {
-    border-radius: 5px;
+ .form-control {
+     border-radius: 5px;
 }
-
-.footer {
-    margin-top: 0px;
+ .footer {
+     margin-top: 0px;
 }
-
-h3 {
-    margin-bottom: 48px;
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 36px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ h3 {
+     margin-bottom: 48px;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 36px;
+     line-height: 100%;
+     letter-spacing: 0%;
+     margin-right: 60px;
 }
-
-.inputBox {
-    position: relative;
+ .inputBox {
+     position: relative;
 }
-
-.inputBox input {
-    width: 500px;
-    height: 60px;
-    padding: 10px;
-    border: 1px solid #99816b;
-    border-radius: 4px;
-    outline: none;
-    color: black;
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 16px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .inputBox input {
+     width: 500px;
+     height: 60px;
+     padding: 10px;
+     border: 1px solid #99816b;
+     border-radius: 4px;
+     outline: none;
+     color: black;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 16px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.inputBox span {
-    position: absolute;
-    top: -18px;
-    left: 15px;
-    padding: 0 5px;
-    font-size: 1.2rem;
-    color: black;
-    pointer-events: none;
-    transition: none;
+ .inputBox span {
+     position: absolute;
+     top: -18px;
+     left: 15px;
+     padding: 0 5px;
+     font-size: 1.2rem;
+     color: black;
+     pointer-events: none;
+     transition: none;
 }
-
-.inputBox input:focus~span,
-.inputBox input:valid~span {
-    transform: translateY(-20px);
-    background: #fff;
-    padding: 0 5px;
-    font-size: 1rem;
+ .inputBox input:focus~span, .inputBox input:valid~span {
+     transform: translateY(-20px);
+     background: #fff;
+     padding: 0 5px;
+     font-size: 1rem;
 }
-
-.btn-dark {
-    margin-top: 40px;
-    border-radius: 5px;
-    background-color: #3d302b;
-    border: none;
-    width: 500px;
-    height: 60px;
-    color: white;
-    font-family: Inter;
-    font-weight: 500;
-    font-style: Medium;
-    font-size: 18px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .btn-dark {
+     margin-top: 40px;
+     border-radius: 5px;
+     background-color: #3d302b;
+     border: none;
+     width: 500px;
+     height: 60px;
+     color: white;
+     font-family: Inter;
+     font-weight: 500;
+     font-style: Medium;
+     font-size: 18px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.btn-dark:hover {
-    background-color: #2b1e19;
+ .btn-dark:hover {
+     background-color: #2b1e19;
 }
-
-.remember-forgot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    margin-top: 15px;
+ .remember-forgot {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     font-family: Arial, sans-serif;
+     font-size: 14px;
+     margin-top: 15px;
 }
-
-.remember-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    width: 28px;
-    height: 28px;
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 14px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .remember-left {
+     display: flex;
+     align-items: center;
+     gap: 15px;
+     width: 28px;
+     height: 28px;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.remember-forgot a {
-    text-decoration: none;
-    color: #cc445e;
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 14px;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .remember-forgot a {
+     text-decoration: none;
+     color: #cc445e;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     font-size: 14px;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-.remember-forgot a:hover {
-    text-decoration: underline;
+ .remember-forgot a:hover {
+     text-decoration: underline;
 }
-
-.image-container {
-    flex: 1;
-    width: 100px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+ .image-container {
+     flex: 1;
+     width: 100px;
+     border-top-right-radius: 10px;
+     border-bottom-right-radius: 10px;
 }
-
-.site-footer {
-    padding: 15px 0;
-    text-align: center;
-    font-size: 14px;
-    color: #99816b;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    position: absolute;
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
-    line-height: 100%;
-    letter-spacing: 0%;
+ .site-footer {
+     padding: 15px 0;
+     text-align: center;
+     font-size: 14px;
+     color: #99816b;
+     bottom: 0;
+     left: 0;
+     width: 100%;
+     position: absolute;
+     font-family: Inter;
+     font-weight: 400;
+     font-style: Regular;
+     line-height: 100%;
+     letter-spacing: 0%;
 }
-
-@media only screen and (max-width: 1399px) {
-    .container {
-        height: 60vh;
+ @media only screen and (max-width: 1399px) {
+     .container {
+         height: 60vh;
     }
 }
-
-@media only screen and (max-width: 1199px) {
-    .container {
-        height: 60vh;
+ @media only screen and (max-width: 1199px) {
+     .container {
+         height: 60vh;
     }
-
-    .login-container img {
-        width: 300px;
-        margin-bottom: 60px;
-        height: 80px;
+     .login-container img {
+         width: 300px;
+         margin-bottom: 60px;
+         height: 80px;
     }
-
-    h3 {
-        font-size: 32px;
+     h3 {
+         font-size: 32px;
     }
-
-    .inputBox input {
-        width: 450px;
-        height: 50px;
-        font-size: 14px;
+     .inputBox input {
+         width: 450px;
+         height: 50px;
+         font-size: 14px;
     }
-
-    .btn-dark {
-        height: 50px;
+     .btn-dark {
+         height: 50px;
     }
 }
-
-@media only screen and (max-width: 991px) {
-    .container {
-        height: 60vh;
+ @media only screen and (max-width: 991px) {
+     .container {
+         height: 60vh;
     }
-
-    .login-container img {
-        width: 300px;
-        margin-bottom: 60px;
+     .login-container img {
+         width: 300px;
+         margin-bottom: 60px;
     }
-
-    h3 {
-        font-size: 32px;
+     h3 {
+         font-size: 32px;
     }
-
-    .inputBox input {
-        width: 450px;
-        height: 50px;
-        font-size: 14px;
+     .inputBox input {
+         width: 450px;
+         height: 50px;
+         font-size: 14px;
     }
-
-    .btn-dark {
-        height: 50px;
+     .btn-dark {
+         height: 50px;
     }
 }
-
-@media only screen and (max-width: 767px) {
-    .container {
-        height: 60vh;
+ @media only screen and (max-width: 767px) {
+     .container {
+         height: 60vh;
     }
-
-    .login-container img {
-        width: 300px;
-        margin-bottom: 60px;
+     .login-container img {
+         width: 300px;
+         margin-bottom: 60px;
     }
-
-    h3 {
-        font-size: 32px;
+     h3 {
+         font-size: 32px;
     }
-
-    .inputBox input {
-        width: 450px;
-        height: 50px;
-        font-size: 14px;
+     .inputBox input {
+         width: 450px;
+         height: 50px;
+         font-size: 14px;
     }
-
-    .btn-dark {
-        height: 50px;
+     .btn-dark {
+         height: 50px;
     }
 }
-
-@media only screen and (max-width: 575px) {
-    .container {
-        height: 60vh;
+ @media only screen and (max-width: 575px) {
+     .container {
+         height: 60vh;
     }
-
-    .login-container img {
-        width: 300px;
-        margin-bottom: 60px;
+     .login-container img {
+         width: 300px;
+         margin-bottom: 60px;
     }
-
-    h3 {
-        font-size: 32px;
+     h3 {
+         font-size: 32px;
     }
-
-    .inputBox input {
-        width: 450px;
-        height: 50px;
-        font-size: 14px;
+     .inputBox input {
+         width: 450px;
+         height: 50px;
+         font-size: 14px;
     }
-
-    .btn-dark {
-        height: 50px;
+     .btn-dark {
+         height: 50px;
     }
 }
-
-@media only screen and (max-width: 359px) {
-    .container {
-        height: 60vh;
+ @media only screen and (max-width: 359px) {
+     .container {
+         height: 60vh;
     }
-
-    .login-container img {
-        width: 300px;
-        margin-bottom: 60px;
+     .login-container img {
+         width: 300px;
+         margin-bottom: 60px;
     }
-
-    h3 {
-        font-size: 32px;
+     h3 {
+         font-size: 32px;
     }
-
-    .inputBox input {
-        width: 450px;
-        height: 50px;
-        font-size: 14px;
+     .inputBox input {
+         width: 450px;
+         height: 50px;
+         font-size: 14px;
     }
-
-    .btn-dark {
-        height: 50px;
+     .btn-dark {
+         height: 50px;
     }
 }
 </style>

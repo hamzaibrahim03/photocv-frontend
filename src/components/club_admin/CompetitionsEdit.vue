@@ -89,19 +89,19 @@
                                         <div class="col-md-4">
                                             <div class="form-control">
                                                 <input type="radio" name="status" value="scheduled" ref="statusscheduled" class="icheck-status" />&nbsp;
-                                                <span style="font-size: 5px">scheduled</span>
+                                                <span>scheduled</span>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-control">
                                                 <input type="radio" name="status" value="draft" ref="statusdraft" class="icheck-status" />&nbsp;
-                                                <span style="font-size: 5px">draft</span>
+                                                <span>draft</span>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-control">
                                                 <input type="radio" name="status" value="postponed" ref="statuspostponed" class="icheck-status" />&nbsp;
-                                                <span style="font-size: 5px">postponed</span>
+                                                <span>postponed</span>
                                             </div>
                                         </div>
                                     </div>
@@ -111,13 +111,13 @@
                                         <div class="col-md-6">
                                             <div class="form-control">
                                                 <input type="radio" name="status" value="cancelled" ref="statuscancelled" class="icheck-status" />&nbsp;
-                                                <span style="font-size: 5px">cancelled</span>
+                                                <span>cancelled</span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-control">
                                                 <input type="radio" name="status" value="completed" ref="statuscompleted" class="icheck-status" />&nbsp;
-                                                <span style="font-size: 5px">completed</span>
+                                                <span>completed</span>
                                             </div>
                                         </div>
                                     </div>
